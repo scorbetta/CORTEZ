@@ -22,11 +22,10 @@ mkdir -p ${OFOLDER}/logs
 DUTS=( FIXED_POINT_ABS FIXED_POINT_ACC FIXED_POINT_ADD FIXED_POINT_CHANGE_SIGN FIXED_POINT_COMP FIXED_POINT_MUL )
 
 # Fixed point widths
-#WIDTHS=( 8 10 12 14 16 18 20 22 24 )
-WIDTHS=( 24 )
+WIDTHS=( 8 10 12 14 16 18 20 22 24 )
 
 # Number of repetitions (seed changes across iterations)
-NUM_ITERS=1
+NUM_ITERS=10
 
 # Tests of fixed-point modules library with different configurations
 for width in ${WIDTHS[@]}
@@ -82,7 +81,7 @@ done
 
 #---- POST PROCESSING -----------------------------------------------------------------------------
 
-OFILE=${OFOLDER}/../Summary.txt
+OFILE=${OFOLDER}/Summary.txt
 
 # Check all run tests
 failing_tests=()
