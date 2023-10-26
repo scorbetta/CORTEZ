@@ -1,0 +1,126 @@
+`timescale 1ns/100ps
+
+// Fixed-point accumulator
+module FIXED_POINT_ACC
+#(
+    // The width of the input values
+    parameter WIDTH         = 8,
+    // Number of bits reserved to the fractional part. Also, the position of the binary point from
+    // LSB. Must be strictly positive
+    parameter FRAC_BITS     = 3,
+    // Number of input operands
+    parameter NUM_INPUTS    = 16,
+    // When 1'b1, the  EXT_VALUE_IN  port is used as well
+    parameter HAS_EXT_BIAS  = 1'b0
+)
+(
+    input                       CLK,
+    input                       RSTN,
+    // Input operand
+    input signed [WIDTH-1:0]    VALUES_IN [NUM_INPUTS],
+    input                       VALID_IN,
+    // External operand (e.g., for bias)
+    input signed [WIDTH-1:0]    EXT_VALUE_IN,
+    // Accumulator
+    output signed [WIDTH-1:0]   VALUE_OUT,
+    output                      VALID_OUT
+);
+
+    typedef enum { WAIT_LAST, ADD_BIAS, ACCUMULATE, IDLE } state_t;
+    state_t curr_state;
+
+    // When an external value is used (e.g., for bias), the internal matrices are reshaped
+    // accordingly to store the additional entry
+    localparam NUM_INPUTS_INT = ( HAS_EXT_BIAS == 1'b1 ? NUM_INPUTS : (NUM_INPUTS+1) );
+
+    logic signed [WIDTH-1:0]            acc;
+    logic                               overflow;
+    logic                               acc_valid;
+    logic [$clog2(NUM_INPUTS_INT)-1:0]  counter;
+    logic signed [WIDTH-1:0]            adder_in;
+    logic                               adder_enable;
+    logic                               adder_valid;
+    logic [$clog2(NUM_INPUTS_INT)-1:0]  adder_valid_counter;
+    logic                               adder_valid_counter_reset;
+
+    // Sequentially generate the accumulator value
+    always_ff @(posedge CLK) begin
+        if(!RSTN) begin
+            counter <= 0;
+            adder_enable <= 1'b0;
+            acc_valid <= 1'b0;
+            adder_valid_counter_reset <= 1'b1;
+            curr_state <= IDLE;
+        end
+        else begin
+            adder_valid_counter_reset <= 1'b1;
+            adder_enable <= 1'b0;
+            acc_valid <= 1'b0;
+
+            case(curr_state)
+                IDLE : begin
+                    if(VALID_IN) begin
+                        counter <= 0;
+                        adder_valid_counter_reset <= 1'b0;
+                        curr_state <= ACCUMULATE;
+                    end
+                end
+
+                ACCUMULATE : begin
+                    counter <= counter + 1;
+                    adder_in <= VALUES_IN[counter];
+                    adder_enable <= 1'b1;
+
+                    if(counter == NUM_INPUTS-1 && !HAS_EXT_BIAS) begin
+                        curr_state <= WAIT_LAST;
+                    end
+                    else if(counter == NUM_INPUTS-1 && HAS_EXT_BIAS) begin
+                        curr_state <= ADD_BIAS;
+                    end
+                end
+
+                ADD_BIAS : begin
+                    adder_in <= EXT_VALUE_IN;
+                    adder_enable <= 1'b1;
+                    curr_state <= WAIT_LAST;
+                end
+
+                WAIT_LAST : begin
+                    if(adder_valid_counter == NUM_INPUTS_INT-1) begin
+                        acc_valid <= 1'b1;
+                        curr_state <= IDLE;
+                    end
+                end
+            endcase
+        end
+    end
+
+    // Shared adder
+    FIXED_POINT_ADD #(
+        .WIDTH      (WIDTH),
+        .FRAC_BITS  (FRAC_BITS)
+    )
+    ADDER (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .VALUE_A_IN (acc),
+        .VALUE_B_IN (adder_in),
+        .VALID_IN   (adder_enable),
+        .VALUE_OUT  (acc),
+        .VALID_OUT  (adder_valid)
+    );
+
+    // Count number of valid operations by the adder
+    always_ff @(posedge CLK) begin
+        if(!RSTN | !adder_valid_counter_reset) begin
+            adder_valid_counter <= 0;
+        end
+        else if(adder_valid) begin
+            adder_valid_counter <= adder_valid_counter + 1;
+        end
+    end
+
+    // Pinout
+    assign VALUE_OUT    = acc;
+    assign VALID_OUT    = acc_valid;
+endmodule

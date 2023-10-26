@@ -1,0 +1,6 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1698308031" />
+    <testcase name="test_fixed_point_mul" classname="test.test_fixed_point_mul" file="/home/scorbetta/work/zero2asic/__projects/cortez/ver/test/test_fixed_point_mul.py" lineno="17" time="1.0208358764648438" sim_time_ns="60070.001" ratio_time="58843.93601841513" />
+  </testsuite>
+</testsuites>
