@@ -1,0 +1,32 @@
+// Fixed point representation:
+//      Word width: __WORD_WIDTH__
+//      Integral bits: __INT_BITS__
+//      Fractional bits: __FRAC_BITS__
+
+// Points of interest are in quadrant #1
+//      FO = (0.0, 0.0)
+//      Z3 = (arctanh(sqrt(1/3)), 0.0) the point where third derivative is 0, meaning the point
+//                                     in which first derivative changes convexity direction
+//      Z4 = (arctanh(sqrt(2/3)), 0.0) the point where fourth derivative is 0, meaning the point
+//                                     in which second derivative changes convexity direction
+//      FP = (2.0, 1.0) the approximation poinf of the plateau
+localparam F0_X             = __F0_X_HEX__; // Equals __F0_X_FIXED__, __F0_X_FLOAT__ before approximation
+localparam Z3_X             = __Z3_X_HEX__; // Equals __Z3_X_FIXED__, __Z3_X_FLOAT__ before approximation
+localparam Z4_X             = __Z4_X_HEX__; // Equals __Z4_X_FIXED__, __Z4_X_FLOAT__ before approximation
+localparam FP_X             = __FP_X_HEX__; // Equals __FP_X_FIXED__, __FP_X_FLOAT__ before approximation
+
+// Line parameters for quadrant #1
+localparam LINE_M_F0_Z3     = __LINE_M_F0_Z3_HEX__; // Equals __LINE_M_F0_Z3_FIXED__, __LINE_M_F0_Z3_FLOAT__ before approximation
+localparam LINE_QP_F0_Z3    = __LINE_QP_F0_Z3_HEX__; // Equals __LINE_QP_F0_Z3_FLOAT__, __LINE_QP_F0_Z3_FLOAT__ before approximation
+localparam LINE_M_Z3_Z4     = __LINE_M_Z3_Z4_HEX__; // Equals __LINE_M_Z3_Z4_FLOAT__, __LINE_M_Z3_Z4_FLOAT__ before approximation
+localparam LINE_QP_Z3_Z4    = __LINE_QP_Z3_Z4_HEX__; // Equals __LINE_QP_Z3_Z4_FLOAT__, __LINE_QP_Z3_Z4_FLOAT__ before approximation
+localparam LINE_M_Z4_FP     = __LINE_M_Z4_FP_HEX__; // Equals __LINE_M_Z4_FP_FLOAT__, __LINE_M_Z4_FP_FLOAT__ before approximation
+localparam LINE_QP_Z4_FP    = __LINE_QP_Z4_FP_HEX__; // Equals __LINE_QP_Z4_FP_FLOAT__, __LINE_QP_Z4_FP_FLOAT__ before approximation
+localparam LINE_M_FP_INF    = __LINE_M_FP_INF_HEX__; // Equals __LINE_M_FP_INF_FLOAT__, __LINE_M_FP_INF_FLOAT__ before approximation
+localparam LINE_QP_FP_INF   = __LINE_QP_FP_INF_HEX__; // Equals __LINE_QP_FP_INF_FLOAT__, __LINE_QP_FP_INF_FLOAT__ before approximation
+
+// Line parameters for quadrant #3
+localparam LINE_QN_F0_Z3    = -LINE_QP_F0_Z3;
+localparam LINE_QN_Z3_Z4    = -LINE_QP_Z3_Z4;
+localparam LINE_QN_Z4_FP    = -LINE_QP_Z4_FP;
+localparam LINE_QN_FP_INF   = -LINE_QP_FP_INF;

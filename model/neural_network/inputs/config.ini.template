@@ -1,0 +1,12 @@
+[default]
+hl_neurons = 25
+ol_neurons = 5
+fp_width = __FP_WIDTH__
+fp_frac = __FP_FRAC__
+boulder = inputs/noiseless_vowels_5x5.json
+max_noisy_pixels = 3
+training_len = 250
+test_len = 1000
+epochs = __EPOCHS__
+alpha = __ALPHA__
+plot_png = 0
