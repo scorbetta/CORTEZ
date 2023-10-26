@@ -5,7 +5,7 @@ import os
 # COCOTB imports
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import RisingEdge, FallingEdge, ClockCycles, with_timeout
+from cocotb.triggers import RisingEdge, FallingEdge, ClockCycles
 
 # Golden model
 from utils.golden_model import golden_model

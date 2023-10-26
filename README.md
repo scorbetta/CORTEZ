@@ -1,4 +1,4 @@
-# Introduction
+## Introduction
 
 CORTEZ1 is the first run of the CORTEZ chip.
 
@@ -8,8 +8,12 @@ training is based on the back-propagation algorithm using the hyperbolic tangent
 activation layer. The digital design is based on fixed-point rather than floating-point to simplify
 the design and reduce costs (area).
 
-# Contents
+## Contents
 
-- `model/neural_network/`, the Python model of the neural network;
-- `model/pievewise_approximation/`, the Python and Matlab approximation of the `tanh()` function, to
-  be used in the digital design. It also contains script to generate synthesizable RTL code.
+- `model/neural_network/` folder contains the Python model of the neural network;
+- `model/pievewise_approximation/` folder contains the Python and Matlab approximation of the
+`tanh()` function, to be used in the digital design. It also contains script to generate
+synthesizable RTL code.
+- `rtl/` folder contains the RTL design;
+- `sim/` folder contains the out-of-the-box-testbench for bring-up simulation;
+- `ver/` folder contains the verification environment;

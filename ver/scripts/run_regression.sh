@@ -6,11 +6,14 @@
 #---- PREAMBLE ------------------------------------------------------------------------------------
 
 # Output folder contains it all
-OFOLDER=outdir
+OFOLDER=${PWD}/outdir
 
 # Clean cache
 rm -fR $OFOLDER
-mkdir $OFOLDER
+
+# Re-create cache
+mkdir ${OFOLDER}
+mkdir -p ${OFOLDER}/logs
 
 
 #---- PARAMETRIC TESTS ----------------------------------------------------------------------------
@@ -19,12 +22,13 @@ mkdir $OFOLDER
 DUTS=( FIXED_POINT_ABS FIXED_POINT_ACC FIXED_POINT_ADD FIXED_POINT_CHANGE_SIGN FIXED_POINT_COMP FIXED_POINT_MUL )
 
 # Fixed point widths
-WIDTHS=( 8 10 12 14 16 18 20 22 24 )
+#WIDTHS=( 8 10 12 14 16 18 20 22 24 )
+WIDTHS=( 24 )
 
 # Number of repetitions (seed changes across iterations)
-NUM_ITERS=2
+NUM_ITERS=1
 
-# Run all configurations on all tests
+# Tests of fixed-point modules library with different configurations
 for width in ${WIDTHS[@]}
 do
     # Reserve 3 bits to the integral part
@@ -34,13 +38,15 @@ do
         for iter in $( seq 1 ${NUM_ITERS} )
         do
             seed=$( date +%N )
-            logname=logs/${dut}_${width}_${frac_bits}_${iter}.runlog
+            logname=${OFOLDER}/logs/${dut}_${width}_${frac_bits}_${iter}.runlog
             cmd="FP_WIDTH=${width} FP_FRAC_WIDTH=${frac_bits} make -j 4 TOPLEVEL=${dut} WIDTH=${width} FRAC_BITS=${frac_bits} RANDOM_SEED=${seed}"
-            echo ${cmd} > ${logname}
+            echo "# ${cmd}" > ${logname}
 
-            # Run test
-            make clean
-            eval ${cmd} 2>&1 | tee -a ${logname}
+            # Run test in proper folder
+            pushd ../ >/dev/null
+                make clean
+                eval ${cmd} 2>&1 | tee -a ${logname}
+            popd >/dev/null
         done
     done
     
@@ -52,23 +58,36 @@ done
 # DUTs
 DUTS=( FIXED_POINT_ACT_FUN NEURON LAYER NETWORK NETWORK_TOP )
 
+# Fixed-point number width
+FP_WIDTH=24
+
+# Fixed-point width of fraction bits
+FP_FRAC_BITS=21
+
 # Tests for a particular fixed-point configuration
 for dut in ${DUTS[@]}
 do
     # Log file name
     seed=$( date +%N )
-    logname=logs/${dut}_${width}_${frac_bits}.runlog
-    cmd="FP_WIDTH=24 FP_FRAC_WIDTH=21 make -j 4 TOPLEVEL=${dut} WIDTH=24 FRAC_BITS=21 RANDOM_SEED=${seed}"
-    echo ${cmd} > ${logname}
-    make clean
-    eval ${cmd} 2>&1 | tee -a ${logname}
+    logname=${OFOLDER}/logs/${dut}_${width}_${frac_bits}.runlog
+    cmd="FP_WIDTH=${FP_WIDTH} FP_FRAC_WIDTH=${FP_FRAC_BITS} make -j 4 TOPLEVEL=${dut} WIDTH=${FP_WIDTH} FRAC_BITS=${FP_FRAC_BITS} RANDOM_SEED=${seed}"
+    echo "# ${cmd}" > ${logname}
+
+    pushd ../ >/dev/null
+        make clean
+        eval ${cmd} 2>&1 | tee -a ${logname}
+    popd >/dev/null
 done
 
 
 #---- POST PROCESSING -----------------------------------------------------------------------------
 
-pushd logs >/dev/null
-    echo -n "" > summary
+OFILE=${OFOLDER}/../Summary.txt
+
+# Check all run tests
+failing_tests=()
+pushd ${OFOLDER}/logs >/dev/null
+    echo -n "" > ${OFILE}
 
     for logfile in $( ls *.runlog )
     do
@@ -79,24 +98,34 @@ pushd logs >/dev/null
 
         if [[ "${pass}" == "1" && "${fail}" == "0" ]]
         then
-            echo "${run}: PASS" >> summary
+            echo "${run}: PASS" >> ${OFILE}
         elif [[ "${pass}" == "0" && "${fail}" == "1" ]]
         then
-            echo "${run}: FAIL" >> summary
+            echo "${run}: FAIL" >> ${OFILE}
+            failing_tests[${#failing_tests[@]}]="${run}"
         else
-            echo "${run}: UNKNOWN" >> summary
+            echo "${run}: UNKNOWN" >> ${OFILE}
         fi
     done
 popd >/dev/null
 
 # Inform user about results
-num_tests=$( wc -l logs/summary | awk '{print $1}' )
-num_pass=$( grep -w "PASS" logs/summary | wc -l )
-num_fail=$( grep -w "FAIL" logs/summary | wc -l )
-num_other=$( grep -w "UNKNOWN" logs/summary | wc -l )
+num_tests=$( wc -l ${OFILE} | awk '{print $1}' )
+num_pass=$( grep -w "PASS" ${OFILE} | wc -l )
+num_fail=$( grep -w "FAIL" ${OFILE} | wc -l )
+num_other=$( grep -w "UNKNOWN" ${OFILE} | wc -l )
 
 echo ""
 echo "rslt: Total number of tests: ${num_tests}"
 echo "rslt:    Pass: ${num_pass}"
 echo "rslt:    Fail: ${num_fail}"
+if [ ${num_fail} -gt 0 ]
+then
+    echo -n "rslt:        --> Failing tests: { "
+    for elem in "${failing_tests[@]}"
+    do
+        echo -n "${elem} "
+    done
+    echo "}"
+fi
 echo "rslt:    Unknown: ${num_other}"

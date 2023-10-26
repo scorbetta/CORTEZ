@@ -1,11 +1,20 @@
-import cocotb
-from cocotb.clock import Clock
-from cocotb.triggers import RisingEdge, FallingEdge, ClockCycles, with_timeout
+# Standard imports
+import sys
 import os
-from fpbinary import FpBinary
-from .golden_model import *
 import json
 import numpy as np
+
+# COCOTB imports
+import cocotb
+from cocotb.clock import Clock
+from cocotb.triggers import RisingEdge, FallingEdge, ClockCycles
+
+# Golden model
+from utils.golden_model import golden_model
+from utils.my_utils import *
+
+# Additional imports
+from fpbinary import FpBinary
 
 def dbug_print(print_flag, message):
     if print_flag == 1:
@@ -82,7 +91,8 @@ async def test_network_top(dut):
     verbose = int(os.getenv("VERBOSE", "0"))
 
     # Load weights and bias
-    weights_bundle = np.load("weights.npz", allow_pickle=True)
+    weights_folder = '../model/neural_network/trained_network'
+    weights_bundle = np.load(f'{weights_folder}/weights.npz', allow_pickle=True)
     temp = np.matrix.transpose(weights_bundle['fixed_w_hl'])
     hl_weights_in = fp_create_matrix(temp.shape, width, frac_bits, True, temp)
     print(f'info: Hidden layer weights matrix loaded with shape {hl_weights_in.shape}')
@@ -100,7 +110,8 @@ async def test_network_top(dut):
     print(f'info: Output layer bias matrix loaded with shape {ol_bias_in.shape}')
 
     # Load boulder specs
-    with open('inputs/noiseless_vowels_5x5.json') as fid:
+    boulder_folder = '../model/neural_network/inputs'
+    with open(f'{boulder_folder}/noiseless_vowels_5x5.json') as fid:
         boulder_data = json.load(fid)
 
     chars_in = boulder_data["training"]

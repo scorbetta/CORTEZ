@@ -1,9 +1,18 @@
+# Standard imports
+import sys
+import os
+
+# COCOTB imports
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import RisingEdge, FallingEdge, ClockCycles, with_timeout
-import os
+from cocotb.triggers import RisingEdge, FallingEdge, ClockCycles
+
+# Golden model
+from utils.golden_model import golden_model
+from utils.my_utils import *
+
+# Additional imports
 from fpbinary import FpBinary
-from .golden_model import *
 
 def dbug_print(print_flag, message):
     if print_flag == 1:
@@ -127,7 +136,7 @@ async def test_layer(dut):
             await FallingEdge(dut.CLK)
             # Check who's fired
             for odx in range(num_outputs):
-                if int(dut.VALID_OUT.value[odx]) == 1 and fired[odx] == False:
+                if int(dut.VALIDS_OUT.value[odx]) == 1 and fired[odx] == False:
                     fired[odx] = True
                     fired_count = fired_count + 1
                     # Values are valid only when the valid signal is asserted. Although they do not

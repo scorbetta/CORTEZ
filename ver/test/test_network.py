@@ -1,9 +1,18 @@
+# Standard imports
+import sys
+import os
+
+# COCOTB imports
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import RisingEdge, FallingEdge, ClockCycles, with_timeout
-import os
+from cocotb.triggers import RisingEdge, FallingEdge, ClockCycles
+
+# Golden model
+from utils.golden_model import golden_model
+from utils.my_utils import *
+
+# Additional imports
 from fpbinary import FpBinary
-from .golden_model import *
 
 def dbug_print(print_flag, message):
     if print_flag == 1:
