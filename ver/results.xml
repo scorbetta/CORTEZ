@@ -1,6 +1,0 @@
-<testsuites name="results">
-  <testsuite name="all" package="all">
-    <property name="random_seed" value="600968219" />
-    <testcase name="test_network_top" classname="test.test_network_top" file="/home/scorbetta/work/zero2asic/__projects/cortez/ver/test/test_network_top.py" lineno="81" time="11.571220874786377" sim_time_ns="283772.001" ratio_time="24523.946441843273" />
-  </testsuite>
-</testsuites>
