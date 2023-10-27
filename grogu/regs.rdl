@@ -1,0 +1,32 @@
+// Multi-field registers definition
+
+// Core control register
+`DEF_CREG(CORE_CTRL)
+    desc = "Core control register";
+
+    field {
+        desc = "When 1'b1, reset the status registers, so that a new input can be loaded in";
+    } RESET [1] = 1'b0;
+
+    field {
+        desc = "A pulse on this register loads the neural network with the input data from the INPUT_GRID_* flops";
+    } LOAD_IN [1] = 1'b0;
+
+    field {
+        desc = "Unused";
+    } reserved [30] = 30'd0;
+};
+
+// Core status register
+`DEF_SREG(CORE_STATUS)
+    desc = "Core status register";
+
+    field {
+        desc = "This signal goes high whenever the solution is ready on the OUTPUT_SOLUTION_* flops";
+    } VALID_OUT [1] = 1'b0;
+
+    field {
+        desc = "Unused";
+    } reserved [31] = 31'd0;
+};
+

@@ -1,0 +1,28 @@
+# Prepare virtual environment
+if [ ! -d venv ]
+then
+    # Create new env if not already existing
+    python3 -m venv venv
+    source venv/bin/activate
+    # Need to install requirements as well
+    pushd grogu.git >/dev/null
+        pip install -r requirements.txt
+    popd >/dev/null
+else
+    # Just switch into existing environment
+    source venv/bin/activate
+fi
+
+# Run grogu within virtual environment
+grogu_cmd="./grogu.git/src/grogu.py --rdl regpool.rdl"
+echo "exec: ${grogu_cmd}"
+eval ${grogu_cmd}
+
+# Show tree
+csr_file=$( find grogu.gen -name csr.tree | tail -n 1 )
+echo ""
+echo "show: Contents of ${csr_file}"
+cat ${csr_file}
+
+# Leave virtual environment
+deactivate
