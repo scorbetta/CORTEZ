@@ -27,7 +27,14 @@ assign values_in[22] = regpool_bundle_out.INPUT_GRID_22.data.value;
 assign values_in[23] = regpool_bundle_out.INPUT_GRID_23.data.value;
 assign values_in[24] = regpool_bundle_out.INPUT_GRID_24.data.value;
 
-assign valid_in = regpool_bundle_out.CORE_CTRL.LOAD_IN.value;
+// Generate pulse from  LOAD_IN  field
+EDGE_DETECTOR LOAD_IN_EDGE_DETECTOR (
+    .CLK            (CLK),
+    .RSTN           (RSTN),
+    .SAMPLE_IN      (regpool_bundle_out.CORE_CTRL.LOAD_IN.value),
+    .RISE_EDGE_OUT  (valid_in),
+    .FALL_EDGE_OUT  () // Unused
+);
 
 // Unpack hidden layer weights
 assign hl_weights_in[0] = regpool_bundle_out.HL_WEIGHTS_0[0].data.value;
@@ -545,11 +552,16 @@ assign regpool_bundle_in.OUTPUT_SOLUTION_2.data.next = values_out[2];
 assign regpool_bundle_in.OUTPUT_SOLUTION_3.data.next = values_out[3];
 assign regpool_bundle_in.OUTPUT_SOLUTION_4.data.next = values_out[4];
 
-always_ff @(posedge CLK) begin
-    if(!RSTN | regpool_bundle_out.CORE_CTRL.RESET.value) begin
-        regpool_bundle_in.CORE_STATUS.VALID_OUT.next <= 1'b0;
-    end
-    else begin
-        regpool_bundle_in.CORE_STATUS.VALID_OUT.next <= valid_out;
-    end
-end
+// Latch the solution strobe
+DELTA_REG #(
+    .DATA_WIDTH (1),
+    .HAS_RESET  (1)
+)
+VALID_SOLUTION_LATCH (
+    .CLK            (CLK),
+    .RSTN           (RSTN),
+    .READ_EVENT     (regpool_bundle_out.CORE_CTRL.RESET.value),
+    .VALUE_IN       (valid_out),
+    .VALUE_CHANGE   (regpool_bundle_in.CORE_STATUS.VALID_OUT.next),
+    .VALUE_OUT      () // Unused
+);

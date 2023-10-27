@@ -21,12 +21,14 @@ SEED ?= $(RANDOM_SEED)
 WAVES ?= 0
 
 # Verilator general options
-EXTRA_ARGS += -I../rtl +1800-2017ext+sv --autoflush
+EXTRA_ARGS += -I../rtl -I../grogu -I../grogu/grogu.gen/CORTEZ_REGPOOL/rtl +1800-2017ext+sv --autoflush --timing
 
 # Design parameters
 ifneq ($(TOPLEVEL),NETWORK)
 ifneq ($(TOPLEVEL),NETWORK_TOP)
+ifneq ($(TOPLEVEL),NETWORK_TOP_WRAPPER)
 EXTRA_ARGS += -GWIDTH=$(WIDTH) -GFRAC_BITS=$(FRAC_BITS)
+endif
 endif
 endif
 

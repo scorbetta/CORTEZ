@@ -15,4 +15,7 @@ NETWORK.sv
 ../grogu/grogu.git/bundle/AXIL2NATIVE.sv
 ../grogu/grogu.git/bundle/RW_REG.sv
 ../grogu/grogu.git/bundle/RO_REG.sv
+../grogu/grogu.git/bundle/DELTA_REG.sv
+EDGE_DETECTOR.sv
 NETWORK_TOP.sv
+NETWORK_TOP_WRAPPER.sv

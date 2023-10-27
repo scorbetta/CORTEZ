@@ -5,7 +5,14 @@
 assign values_in[{{idx}}] = regpool_bundle_out.INPUT_GRID_{{idx}}.data.value;
 {%- endfor %}
 
-assign valid_in = regpool_bundle_out.CORE_CTRL.LOAD_IN.value;
+// Generate pulse from  LOAD_IN  field
+EDGE_DETECTOR LOAD_IN_EDGE_DETECTOR (
+    .CLK            (CLK),
+    .RSTN           (RSTN),
+    .SAMPLE_IN      (regpool_bundle_out.CORE_CTRL.LOAD_IN.value),
+    .RISE_EDGE_OUT  (valid_in),
+    .FALL_EDGE_OUT  () // Unused
+);
 
 // Unpack hidden layer weights
 {%- for odx in range(num_hl_nodes) %}
@@ -36,11 +43,16 @@ assign ol_bias_in[{{odx}}] = regpool_bundle_out.OL_BIAS_{{odx}}.data.value;
 assign regpool_bundle_in.OUTPUT_SOLUTION_{{odx}}.data.next = values_out[{{odx}}];
 {%- endfor %}
 
-always_ff @(posedge CLK) begin
-    if(!RSTN | regpool_bundle_out.CORE_CTRL.RESET.value) begin
-        regpool_bundle_in.CORE_STATUS.VALID_OUT.next <= 1'b0;
-    end
-    else begin
-        regpool_bundle_in.CORE_STATUS.VALID_OUT.next <= valid_out;
-    end
-end
+// Latch the solution strobe
+DELTA_REG #(
+    .DATA_WIDTH (1),
+    .HAS_RESET  (1)
+)
+VALID_SOLUTION_LATCH (
+    .CLK            (CLK),
+    .RSTN           (RSTN),
+    .READ_EVENT     (regpool_bundle_out.CORE_CTRL.RESET.value),
+    .VALUE_IN       (valid_out),
+    .VALUE_CHANGE   (regpool_bundle_in.CORE_STATUS.VALID_OUT.next),
+    .VALUE_OUT      () // Unused
+);
