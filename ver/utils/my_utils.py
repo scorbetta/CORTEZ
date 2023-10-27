@@ -66,8 +66,11 @@ def bin_add(a, b):
 
 # Convert a fixed-point value to binary string
 def fp2bin(fp_value, width, frac_bits):
+    # In case of scientific representation, convert it to float at first
+    fp_value_float = float(fp_value)
+
     # Get binary representation of positive value first
-    fp_value_abs = str(abs(fp_value))
+    fp_value_abs = str(abs(fp_value_float))
     whole,frac = fp_value_abs.split('.')
 
     # Whole part is easy
@@ -86,7 +89,7 @@ def fp2bin(fp_value, width, frac_bits):
     fp_value_bin = f'{whole_part_bin}{frac_part_bin}'
 
     # In case, take 2's complement to get negative number
-    if fp_value < 0:
+    if fp_value_float < 0:
         # Bitwise negation
         fp_value_bin = fp_value_bin.replace('0', 'x')
         fp_value_bin = fp_value_bin.replace('1', '0')

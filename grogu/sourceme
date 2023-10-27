@@ -26,3 +26,6 @@ cat ${csr_file}
 
 # Leave virtual environment
 deactivate
+
+# Generate glue logic code for the top-level module
+./generate_wires.py

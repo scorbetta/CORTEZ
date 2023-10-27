@@ -2,21 +2,32 @@
 
 // Import network configuration
 `include "NETWORK_CONFIG.svh"
+// Import regpool defines
+`include "CORTEZ_REGPOOL.svh"
 
 // For printout
 `define SCALING (2.0**-`FIXED_POINT_FRAC_BITS)
 
 module ootbtb;
-    logic                                       clk;
-    logic                                       rstn;
-    logic signed [`FIXED_POINT_WORD_WIDTH-1:0]  values_in [`NUM_INPUTS];
-    logic signed [`FIXED_POINT_WORD_WIDTH-1:0]  hl_weights [`NUM_HL_NODES*`NUM_INPUTS];
-    logic signed [`FIXED_POINT_WORD_WIDTH-1:0]  ol_weights [`NUM_OL_NODES*`NUM_HL_NODES];
-    logic signed [`FIXED_POINT_WORD_WIDTH-1:0]  hl_bias [`NUM_HL_NODES];
-    logic signed [`FIXED_POINT_WORD_WIDTH-1:0]  ol_bias [`NUM_OL_NODES];
-    logic                                       valid_in;
-    logic signed [`FIXED_POINT_WORD_WIDTH-1:0]  values_out [`NUM_OL_NODES];
-    logic                                       valid_out;
+    logic           clk;
+    logic           rstn;
+    logic [31:0]    write_addr;
+    logic [31:0]    write_data [1];
+    logic [31:0]    read_addr;
+    logic [31:0]    read_data [1];
+
+    axi4l_if #(
+        .ADDR_WIDTH (32),
+        .DATA_WIDTH (32)
+    )
+    axi4l_port (
+        .aclk       (clk),
+        .aresetn    (rstn)
+    );
+
+    // File read
+    integer         fid;
+    logic [23:0]    fid_read;
 
     // Clock and reset
     initial begin
@@ -33,60 +44,131 @@ module ootbtb;
     end
 
     // DUT
-    NETWORK DUT (
-        .CLK            (clk),
-        .RSTN           (rstn),
-        .VALUES_IN      (values_in),
-        .VALID_IN       (valid_in),
-        .HL_WEIGHTS_IN  (hl_weights),
-        .HL_BIAS_IN     (hl_bias),
-        .OL_WEIGHTS_IN  (ol_weights),
-        .OL_BIAS_IN     (ol_bias),
-        .VALUES_OUT     (values_out),
-        .VALID_OUT      (valid_out)
+    NETWORK_TOP DUT (
+        .CLK        (clk),
+        .RSTN       (rstn),
+        .AXI4L_PORT (axi4l_port)
     );
 
-    // Random weights
     initial begin
-        for(int ndx = 0; ndx < `NUM_HL_NODES; ndx++) begin
-            for(int idx = 0; idx < `NUM_INPUTS; idx++) begin
-                hl_weights[ndx*`NUM_INPUTS+idx] = $random % 2;
-            end
-        end
-
-        for(int ndx = 0; ndx < `NUM_OL_NODES; ndx++) begin
-            for(int idx = 0; idx < `NUM_HL_NODES; idx++) begin
-                ol_weights[ndx*`NUM_HL_NODES+idx] = $random % 2;
-            end
-        end
-    end
-
-    // Random bias
-    initial begin
-        for(int ndx = 0; ndx < `NUM_HL_NODES; ndx++) begin
-            hl_bias[ndx] = $random % 2;
-        end
-
-        for(int ndx = 0; ndx < `NUM_OL_NODES; ndx++) begin
-            ol_bias[ndx] = $random % 2;
-        end
-    end
-
-    initial begin
-        valid_in <= 1'b0;
+        axi4l_port.set_idle();
         @(posedge rstn);
         repeat(1e1) @(posedge clk);
 
-        @(posedge clk);
-        valid_in <= 1'b1;
-        for(int idx = 0; idx < `NUM_INPUTS; idx++) begin
-            values_in[idx] <= $random;
+        // Load hidden layer weights
+        fid = $fopen("hidden_layer_weights_fp_hex.txt", "r");
+        write_addr = `HL_WEIGHTS_0_0_OFFSET;
+        for(int odx = 0; odx < `NUM_HL_NODES; odx++) begin
+            for(int idx = 0; idx < `NUM_INPUTS; idx++) begin
+                $fscanf(fid, "0x%h,", fid_read);
+                write_data[0] = { 8'd0, fid_read }; 
+                axi4l_port.write_data(write_addr, write_data);
+                write_addr = write_addr + 16'd4;
+            end
         end
 
-        @(posedge clk);
-        valid_in <= 1'b0;
+        // Load hidden layer bias
+        fid = $fopen("hidden_layer_bias_fp_hex.txt", "r");
+        write_addr = `HL_BIAS_0_OFFSET;
+        for(int odx = 0; odx < `NUM_HL_NODES; odx++) begin
+            $fscanf(fid, "0x%h,", fid_read);
+            write_data[0] = { 8'd0, fid_read }; 
+            axi4l_port.write_data(write_addr, write_data);
+            write_addr = write_addr + 16'd4;
+        end
 
-        repeat(1e2) @(posedge clk);
+        // Load output layer weights
+        fid = $fopen("output_layer_weights_fp_hex.txt", "r");
+        write_addr = `OL_WEIGHTS_0_0_OFFSET;
+        for(int odx = 0; odx < `NUM_OL_NODES; odx++) begin
+            for(int idx = 0; idx < `NUM_HL_NODES; idx++) begin
+                $fscanf(fid, "0x%h,", fid_read);
+                write_data[0] = { 8'd0, fid_read }; 
+                axi4l_port.write_data(write_addr, write_data);
+                write_addr = write_addr + 16'd4;
+            end
+        end
+
+        // Load output layer bias
+        fid = $fopen("output_layer_bias_fp_hex.txt", "r");
+        write_addr = `OL_BIAS_0_OFFSET;
+        for(int odx = 0; odx < `NUM_OL_NODES; odx++) begin
+            $fscanf(fid, "0x%h,", fid_read);
+            write_data[0] = { 8'd0, fid_read }; 
+            axi4l_port.write_data(write_addr, write_data);
+            write_addr = write_addr + 16'd4;
+        end
+
+        // Try the network
+        write_data[0] = { 8'd0, 24'he00000 }; 
+        write_addr = `INPUT_GRID_0_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+        write_addr = `INPUT_GRID_1_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+        write_addr = `INPUT_GRID_2_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+        write_addr = `INPUT_GRID_3_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+        write_addr = `INPUT_GRID_4_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+
+        write_addr = `INPUT_GRID_5_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+        write_data[0] = { 8'd0, 24'h200000 }; 
+        write_addr = `INPUT_GRID_6_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+        write_addr = `INPUT_GRID_7_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+        write_addr = `INPUT_GRID_8_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+        write_data[0] = { 8'd0, 24'he00000 }; 
+        write_addr = `INPUT_GRID_9_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+
+        write_data[0] = { 8'd0, 24'he00000 }; 
+        write_addr = `INPUT_GRID_10_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+        write_data[0] = { 8'd0, 24'h200000 }; 
+        write_addr = `INPUT_GRID_11_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+        write_addr = `INPUT_GRID_12_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+        write_addr = `INPUT_GRID_13_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+        write_addr = `INPUT_GRID_14_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+
+        write_data[0] = { 8'd0, 24'he00000 }; 
+        write_addr = `INPUT_GRID_15_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+        write_data[0] = { 8'd0, 24'h200000 }; 
+        write_addr = `INPUT_GRID_16_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+        write_addr = `INPUT_GRID_17_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+        write_addr = `INPUT_GRID_18_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+        write_data[0] = { 8'd0, 24'he00000 }; 
+        write_addr = `INPUT_GRID_19_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+
+        write_data[0] = { 8'd0, 24'he00000 }; 
+        write_addr = `INPUT_GRID_20_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+        write_addr = `INPUT_GRID_21_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+        write_addr = `INPUT_GRID_22_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+        write_addr = `INPUT_GRID_23_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+        write_addr = `INPUT_GRID_24_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+
+        write_data[0] = { 8'd0, 24'h000002 }; 
+        write_addr = `CORE_CTRL_OFFSET;
+        axi4l_port.write_data(write_addr, write_data);
+
+        repeat(1e3) @(posedge clk);
         $finish;
    end
 

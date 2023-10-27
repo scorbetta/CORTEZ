@@ -9,4 +9,10 @@ NEURON.sv
 SHIM_ALIGN.sv
 LAYER.sv
 NETWORK.sv
+../grogu/grogu.gen/CORTEZ_REGPOOL/rtl/cortez_regpool_pkg.sv
+../grogu/grogu.gen/CORTEZ_REGPOOL/rtl/CORTEZ_REGPOOL.sv
+../grogu/grogu.git/bundle/AXI4.sv
+../grogu/grogu.git/bundle/AXIL2NATIVE.sv
+../grogu/grogu.git/bundle/RW_REG.sv
+../grogu/grogu.git/bundle/RO_REG.sv
 NETWORK_TOP.sv
