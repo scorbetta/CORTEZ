@@ -26,44 +26,57 @@ module ootbtb;
         .rst    (rst)
     );
 
-    // DUT (VHDL wrapper)
-    WB2AXI4L_BRIDGE #(
+    // DUT (SystemVerilog porting)
+    WB2AXI4LITE_BRIDGE #(
         .ADDR_WIDTH (32),
         .DATA_WIDTH (32)
     )
     DUT (
-        .aclk            (clk),
-        .aresetn         (rstn),
-        .wb_cyc          (wb.cyc),
-        .wb_stb          (wb.stb),
-        .wb_adr          (wb.addr),
-        .wb_sel          (wb.sel),
-        .wb_we           (wb.we),
-        .wb_wdat         (wb.wdata),
-        .wb_ack          (wb.ack),
-        .wb_err          (wb.err),
-        .wb_rty          (), // Unused
-        .wb_stall        (wb.stall),
-        .wb_int          (), // Unused
-        .wb_rdat         (wb.rdata),
-        .axi4l_awready   (axi4l.awready),
-        .axi4l_wready    (axi4l.wready),
-        .axi4l_bresp     (axi4l.bresp),
-        .axi4l_bvalid    (axi4l.bvalid),
-        .axi4l_arready   (axi4l.arready),
-        .axi4l_rdata     (axi4l.rdata),
-        .axi4l_rresp     (axi4l.rresp),
-        .axi4l_rvalid    (axi4l.rvalid),
-        .axi4l_awaddr    (axi4l.awaddr),
-        .axi4l_awvalid   (axi4l.awvalid),
-        .axi4l_wdata     (axi4l.wdata),
-        .axi4l_wstrb     (axi4l.wstrb),
-        .axi4l_wvalid    (axi4l.wvalid),
-        .axi4l_bready    (axi4l.bready),
-        .axi4l_araddr    (axi4l.araddr),
-        .axi4l_arvalid   (axi4l.arvalid),
-        .axi4l_rready    (axi4l.rready)
+        .CLK            (clk),
+        .RSTN           (rstn),
+        .RST            (rst),
+        .WISHBONE_PORT  (wb),
+        .AXI4LITE_PORT  (axi4l)
     );
+ 
+    //@VHD// DUT (VHDL wrapper)
+    //@VHDWB2AXI4L_BRIDGE #(
+    //@VHD    .ADDR_WIDTH (32),
+    //@VHD    .DATA_WIDTH (32)
+    //@VHD)
+    //@VHDDUT (
+    //@VHD    .aclk            (clk),
+    //@VHD    .aresetn         (rstn),
+    //@VHD    .wb_cyc          (wb.cyc),
+    //@VHD    .wb_stb          (wb.stb),
+    //@VHD    .wb_adr          (wb.addr),
+    //@VHD    .wb_sel          (wb.sel),
+    //@VHD    .wb_we           (wb.we),
+    //@VHD    .wb_wdat         (wb.wdata),
+    //@VHD    .wb_ack          (wb.ack),
+    //@VHD    .wb_err          (wb.err),
+    //@VHD    .wb_rty          (), // Unused
+    //@VHD    .wb_stall        (wb.stall),
+    //@VHD    .wb_int          (), // Unused
+    //@VHD    .wb_rdat         (wb.rdata),
+    //@VHD    .axi4l_awready   (axi4l.awready),
+    //@VHD    .axi4l_wready    (axi4l.wready),
+    //@VHD    .axi4l_bresp     (axi4l.bresp),
+    //@VHD    .axi4l_bvalid    (axi4l.bvalid),
+    //@VHD    .axi4l_arready   (axi4l.arready),
+    //@VHD    .axi4l_rdata     (axi4l.rdata),
+    //@VHD    .axi4l_rresp     (axi4l.rresp),
+    //@VHD    .axi4l_rvalid    (axi4l.rvalid),
+    //@VHD    .axi4l_awaddr    (axi4l.awaddr),
+    //@VHD    .axi4l_awvalid   (axi4l.awvalid),
+    //@VHD    .axi4l_wdata     (axi4l.wdata),
+    //@VHD    .axi4l_wstrb     (axi4l.wstrb),
+    //@VHD    .axi4l_wvalid    (axi4l.wvalid),
+    //@VHD    .axi4l_bready    (axi4l.bready),
+    //@VHD    .axi4l_araddr    (axi4l.araddr),
+    //@VHD    .axi4l_arvalid   (axi4l.arvalid),
+    //@VHD    .axi4l_rready    (axi4l.rready)
+    //@VHD);
 
     // Clock and reset
     initial begin
