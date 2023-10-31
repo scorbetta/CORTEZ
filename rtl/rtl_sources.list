@@ -18,4 +18,16 @@ NETWORK.sv
 ../grogu/grogu.git/bundle/DELTA_REG.sv
 EDGE_DETECTOR.sv
 NETWORK_TOP.sv
+WISHBONE.sv
+genram_pkg.vhd
+wishbone_pkg.vhd
+axi_helpers_pkg.vhd
+wb_helpers_pkg.vhd
+memory_loader_pkg.vhd
+generic_async_fifo.vhd
+generic_shiftreg_fifo.vhd
+generic_sync_fifo.vhd
+wb_slave_adapter.vhd
+WishboneAXI_v0_1_M_AXI4_LITE.vhd
+WB2AXI4L_BRIDGE.vhd
 NETWORK_TOP_WRAPPER.sv
