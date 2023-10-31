@@ -78,66 +78,47 @@ def create_noisy_data(num_inputs, num_outputs, chars_in, chars_out, num_noisy_pi
 
     return x,x_str,y
 
-async def axi4l_write_data(dut, write_addr, write_data):
-    assert(dut.RSTN == 1),print('Reset shall be released before forcing AXI transaction')
+async def wishbone_write_data(dut, write_addr, write_data):
+    assert(dut.RST == 0),print('Reset shall be released before forcing AXI transaction')
     await RisingEdge(dut.CLK)
 
-    # Address phase and data phase must be started together
-    dut.AXI4L_AWVALID.value = 1
-    dut.AXI4L_AWADDR.value = write_addr
-    dut.AXI4L_WVALID.value = 1
-    dut.AXI4L_WDATA.value = write_data
+    dut.CYC.value = 1
+    dut.STB.value = 1
+    dut.WE.value = 1
+    dut.SEL.value = 0
+    dut.ADDR.value = write_addr
+    dut.WDATA.value = write_data
 
-    # Wait for both phases to finish
-    address_phase_done = 0
-    data_phase_done = 0
     while True:
         await RisingEdge(dut.CLK)
-
-        if dut.AXI4L_AWVALID.value == 1 and dut.AXI4L_AWREADY.value == 1:
-            address_phase_done = 1
-            dut.AXI4L_AWVALID.value = 0
-
-        if dut.AXI4L_WVALID.value == 1 and dut.AXI4L_WREADY.value == 1:
-            data_phase_done = 1
-            dut.AXI4L_WVALID.value = 0
-
-        if address_phase_done == 1 and data_phase_done == 1:
+        if dut.STB.value == 1 and dut.ACK.value == 1:
+            dut.STB.value = 0
             break
 
-    # Ack phase
+    await RisingEdge(dut.CLK)
+    dut.CYC.value = 0
+    dut.STB.value = 0
+
+async def wishbone_read_data(dut, read_addr):
+    assert(dut.RST == 0),print('Reset shall be released before forcing AXI transaction')
+    await RisingEdge(dut.CLK)
+
+    dut.CYC.value = 1
+    dut.STB.value = 1
+    dut.WE.value = 0
+    dut.SEL.value = 0
+    dut.ADDR.value = read_addr
+
     while True:
         await RisingEdge(dut.CLK)
-        if dut.AXI4L_BVALID.value == 1:
-            dut.AXI4L_BREADY.value = 1
+        if dut.STB.value == 1 and dut.ACK.value == 1:
+            dut.STB.value = 0
+            read_data = dut.RDATA.value
             break
-    await RisingEdge(dut.CLK)
-    dut.AXI4L_BREADY.value = 0
-    await RisingEdge(dut.CLK)
 
-async def axi4l_read_data(dut, read_addr):
-    assert(dut.RSTN == 1),print('Reset shall be released before forcing AXI transaction')
     await RisingEdge(dut.CLK)
-
-    # Address phase
-    dut.AXI4L_ARVALID.value = 1
-    dut.AXI4L_ARADDR.value = read_addr
-    while True:
-        await RisingEdge(dut.CLK)
-        if dut.AXI4L_ARVALID.value == 1 and dut.AXI4L_ARREADY.value == 1:
-            break
-    dut.AXI4L_ARVALID.value = 0
-
-    # Ack and data phase
-    while True:
-        await RisingEdge(dut.CLK)
-        if dut.AXI4L_RVALID.value == 1:
-            read_data = dut.AXI4L_RDATA.value
-            dut.AXI4L_RREADY.value = 1
-            break
-    await RisingEdge(dut.CLK)
-    dut.AXI4L_RREADY.value = 0
-    await RisingEdge(dut.CLK)
+    dut.CYC.value = 0
+    dut.STB.value = 0
 
     return read_data
 
@@ -199,16 +180,15 @@ async def test_network_top_wrapper(dut):
 
     # Defaults
     dut.RSTN.value = 0
-    dut.AXI4L_AWVALID.value = 0
-    dut.AXI4L_WVALID.value = 0
-    dut.AXI4L_BREADY.value = 0
-    dut.AXI4L_ARVALID.value = 0
-    dut.AXI4L_RREADY.value = 0
+    dut.RST.value = 1
+    dut.CYC.value = 0
+    dut.STB.value = 0
 
     # Reset procedure w/ shim delay
     for cycle in range(4):
         await RisingEdge(dut.CLK)
     dut.RSTN.value = 1
+    dut.RST.value = 0
     for cycle in range(4):
         await RisingEdge(dut.CLK)
 
@@ -216,23 +196,23 @@ async def test_network_top_wrapper(dut):
     write_addr = 0x0
     for odx in range(num_hl_nodes):
         for idx in range(num_inputs):
-            await axi4l_write_data(dut, write_addr, int(get_bin_str(hl_weights_in[odx][idx], width, frac_bits), 2))
+            await wishbone_write_data(dut, write_addr, int(get_bin_str(hl_weights_in[odx][idx], width, frac_bits), 2))
             write_addr = write_addr + 0x4
 
     write_addr = 0x680
     for odx in range(num_outputs):
         for idx in range(num_hl_nodes):
-            await axi4l_write_data(dut, write_addr, int(get_bin_str(ol_weights_in[odx][idx], width, frac_bits), 2))
+            await wishbone_write_data(dut, write_addr, int(get_bin_str(ol_weights_in[odx][idx], width, frac_bits), 2))
             write_addr = write_addr + 0x4
 
     write_addr = 0x640
     for odx in range(num_hl_nodes):
-        await axi4l_write_data(dut, write_addr, int(get_bin_str(hl_bias_in[odx][0], width, frac_bits), 2))
+        await wishbone_write_data(dut, write_addr, int(get_bin_str(hl_bias_in[odx][0], width, frac_bits), 2))
         write_addr = write_addr + 0x4
 
     write_addr = 0x7c0
     for odx in range(num_outputs):
-        await axi4l_write_data(dut, write_addr, int(get_bin_str(ol_bias_in[odx][0], width, frac_bits), 2))
+        await wishbone_write_data(dut, write_addr, int(get_bin_str(ol_bias_in[odx][0], width, frac_bits), 2))
         write_addr = write_addr + 0x4
 
     for test in range(100):
@@ -300,19 +280,19 @@ async def test_network_top_wrapper(dut):
         # Force values
         write_addr = 0x7d4
         for idx in range(num_inputs):
-            await axi4l_write_data(dut, write_addr, int(random_values_in_str[idx], 2))
+            await wishbone_write_data(dut, write_addr, int(random_values_in_str[idx], 2))
             write_addr = write_addr + 0x4
 
         # Strobe values
         await RisingEdge(dut.CLK)
         write_addr = 0x84c
-        await axi4l_write_data(dut, write_addr, 0x2)
-        await axi4l_write_data(dut, write_addr, 0x0)
+        await wishbone_write_data(dut, write_addr, 0x2)
+        await wishbone_write_data(dut, write_addr, 0x0)
 
         # Wait for the network to fire
         read_addr = 0x850
         while True:
-            read_data = await axi4l_read_data(dut, read_addr)
+            read_data = await wishbone_read_data(dut, read_addr)
             if read_data == 1:
                 break
 
@@ -320,7 +300,7 @@ async def test_network_top_wrapper(dut):
         read_addr = 0x838
         solution = []
         for idx in range(num_outputs):
-            read_data = await axi4l_read_data(dut, read_addr)
+            read_data = await wishbone_read_data(dut, read_addr)
             read_data_str = str(read_data)
             # Remove 8 MSBs!
             solution.append(read_data_str[8:])
@@ -328,8 +308,8 @@ async def test_network_top_wrapper(dut):
 
         # Reset 
         write_addr = 0x84c
-        await axi4l_write_data(dut, write_addr, 0x1)
-        await axi4l_write_data(dut, write_addr, 0x0)
+        await wishbone_write_data(dut, write_addr, 0x1)
+        await wishbone_write_data(dut, write_addr, 0x0)
 
 
         #---- VERIFICATION ------------------------------------------------------------------------

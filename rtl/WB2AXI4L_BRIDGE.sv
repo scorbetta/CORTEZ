@@ -132,7 +132,6 @@ module WB2AXI4LITE_BRIDGE
     assign wb_stall = ( (!wb_r.stall && !wb_w.stall) ? 1'b0 : 1'b1 );
     assign WISHBONE_PORT.ack = ( (wb_r.ack || wb_w.ack) ? 1'b1 : 1'b0 );
     assign WISHBONE_PORT.err = ( (wb_r.err || wb_w.err) ? 1'b1 : 1'b0 );
-    assign WISHBONE_PORT.wdata = wb_r.wdata;
  
     // Read channel always ready
     assign WISHBONE_PORT.rdata = AXI4LITE_PORT.rdata;
