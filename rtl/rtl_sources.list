@@ -17,6 +17,8 @@ NETWORK.sv
 ../grogu/grogu.git/bundle/RO_REG.sv
 ../grogu/grogu.git/bundle/DELTA_REG.sv
 EDGE_DETECTOR.sv
+SS_DECODER.sv
+LEDS_SWINGER.sv
 NETWORK_TOP.sv
 WISHBONE.sv
 WB2AXI4L_BRIDGE.sv

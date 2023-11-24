@@ -5,7 +5,8 @@
 module WB2AXI4LITE_BRIDGE
 #(
     parameter ADDR_WIDTH    = 32,
-    parameter DATA_WIDTH    = 32
+    parameter DATA_WIDTH    = 32,
+    parameter AXI_BASE_ADDR = 32'h00000000
 )
 (
     input               CLK,
@@ -41,9 +42,9 @@ module WB2AXI4LITE_BRIDGE
         .rst    (RST)
     );
 
-    // AXI4 signals
-    assign AXI4LITE_PORT.awaddr = axi_waddr;
-    assign AXI4LITE_PORT.araddr = axi_raddr;
+    // AXI4 signals. Be aware of the address rebase!
+    assign AXI4LITE_PORT.awaddr = (axi_waddr >> 2);
+    assign AXI4LITE_PORT.araddr = (axi_raddr >> 2);
     assign AXI4LITE_PORT.wdata = axi_wdata;
     assign AXI4LITE_PORT.wstrb = axi_wstrb;
 
@@ -53,7 +54,7 @@ module WB2AXI4LITE_BRIDGE
             AXI4LITE_PORT.awvalid <= 1'b0;
         end
         else if(WISHBONE_PORT.cyc && WISHBONE_PORT.stb && WISHBONE_PORT.we && !wb_stall) begin
-            axi_waddr = WISHBONE_PORT.addr;
+            axi_waddr = WISHBONE_PORT.addr - AXI_BASE_ADDR;
             AXI4LITE_PORT.awvalid <= 1'b1;
         end
         else if(AXI4LITE_PORT.awready) begin
@@ -95,7 +96,7 @@ module WB2AXI4LITE_BRIDGE
             AXI4LITE_PORT.arvalid <= 1'b0;
         end
         else if(WISHBONE_PORT.cyc && WISHBONE_PORT.stb && !WISHBONE_PORT.we && !wb_stall) begin
-            axi_raddr <= WISHBONE_PORT.addr;
+            axi_raddr <= WISHBONE_PORT.addr - AXI_BASE_ADDR;
             AXI4LITE_PORT.arvalid <= 1'b1;
         end
         else if(AXI4LITE_PORT.arready) begin
@@ -143,4 +144,8 @@ module WB2AXI4LITE_BRIDGE
     assign AXI4LITE_PORT.bready = 1'b1;
     assign wb_w.ack = (AXI4LITE_PORT.bvalid & !AXI4LITE_PORT.bresp[1]);
     assign wb_w.err = (AXI4LITE_PORT.bvalid & !AXI4LITE_PORT.bresp[1]);
+
+    // Unused
+    assign AXI4LITE_PORT.awprot = 3'b000;
+    assign AXI4LITE_PORT.arprot = 3'b000;
 endmodule

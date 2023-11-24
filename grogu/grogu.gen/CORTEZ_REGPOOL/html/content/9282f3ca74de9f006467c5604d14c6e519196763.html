@@ -7,8 +7,8 @@
 <dl class="node-info">
     <dt>Absolute Address:</dt><dd id="_AbsAddr" class="address"></dd>
     <div id="_AbsAddrDetails"></div>
-    <dt>Base Offset:</dt><dd class="address">0x84c</dd>
-    <dt>Size:</dt><dd class="address">0x4</dd>
+    <dt>Base Offset:</dt><dd class="address">0x5d</dd>
+    <dt>Size:</dt><dd class="address">0x1</dd>
     
     <dt>Source:</dt><dd><a href="https://github.com/scorbetta/cortez/blob/devel/grogu/regs.rdl#L4" target="_blank">regs.rdl</a></dd>
     
@@ -30,11 +30,11 @@
         <th></th>
     </tr>
     <tr id="reserved">
-        <td>[31:2]</td>
+        <td>[7:3]</td>
         <td><a href="#reserved.desc">reserved</a></td>
         <td>
             <span title='Readable and Writable'>rw</span></td>
-        <td>0x0
+        <td>-
         </td>
         <td>
             <input id="_FieldValueTesterreserved" class="field-value-tester"
@@ -49,12 +49,32 @@
             <a class="headerlink" href="#reserved" title="Permalink to this row"></a>
         </td>
     </tr>
+    <tr id="CFG_DONE">
+        <td>[2]</td>
+        <td><a href="#CFG_DONE.desc">CFG_DONE</a></td>
+        <td>
+            <span title='Readable and Writable'>rw</span></td>
+        <td>-
+        </td>
+        <td>
+            <input id="_FieldValueTesterCFG_DONE" class="field-value-tester"
+                type="text" autocomplete="off"
+                data-name="CFG_DONE" oninput="onDecodedFieldInput(this)"/>
+        </td>
+        <td>-</td>
+        <td>
+            <button type="button" id="_RadixButtonCFG_DONE" class="radix-button"
+                title="Switch radix" aria-label="Switch radix"
+                data-name="CFG_DONE" onclick="onRadixSwitch(this)">H</button>
+            <a class="headerlink" href="#CFG_DONE" title="Permalink to this row"></a>
+        </td>
+    </tr>
     <tr id="LOAD_IN">
         <td>[1]</td>
         <td><a href="#LOAD_IN.desc">LOAD_IN</a></td>
         <td>
             <span title='Readable and Writable'>rw</span></td>
-        <td>0x0
+        <td>-
         </td>
         <td>
             <input id="_FieldValueTesterLOAD_IN" class="field-value-tester"
@@ -74,7 +94,7 @@
         <td><a href="#RESET.desc">RESET</a></td>
         <td>
             <span title='Readable and Writable'>rw</span></td>
-        <td>0x0
+        <td>-
         </td>
         <td>
             <input id="_FieldValueTesterRESET" class="field-value-tester"
@@ -104,6 +124,13 @@
 </h3>
 <div id="_Content.reserved.desc">
 <p>Unused</p>
+</div>
+
+<h3 id="CFG_DONE.desc">CFG_DONE
+    <a class="headerlink" href="#CFG_DONE.desc" title="Permalink to this headline"></a>
+</h3>
+<div id="_Content.CFG_DONE.desc">
+<p>Core has been properly configured by the processor</p>
 </div>
 
 <h3 id="LOAD_IN.desc">LOAD_IN

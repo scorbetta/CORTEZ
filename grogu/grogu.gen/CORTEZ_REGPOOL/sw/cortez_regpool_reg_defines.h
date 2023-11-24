@@ -4,597 +4,262 @@
 
 // Array registers are defined only once
 
-// CORTEZ_HL_WEIGHTS_0[25] @+0x0:0x60
+// CORTEZ_HL_WEIGHTS_0[9] @+0x0:0x8
 typedef union CORTEZ_HL_WEIGHTS_0_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_HL_WEIGHTS_0_reg_t;
 
-// CORTEZ_HL_WEIGHTS_1[25] @+0x64:0xc4
+// CORTEZ_HL_WEIGHTS_1[9] @+0x9:0x11
 typedef union CORTEZ_HL_WEIGHTS_1_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_HL_WEIGHTS_1_reg_t;
 
-// CORTEZ_HL_WEIGHTS_2[25] @+0xc8:0x128
+// CORTEZ_HL_WEIGHTS_2[9] @+0x12:0x1a
 typedef union CORTEZ_HL_WEIGHTS_2_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_HL_WEIGHTS_2_reg_t;
 
-// CORTEZ_HL_WEIGHTS_3[25] @+0x12c:0x18c
+// CORTEZ_HL_WEIGHTS_3[9] @+0x1b:0x23
 typedef union CORTEZ_HL_WEIGHTS_3_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_HL_WEIGHTS_3_reg_t;
 
-// CORTEZ_HL_WEIGHTS_4[25] @+0x190:0x1f0
+// CORTEZ_HL_WEIGHTS_4[9] @+0x24:0x2c
 typedef union CORTEZ_HL_WEIGHTS_4_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_HL_WEIGHTS_4_reg_t;
 
-// CORTEZ_HL_WEIGHTS_5[25] @+0x1f4:0x254
+// CORTEZ_HL_WEIGHTS_5[9] @+0x2d:0x35
 typedef union CORTEZ_HL_WEIGHTS_5_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_HL_WEIGHTS_5_reg_t;
 
-// CORTEZ_HL_WEIGHTS_6[25] @+0x258:0x2b8
-typedef union CORTEZ_HL_WEIGHTS_6_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_HL_WEIGHTS_6_reg_t;
-
-// CORTEZ_HL_WEIGHTS_7[25] @+0x2bc:0x31c
-typedef union CORTEZ_HL_WEIGHTS_7_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_HL_WEIGHTS_7_reg_t;
-
-// CORTEZ_HL_WEIGHTS_8[25] @+0x320:0x380
-typedef union CORTEZ_HL_WEIGHTS_8_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_HL_WEIGHTS_8_reg_t;
-
-// CORTEZ_HL_WEIGHTS_9[25] @+0x384:0x3e4
-typedef union CORTEZ_HL_WEIGHTS_9_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_HL_WEIGHTS_9_reg_t;
-
-// CORTEZ_HL_WEIGHTS_10[25] @+0x3e8:0x448
-typedef union CORTEZ_HL_WEIGHTS_10_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_HL_WEIGHTS_10_reg_t;
-
-// CORTEZ_HL_WEIGHTS_11[25] @+0x44c:0x4ac
-typedef union CORTEZ_HL_WEIGHTS_11_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_HL_WEIGHTS_11_reg_t;
-
-// CORTEZ_HL_WEIGHTS_12[25] @+0x4b0:0x510
-typedef union CORTEZ_HL_WEIGHTS_12_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_HL_WEIGHTS_12_reg_t;
-
-// CORTEZ_HL_WEIGHTS_13[25] @+0x514:0x574
-typedef union CORTEZ_HL_WEIGHTS_13_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_HL_WEIGHTS_13_reg_t;
-
-// CORTEZ_HL_WEIGHTS_14[25] @+0x578:0x5d8
-typedef union CORTEZ_HL_WEIGHTS_14_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_HL_WEIGHTS_14_reg_t;
-
-// CORTEZ_HL_WEIGHTS_15[25] @+0x5dc:0x63c
-typedef union CORTEZ_HL_WEIGHTS_15_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_HL_WEIGHTS_15_reg_t;
-
-// CORTEZ_HL_BIAS_0 @+0x640
+// CORTEZ_HL_BIAS_0 @+0x36
 typedef union CORTEZ_HL_BIAS_0_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_HL_BIAS_0_reg_t;
 
-// CORTEZ_HL_BIAS_1 @+0x644
+// CORTEZ_HL_BIAS_1 @+0x37
 typedef union CORTEZ_HL_BIAS_1_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_HL_BIAS_1_reg_t;
 
-// CORTEZ_HL_BIAS_2 @+0x648
+// CORTEZ_HL_BIAS_2 @+0x38
 typedef union CORTEZ_HL_BIAS_2_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_HL_BIAS_2_reg_t;
 
-// CORTEZ_HL_BIAS_3 @+0x64c
+// CORTEZ_HL_BIAS_3 @+0x39
 typedef union CORTEZ_HL_BIAS_3_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_HL_BIAS_3_reg_t;
 
-// CORTEZ_HL_BIAS_4 @+0x650
+// CORTEZ_HL_BIAS_4 @+0x3a
 typedef union CORTEZ_HL_BIAS_4_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_HL_BIAS_4_reg_t;
 
-// CORTEZ_HL_BIAS_5 @+0x654
+// CORTEZ_HL_BIAS_5 @+0x3b
 typedef union CORTEZ_HL_BIAS_5_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_HL_BIAS_5_reg_t;
 
-// CORTEZ_HL_BIAS_6 @+0x658
-typedef union CORTEZ_HL_BIAS_6_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_HL_BIAS_6_reg_t;
-
-// CORTEZ_HL_BIAS_7 @+0x65c
-typedef union CORTEZ_HL_BIAS_7_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_HL_BIAS_7_reg_t;
-
-// CORTEZ_HL_BIAS_8 @+0x660
-typedef union CORTEZ_HL_BIAS_8_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_HL_BIAS_8_reg_t;
-
-// CORTEZ_HL_BIAS_9 @+0x664
-typedef union CORTEZ_HL_BIAS_9_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_HL_BIAS_9_reg_t;
-
-// CORTEZ_HL_BIAS_10 @+0x668
-typedef union CORTEZ_HL_BIAS_10_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_HL_BIAS_10_reg_t;
-
-// CORTEZ_HL_BIAS_11 @+0x66c
-typedef union CORTEZ_HL_BIAS_11_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_HL_BIAS_11_reg_t;
-
-// CORTEZ_HL_BIAS_12 @+0x670
-typedef union CORTEZ_HL_BIAS_12_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_HL_BIAS_12_reg_t;
-
-// CORTEZ_HL_BIAS_13 @+0x674
-typedef union CORTEZ_HL_BIAS_13_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_HL_BIAS_13_reg_t;
-
-// CORTEZ_HL_BIAS_14 @+0x678
-typedef union CORTEZ_HL_BIAS_14_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_HL_BIAS_14_reg_t;
-
-// CORTEZ_HL_BIAS_15 @+0x67c
-typedef union CORTEZ_HL_BIAS_15_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_HL_BIAS_15_reg_t;
-
-// CORTEZ_OL_WEIGHTS_0[16] @+0x680:0x6bc
+// CORTEZ_OL_WEIGHTS_0[6] @+0x3c:0x41
 typedef union CORTEZ_OL_WEIGHTS_0_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_OL_WEIGHTS_0_reg_t;
 
-// CORTEZ_OL_WEIGHTS_1[16] @+0x6c0:0x6fc
+// CORTEZ_OL_WEIGHTS_1[6] @+0x42:0x47
 typedef union CORTEZ_OL_WEIGHTS_1_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_OL_WEIGHTS_1_reg_t;
 
-// CORTEZ_OL_WEIGHTS_2[16] @+0x700:0x73c
+// CORTEZ_OL_WEIGHTS_2[6] @+0x48:0x4d
 typedef union CORTEZ_OL_WEIGHTS_2_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_OL_WEIGHTS_2_reg_t;
 
-// CORTEZ_OL_WEIGHTS_3[16] @+0x740:0x77c
-typedef union CORTEZ_OL_WEIGHTS_3_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_OL_WEIGHTS_3_reg_t;
-
-// CORTEZ_OL_WEIGHTS_4[16] @+0x780:0x7bc
-typedef union CORTEZ_OL_WEIGHTS_4_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_OL_WEIGHTS_4_reg_t;
-
-// CORTEZ_OL_BIAS_0 @+0x7c0
+// CORTEZ_OL_BIAS_0 @+0x4e
 typedef union CORTEZ_OL_BIAS_0_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_OL_BIAS_0_reg_t;
 
-// CORTEZ_OL_BIAS_1 @+0x7c4
+// CORTEZ_OL_BIAS_1 @+0x4f
 typedef union CORTEZ_OL_BIAS_1_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_OL_BIAS_1_reg_t;
 
-// CORTEZ_OL_BIAS_2 @+0x7c8
+// CORTEZ_OL_BIAS_2 @+0x50
 typedef union CORTEZ_OL_BIAS_2_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_OL_BIAS_2_reg_t;
 
-// CORTEZ_OL_BIAS_3 @+0x7cc
-typedef union CORTEZ_OL_BIAS_3_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_OL_BIAS_3_reg_t;
-
-// CORTEZ_OL_BIAS_4 @+0x7d0
-typedef union CORTEZ_OL_BIAS_4_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_OL_BIAS_4_reg_t;
-
-// CORTEZ_INPUT_GRID_0 @+0x7d4
+// CORTEZ_INPUT_GRID_0 @+0x51
 typedef union CORTEZ_INPUT_GRID_0_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_INPUT_GRID_0_reg_t;
 
-// CORTEZ_INPUT_GRID_1 @+0x7d8
+// CORTEZ_INPUT_GRID_1 @+0x52
 typedef union CORTEZ_INPUT_GRID_1_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_INPUT_GRID_1_reg_t;
 
-// CORTEZ_INPUT_GRID_2 @+0x7dc
+// CORTEZ_INPUT_GRID_2 @+0x53
 typedef union CORTEZ_INPUT_GRID_2_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_INPUT_GRID_2_reg_t;
 
-// CORTEZ_INPUT_GRID_3 @+0x7e0
+// CORTEZ_INPUT_GRID_3 @+0x54
 typedef union CORTEZ_INPUT_GRID_3_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_INPUT_GRID_3_reg_t;
 
-// CORTEZ_INPUT_GRID_4 @+0x7e4
+// CORTEZ_INPUT_GRID_4 @+0x55
 typedef union CORTEZ_INPUT_GRID_4_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_INPUT_GRID_4_reg_t;
 
-// CORTEZ_INPUT_GRID_5 @+0x7e8
+// CORTEZ_INPUT_GRID_5 @+0x56
 typedef union CORTEZ_INPUT_GRID_5_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_INPUT_GRID_5_reg_t;
 
-// CORTEZ_INPUT_GRID_6 @+0x7ec
+// CORTEZ_INPUT_GRID_6 @+0x57
 typedef union CORTEZ_INPUT_GRID_6_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_INPUT_GRID_6_reg_t;
 
-// CORTEZ_INPUT_GRID_7 @+0x7f0
+// CORTEZ_INPUT_GRID_7 @+0x58
 typedef union CORTEZ_INPUT_GRID_7_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_INPUT_GRID_7_reg_t;
 
-// CORTEZ_INPUT_GRID_8 @+0x7f4
+// CORTEZ_INPUT_GRID_8 @+0x59
 typedef union CORTEZ_INPUT_GRID_8_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_INPUT_GRID_8_reg_t;
 
-// CORTEZ_INPUT_GRID_9 @+0x7f8
-typedef union CORTEZ_INPUT_GRID_9_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_INPUT_GRID_9_reg_t;
-
-// CORTEZ_INPUT_GRID_10 @+0x7fc
-typedef union CORTEZ_INPUT_GRID_10_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_INPUT_GRID_10_reg_t;
-
-// CORTEZ_INPUT_GRID_11 @+0x800
-typedef union CORTEZ_INPUT_GRID_11_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_INPUT_GRID_11_reg_t;
-
-// CORTEZ_INPUT_GRID_12 @+0x804
-typedef union CORTEZ_INPUT_GRID_12_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_INPUT_GRID_12_reg_t;
-
-// CORTEZ_INPUT_GRID_13 @+0x808
-typedef union CORTEZ_INPUT_GRID_13_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_INPUT_GRID_13_reg_t;
-
-// CORTEZ_INPUT_GRID_14 @+0x80c
-typedef union CORTEZ_INPUT_GRID_14_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_INPUT_GRID_14_reg_t;
-
-// CORTEZ_INPUT_GRID_15 @+0x810
-typedef union CORTEZ_INPUT_GRID_15_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_INPUT_GRID_15_reg_t;
-
-// CORTEZ_INPUT_GRID_16 @+0x814
-typedef union CORTEZ_INPUT_GRID_16_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_INPUT_GRID_16_reg_t;
-
-// CORTEZ_INPUT_GRID_17 @+0x818
-typedef union CORTEZ_INPUT_GRID_17_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_INPUT_GRID_17_reg_t;
-
-// CORTEZ_INPUT_GRID_18 @+0x81c
-typedef union CORTEZ_INPUT_GRID_18_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_INPUT_GRID_18_reg_t;
-
-// CORTEZ_INPUT_GRID_19 @+0x820
-typedef union CORTEZ_INPUT_GRID_19_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_INPUT_GRID_19_reg_t;
-
-// CORTEZ_INPUT_GRID_20 @+0x824
-typedef union CORTEZ_INPUT_GRID_20_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_INPUT_GRID_20_reg_t;
-
-// CORTEZ_INPUT_GRID_21 @+0x828
-typedef union CORTEZ_INPUT_GRID_21_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_INPUT_GRID_21_reg_t;
-
-// CORTEZ_INPUT_GRID_22 @+0x82c
-typedef union CORTEZ_INPUT_GRID_22_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_INPUT_GRID_22_reg_t;
-
-// CORTEZ_INPUT_GRID_23 @+0x830
-typedef union CORTEZ_INPUT_GRID_23_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_INPUT_GRID_23_reg_t;
-
-// CORTEZ_INPUT_GRID_24 @+0x834
-typedef union CORTEZ_INPUT_GRID_24_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_INPUT_GRID_24_reg_t;
-
-// CORTEZ_OUTPUT_SOLUTION_0 @+0x838
+// CORTEZ_OUTPUT_SOLUTION_0 @+0x5a
 typedef union CORTEZ_OUTPUT_SOLUTION_0_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_OUTPUT_SOLUTION_0_reg_t;
 
-// CORTEZ_OUTPUT_SOLUTION_1 @+0x83c
+// CORTEZ_OUTPUT_SOLUTION_1 @+0x5b
 typedef union CORTEZ_OUTPUT_SOLUTION_1_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_OUTPUT_SOLUTION_1_reg_t;
 
-// CORTEZ_OUTPUT_SOLUTION_2 @+0x840
+// CORTEZ_OUTPUT_SOLUTION_2 @+0x5c
 typedef union CORTEZ_OUTPUT_SOLUTION_2_reg_tag {
     struct {
-        uint32_t data : 32; // @[31:0]
+        uint32_t data : 8; // @[7:0]
     } fields;
     uint32_t value;
 } CORTEZ_OUTPUT_SOLUTION_2_reg_t;
 
-// CORTEZ_OUTPUT_SOLUTION_3 @+0x844
-typedef union CORTEZ_OUTPUT_SOLUTION_3_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_OUTPUT_SOLUTION_3_reg_t;
-
-// CORTEZ_OUTPUT_SOLUTION_4 @+0x848
-typedef union CORTEZ_OUTPUT_SOLUTION_4_reg_tag {
-    struct {
-        uint32_t data : 32; // @[31:0]
-    } fields;
-    uint32_t value;
-} CORTEZ_OUTPUT_SOLUTION_4_reg_t;
-
-// CORTEZ_CORE_CTRL @+0x84c
+// CORTEZ_CORE_CTRL @+0x5d
 typedef union CORTEZ_CORE_CTRL_reg_tag {
     struct {
         uint32_t RESET : 1; // @[0:0]
         uint32_t LOAD_IN : 1; // @[1:1]
-        uint32_t reserved : 30; // @[31:2]
+        uint32_t CFG_DONE : 1; // @[2:2]
+        uint32_t reserved : 5; // @[7:3]
     } fields;
     uint32_t value;
 } CORTEZ_CORE_CTRL_reg_t;
 
-// CORTEZ_CORE_STATUS @+0x850
+// CORTEZ_CORE_STATUS @+0x5e
 typedef union CORTEZ_CORE_STATUS_reg_tag {
     struct {
         uint32_t VALID_OUT : 1; // @[0:0]
-        uint32_t reserved : 31; // @[31:1]
+        uint32_t reserved : 7; // @[7:1]
     } fields;
     uint32_t value;
 } CORTEZ_CORE_STATUS_reg_t;

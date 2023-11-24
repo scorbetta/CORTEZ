@@ -6,15 +6,19 @@
 
     field {
         desc = "When 1'b1, reset the status registers, so that a new input can be loaded in";
-    } RESET [1] = 1'b0;
+    } RESET [1];
 
     field {
         desc = "A pulse on this register loads the neural network with the input data from the INPUT_GRID_* flops";
-    } LOAD_IN [1] = 1'b0;
+    } LOAD_IN [1];
+
+    field {
+        desc = "Core has been properly configured by the processor";
+    } CFG_DONE [1];
 
     field {
         desc = "Unused";
-    } reserved [30] = 30'd0;
+    } reserved [5];
 };
 
 // Core status register
@@ -23,10 +27,10 @@
 
     field {
         desc = "This signal goes high whenever the solution is ready on the OUTPUT_SOLUTION_* flops";
-    } VALID_OUT [1] = 1'b0;
+    } VALID_OUT [1];
 
     field {
         desc = "Unused";
-    } reserved [31] = 31'd0;
+    } reserved [7];
 };
 

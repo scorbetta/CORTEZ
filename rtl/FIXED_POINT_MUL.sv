@@ -43,9 +43,4 @@ module FIXED_POINT_MUL
     // Pinout
     assign VALUE_OUT    = a_times_b[WIDTH-1:0];
     assign VALID_OUT    = mul_valid;
-
-    // Elaboration checks
-    if(FRAC_BITS > WIDTH) $fatal(0, "Number of fractional bits cannot be larger than word width: %0d VS %0d", FRAC_BITS, WIDTH);
-    if(FRAC_BITS == 0) $fatal(0, "FRAC_BITS parameter must be strictly positive: FRAC_BITS=%0d", FRAC_BITS);
-    if(FRAC_BITS == WIDTH) $fatal(0, "At least one bit must be reserved for the integral part: WIDTH=%0d, FRAC_BITS=%0d", WIDTH, FRAC_BITS);
 endmodule

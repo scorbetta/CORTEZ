@@ -9,12 +9,12 @@ jj_env = jj.Environment(loader=jj.FileSystemLoader('./'))
 # Build Jinja template context
 context = {
     "template_file": "CSR_BUNDLE_WIRES.template",
-    "num_inputs" : 25,
-    "num_hl_nodes": 16,
-    "num_outputs": 5
+    "num_inputs" : 9,
+    "num_hl_nodes": 6,
+    "num_outputs": 3
 }
 
 # Write out design
 template = jj_env.get_template("CSR_BUNDLE_WIRES.template")
 stream = template.stream(context)
-stream.dump("CSR_BUNDLE_WIRES.sv")
+stream.dump("CSR_BUNDLE_WIRES.svh")

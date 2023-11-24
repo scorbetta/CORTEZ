@@ -26,7 +26,10 @@ module SHIM_ALIGN
     generate
         for(genvar gdx = 0; gdx < NUM_INPUTS; gdx++) begin
             always_ff @(posedge CLK) begin
-                if(!RSTN || reset_valids) begin
+                if(!RSTN) begin
+                    valids_in[gdx] <= 1'b0;
+                end
+                else if(reset_valids) begin
                     valids_in[gdx] <= 1'b0;
                 end
                 else if(!valids_in[gdx] && VALIDS_IN[gdx]) begin

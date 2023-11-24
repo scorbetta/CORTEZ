@@ -26,21 +26,33 @@ module FIXED_POINT_ACC
     output                      VALID_OUT
 );
 
+    // For Verilog compatibility, so that we can use  sv2v  tool in OpenLane flow
+    function integer clog2;
+        input integer value;
+            integer temp;
+        begin
+            temp = value - 1;
+            for (clog2 = 0; temp > 0; clog2 = clog2 + 1) begin
+                temp = temp >> 1;
+            end
+        end
+    endfunction
+
     typedef enum { WAIT_LAST, ADD_BIAS, ACCUMULATE, IDLE } state_t;
     state_t curr_state;
 
     // When an external value is used (e.g., for bias), the internal matrices are reshaped
     // accordingly to store the additional entry
-    localparam NUM_INPUTS_INT = ( HAS_EXT_BIAS == 1'b1 ? NUM_INPUTS : (NUM_INPUTS+1) );
+    localparam NUM_INPUTS_INT = ( HAS_EXT_BIAS == 1'b1 ? (NUM_INPUTS+1) : NUM_INPUTS );
 
     logic signed [WIDTH-1:0]            acc;
     logic                               overflow;
     logic                               acc_valid;
-    logic [$clog2(NUM_INPUTS_INT)-1:0]  counter;
+    logic [clog2(NUM_INPUTS_INT)-1:0]   counter;
     logic signed [WIDTH-1:0]            adder_in;
     logic                               adder_enable;
     logic                               adder_valid;
-    logic [$clog2(NUM_INPUTS_INT)-1:0]  adder_valid_counter;
+    logic [clog2(NUM_INPUTS_INT)-1:0]   adder_valid_counter;
     logic                               adder_valid_counter_reset;
 
     // Sequentially generate the accumulator value
