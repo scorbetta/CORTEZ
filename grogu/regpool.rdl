@@ -1,0 +1,56 @@
+// Register map definition
+
+`include "common.rdl"
+`include "regs.rdl"
+
+addrmap regpool {
+    desc = "The CORTEZ CSR block";
+
+    // Weights of the hidden layer, one vector for every neuron
+    `REF_MULTI_CGPREG(GP, HL_WEIGHTS_0, "Weights for neuron 0 of the hidden layer", 9)
+    `REF_MULTI_CGPREG(GP, HL_WEIGHTS_1, "Weights for neuron 1 of the hidden layer", 9)
+    `REF_MULTI_CGPREG(GP, HL_WEIGHTS_2, "Weights for neuron 2 of the hidden layer", 9)
+    `REF_MULTI_CGPREG(GP, HL_WEIGHTS_3, "Weights for neuron 3 of the hidden layer", 9)
+    `REF_MULTI_CGPREG(GP, HL_WEIGHTS_4, "Weights for neuron 4 of the hidden layer", 9)
+    `REF_MULTI_CGPREG(GP, HL_WEIGHTS_5, "Weights for neuron 5 of the hidden layer", 9)
+
+    // Bias of the hidden layer
+    `REF_CGPREG(GP, HL_BIAS_0, "Bias for neuron 0 of the hidden layer")
+    `REF_CGPREG(GP, HL_BIAS_1, "Bias for neuron 1 of the hidden layer")
+    `REF_CGPREG(GP, HL_BIAS_2, "Bias for neuron 2 of the hidden layer")
+    `REF_CGPREG(GP, HL_BIAS_3, "Bias for neuron 3 of the hidden layer")
+    `REF_CGPREG(GP, HL_BIAS_4, "Bias for neuron 4 of the hidden layer")
+    `REF_CGPREG(GP, HL_BIAS_5, "Bias for neuron 5 of the hidden layer")
+
+    // Weights of the output layer, one vector for every neuron
+    `REF_MULTI_CGPREG(GP, OL_WEIGHTS_0, "Weights for neuron 0 of the output layer", 6)
+    `REF_MULTI_CGPREG(GP, OL_WEIGHTS_1, "Weights for neuron 1 of the output layer", 6)
+    `REF_MULTI_CGPREG(GP, OL_WEIGHTS_2, "Weights for neuron 2 of the output layer", 6)
+
+    // Bias of the output layer
+    `REF_CGPREG(GP, OL_BIAS_0, "Bias for neuron 0 of the output layer")
+    `REF_CGPREG(GP, OL_BIAS_1, "Bias for neuron 1 of the output layer")
+    `REF_CGPREG(GP, OL_BIAS_2, "Bias for neuron 2 of the output layer")
+
+    // Input problem, one vector for each pixel
+    `REF_CGPREG(GP, INPUT_GRID_0, "Pixel 0 of the input character")
+    `REF_CGPREG(GP, INPUT_GRID_1, "Pixel 1 of the input character")
+    `REF_CGPREG(GP, INPUT_GRID_2, "Pixel 2 of the input character")
+    `REF_CGPREG(GP, INPUT_GRID_3, "Pixel 3 of the input character")
+    `REF_CGPREG(GP, INPUT_GRID_4, "Pixel 4 of the input character")
+    `REF_CGPREG(GP, INPUT_GRID_5, "Pixel 5 of the input character")
+    `REF_CGPREG(GP, INPUT_GRID_6, "Pixel 6 of the input character")
+    `REF_CGPREG(GP, INPUT_GRID_7, "Pixel 7 of the input character")
+    `REF_CGPREG(GP, INPUT_GRID_8, "Pixel 8 of the input character")
+
+    // Output solution, one vector for each character
+    `REF_SGPREG(GP, OUTPUT_SOLUTION_0, "Digit 0 of the output solution")
+    `REF_SGPREG(GP, OUTPUT_SOLUTION_1, "Digit 1 of the output solution")
+    `REF_SGPREG(GP, OUTPUT_SOLUTION_2, "Digit 2 of the output solution")
+
+    // Control register
+    `REF_CREG(CORE_CTRL, CORE_CTRL)
+
+    // Status register
+    `REF_SREG(CORE_STATUS, CORE_STATUS)
+};

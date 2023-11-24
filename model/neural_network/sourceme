@@ -1,0 +1,5 @@
+# Train network
+./bpn.py --train-network
+
+# Test network
+./bpn.py --test-network
