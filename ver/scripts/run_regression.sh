@@ -25,7 +25,7 @@ DUTS=( FIXED_POINT_ABS FIXED_POINT_ACC FIXED_POINT_ADD FIXED_POINT_CHANGE_SIGN F
 WIDTHS=( 8 10 12 14 16 18 20 22 24 )
 
 # Number of repetitions (seed changes across iterations)
-NUM_ITERS=10
+NUM_ITERS=25
 
 # Tests of fixed-point modules library with different configurations
 for width in ${WIDTHS[@]}
@@ -36,49 +36,48 @@ do
     do
         for iter in $( seq 1 ${NUM_ITERS} )
         do
-            seed=$( date +%N )
-            logname=${OFOLDER}/logs/${dut}_${width}_${frac_bits}_${iter}.runlog
-            cmd="FP_WIDTH=${width} FP_FRAC_WIDTH=${frac_bits} make -j 4 TOPLEVEL=${dut} WIDTH=${width} FRAC_BITS=${frac_bits} RANDOM_SEED=${seed}"
-            echo "# ${cmd}" > ${logname}
-
             # Run test in proper folder
             pushd ../ >/dev/null
+                # Seed
+                seed=$( date +%N )
+
+                # Log name
+                logname=${OFOLDER}/logs/${dut}_${width}_${frac_bits}_${iter}.runlog
+                cmd="make -j 4 TOPLEVEL=${dut} RANDOM_SEED=${seed} WIDTH=${width} FRAC_BITS=${frac_bits}"
+                echo "# ${cmd}" > ${logname}
+
+                # Prepare INI file
+                cp config.ini.template config.ini
+                sed -i "s/__FP_WIDTH__/${width}/g" config.ini
+                sed -i "s/__FRAC_BITS__/${frac_bits}/g" config.ini
+                sed -i "s/__NUM_INPUTS__/\"UNUSED\"/g" config.ini
+                sed -i "s/__NUM_OUTPUTS__/\"UNUSED\"/g" config.ini
+
+                # Clean before simulating
                 make clean
                 eval ${cmd} 2>&1 | tee -a ${logname}
             popd >/dev/null
         done
-    done
-    
+    done  
 done
 
 
-#---- SINGLETON TESTS -----------------------------------------------------------------------------
-
-# DUTs
-DUTS=( FIXED_POINT_ACT_FUN NEURON LAYER NETWORK NETWORK_TOP )
-
-# Fixed-point number width
-FP_WIDTH=24
-
-# Fixed-point width of fraction bits
-FP_FRAC_BITS=21
-
-# Tests for a particular fixed-point configuration
-for dut in ${DUTS[@]}
-do
-    # Log file name
-    seed=$( date +%N )
-    logname=${OFOLDER}/logs/${dut}_${width}_${frac_bits}.runlog
-    cmd="FP_WIDTH=${FP_WIDTH} FP_FRAC_WIDTH=${FP_FRAC_BITS} make -j 4 TOPLEVEL=${dut} WIDTH=${FP_WIDTH} FRAC_BITS=${FP_FRAC_BITS} RANDOM_SEED=${seed}"
-    echo "# ${cmd}" > ${logname}
-
-    pushd ../ >/dev/null
-        make clean
-        eval ${cmd} 2>&1 | tee -a ${logname}
-    popd >/dev/null
-done
-
-
+#@TBD#---- SINGLETON TESTS -----------------------------------------------------------------------------
+#@TBD
+#@TBD# FIXED_POINT_ACT_FUN
+#@TBDdut=FIXED_POINT_ACT_FUN
+#@TBDwidth=8
+#@TBDfrac_bits=5
+#@TBDseed=$( date +%N )
+#@TBDlogname=${OFOLDER}/logs/${dut}_${width}_${frac_bits}.runlog
+#@TBDcmd="make -j 4 TOPLEVEL=${dut} RANDOM_SEED=${seed} WIDTH=${width} FRAC_BITS=${frac_bits}"
+#@TBDecho "# ${cmd}" > ${logname}
+#@TBDpushd ../ >/dev/null
+#@TBD    make clean
+#@TBD    eval ${cmd} 2>&1 | tee -a ${logname}
+#@TBDpopd >/dev/null
+#@TBD
+#@TBD
 #---- POST PROCESSING -----------------------------------------------------------------------------
 
 OFILE=${OFOLDER}/Summary.txt

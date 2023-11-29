@@ -81,14 +81,16 @@ def create_noisy_data(num_inputs, num_outputs, chars_in, chars_out, num_noisy_pi
 @cocotb.test()
 async def test_network_top(dut):
     # Static configuration
-    num_inputs = 25
-    num_hl_nodes = 16
-    num_outputs = 5
+    num_inputs = 9
+    num_hl_nodes = 6
+    num_outputs = 3
 
     # Dynamic configuration
-    width = int(os.getenv("FP_WIDTH", "8"))
-    frac_bits = int(os.getenv("FP_FRAC_WIDTH", "3"))
-    verbose = int(os.getenv("VERBOSE", "0"))
+    ini_parser = configparser.ConfigParser()
+    ini_parser.read('config.ini')
+    width = int(ini_parser['fixed_point']['fp_width'])
+    frac_bits = int(ini_parser['fixed_point']['frac_bits'])
+    verbose = int(ini_parser['simulation']['verbose'])
 
     # Load weights and bias
     weights_folder = '../model/neural_network/trained_network'

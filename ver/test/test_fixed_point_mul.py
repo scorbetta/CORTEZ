@@ -13,12 +13,15 @@ from utils.my_utils import *
 
 # Additional imports
 from fpbinary import FpBinary
+import configparser
 
 @cocotb.test()
 async def test_fixed_point_mul(dut):
     # Config
-    width = int(os.getenv("FP_WIDTH", "8"))
-    frac_bits = int(os.getenv("FP_FRAC_WIDTH", "3"))
+    ini_parser = configparser.ConfigParser()
+    ini_parser.read('config.ini')
+    width = int(ini_parser['fixed_point']['fp_width'])
+    frac_bits = int(ini_parser['fixed_point']['frac_bits'])
 
     # Run the clock asap
     clock = Clock(dut.CLK, 10, units="ns")

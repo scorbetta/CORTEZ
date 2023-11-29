@@ -13,13 +13,16 @@ from utils.my_utils import *
 
 # Additional imports
 from fpbinary import FpBinary
+import configparser
 
 @cocotb.test()
 async def test_neuron(dut):
     # Config
-    width = int(os.getenv("FP_WIDTH", "8"))
-    frac_bits = int(os.getenv("FP_FRAC_WIDTH", "3"))
-    num_inputs = int(os.getenv("NUM_INPUTS", "1"))
+    ini_parser = configparser.ConfigParser()
+    ini_parser.read('config.ini')
+    width = int(ini_parser['fixed_point']['fp_width'])
+    frac_bits = int(ini_parser['fixed_point']['frac_bits'])
+    num_inputs = int(ini_parser['network']['num_inputs'])
 
     # Run the clock asap
     clock = Clock(dut.CLK, 10, units="ns")
@@ -45,21 +48,21 @@ async def test_neuron(dut):
     for test in range(1000):
         # Generate random values
         random_values_in = []
-        random_values_in_str = []
+        random_values_in_str = ""
         for vdx in range(num_inputs):
             random_value,random_value_bit_str = get_random_fixed_point_value(width, frac_bits)
             value = FpBinary(int_bits=width-frac_bits, frac_bits=frac_bits, signed=True, value=random_value)
             random_values_in.append(value)
-            random_values_in_str.append(random_value_bit_str)
+            random_values_in_str = f'{random_value_bit_str}{random_values_in_str}'
 
         # Generate random weights
         random_weights_in = []
-        random_weights_in_str = []
+        random_weights_in_str = ""
         for vdx in range(num_inputs):
             random_value,random_value_bit_str = get_random_fixed_point_value(width, frac_bits)
             value = FpBinary(int_bits=width-frac_bits, frac_bits=frac_bits, signed=True, value=random_value)
             random_weights_in.append(value)
-            random_weights_in_str.append(random_value_bit_str)
+            random_weights_in_str = f'{random_value_bit_str}{random_weights_in_str}'
 
         # Generate random bias
         random_value,random_value_bit_str = get_random_fixed_point_value(width, frac_bits)
@@ -86,9 +89,8 @@ async def test_neuron(dut):
 
         # Run DUT
         await RisingEdge(dut.CLK)
-        for vdx in range(num_inputs):
-            dut.VALUES_IN[vdx].value = int(random_values_in_str[vdx], 2)
-            dut.WEIGHTS_IN[vdx].value = int(random_weights_in_str[vdx], 2)
+        dut.VALUES_IN.value = int(random_values_in_str, 2)
+        dut.WEIGHTS_IN.value = int(random_weights_in_str, 2)
         dut.BIAS_IN.value = int(random_bias_in_str, 2)
         
         await RisingEdge(dut.CLK)

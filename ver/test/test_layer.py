@@ -13,19 +13,29 @@ from utils.my_utils import *
 
 # Additional imports
 from fpbinary import FpBinary
+import configparser
 
 def dbug_print(print_flag, message):
     if print_flag == 1:
         print(f'{message}')
 
+# Convert binary position to string position:
+#   0 (lsb) becomes strlen-1
+#   ...
+#   strlen-1 (msb) becomes 0
+def stringify(bin_pos, strlen):
+    return (strlen - 1 - bin_pos)
+
 @cocotb.test()
 async def test_layer(dut):
     # Config
-    width = int(os.getenv("FP_WIDTH", "8"))
-    frac_bits = int(os.getenv("FP_FRAC_WIDTH", "3"))
-    num_inputs = int(os.getenv("NUM_INPUTS", "2"))
-    num_outputs = int(os.getenv("NUM_OUTPUTS", "2"))
-    verbose = int(os.getenv("VERBOSE", "0"))
+    ini_parser = configparser.ConfigParser()
+    ini_parser.read('config.ini')
+    width = int(ini_parser['fixed_point']['fp_width'])
+    frac_bits = int(ini_parser['fixed_point']['frac_bits'])
+    num_inputs = int(ini_parser['network']['num_inputs'])
+    num_outputs = int(ini_parser['network']['num_outputs'])
+    verbose = int(ini_parser['simulation']['verbose'])
 
     # Run the clock asap
     clock = Clock(dut.CLK, 10, units="ns")
@@ -58,35 +68,35 @@ async def test_layer(dut):
 
         # Generate random values
         random_values_in = []
-        random_values_in_str = []
+        random_values_in_str = ""
         for vdx in range(num_inputs):
             random_value,random_value_bit_str = get_random_fixed_point_value(width, frac_bits)
             value = FpBinary(int_bits=width-frac_bits, frac_bits=frac_bits, signed=True, value=random_value)
             random_values_in.append(value)
-            random_values_in_str.append(random_value_bit_str)
+            random_values_in_str = f'{random_value_bit_str}{random_values_in_str}'
 
         # Generate random weights
         random_weights_in = []
-        random_weights_in_str = []
+        random_weights_in_str = ""
         for odx in range(num_outputs):
             temp = []
-            temp_str = []
+            temp_str = ""
             for idx in range(num_inputs):
                 random_value,random_value_bit_str = get_random_fixed_point_value(width, frac_bits)
                 value = FpBinary(int_bits=width-frac_bits, frac_bits=frac_bits, signed=True, value=random_value)
                 temp.append(value)
-                temp_str.append(random_value_bit_str)
+                temp_str = f'{temp_str}{random_value_bit_str}'
             random_weights_in.append(temp)
-            random_weights_in_str.append(temp_str)
+            random_weights_in_str = f'{temp_str}{random_weights_in_str}'
 
         # Generate random bias
         random_bias_in = []
-        random_bias_in_str = []
+        random_bias_in_str = ""
         for odx in range(num_outputs):
             random_value,random_value_bit_str = get_random_fixed_point_value(width, frac_bits)
             value = FpBinary(int_bits=width-frac_bits, frac_bits=frac_bits, signed=True, value=random_value)
             random_bias_in.append(value)
-            random_bias_in_str.append(random_value_bit_str)
+            random_bias_in_str = f'{random_value_bit_str}{random_bias_in_str}'
 
         # Run golden model on all neurons
         for odx in range(num_outputs):
@@ -108,16 +118,9 @@ async def test_layer(dut):
 
         # Run DUT
         await RisingEdge(dut.CLK)
-        for idx in range(num_inputs):
-            dut.VALUES_IN[idx].value = int(random_values_in_str[idx], 2)
-
-        for odx in range(num_outputs):
-            for idx in range(num_inputs):
-                #dut.WEIGHTS_IN[odx][idx].value = int(random_weights_in_str[odx][idx], 2)
-                dut.WEIGHTS_IN[odx*num_inputs+idx].value = int(random_weights_in_str[odx][idx], 2)
-
-        for odx in range(num_outputs):
-            dut.BIAS_IN[odx].value = int(random_bias_in_str[odx], 2)
+        dut.VALUES_IN.value = int(random_values_in_str, 2)
+        dut.WEIGHTS_IN.value = int(random_weights_in_str, 2)
+        dut.BIAS_IN.value = int(random_bias_in_str, 2)
         
         await RisingEdge(dut.CLK)
         dut.VALID_IN.value = 1
@@ -142,7 +145,13 @@ async def test_layer(dut):
                     # Values are valid only when the valid signal is asserted. Although they do not
                     # change until the next time valid is asserted, it is good habit sticking to the
                     # digital design!
-                    values_out[odx] = dut.VALUES_OUT.value[odx].binstr
+                    strlen = width * num_outputs
+                    lsb = odx * width
+                    msb = lsb + width - 1
+                    lmc = stringify(msb, strlen)
+                    rmc = stringify(lsb, strlen)
+                    values_out[odx] = dut.VALUES_OUT.value[lmc:rmc].binstr
+                    #@DBUGprint(f'{odx} {width} {msb}:{lsb} {lmc}:{rmc} --> {dut.VALUES_OUT.value[lmc:rmc].binstr} {dut.VALUES_OUT.value.binstr}')
 
             # End condition
             if fired_count == num_outputs:

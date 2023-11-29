@@ -13,12 +13,15 @@ from utils.my_utils import *
 
 # Additional imports
 from fpbinary import FpBinary
+import configparser
 
 @cocotb.test()
 async def test_fixed_point_acc(dut):
     # Config
-    width = int(os.getenv("FP_WIDTH", "8"))
-    frac_bits = int(os.getenv("FP_FRAC_WIDTH", "3"))
+    ini_parser = configparser.ConfigParser()
+    ini_parser.read('config.ini')
+    width = int(ini_parser['fixed_point']['fp_width'])
+    frac_bits = int(ini_parser['fixed_point']['frac_bits'])
 
     # Run the clock asap
     clock = Clock(dut.CLK, 10, units="ns")
@@ -50,12 +53,12 @@ async def test_fixed_point_acc(dut):
  
         # Generate random values
         random_values_in = []
-        random_values_in_str = []
+        random_values_in_str = ""
         for vdx in range(num_values):
             random_value,random_value_bit_str = get_random_fixed_point_value(width, frac_bits)
             value = FpBinary(int_bits=width-frac_bits, frac_bits=frac_bits, signed=True, value=random_value)
             random_values_in.append(value)
-            random_values_in_str.append(random_value_bit_str)
+            random_values_in_str = f'{random_value_bit_str}{random_values_in_str}'
 
         # Golden model
         for vdx in range(num_values):
@@ -63,8 +66,7 @@ async def test_fixed_point_acc(dut):
 
         # DUT
         await RisingEdge(dut.CLK)
-        for vdx in range(num_values):
-            dut.VALUES_IN[vdx].value = int(random_values_in_str[vdx], 2)
+        dut.VALUES_IN.value = int(random_values_in_str, 2)
         
         await RisingEdge(dut.CLK)
         dut.VALID_IN.value = 1

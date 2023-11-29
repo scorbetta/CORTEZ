@@ -18,14 +18,11 @@ grogu_cmd="./grogu.git/src/grogu.py --rdl regpool.rdl"
 echo "exec: ${grogu_cmd}"
 eval ${grogu_cmd}
 
-# Show tree
-csr_file=$( find grogu.gen -name csr.tree | tail -n 1 )
-echo ""
-echo "show: Contents of ${csr_file}"
-cat ${csr_file}
+#@VERBOSE# Show tree
+#@VERBOSEcsr_file=$( find grogu.gen -name csr.tree | tail -n 1 )
+#@VERBOSEecho ""
+#@VERBOSEecho "show: Contents of ${csr_file}"
+#@VERBOSEcat ${csr_file}
 
 # Leave virtual environment
 deactivate
-
-# Generate glue logic code for the top-level module
-./generate_wires.py

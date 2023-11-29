@@ -15,6 +15,7 @@ from utils.my_utils import *
 
 # Additional imports
 from fpbinary import FpBinary
+import configparser
 
 def dbug_print(print_flag, message):
     if print_flag == 1:
@@ -125,14 +126,16 @@ async def wishbone_read_data(dut, read_addr):
 @cocotb.test()
 async def test_network_top_wrapper(dut):
     # Static configuration
-    num_inputs = 25
-    num_hl_nodes = 16
-    num_outputs = 5
-    width = 24
-    frac_bits = 21
+    num_inputs = 9
+    num_hl_nodes = 6
+    num_outputs = 3
+    width = 8
+    frac_bits = 5
 
     # Dynamic configuration
-    verbose = int(os.getenv("VERBOSE", "0"))
+    ini_parser = configparser.ConfigParser()
+    ini_parser.read('config.ini')
+    verbose = int(ini_parser['simulation']['verbose'])
 
     # Load weights and bias from the trained network results, and store them into the register pool
     weights_folder = '../model/neural_network/trained_network'

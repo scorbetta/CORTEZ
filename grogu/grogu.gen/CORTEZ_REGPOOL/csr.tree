@@ -1,4 +1,12 @@
  regpool
+	 DBUG_REG_0
+		 [7:0] data sw=rw
+	 DBUG_REG_1
+		 [7:0] data sw=rw
+	 DBUG_REG_2
+		 [7:0] data sw=rw
+	 DBUG_REG_3
+		 [7:0] data sw=rw
 	 HL_WEIGHTS_0[0]
 		 [7:0] data sw=rw
 	 HL_WEIGHTS_0[1]
@@ -193,3 +201,11 @@
 	 CORE_STATUS
 		 [0:0] VALID_OUT sw=r
 		 [7:1] reserved sw=r
+	 SEVENSEG_0
+		 [7:0] data sw=rw
+	 SEVENSEG_1
+		 [7:0] data sw=rw
+	 SEVENSEG_2
+		 [7:0] data sw=rw
+	 SEVENSEG_3
+		 [7:0] data sw=rw
