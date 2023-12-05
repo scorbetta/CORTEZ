@@ -5,7 +5,7 @@ function integer clog2;
 
     begin
         if(value == 0 || value == 1) begin
-            temp = 1;
+            clog2 = 1;
         end
         else begin
             temp = value - 1;
