@@ -36,6 +36,14 @@ module NETWORK_TOP
     wire                    input_valid;
     wire                    output_ready;
     wire [7:0]              core_ctrl;
+    wire [7:0]              core_debug_info;
+    wire                    reset_start;
+    wire                    reset_end;
+    wire                    config_start;
+    wire                    config_end;
+    wire                    test_start;
+    wire                    test_end;
+    wire                    test_err;
     wire [7:0]              core_status;
     wire [4*8-1:0]          sevensegs;
     wire [31:0]             awaddr;
@@ -70,7 +78,7 @@ module NETWORK_TOP
     WB2AXI4LITE_BRIDGE #(
         .ADDR_WIDTH     (32),
         .DATA_WIDTH     (8),
-        .AXI_BASE_ADDR  (32'hc000_0000)
+        .AXI_BASE_ADDR  (32'h3000_0000)
     )
     WB2AXI_BRIDGE (
         .CLK            (CLK),
@@ -130,6 +138,10 @@ module NETWORK_TOP
         .RRESP                      (rresp),
         .RVALID                     (rvalid),
         .RREADY                     (rready),
+        .HWIF_OUT_DBUG_REG_0        (), // Unused
+        .HWIF_OUT_DBUG_REG_1        (), //
+        .HWIF_OUT_DBUG_REG_2        (), //
+        .HWIF_OUT_DBUG_REG_3        (), //
         .HWIF_OUT_HL_WEIGHTS_0      (hl_weights[0*9*8 +: 9*8]),
         .HWIF_OUT_HL_WEIGHTS_1      (hl_weights[1*9*8 +: 9*8]),
         .HWIF_OUT_HL_WEIGHTS_2      (hl_weights[2*9*8 +: 9*8]),
@@ -161,6 +173,7 @@ module NETWORK_TOP
         .HWIF_IN_OUTPUT_SOLUTION_1  (values_out[1*8 +: 8]),
         .HWIF_IN_OUTPUT_SOLUTION_2  (values_out[2*8 +: 8]),
         .HWIF_OUT_CORE_CTRL         (core_ctrl),
+        .HWIF_OUT_CORE_DEBUG_INFO   (core_debug_info),
         .HWIF_IN_CORE_STATUS        (core_status),
         .HWIF_OUT_SEVENSEG_0        (sevensegs[0*8 +: 8]),
         .HWIF_OUT_SEVENSEG_1        (sevensegs[1*8 +: 8]),
@@ -229,6 +242,9 @@ module NETWORK_TOP
         config_done,    //@[1]
         reset_asserted  //@[0]
     };
+
+    // Core debug information
+    assign { test_err, test_end, test_start, config_end, config_start, reset_end, reset_start } = core_debug_info[6:0];
 
     // 7-segments display control engines
     always @(posedge CLK) begin

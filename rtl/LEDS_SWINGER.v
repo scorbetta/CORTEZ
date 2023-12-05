@@ -50,6 +50,11 @@ module LEDS_SWINGER
                 4'b0011 : begin
                     data <= 4'b1001;
                 end 
+
+                default : begin
+                    data <= 4'b1100;
+                    lnr <= 1'b1;
+                end
             endcase
         end
     end
