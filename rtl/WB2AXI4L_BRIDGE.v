@@ -136,13 +136,13 @@ module WB2AXI4LITE_BRIDGE
     // Read data channel always ready
     assign WB_RDATA     = AXI_RDATA;
     assign AXI_RREADY   = 1'b1;
-    assign wb_r_ack     = (AXI_RVALID & !AXI_RRESP[1]);
-    assign wb_r_err     = (AXI_RVALID & !AXI_RRESP[1]);
+    assign wb_r_ack     = (AXI_RVALID & AXI_RREADY);
+    assign wb_r_err     = (AXI_RVALID & AXI_RREADY & AXI_RRESP[1]);
     
     // Write return channel always ready
     assign AXI_BREADY   = 1'b1;
-    assign wb_w_ack     = (AXI_BVALID & !AXI_BRESP[1]);
-    assign wb_w_err     = (AXI_BVALID & !AXI_BRESP[1]);
+    assign wb_w_ack     = (AXI_BVALID & AXI_BREADY);
+    assign wb_w_err     = (AXI_BVALID & AXI_BREADY & AXI_BRESP[1]);
 
     // Unused
     assign AXI_AWPROT = 3'b000;
