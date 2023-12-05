@@ -198,6 +198,15 @@
 		 [1:1] LOAD_IN sw=rw
 		 [2:2] CFG_DONE sw=rw
 		 [7:3] reserved sw=rw
+	 CORE_DEBUG_INFO
+		 [0:0] RESET_START sw=rw
+		 [1:1] RESET_END sw=rw
+		 [2:2] CONFIG_START sw=rw
+		 [3:3] CONFIG_END sw=rw
+		 [4:4] TEST_START sw=rw
+		 [5:5] TEST_END sw=rw
+		 [6:6] TEST_ERR sw=rw
+		 [7:7] reserved sw=rw
 	 CORE_STATUS
 		 [0:0] VALID_OUT sw=r
 		 [7:1] reserved sw=r

@@ -57,6 +57,9 @@ addrmap regpool {
     // Control register
     `REF_CREG(CORE_CTRL, CORE_CTRL)
 
+    // Debug register
+    `REF_CREG(CORE_DEBUG_INFO, CORE_DEBUG_INFO)
+
     // Status register
     `REF_SREG(CORE_STATUS, CORE_STATUS)
 

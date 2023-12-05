@@ -66,6 +66,7 @@ module CORTEZ_REGPOOL (
     input wire [7:0] HWIF_IN_OUTPUT_SOLUTION_1,
     input wire [7:0] HWIF_IN_OUTPUT_SOLUTION_2,
     output wire [7:0] HWIF_OUT_CORE_CTRL,
+    output wire [7:0] HWIF_OUT_CORE_DEBUG_INFO,
     input wire [7:0] HWIF_IN_CORE_STATUS,
     output wire [7:0] HWIF_OUT_SEVENSEG_0,
     output wire [7:0] HWIF_OUT_SEVENSEG_1,
@@ -1685,6 +1686,22 @@ module CORTEZ_REGPOOL (
         .VALUE_OUT  (core_ctrl_value_out)
     );
         
+    // CORE_DEBUG_INFO: Firmware-initiated debug information
+    reg core_debug_info_wreq;
+    wire core_debug_info_wreq_filtered;
+    wire [7:0] core_debug_info_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (1)
+    )
+    CORE_DEBUG_INFO_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (core_debug_info_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (core_debug_info_value_out)
+    );
+        
     // CORE_STATUS: Core status register
     wire [7:0] core_status_value_in;
     wire [7:0] core_status_value_out;
@@ -1860,6 +1877,7 @@ module CORTEZ_REGPOOL (
         input_grid_7_wreq <= 1'b0;
         input_grid_8_wreq <= 1'b0;
         core_ctrl_wreq <= 1'b0;
+        core_debug_info_wreq <= 1'b0;
         sevenseg_0_wreq <= 1'b0;
         sevenseg_1_wreq <= 1'b0;
         sevenseg_2_wreq <= 1'b0;
@@ -1961,6 +1979,7 @@ module CORTEZ_REGPOOL (
             `INPUT_GRID_7_OFFSET : begin input_grid_7_wreq <= 1'b1; end
             `INPUT_GRID_8_OFFSET : begin input_grid_8_wreq <= 1'b1; end
             `CORE_CTRL_OFFSET : begin core_ctrl_wreq <= 1'b1; end
+            `CORE_DEBUG_INFO_OFFSET : begin core_debug_info_wreq <= 1'b1; end
             `SEVENSEG_0_OFFSET : begin sevenseg_0_wreq <= 1'b1; end
             `SEVENSEG_1_OFFSET : begin sevenseg_1_wreq <= 1'b1; end
             `SEVENSEG_2_OFFSET : begin sevenseg_2_wreq <= 1'b1; end
@@ -2069,6 +2088,7 @@ module CORTEZ_REGPOOL (
     assign input_grid_7_wreq_filtered = input_grid_7_wreq & regpool_wen_resampled;
     assign input_grid_8_wreq_filtered = input_grid_8_wreq & regpool_wen_resampled;
     assign core_ctrl_wreq_filtered = core_ctrl_wreq & regpool_wen_resampled;
+    assign core_debug_info_wreq_filtered = core_debug_info_wreq & regpool_wen_resampled;
     assign sevenseg_0_wreq_filtered = sevenseg_0_wreq & regpool_wen_resampled;
     assign sevenseg_1_wreq_filtered = sevenseg_1_wreq & regpool_wen_resampled;
     assign sevenseg_2_wreq_filtered = sevenseg_2_wreq & regpool_wen_resampled;
@@ -2180,6 +2200,7 @@ module CORTEZ_REGPOOL (
             `OUTPUT_SOLUTION_1_OFFSET : begin regpool_rdata <= output_solution_1_value_out; end
             `OUTPUT_SOLUTION_2_OFFSET : begin regpool_rdata <= output_solution_2_value_out; end
             `CORE_CTRL_OFFSET : begin regpool_rdata <= core_ctrl_value_out; end
+            `CORE_DEBUG_INFO_OFFSET : begin regpool_rdata <= core_debug_info_value_out; end
             `CORE_STATUS_OFFSET : begin regpool_rdata <= core_status_value_out; end
             `SEVENSEG_0_OFFSET : begin regpool_rdata <= sevenseg_0_value_out; end
             `SEVENSEG_1_OFFSET : begin regpool_rdata <= sevenseg_1_value_out; end
@@ -2290,6 +2311,7 @@ module CORTEZ_REGPOOL (
     assign output_solution_1_value_in = HWIF_IN_OUTPUT_SOLUTION_1;
     assign output_solution_2_value_in = HWIF_IN_OUTPUT_SOLUTION_2;
     assign HWIF_OUT_CORE_CTRL = core_ctrl_value_out;
+    assign HWIF_OUT_CORE_DEBUG_INFO = core_debug_info_value_out;
     assign core_status_value_in = HWIF_IN_CORE_STATUS;
     assign HWIF_OUT_SEVENSEG_0 = sevenseg_0_value_out;
     assign HWIF_OUT_SEVENSEG_1 = sevenseg_1_value_out;

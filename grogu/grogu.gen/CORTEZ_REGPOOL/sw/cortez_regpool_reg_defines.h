@@ -287,7 +287,22 @@ typedef union CORTEZ_CORE_CTRL_reg_tag {
     uint32_t value;
 } CORTEZ_CORE_CTRL_reg_t;
 
-// CORTEZ_CORE_STATUS @+0x62
+// CORTEZ_CORE_DEBUG_INFO @+0x62
+typedef union CORTEZ_CORE_DEBUG_INFO_reg_tag {
+    struct {
+        uint32_t RESET_START : 1; // @[0:0]
+        uint32_t RESET_END : 1; // @[1:1]
+        uint32_t CONFIG_START : 1; // @[2:2]
+        uint32_t CONFIG_END : 1; // @[3:3]
+        uint32_t TEST_START : 1; // @[4:4]
+        uint32_t TEST_END : 1; // @[5:5]
+        uint32_t TEST_ERR : 1; // @[6:6]
+        uint32_t reserved : 1; // @[7:7]
+    } fields;
+    uint32_t value;
+} CORTEZ_CORE_DEBUG_INFO_reg_t;
+
+// CORTEZ_CORE_STATUS @+0x63
 typedef union CORTEZ_CORE_STATUS_reg_tag {
     struct {
         uint32_t VALID_OUT : 1; // @[0:0]
@@ -296,7 +311,7 @@ typedef union CORTEZ_CORE_STATUS_reg_tag {
     uint32_t value;
 } CORTEZ_CORE_STATUS_reg_t;
 
-// CORTEZ_SEVENSEG_0 @+0x63
+// CORTEZ_SEVENSEG_0 @+0x64
 typedef union CORTEZ_SEVENSEG_0_reg_tag {
     struct {
         uint32_t data : 8; // @[7:0]
@@ -304,7 +319,7 @@ typedef union CORTEZ_SEVENSEG_0_reg_tag {
     uint32_t value;
 } CORTEZ_SEVENSEG_0_reg_t;
 
-// CORTEZ_SEVENSEG_1 @+0x64
+// CORTEZ_SEVENSEG_1 @+0x65
 typedef union CORTEZ_SEVENSEG_1_reg_tag {
     struct {
         uint32_t data : 8; // @[7:0]
@@ -312,7 +327,7 @@ typedef union CORTEZ_SEVENSEG_1_reg_tag {
     uint32_t value;
 } CORTEZ_SEVENSEG_1_reg_t;
 
-// CORTEZ_SEVENSEG_2 @+0x65
+// CORTEZ_SEVENSEG_2 @+0x66
 typedef union CORTEZ_SEVENSEG_2_reg_tag {
     struct {
         uint32_t data : 8; // @[7:0]
@@ -320,7 +335,7 @@ typedef union CORTEZ_SEVENSEG_2_reg_tag {
     uint32_t value;
 } CORTEZ_SEVENSEG_2_reg_t;
 
-// CORTEZ_SEVENSEG_3 @+0x66
+// CORTEZ_SEVENSEG_3 @+0x67
 typedef union CORTEZ_SEVENSEG_3_reg_tag {
     struct {
         uint32_t data : 8; // @[7:0]
