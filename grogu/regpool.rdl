@@ -61,7 +61,7 @@ addrmap regpool {
     `REF_CREG(CORE_DEBUG_INFO, CORE_DEBUG_INFO)
 
     // Status register
-    `REF_SREG(CORE_STATUS, CORE_STATUS)
+    `REF_SREG(CORE_STATUS, CORE_STATUS_RESET)
 
     // 7-segments control registers
     `REF_CGPREG(GP, SEVENSEG_0, "7-segments display contents: .gfedcba")

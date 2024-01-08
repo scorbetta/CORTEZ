@@ -47,7 +47,9 @@
 
 // Utilities to instantiate register with consistent naming
 `define REF_SREG(reg_name, instance_name) SREG_``reg_name instance_name;
+
 `define REF_CREG(reg_name, instance_name) CREG_``reg_name instance_name;
+
 `define REF_DREG(reg_name, instance_name) DREG_``reg_name instance_name;
 
 `define REF_SGPREG(reg_name, instance_name, desc_str) \

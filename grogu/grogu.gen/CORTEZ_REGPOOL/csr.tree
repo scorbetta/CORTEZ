@@ -207,7 +207,10 @@
 		 [5:5] TEST_END sw=rw
 		 [6:6] TEST_ERR sw=rw
 		 [7:7] reserved sw=rw
-	 CORE_STATUS
+	 CORE_STATUS_RESET
+		 [0:0] VALID_OUT sw=r
+		 [7:1] reserved sw=r
+	 CORE_STATUS_NO_RESET
 		 [0:0] VALID_OUT sw=r
 		 [7:1] reserved sw=r
 	 SEVENSEG_0

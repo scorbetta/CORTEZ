@@ -67,7 +67,8 @@ module CORTEZ_REGPOOL (
     input wire [7:0] HWIF_IN_OUTPUT_SOLUTION_2,
     output wire [7:0] HWIF_OUT_CORE_CTRL,
     output wire [7:0] HWIF_OUT_CORE_DEBUG_INFO,
-    input wire [7:0] HWIF_IN_CORE_STATUS,
+    input wire [7:0] HWIF_IN_CORE_STATUS_RESET,
+    input wire [7:0] HWIF_IN_CORE_STATUS_NO_RESET,
     output wire [7:0] HWIF_OUT_SEVENSEG_0,
     output wire [7:0] HWIF_OUT_SEVENSEG_1,
     output wire [7:0] HWIF_OUT_SEVENSEG_2,
@@ -1702,18 +1703,32 @@ module CORTEZ_REGPOOL (
         .VALUE_OUT  (core_debug_info_value_out)
     );
         
-    // CORE_STATUS: Core status register
-    wire [7:0] core_status_value_in;
-    wire [7:0] core_status_value_out;
+    // CORE_STATUS_RESET: Core status register
+    wire [7:0] core_status_reset_value_in;
+    wire [7:0] core_status_reset_value_out;
     RO_REG #(
         .DATA_WIDTH (8),
         .HAS_RESET  (1)
     )
-    CORE_STATUS_REG (
+    CORE_STATUS_RESET_REG (
         .CLK        (ACLK),
         .RSTN       (ARESETN),
-        .VALUE_IN   (core_status_value_in),
-        .VALUE_OUT  (core_status_value_out)
+        .VALUE_IN   (core_status_reset_value_in),
+        .VALUE_OUT  (core_status_reset_value_out)
+    );
+        
+    // CORE_STATUS_NO_RESET: Core status register
+    wire [7:0] core_status_no_reset_value_in;
+    wire [7:0] core_status_no_reset_value_out;
+    RO_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    CORE_STATUS_NO_RESET_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .VALUE_IN   (core_status_no_reset_value_in),
+        .VALUE_OUT  (core_status_no_reset_value_out)
     );
         
     // SEVENSEG_0: 7-segments display contents: .gfedcba
@@ -2201,7 +2216,8 @@ module CORTEZ_REGPOOL (
             `OUTPUT_SOLUTION_2_OFFSET : begin regpool_rdata <= output_solution_2_value_out; end
             `CORE_CTRL_OFFSET : begin regpool_rdata <= core_ctrl_value_out; end
             `CORE_DEBUG_INFO_OFFSET : begin regpool_rdata <= core_debug_info_value_out; end
-            `CORE_STATUS_OFFSET : begin regpool_rdata <= core_status_value_out; end
+            `CORE_STATUS_RESET_OFFSET : begin regpool_rdata <= core_status_reset_value_out; end
+            `CORE_STATUS_NO_RESET_OFFSET : begin regpool_rdata <= core_status_no_reset_value_out; end
             `SEVENSEG_0_OFFSET : begin regpool_rdata <= sevenseg_0_value_out; end
             `SEVENSEG_1_OFFSET : begin regpool_rdata <= sevenseg_1_value_out; end
             `SEVENSEG_2_OFFSET : begin regpool_rdata <= sevenseg_2_value_out; end
@@ -2312,7 +2328,8 @@ module CORTEZ_REGPOOL (
     assign output_solution_2_value_in = HWIF_IN_OUTPUT_SOLUTION_2;
     assign HWIF_OUT_CORE_CTRL = core_ctrl_value_out;
     assign HWIF_OUT_CORE_DEBUG_INFO = core_debug_info_value_out;
-    assign core_status_value_in = HWIF_IN_CORE_STATUS;
+    assign core_status_reset_value_in = HWIF_IN_CORE_STATUS_RESET;
+    assign core_status_no_reset_value_in = HWIF_IN_CORE_STATUS_NO_RESET;
     assign HWIF_OUT_SEVENSEG_0 = sevenseg_0_value_out;
     assign HWIF_OUT_SEVENSEG_1 = sevenseg_1_value_out;
     assign HWIF_OUT_SEVENSEG_2 = sevenseg_2_value_out;
