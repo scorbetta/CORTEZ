@@ -30,10 +30,8 @@ TEST_LEN=200
 EPOCHS=1000
 ALPHA=0.01
 
-# Base address of register map, over AXI4 Lite bus (use Verilog syntax)
-AXI_BASE_ADDR="32'h3000_0000"
-
 # Miscellanea, don't touch!
+AXI_BASE_ADDR="32'h3000_0000"
 BLUE='\033[0;34m'
 NONE='\033[0m'
 input_size=$(( $GRID_SIZE * $GRID_SIZE ))

@@ -21,10 +21,37 @@ based on the back-propagation algorithm using a piece-wise approximation of the 
 function as activation layer.  The digital design is based on fixed-point rather than floating-point
 to simplify the design and reduce costs (area).
 
-# Contents
+## Contents
 - `grogu/`, register map design files based on [`grogu`](https://github.com/scorbetta/grogu);
 - `model/neural_network/`, the Python model of the neural network;
 - `model/piecewise_approximation/`, the Python and Matlab files of the `tanh()` approximation;
 - `rtl/`, the RTL design;
 - `sim/`, out-of-the-box-testbench for bring-up simulation;
-- `ver/`, the verification environment.
+- `ver/`, the verification environment;
+- `generate_design.sh`, the main script to run the design customization flow.
+
+## How-to: design customization
+The `generate_design.sh` script can be used to run the network customization flow from model to RTL.
+The script will run through the following steps:
+
+- Model training;
+- Model testing;
+- Piecewise approximation generation;
+- Top-level RTL design generation;
+- Simple simulation.
+
+To run the flow, open `generate_design.sh` and modify the following constants according to your
+desired network architecture and input problem:
+
+| CONSTANT | BRIEF |
+|-|-|
+| `HL_NEURONS` | Number of neurons in the hidden layer |
+| `OL_NEURONS` | Number of neurons in the output layer |
+| `FP_WIDTH` | Fixed-point width |
+| `FP_FRAC` | Fixed-point fractional portion |
+| `GRID_SIZE` | Input problem size (one dimension) |
+| `MAX_NOISY_PIXELS` | Number of noisy pixels to use for training |
+| `TRAINING_LEN` | Number of training vectors |
+| `TEST_LEN` | Number of test vectors |
+| `EPOCHS` | Number of training epochs |
+| `ALPHA` | Learning rate |
