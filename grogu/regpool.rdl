@@ -6,6 +6,12 @@
 addrmap regpool {
     desc = "The CORTEZ CSR block";
 
+    // First registers are for debug only
+    `REF_CGPREG(GP, DBUG_REG_0, "General-purpose register for debug")
+    `REF_CGPREG(GP, DBUG_REG_1, "General-purpose register for debug")
+    `REF_CGPREG(GP, DBUG_REG_2, "General-purpose register for debug")
+    `REF_CGPREG(GP, DBUG_REG_3, "General-purpose register for debug")
+
     // Weights of the hidden layer, one vector for every neuron
     `REF_MULTI_CGPREG(GP, HL_WEIGHTS_0, "Weights for neuron 0 of the hidden layer", 9)
     `REF_MULTI_CGPREG(GP, HL_WEIGHTS_1, "Weights for neuron 1 of the hidden layer", 9)
@@ -51,6 +57,15 @@ addrmap regpool {
     // Control register
     `REF_CREG(CORE_CTRL, CORE_CTRL)
 
+    // Debug register
+    `REF_CREG(CORE_DEBUG_INFO, CORE_DEBUG_INFO)
+
     // Status register
-    `REF_SREG(CORE_STATUS, CORE_STATUS)
+    `REF_SREG(CORE_STATUS, CORE_STATUS_RESET)
+
+    // 7-segments control registers
+    `REF_CGPREG(GP, SEVENSEG_0, "7-segments display contents: .gfedcba")
+    `REF_CGPREG(GP, SEVENSEG_1, "7-segments display contents: .gfedcba")
+    `REF_CGPREG(GP, SEVENSEG_2, "7-segments display contents: .gfedcba")
+    `REF_CGPREG(GP, SEVENSEG_3, "7-segments display contents: .gfedcba")
 };

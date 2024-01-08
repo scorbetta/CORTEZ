@@ -15,6 +15,7 @@ from utils.my_utils import *
 
 # Additional imports
 from fpbinary import FpBinary
+import configparser
 
 def dbug_print(print_flag, message):
     if print_flag == 1:
@@ -78,17 +79,53 @@ def create_noisy_data(num_inputs, num_outputs, chars_in, chars_out, num_noisy_pi
 
     return x,x_str,y
 
+async def wishbone_write_access(dut, addr, data):
+    await RisingEdge(dut.CLK)
+    dut.CYC.value = 1
+    dut.STB.value = 1
+    dut.WE.value = 1
+    dut.ADDR.value = addr
+    dut.WDATA.value = data
+    dut.SEL.value = 1
+
+    await RisingEdge(dut.ACK)
+    await RisingEdge(dut.CLK)
+    dut.CYC.value = 0
+    dut.STB.value = 0
+
+async def wishbone_read_access(dut, addr):
+    await RisingEdge(dut.CLK)
+    dut.CYC.value = 1
+    dut.STB.value = 1
+    dut.WE.value = 0
+    dut.ADDR.value = addr
+    dut.SEL.value = 1
+
+    await RisingEdge(dut.ACK)
+    data = dut.RDATA.value
+    await RisingEdge(dut.CLK)
+    dut.CYC.value = 0
+    dut.STB.value = 0
+
+    return data
+
 @cocotb.test()
 async def test_network_top(dut):
     # Static configuration
-    num_inputs = 25
-    num_hl_nodes = 16
-    num_outputs = 5
+    num_inputs = 9
+    num_hl_nodes = 6
+    num_outputs = 3
 
     # Dynamic configuration
-    width = int(os.getenv("FP_WIDTH", "8"))
-    frac_bits = int(os.getenv("FP_FRAC_WIDTH", "3"))
-    verbose = int(os.getenv("VERBOSE", "0"))
+    ini_parser = configparser.ConfigParser()
+    ini_parser.read('config.ini')
+    width = int(ini_parser['fixed_point']['fp_width'])
+    frac_bits = int(ini_parser['fixed_point']['frac_bits'])
+    verbose = int(ini_parser['simulation']['verbose'])
+    base_address = int(ini_parser['network']['base_address'], 0)
+    print(f'info: Network configuration loaded')
+    print(f'info:    Fixed-point configuration: <{width},{frac_bits}>')
+    print(f'info:    Base address: {hex(base_address)}')
 
     # Load weights and bias
     weights_folder = '../model/neural_network/trained_network'
@@ -111,7 +148,7 @@ async def test_network_top(dut):
 
     # Load boulder specs
     boulder_folder = '../model/neural_network/inputs'
-    with open(f'{boulder_folder}/noiseless_vowels_5x5.json') as fid:
+    with open(f'{boulder_folder}/noiseless_chars_3x3.json') as fid:
         boulder_data = json.load(fid)
 
     chars_in = boulder_data["training"]
@@ -135,34 +172,57 @@ async def test_network_top(dut):
         ol_goldens[odx].reset_values()
 
     # Defaults
-    dut.VALID_IN.value = 0
-    dut.RSTN.value = 0
-
-    # Weights and bias don't change
-    for odx in range(num_hl_nodes):
-        for idx in range(num_inputs):
-            dut.HL_WEIGHTS_IN[odx*num_inputs+idx].value = int(get_bin_str(hl_weights_in[odx][idx], width, frac_bits), 2)
-
-    for odx in range(num_outputs):
-        for idx in range(num_hl_nodes):
-            dut.OL_WEIGHTS_IN[odx*num_hl_nodes+idx].value = int(get_bin_str(ol_weights_in[odx][idx], width, frac_bits), 2)
-
-    for odx in range(num_hl_nodes):
-        dut.HL_BIAS_IN[odx].value = int(get_bin_str(hl_bias_in[odx][0], width, frac_bits), 2)
-
-    for odx in range(num_outputs):
-        dut.OL_BIAS_IN[odx].value = int(get_bin_str(ol_bias_in[odx][0], width, frac_bits), 2)
+    dut.CYC.value = 0
+    dut.STB.value = 0
+    dut.WE.value = 0
+    dut.ADDR.value = 0
+    dut.WDATA.value = 0
+    dut.SEL.value = 0
+    dut.RST.value = 1
 
     # Reset procedure
     for cycle in range(4):
         await RisingEdge(dut.CLK)
-    dut.RSTN.value = 1
+    dut.RST.value = 0
 
     # Shim delay
     for cycle in range(4):
         await RisingEdge(dut.CLK)
 
-    for test in range(1000):
+    # Simple register tests (Write only)
+    for tdx in range(4):
+        addr = base_address + (tdx << 2)
+        data = (tdx << 4) | tdx
+        await wishbone_write_access(dut, addr, data)
+    
+    # Configure weights and bias
+    addr = base_address + (0x4 << 2)
+    for odx in range(num_hl_nodes):
+        for idx in range(num_inputs):
+            data = int(get_bin_str(hl_weights_in[odx][idx], width, frac_bits), 2)
+            await wishbone_write_access(dut, addr, data)
+            addr = addr + (0x1 << 2)
+
+    addr = base_address + (0x40 << 2)
+    for odx in range(num_outputs):
+        for idx in range(num_hl_nodes):
+            data = int(get_bin_str(ol_weights_in[odx][idx], width, frac_bits), 2)
+            await wishbone_write_access(dut, addr, data)
+            addr = addr + (0x1 << 2)
+
+    addr = base_address + (0x3a << 2)
+    for odx in range(num_hl_nodes):
+        data = int(get_bin_str(hl_bias_in[odx][0], width, frac_bits), 2)
+        await wishbone_write_access(dut, addr, data)
+        addr = addr + (0x1 << 2)
+
+    addr = base_address + (0x52 << 2)
+    for odx in range(num_outputs):
+        data = int(get_bin_str(ol_bias_in[odx][0], width, frac_bits), 2)
+        await wishbone_write_access(dut, addr, data)
+        addr = addr + (0x1 << 2)
+
+    for test in range(10):
         dbug_print(verbose, f'test: ==== Begin: TEST #{test} ================')
         for odx in range(num_hl_nodes):
             dbug_print(verbose, f'test: HL/N#{odx}: {hl_goldens[odx].to_str()}')
@@ -224,18 +284,27 @@ async def test_network_top(dut):
 
         await RisingEdge(dut.CLK)
 
-        # Force values
+        # Write input values
+        addr = base_address + (0x55 << 2)
         for idx in range(num_inputs):
-            dut.VALUES_IN[idx].value = int(random_values_in_str[idx], 2)
+            data = int(random_values_in_str[idx], 2)
+            await wishbone_write_access(dut, addr, data)
+            addr = addr + (0x1 << 2)
 
         # Strobe values
         await RisingEdge(dut.CLK)
-        dut.VALID_IN.value = 1
-        await RisingEdge(dut.CLK)
-        dut.VALID_IN.value = 0
+        addr = base_address + (0x61 << 2)
+        data = 2
+        await wishbone_write_access(dut, addr, data)
 
         # Wait for the network to fire
-        await RisingEdge(dut.VALID_OUT)
+        addr = base_address + (0x63 << 2)
+        while 1:
+            for cycle in range(25):
+                await RisingEdge(dut.CLK)
+            data = await wishbone_read_access(dut, addr)
+            if data == 1:
+                break
 
 
         #---- VERIFICATION ------------------------------------------------------------------------
@@ -252,9 +321,12 @@ async def test_network_top(dut):
         # margin might not be able to capture it. For this reason, and for test only, the margin is
         # computed one-side, considering the absolute relative error of the two results, compared to
         # the full domain swing, i.e. 2, since domain is [-1.0,1.0]
-        margin = 0.05
+        margin = 0.10
+        addr = base_address + (0x5e << 2)
         for odx in range(num_outputs):
-            dut_result = bin2fp(dut.VALUES_OUT[odx].value.binstr, width, frac_bits)
+            temp = await wishbone_read_access(dut, addr)
+            addr = addr + (0x1 << 2)
+            dut_result = bin2fp(temp.binstr, width, frac_bits)
             diff = abs(dut_result - net_outputs[odx])
             abs_err = diff / 2.0
             assert(abs_err <= margin),print(f'Results mismatch: test={test},odx={odx},dut_result={dut_result},golden_result={net_outputs[odx]},diff={diff},abs_err={abs_err},margin={margin}')

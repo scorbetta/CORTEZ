@@ -16,8 +16,8 @@ all: sim
 sim: comp
 	vsim $(VSIM_ARGS) ootbtb
 
-comp: $(SOURCES) ootbtb.sv
-	vlog -32 -noincr -sv -sv17compat +incdir+../../rtl +incdir+../../grogu/grogu.gen/CORTEZ_REGPOOL/rtl +incdir+../../grogu -timescale=1ns/100ps $?
+comp: $(SOURCES) ootbtb.v
+	vlog -32 -noincr -vlog01compat +incdir+../../rtl +incdir+../../grogu/grogu.gen/CORTEZ_REGPOOL/rtl +incdir+../../grogu -timescale=1ns/100ps $?
 
 clean:
 	rm -fR *.vcd work/

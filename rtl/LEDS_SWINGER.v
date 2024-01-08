@@ -1,19 +1,19 @@
-`timescale 1ns/100ps
+`default_nettype none
 
 module LEDS_SWINGER
 #(
     parameter COUNTER_WIDTH = 24
 )
 (
-    input           CLK,
-    input           RSTN,
-    output [3:0]    DATA
+    input wire          CLK,
+    input wire          RSTN,
+    output wire [3:0]   DATA
 );
 
-    logic [3:0]                 data;
-    logic [COUNTER_WIDTH-1:0]   counter;
-    logic                       overflow;
-    logic                       lnr;
+    reg [3:0]               data;
+    reg [COUNTER_WIDTH-1:0] counter;
+    reg                     overflow;
+    reg                     lnr;
 
     // Pre-scaler
     always @(posedge CLK) begin
@@ -26,7 +26,7 @@ module LEDS_SWINGER
         end
     end
 
-    always_ff @(posedge CLK) begin
+    always @(posedge CLK) begin
         if(!RSTN) begin
             data <= 4'b1100;
             lnr <= 1'b1;
@@ -50,6 +50,11 @@ module LEDS_SWINGER
                 4'b0011 : begin
                     data <= 4'b1001;
                 end 
+
+                default : begin
+                    data <= 4'b1100;
+                    lnr <= 1'b1;
+                end
             endcase
         end
     end
@@ -57,3 +62,5 @@ module LEDS_SWINGER
     // Pinout
     assign DATA = data;
 endmodule
+
+`default_nettype wire

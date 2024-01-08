@@ -1,4 +1,4 @@
-`timescale 1ns/100ps
+`default_nettype none
 
 // Fixed-point accumulator
 module FIXED_POINT_ACC
@@ -14,49 +14,43 @@ module FIXED_POINT_ACC
     parameter HAS_EXT_BIAS  = 1'b0
 )
 (
-    input                       CLK,
-    input                       RSTN,
+    input wire                                  CLK,
+    input wire                                  RSTN,
     // Input operand
-    input signed [WIDTH-1:0]    VALUES_IN [NUM_INPUTS],
-    input                       VALID_IN,
+    input wire signed [NUM_INPUTS*WIDTH-1:0]    VALUES_IN,
+    input wire                                  VALID_IN,
     // External operand (e.g., for bias)
-    input signed [WIDTH-1:0]    EXT_VALUE_IN,
+    input wire signed [WIDTH-1:0]               EXT_VALUE_IN,
     // Accumulator
-    output signed [WIDTH-1:0]   VALUE_OUT,
-    output                      VALID_OUT
+    output wire signed [WIDTH-1:0]              VALUE_OUT,
+    output wire                                 VALID_OUT
 );
 
-    // For Verilog compatibility, so that we can use  sv2v  tool in OpenLane flow
-    function integer clog2;
-        input integer value;
-            integer temp;
-        begin
-            temp = value - 1;
-            for (clog2 = 0; temp > 0; clog2 = clog2 + 1) begin
-                temp = temp >> 1;
-            end
-        end
-    endfunction
+    // clog2
+    `include "clog2.vh"
 
-    typedef enum { WAIT_LAST, ADD_BIAS, ACCUMULATE, IDLE } state_t;
-    state_t curr_state;
+    // States encoding
+    localparam WAIT_LAST    = 0;
+    localparam ADD_BIAS     = 1;
+    localparam ACCUMULATE   = 2;
+    localparam IDLE         = 3;
 
     // When an external value is used (e.g., for bias), the internal matrices are reshaped
     // accordingly to store the additional entry
     localparam NUM_INPUTS_INT = ( HAS_EXT_BIAS == 1'b1 ? (NUM_INPUTS+1) : NUM_INPUTS );
 
-    logic signed [WIDTH-1:0]            acc;
-    logic                               overflow;
-    logic                               acc_valid;
-    logic [clog2(NUM_INPUTS_INT)-1:0]   counter;
-    logic signed [WIDTH-1:0]            adder_in;
-    logic                               adder_enable;
-    logic                               adder_valid;
-    logic [clog2(NUM_INPUTS_INT)-1:0]   adder_valid_counter;
-    logic                               adder_valid_counter_reset;
+    reg [clog2(IDLE)-1:0]           curr_state;
+    wire signed [WIDTH-1:0]         acc;
+    reg                             acc_valid;
+    reg [clog2(NUM_INPUTS_INT)-1:0] counter;
+    reg signed [WIDTH-1:0]          adder_in;
+    reg                             adder_enable;
+    wire                            adder_valid;
+    reg [clog2(NUM_INPUTS_INT)-1:0] adder_valid_counter;
+    reg                             adder_valid_counter_reset;
 
     // Sequentially generate the accumulator value
-    always_ff @(posedge CLK) begin
+    always @(posedge CLK) begin
         if(!RSTN) begin
             counter <= 0;
             adder_enable <= 1'b0;
@@ -80,7 +74,7 @@ module FIXED_POINT_ACC
 
                 ACCUMULATE : begin
                     counter <= counter + 1;
-                    adder_in <= VALUES_IN[counter];
+                    adder_in <= VALUES_IN[counter*WIDTH +: WIDTH];
                     adder_enable <= 1'b1;
 
                     if(counter == NUM_INPUTS-1 && !HAS_EXT_BIAS) begin
@@ -123,7 +117,7 @@ module FIXED_POINT_ACC
     );
 
     // Count number of valid operations by the adder
-    always_ff @(posedge CLK) begin
+    always @(posedge CLK) begin
         if(!RSTN | !adder_valid_counter_reset) begin
             adder_valid_counter <= 0;
         end
@@ -136,3 +130,5 @@ module FIXED_POINT_ACC
     assign VALUE_OUT    = acc;
     assign VALID_OUT    = acc_valid;
 endmodule
+
+`default_nettype wire

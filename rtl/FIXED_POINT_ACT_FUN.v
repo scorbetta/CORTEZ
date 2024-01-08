@@ -1,4 +1,4 @@
-`timescale 1ns/100ps
+`default_nettype none
 
 // The non-linear activation function. This is a piecewise approximation of the tanh(x) function.
 // Piecewise approximation are explained somewhere else (see plots and paper)
@@ -10,42 +10,40 @@ module FIXED_POINT_ACT_FUN
     parameter FRAC_BITS     = 13
 )
 (
-    input                       CLK,
-    input                       RSTN,
-    input signed [WIDTH-1:0]    VALUE_IN,
-    input                       VALID_IN,
-    output signed [WIDTH-1:0]   VALUE_OUT,
-    output                      VALID_OUT
+    input wire                      CLK,
+    input wire                      RSTN,
+    input wire signed [WIDTH-1:0]   VALUE_IN,
+    input wire                      VALID_IN,
+    output wire signed [WIDTH-1:0]  VALUE_OUT,
+    output wire                     VALID_OUT
 );
 
-    logic signed [WIDTH-1:0]    value_out;
-    logic                       valid_out;
-    logic                       sign;
-    logic                       value_gt_f0;
-    logic                       value_eq_f0;
-    logic                       value_lt_z3;
-    logic                       value_gt_z3;
-    logic                       value_eq_z3;
-    logic                       value_lt_z4;
-    logic                       value_gt_z4;
-    logic                       value_eq_z4;
-    logic                       value_lt_fp;
-    logic                       value_gt_fp;
-    logic                       value_eq_fp;
-    logic signed [WIDTH-1:0]    m;
-    logic signed [WIDTH-1:0]    qp;
-    logic signed [WIDTH-1:0]    qn;
-    logic signed [WIDTH-1:0]    m_times_x;
-    logic                       m_times_x_valid;
-    logic signed [WIDTH-1:0]    value_in_abs;
-    logic                       abs_valid;
-    logic signed [WIDTH-1:0]    line_q1_out;
-    logic                       line_q1_valid;
-    logic signed [WIDTH-1:0]    line_out;
-    logic                       line_valid;
+    wire                    sign;
+    wire                    value_gt_f0;
+    wire                    value_eq_f0;
+    wire                    value_lt_z3;
+    wire                    value_gt_z3;
+    wire                    value_eq_z3;
+    wire                    value_lt_z4;
+    wire                    value_gt_z4;
+    wire                    value_eq_z4;
+    wire                    value_lt_fp;
+    wire                    value_gt_fp;
+    wire                    value_eq_fp;
+    reg signed [WIDTH-1:0]  m;
+    reg signed [WIDTH-1:0]  qp;
+    reg signed [WIDTH-1:0]  qn;
+    wire signed [WIDTH-1:0] m_times_x;
+    wire                    m_times_x_valid;
+    wire signed [WIDTH-1:0] value_in_abs;
+    wire                    abs_valid;
+    wire signed [WIDTH-1:0] line_q1_out;
+    wire                    line_q1_valid;
+    wire signed [WIDTH-1:0] line_out;
+    wire                    line_valid;
 
     // Load parameters
-    `include "PIECEWISE_APPROXIMATION_PARAMETERS.svh"
+    `include "PIECEWISE_APPROXIMATION_PARAMETERS.vh"
  
     // Parallel comparators give the segment we are in. Since the tanh(x) function is odd-symmetric,
     // we consider only positive values and change sign later if required. Comparison is made on
@@ -160,7 +158,7 @@ module FIXED_POINT_ACT_FUN
     // we let the synthesizer do its job here!  q  is returned in two values:  qp  and  qn  , the
     // former for quadrant 1 and the latter for quadrant 3, since the non-linear function is
     // odd-symmetric
-    always_comb begin
+    always @* begin
         // Fall within [0,arctanh(sqrt(1/3)))
         if((value_gt_f0 || value_eq_f0) && value_lt_z3) begin
             m = LINE_M_F0_Z3;
@@ -245,3 +243,5 @@ module FIXED_POINT_ACT_FUN
     assign VALUE_OUT    = line_out;
     assign VALID_OUT    = line_valid;
 endmodule
+
+`default_nettype wire

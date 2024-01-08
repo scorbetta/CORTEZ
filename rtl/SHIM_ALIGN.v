@@ -1,4 +1,4 @@
-`timescale 1ns/100ps
+`default_nettype none
 
 module SHIM_ALIGN
 #(
@@ -6,26 +6,33 @@ module SHIM_ALIGN
     parameter WIDTH         = 8
 )
 (
-    input                       CLK,
-    input                       RSTN,
-    input signed [WIDTH-1:0]    VALUES_IN [NUM_INPUTS],
-    input                       VALIDS_IN [NUM_INPUTS],
-    output signed [WIDTH-1:0]   VALUES_OUT [NUM_INPUTS],
-    output                      VALID_OUT
+    input wire                                  CLK,
+    input wire                                  RSTN,
+    input wire signed [NUM_INPUTS*WIDTH-1:0]    VALUES_IN,
+    input wire [NUM_INPUTS-1:0]                 VALIDS_IN,
+    output wire signed [NUM_INPUTS*WIDTH-1:0]   VALUES_OUT,
+    output wire                                 VALID_OUT
 );
 
-    typedef enum { BUSY, IDLE } state_t;
-    state_t                     curr_state;
-    logic [NUM_INPUTS-1:0]      valids_in;
-    logic signed [WIDTH-1:0]    values_in [NUM_INPUTS];
-    logic                       valid_out;
-    logic                       reset_valids;
-    logic                       all_valids;
+    // clog2
+    `include "clog2.vh"
+
+    // States encoding
+    localparam BUSY = 0;
+    localparam IDLE = 1;
+
+    reg [clog2(IDLE)-1:0]               curr_state;
+    reg [NUM_INPUTS-1:0]                valids_in;
+    reg signed [NUM_INPUTS*WIDTH-1:0]   values_in;
+    reg                                 valid_out;
+    reg                                 reset_valids;
+    wire                                all_valids;
+    genvar                              gdx;
 
     // Keep sampling incoming valid edges
     generate
-        for(genvar gdx = 0; gdx < NUM_INPUTS; gdx++) begin
-            always_ff @(posedge CLK) begin
+        for(gdx = 0; gdx < NUM_INPUTS; gdx = gdx + 1) begin
+            always @(posedge CLK) begin
                 if(!RSTN) begin
                     valids_in[gdx] <= 1'b0;
                 end
@@ -34,7 +41,7 @@ module SHIM_ALIGN
                 end
                 else if(!valids_in[gdx] && VALIDS_IN[gdx]) begin
                     valids_in[gdx] <= VALIDS_IN[gdx];
-                    values_in[gdx] <= VALUES_IN[gdx];
+                    values_in[gdx*WIDTH +: WIDTH] <= VALUES_IN[gdx*WIDTH +: WIDTH];
                 end
             end
         end
@@ -44,7 +51,7 @@ module SHIM_ALIGN
 
     // FSM waits for all valids to be captured, then generates a single-cycle pulse to the
     // downstream logic
-    always_ff @(posedge CLK) begin
+    always @(posedge CLK) begin
         if(!RSTN) begin
             reset_valids <= 1'b0;
             valid_out <= 1'b0;
@@ -74,3 +81,5 @@ module SHIM_ALIGN
     assign VALUES_OUT   = values_in;
     assign VALID_OUT    = valid_out;
 endmodule
+
+`default_nettype wire

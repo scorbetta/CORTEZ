@@ -1,4 +1,4 @@
-`timescale 1ns/100ps
+`default_nettype none
 
 // Changes the sign of the incoming value to the target one. This can be used in different contexts,
 // e.g. to share ALUs for odd-symmetric functions
@@ -10,24 +10,24 @@ module FIXED_POINT_CHANGE_SIGN
     parameter FRAC_BITS     = 3
 )
 (
-    input                       CLK,
-    input                       RSTN,
+    input wire                      CLK,
+    input wire                      RSTN,
     // 1'b0 -> we want positive, 1'b1 -> we want negative
-    input                       TARGET_SIGN,
-    input signed [WIDTH-1:0]    VALUE_IN,
-    input                       VALID_IN,
-    output signed [WIDTH-1:0]   VALUE_OUT,
-    output                      VALID_OUT
+    input wire                      TARGET_SIGN,
+    input wire signed [WIDTH-1:0]   VALUE_IN,
+    input wire                      VALID_IN,
+    output wire signed [WIDTH-1:0]  VALUE_OUT,
+    output wire                     VALID_OUT
 );
 
-    logic signed [WIDTH-1:0]    value_out;
-    logic                       valid_out;
-    logic                       sign;
-    logic                       sign_match;
-    logic signed [WIDTH-1:0]    value_converted;
-    logic                       valid_converted;
-    logic signed [WIDTH-1:0]    fixed_point_minus_one;
-    logic                       valid_in_filtered;
+     reg signed [WIDTH-1:0]     value_out;
+     reg                        valid_out;
+     wire                       sign;
+     wire                       sign_match;
+     wire signed [WIDTH-1:0]    value_converted;
+     wire                       valid_converted;
+     wire signed [WIDTH-1:0]    fixed_point_minus_one;
+     wire                       valid_in_filtered;
 
     // As usual, the MSB hints about the negative number
     assign sign = VALUE_IN[WIDTH-1];
@@ -56,7 +56,7 @@ module FIXED_POINT_CHANGE_SIGN
     // When sign of incoming value already matches the desired one, discard all computations
     assign sign_match = (sign & TARGET_SIGN) | (!sign & !TARGET_SIGN);
 
-    always_ff @(posedge CLK) begin
+    always @(posedge CLK) begin
         if(!RSTN) begin
             valid_out <= 1'b0;
         end
@@ -78,3 +78,5 @@ module FIXED_POINT_CHANGE_SIGN
     assign VALUE_OUT    = value_out;
     assign VALID_OUT    = valid_out;
 endmodule
+
+`default_nettype wire

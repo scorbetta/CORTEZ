@@ -1,4 +1,4 @@
-`timescale 1ns/100ps
+`default_nettype none
 
 // A neuron consists of a configurable number of inputs and a single output
 module NEURON #(
@@ -10,28 +10,28 @@ module NEURON #(
     parameter FRAC_BITS     = 3
 )
 (
-    input                       CLK,
-    input                       RSTN,
+    input wire                                  CLK,
+    input wire                                  RSTN,
     // Inputs are all asserted at the same time
-    input signed [WIDTH-1:0]    VALUES_IN [NUM_INPUTS],
-    input signed [WIDTH-1:0]    WEIGHTS_IN [NUM_INPUTS],
-    input signed [WIDTH-1:0]    BIAS_IN,
-    input                       VALID_IN,
+    input wire signed [NUM_INPUTS*WIDTH-1:0]    VALUES_IN,
+    input wire signed [NUM_INPUTS*WIDTH-1:0]    WEIGHTS_IN,
+    input wire signed [WIDTH-1:0]               BIAS_IN,
+    input wire                                  VALID_IN,
     // Output path
-    output signed [WIDTH-1:0]   VALUE_OUT,
-    output                      VALID_OUT
+    output wire signed [WIDTH-1:0]              VALUE_OUT,
+    output wire                                 VALID_OUT
 );
 
-    logic signed [WIDTH-1:0]    mul_result [NUM_INPUTS];
-    logic signed                mul_valid [NUM_INPUTS];
-    logic                       all_mul_valid;
-    logic signed [WIDTH-1:0]    acc_result;
-    logic                       acc_valid;
-    logic signed [WIDTH-1:0]    acc_bias_in [2];
+    wire signed [NUM_INPUTS*WIDTH-1:0]  mul_result;
+    wire signed [NUM_INPUTS-1:0]        mul_valid;
+    wire                                all_mul_valid;
+    wire signed [WIDTH-1:0]             acc_result;
+    wire                                acc_valid;
+    genvar                              gdx;
 
     // Parallel multipliers
     generate
-        for(genvar gdx = 0; gdx < NUM_INPUTS; gdx++) begin
+        for(gdx = 0; gdx < NUM_INPUTS; gdx = gdx + 1) begin
             FIXED_POINT_MUL #(
                 .WIDTH      (WIDTH),
                 .FRAC_BITS  (FRAC_BITS)
@@ -39,10 +39,10 @@ module NEURON #(
             FP_MUL (
                 .CLK        (CLK),
                 .RSTN       (RSTN),
-                .VALUE_A_IN (VALUES_IN[gdx]),
-                .VALUE_B_IN (WEIGHTS_IN[gdx]),
+                .VALUE_A_IN (VALUES_IN[gdx*WIDTH +: WIDTH]),
+                .VALUE_B_IN (WEIGHTS_IN[gdx*WIDTH +: WIDTH]),
                 .VALID_IN   (VALID_IN),
-                .VALUE_OUT  (mul_result[gdx]),
+                .VALUE_OUT  (mul_result[gdx*WIDTH +: WIDTH]),
                 .VALID_OUT  (mul_valid[gdx])
             );
         end
@@ -83,3 +83,5 @@ module NEURON #(
         .VALID_OUT  (VALID_OUT)
     );
 endmodule
+
+`default_nettype wire

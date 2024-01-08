@@ -1,4 +1,4 @@
-`timescale 1ns/100ps
+`default_nettype none
 
 // Fixed-point adder
 module FIXED_POINT_ADD
@@ -10,21 +10,21 @@ module FIXED_POINT_ADD
     parameter FRAC_BITS = 3
 )
 (
-    input                       CLK,
-    input                       RSTN,
+    input wire                      CLK,
+    input wire                      RSTN,
     // Input operand
-    input signed [WIDTH-1:0]    VALUE_A_IN,
-    input signed [WIDTH-1:0]    VALUE_B_IN,
-    input                       VALID_IN,
+    input wire signed [WIDTH-1:0]   VALUE_A_IN,
+    input wire signed [WIDTH-1:0]   VALUE_B_IN,
+    input wire                      VALID_IN,
     // Accumulator
-    output signed [WIDTH-1:0]   VALUE_OUT,
-    output                      VALID_OUT
+    output wire signed [WIDTH-1:0]  VALUE_OUT,
+    output wire                     VALID_OUT
 );
 
-    logic signed [WIDTH-1:0]    value_out;
-    logic                       valid_out;
+    reg signed [WIDTH-1:0]  value_out;
+    reg                     valid_out;
 
-    always_ff @(posedge CLK) begin
+    always @(posedge CLK) begin
         if(!RSTN) begin
             valid_out <= 1'b0;
             value_out <= 0;
@@ -43,3 +43,5 @@ module FIXED_POINT_ADD
     assign VALUE_OUT    = value_out;
     assign VALID_OUT    = valid_out;
 endmodule
+
+`default_nettype wire

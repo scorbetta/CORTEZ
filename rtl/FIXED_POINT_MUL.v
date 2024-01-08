@@ -1,4 +1,4 @@
-`timescale 1ns/100ps
+`default_nettype none
 
 // Fixed-point multiplier with configurable representation
 module FIXED_POINT_MUL
@@ -10,21 +10,21 @@ module FIXED_POINT_MUL
     parameter FRAC_BITS = 3
 )
 (
-    input                       CLK,
-    input                       RSTN,
+    input wire                      CLK,
+    input wire                      RSTN,
     // Input operands
-    input signed [WIDTH-1:0]    VALUE_A_IN,
-    input signed [WIDTH-1:0]    VALUE_B_IN,
-    input                       VALID_IN,
+    input wire signed [WIDTH-1:0]   VALUE_A_IN,
+    input wire signed [WIDTH-1:0]   VALUE_B_IN,
+    input wire                      VALID_IN,
     // Output result
-    output signed [WIDTH-1:0]   VALUE_OUT,
-    output                      VALID_OUT
+    output wire signed [WIDTH-1:0]  VALUE_OUT,
+    output wire                     VALID_OUT
 );
 
-    logic signed [2*WIDTH-1:0]  a_times_b;
-    logic                       mul_valid;
+    reg signed [2*WIDTH-1:0]    a_times_b;
+    reg                         mul_valid;
 
-    always_ff @(posedge CLK) begin
+    always @(posedge CLK) begin
         if(!RSTN) begin
             a_times_b <= 0;
             mul_valid <= 1'b0;
@@ -44,3 +44,5 @@ module FIXED_POINT_MUL
     assign VALUE_OUT    = a_times_b[WIDTH-1:0];
     assign VALID_OUT    = mul_valid;
 endmodule
+
+`default_nettype wire

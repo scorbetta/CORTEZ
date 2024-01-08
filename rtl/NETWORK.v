@@ -1,6 +1,4 @@
-`timescale 1ns/100ps
-
-`include "NETWORK_CONFIG.svh"
+`default_nettype none
 
 // The top-level neural network module contains designed instances and connections of  LAYER
 // modules. This network solves the 5x5 vowel recognition problem using bipolar inputs and outputs,
@@ -10,36 +8,36 @@
 // the tanh function
 module NETWORK
 (
-    input                                       CLK,
-    input                                       RSTN,
+    input wire                      CLK,
+    input wire                      RSTN,
     // Input path
-    input signed [`FIXED_POINT_WORD_WIDTH-1:0]  VALUES_IN [`NUM_INPUTS],
-    input                                       VALID_IN,
+    input wire signed [9*8-1:0]     VALUES_IN,
+    input wire                      VALID_IN,
     // Hidden layer weights
-    input signed [`FIXED_POINT_WORD_WIDTH-1:0]  HL_WEIGHTS_IN [`NUM_HL_NODES*`NUM_INPUTS],
-    input signed [`FIXED_POINT_WORD_WIDTH-1:0]  HL_BIAS_IN [`NUM_HL_NODES],
+    input wire signed [6*9*8-1:0]   HL_WEIGHTS_IN,
+    input wire signed [6*8-1:0]     HL_BIAS_IN,
     // Output layer weights
-    input signed [`FIXED_POINT_WORD_WIDTH-1:0]  OL_WEIGHTS_IN [`NUM_OL_NODES*`NUM_HL_NODES],
-    input signed [`FIXED_POINT_WORD_WIDTH-1:0]  OL_BIAS_IN [`NUM_OL_NODES],
+    input wire signed [3*6*8-1:0]   OL_WEIGHTS_IN,
+    input wire signed [3*8-1:0]     OL_BIAS_IN,
     // Output path
-    output signed [`FIXED_POINT_WORD_WIDTH-1:0] VALUES_OUT [`NUM_OL_NODES],
-    output                                      VALID_OUT
+    output wire signed [3*8-1:0]    VALUES_OUT,
+    output wire                     VALID_OUT
 );
 
     // Connections
-    logic signed [`FIXED_POINT_WORD_WIDTH-1:0]  hl_values_out [`NUM_HL_NODES];
-    logic                                       hl_valids_out [`NUM_HL_NODES];
-    logic signed [`FIXED_POINT_WORD_WIDTH-1:0]  ol_values_in [`NUM_HL_NODES];
-    logic                                       ol_valid_in;
-    logic signed [`FIXED_POINT_WORD_WIDTH-1:0]  ol_values_out [`NUM_OL_NODES];
-    logic                                       ol_valids_out [`NUM_OL_NODES];
+    wire signed [6*8-1:0]   hl_values_out;
+    wire [5:0]              hl_valids_out;
+    wire signed [6*8-1:0]   ol_values_in;
+    wire                    ol_valid_in;
+    wire signed [3*8-1:0]   ol_values_out;
+    wire [2:0]              ol_valids_out;
 
     // Hidden layer
     LAYER #(
-        .NUM_INPUTS     (`NUM_INPUTS),
-        .NUM_OUTPUTS    (`NUM_HL_NODES),
-        .WIDTH          (`FIXED_POINT_WORD_WIDTH),
-        .FRAC_BITS      (`FIXED_POINT_FRAC_BITS)
+        .NUM_INPUTS     (9),
+        .NUM_OUTPUTS    (6),
+        .WIDTH          (8),
+        .FRAC_BITS      (5)
     )
     HIDDEN_LAYER (
         .CLK        (CLK),
@@ -55,8 +53,8 @@ module NETWORK
     // By design, neurons might fire at different times. This logic barriers all incoming valids,
     // re-samples the intermediate values and generate a single pulse for the output layer
     SHIM_ALIGN #(
-        .NUM_INPUTS (`NUM_HL_NODES),
-        .WIDTH      (`FIXED_POINT_WORD_WIDTH)
+        .NUM_INPUTS (6),
+        .WIDTH      (8)
     )
     HL_OL_ALIGNMENT_BARRIER (
         .CLK        (CLK),
@@ -69,10 +67,10 @@ module NETWORK
 
     // Output layer
     LAYER #(
-        .NUM_INPUTS     (`NUM_HL_NODES),
-        .NUM_OUTPUTS    (`NUM_OL_NODES),
-        .WIDTH          (`FIXED_POINT_WORD_WIDTH),
-        .FRAC_BITS      (`FIXED_POINT_FRAC_BITS)
+        .NUM_INPUTS     (6),
+        .NUM_OUTPUTS    (3),
+        .WIDTH          (8),
+        .FRAC_BITS      (5)
     )
     OUTPUT_LAYER (
         .CLK        (CLK),
@@ -86,8 +84,8 @@ module NETWORK
     );
 
     SHIM_ALIGN #(
-        .NUM_INPUTS (`NUM_OL_NODES),
-        .WIDTH      (`FIXED_POINT_WORD_WIDTH)
+        .NUM_INPUTS (3),
+        .WIDTH      (8)
     )
     OL_OUTPUT_ALIGNMENT_BARRIER (
         .CLK        (CLK),
@@ -98,3 +96,5 @@ module NETWORK
         .VALID_OUT  (VALID_OUT)
     );
 endmodule
+
+`default_nettype wire

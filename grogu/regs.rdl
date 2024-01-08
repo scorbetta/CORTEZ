@@ -21,6 +21,43 @@
     } reserved [5];
 };
 
+// Firmware-controlled debug information
+`DEF_CREG(CORE_DEBUG_INFO)
+    desc = "Firmware-initiated debug information";
+
+    field {
+        desc = "Core reset procedure start";
+    } RESET_START [1];
+
+    field {
+        desc = "Core reset procedure end";
+    } RESET_END [1];
+
+    field {
+        desc = "Core configuration start";
+    } CONFIG_START [1];
+
+    field {
+        desc = "Core configuration end";
+    } CONFIG_END [1];
+
+    field {
+        desc = "Test start";
+    } TEST_START [1];
+
+    field {
+        desc = "Test end";
+    } TEST_END [1];
+
+    field {
+        desc = "When 1'b1, the Firmware has detected an error and switched to idle state";
+    } TEST_ERR [1];
+
+    field {
+        desc = "Unused";
+    } reserved [1];
+};
+
 // Core status register
 `DEF_SREG(CORE_STATUS)
     desc = "Core status register";

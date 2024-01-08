@@ -5,7 +5,7 @@
 {%- for hdx in range(num_hl_nodes) %}
 {%- for idx in range(num_inputs) %}
 //    Input {{idx}} -> Hidden Neuron {{hdx}}
-CORTEZ_WRITE_IO((CORE_BASE + (CORTEZ_HL_WEIGHTS_{{hdx}}_{{idx}}_OFFSET << 2)), {{hl_weights[idx][hdx]}});
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_{{hdx}}_{{idx}}_OFFSET << 2)), {{hl_weights[idx][hdx]}});
 {%- endfor %}
 {%- endfor %}
 
@@ -13,7 +13,7 @@ CORTEZ_WRITE_IO((CORE_BASE + (CORTEZ_HL_WEIGHTS_{{hdx}}_{{idx}}_OFFSET << 2)), {
 //---- INITIALIZE HIDDEN LAYER BIAS ----------------
 {%- for hdx in range(num_hl_nodes) %}
 //    Hidden Neuron {{hdx}}
-CORTEZ_WRITE_IO((CORE_BASE + (CORTEZ_HL_BIAS_{{hdx}}_OFFSET << 2)), {{hl_bias[0][hdx]}});
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_BIAS_{{hdx}}_OFFSET << 2)), {{hl_bias[0][hdx]}});
 {%- endfor %}
 
 
@@ -21,7 +21,7 @@ CORTEZ_WRITE_IO((CORE_BASE + (CORTEZ_HL_BIAS_{{hdx}}_OFFSET << 2)), {{hl_bias[0]
 {%- for odx in range(num_outputs) %}
 {%- for hdx in range(num_hl_nodes) %}
 //    Hidden Neuron {{hdx}} -> Output {{odx}}
-CORTEZ_WRITE_IO((CORE_BASE + (CORTEZ_OL_WEIGHTS_{{odx}}_{{hdx}}_OFFSET << 2)), {{ol_weights[hdx][odx]}});
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_{{odx}}_{{hdx}}_OFFSET << 2)), {{ol_weights[hdx][odx]}});
 {%- endfor %}
 {%- endfor %}
 
@@ -29,5 +29,5 @@ CORTEZ_WRITE_IO((CORE_BASE + (CORTEZ_OL_WEIGHTS_{{odx}}_{{hdx}}_OFFSET << 2)), {
 //---- INITIALIZE OUTPUT LAYER BIAS ----------------
 {%- for odx in range(num_outputs) %}
 //    Output {{odx}}
-CORTEZ_WRITE_IO((CORE_BASE + (CORTEZ_OL_BIAS_{{odx}}_OFFSET << 2)), {{ol_bias[0][odx]}});
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_BIAS_{{odx}}_OFFSET << 2)), {{ol_bias[0][odx]}});
 {%- endfor %}
