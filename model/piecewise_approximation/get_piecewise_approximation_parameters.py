@@ -13,7 +13,7 @@ def get_string(float_value, int_bits = 16, frac_bits = 13):
     return value_fixed_str,str(value_fixed)
 
 # Load template file
-with open("PIECEWISE_APPROXIMATION_PARAMETERS.svh.template") as file:
+with open("PIECEWISE_APPROXIMATION_PARAMETERS.vh.template") as file:
     template = file.read()
 
 # Number of bits for the integral and fractional parts
@@ -99,5 +99,5 @@ template = template.replace("__LINE_QP_FP_INF_HEX__", val_hex)
 template = template.replace("__LINE_QP_FP_INF_FIXED__", val_fix)
 template = template.replace("__LINE_QP_FP_INF_FLOAT__", str(target_value_float))
 
-with open("PIECEWISE_APPROXIMATION_PARAMETERS.svh", "w") as file:
+with open("PIECEWISE_APPROXIMATION_PARAMETERS.vh", "w") as file:
     file.write(template)

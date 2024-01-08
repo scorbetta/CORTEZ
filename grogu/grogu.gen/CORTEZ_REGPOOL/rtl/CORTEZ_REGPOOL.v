@@ -35,24 +35,36 @@ module CORTEZ_REGPOOL (
     output wire [7:0] HWIF_OUT_DBUG_REG_1,
     output wire [7:0] HWIF_OUT_DBUG_REG_2,
     output wire [7:0] HWIF_OUT_DBUG_REG_3,
-    output wire [9*8-1:0] HWIF_OUT_HL_WEIGHTS_0,
-    output wire [9*8-1:0] HWIF_OUT_HL_WEIGHTS_1,
-    output wire [9*8-1:0] HWIF_OUT_HL_WEIGHTS_2,
-    output wire [9*8-1:0] HWIF_OUT_HL_WEIGHTS_3,
-    output wire [9*8-1:0] HWIF_OUT_HL_WEIGHTS_4,
-    output wire [9*8-1:0] HWIF_OUT_HL_WEIGHTS_5,
+    output wire [25*8-1:0] HWIF_OUT_HL_WEIGHTS_0,
+    output wire [25*8-1:0] HWIF_OUT_HL_WEIGHTS_1,
+    output wire [25*8-1:0] HWIF_OUT_HL_WEIGHTS_2,
+    output wire [25*8-1:0] HWIF_OUT_HL_WEIGHTS_3,
+    output wire [25*8-1:0] HWIF_OUT_HL_WEIGHTS_4,
+    output wire [25*8-1:0] HWIF_OUT_HL_WEIGHTS_5,
+    output wire [25*8-1:0] HWIF_OUT_HL_WEIGHTS_6,
+    output wire [25*8-1:0] HWIF_OUT_HL_WEIGHTS_7,
+    output wire [25*8-1:0] HWIF_OUT_HL_WEIGHTS_8,
+    output wire [25*8-1:0] HWIF_OUT_HL_WEIGHTS_9,
     output wire [7:0] HWIF_OUT_HL_BIAS_0,
     output wire [7:0] HWIF_OUT_HL_BIAS_1,
     output wire [7:0] HWIF_OUT_HL_BIAS_2,
     output wire [7:0] HWIF_OUT_HL_BIAS_3,
     output wire [7:0] HWIF_OUT_HL_BIAS_4,
     output wire [7:0] HWIF_OUT_HL_BIAS_5,
-    output wire [6*8-1:0] HWIF_OUT_OL_WEIGHTS_0,
-    output wire [6*8-1:0] HWIF_OUT_OL_WEIGHTS_1,
-    output wire [6*8-1:0] HWIF_OUT_OL_WEIGHTS_2,
+    output wire [7:0] HWIF_OUT_HL_BIAS_6,
+    output wire [7:0] HWIF_OUT_HL_BIAS_7,
+    output wire [7:0] HWIF_OUT_HL_BIAS_8,
+    output wire [7:0] HWIF_OUT_HL_BIAS_9,
+    output wire [10*8-1:0] HWIF_OUT_OL_WEIGHTS_0,
+    output wire [10*8-1:0] HWIF_OUT_OL_WEIGHTS_1,
+    output wire [10*8-1:0] HWIF_OUT_OL_WEIGHTS_2,
+    output wire [10*8-1:0] HWIF_OUT_OL_WEIGHTS_3,
+    output wire [10*8-1:0] HWIF_OUT_OL_WEIGHTS_4,
     output wire [7:0] HWIF_OUT_OL_BIAS_0,
     output wire [7:0] HWIF_OUT_OL_BIAS_1,
     output wire [7:0] HWIF_OUT_OL_BIAS_2,
+    output wire [7:0] HWIF_OUT_OL_BIAS_3,
+    output wire [7:0] HWIF_OUT_OL_BIAS_4,
     output wire [7:0] HWIF_OUT_INPUT_GRID_0,
     output wire [7:0] HWIF_OUT_INPUT_GRID_1,
     output wire [7:0] HWIF_OUT_INPUT_GRID_2,
@@ -62,13 +74,30 @@ module CORTEZ_REGPOOL (
     output wire [7:0] HWIF_OUT_INPUT_GRID_6,
     output wire [7:0] HWIF_OUT_INPUT_GRID_7,
     output wire [7:0] HWIF_OUT_INPUT_GRID_8,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_9,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_10,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_11,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_12,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_13,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_14,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_15,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_16,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_17,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_18,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_19,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_20,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_21,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_22,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_23,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_24,
     input wire [7:0] HWIF_IN_OUTPUT_SOLUTION_0,
     input wire [7:0] HWIF_IN_OUTPUT_SOLUTION_1,
     input wire [7:0] HWIF_IN_OUTPUT_SOLUTION_2,
+    input wire [7:0] HWIF_IN_OUTPUT_SOLUTION_3,
+    input wire [7:0] HWIF_IN_OUTPUT_SOLUTION_4,
     output wire [7:0] HWIF_OUT_CORE_CTRL,
     output wire [7:0] HWIF_OUT_CORE_DEBUG_INFO,
-    input wire [7:0] HWIF_IN_CORE_STATUS_RESET,
-    input wire [7:0] HWIF_IN_CORE_STATUS_NO_RESET,
+    input wire [7:0] HWIF_IN_CORE_STATUS,
     output wire [7:0] HWIF_OUT_SEVENSEG_0,
     output wire [7:0] HWIF_OUT_SEVENSEG_1,
     output wire [7:0] HWIF_OUT_SEVENSEG_2,
@@ -195,7 +224,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_0_0_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_0_0_REG (
         .CLK        (ACLK),
@@ -211,7 +240,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_0_1_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_0_1_REG (
         .CLK        (ACLK),
@@ -227,7 +256,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_0_2_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_0_2_REG (
         .CLK        (ACLK),
@@ -243,7 +272,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_0_3_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_0_3_REG (
         .CLK        (ACLK),
@@ -259,7 +288,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_0_4_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_0_4_REG (
         .CLK        (ACLK),
@@ -275,7 +304,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_0_5_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_0_5_REG (
         .CLK        (ACLK),
@@ -291,7 +320,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_0_6_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_0_6_REG (
         .CLK        (ACLK),
@@ -307,7 +336,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_0_7_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_0_7_REG (
         .CLK        (ACLK),
@@ -323,7 +352,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_0_8_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_0_8_REG (
         .CLK        (ACLK),
@@ -333,13 +362,269 @@ module CORTEZ_REGPOOL (
         .VALUE_OUT  (hl_weights_0_8_value_out)
     );
         
+    // HL_WEIGHTS_0_9: Weights for neuron 0 of the hidden layer
+    reg hl_weights_0_9_wreq;
+    wire hl_weights_0_9_wreq_filtered;
+    wire [7:0] hl_weights_0_9_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_0_9_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_0_9_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_0_9_value_out)
+    );
+        
+    // HL_WEIGHTS_0_10: Weights for neuron 0 of the hidden layer
+    reg hl_weights_0_10_wreq;
+    wire hl_weights_0_10_wreq_filtered;
+    wire [7:0] hl_weights_0_10_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_0_10_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_0_10_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_0_10_value_out)
+    );
+        
+    // HL_WEIGHTS_0_11: Weights for neuron 0 of the hidden layer
+    reg hl_weights_0_11_wreq;
+    wire hl_weights_0_11_wreq_filtered;
+    wire [7:0] hl_weights_0_11_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_0_11_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_0_11_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_0_11_value_out)
+    );
+        
+    // HL_WEIGHTS_0_12: Weights for neuron 0 of the hidden layer
+    reg hl_weights_0_12_wreq;
+    wire hl_weights_0_12_wreq_filtered;
+    wire [7:0] hl_weights_0_12_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_0_12_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_0_12_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_0_12_value_out)
+    );
+        
+    // HL_WEIGHTS_0_13: Weights for neuron 0 of the hidden layer
+    reg hl_weights_0_13_wreq;
+    wire hl_weights_0_13_wreq_filtered;
+    wire [7:0] hl_weights_0_13_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_0_13_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_0_13_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_0_13_value_out)
+    );
+        
+    // HL_WEIGHTS_0_14: Weights for neuron 0 of the hidden layer
+    reg hl_weights_0_14_wreq;
+    wire hl_weights_0_14_wreq_filtered;
+    wire [7:0] hl_weights_0_14_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_0_14_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_0_14_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_0_14_value_out)
+    );
+        
+    // HL_WEIGHTS_0_15: Weights for neuron 0 of the hidden layer
+    reg hl_weights_0_15_wreq;
+    wire hl_weights_0_15_wreq_filtered;
+    wire [7:0] hl_weights_0_15_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_0_15_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_0_15_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_0_15_value_out)
+    );
+        
+    // HL_WEIGHTS_0_16: Weights for neuron 0 of the hidden layer
+    reg hl_weights_0_16_wreq;
+    wire hl_weights_0_16_wreq_filtered;
+    wire [7:0] hl_weights_0_16_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_0_16_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_0_16_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_0_16_value_out)
+    );
+        
+    // HL_WEIGHTS_0_17: Weights for neuron 0 of the hidden layer
+    reg hl_weights_0_17_wreq;
+    wire hl_weights_0_17_wreq_filtered;
+    wire [7:0] hl_weights_0_17_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_0_17_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_0_17_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_0_17_value_out)
+    );
+        
+    // HL_WEIGHTS_0_18: Weights for neuron 0 of the hidden layer
+    reg hl_weights_0_18_wreq;
+    wire hl_weights_0_18_wreq_filtered;
+    wire [7:0] hl_weights_0_18_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_0_18_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_0_18_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_0_18_value_out)
+    );
+        
+    // HL_WEIGHTS_0_19: Weights for neuron 0 of the hidden layer
+    reg hl_weights_0_19_wreq;
+    wire hl_weights_0_19_wreq_filtered;
+    wire [7:0] hl_weights_0_19_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_0_19_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_0_19_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_0_19_value_out)
+    );
+        
+    // HL_WEIGHTS_0_20: Weights for neuron 0 of the hidden layer
+    reg hl_weights_0_20_wreq;
+    wire hl_weights_0_20_wreq_filtered;
+    wire [7:0] hl_weights_0_20_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_0_20_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_0_20_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_0_20_value_out)
+    );
+        
+    // HL_WEIGHTS_0_21: Weights for neuron 0 of the hidden layer
+    reg hl_weights_0_21_wreq;
+    wire hl_weights_0_21_wreq_filtered;
+    wire [7:0] hl_weights_0_21_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_0_21_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_0_21_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_0_21_value_out)
+    );
+        
+    // HL_WEIGHTS_0_22: Weights for neuron 0 of the hidden layer
+    reg hl_weights_0_22_wreq;
+    wire hl_weights_0_22_wreq_filtered;
+    wire [7:0] hl_weights_0_22_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_0_22_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_0_22_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_0_22_value_out)
+    );
+        
+    // HL_WEIGHTS_0_23: Weights for neuron 0 of the hidden layer
+    reg hl_weights_0_23_wreq;
+    wire hl_weights_0_23_wreq_filtered;
+    wire [7:0] hl_weights_0_23_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_0_23_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_0_23_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_0_23_value_out)
+    );
+        
+    // HL_WEIGHTS_0_24: Weights for neuron 0 of the hidden layer
+    reg hl_weights_0_24_wreq;
+    wire hl_weights_0_24_wreq_filtered;
+    wire [7:0] hl_weights_0_24_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_0_24_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_0_24_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_0_24_value_out)
+    );
+        
     // HL_WEIGHTS_1_0: Weights for neuron 1 of the hidden layer
     reg hl_weights_1_0_wreq;
     wire hl_weights_1_0_wreq_filtered;
     wire [7:0] hl_weights_1_0_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_1_0_REG (
         .CLK        (ACLK),
@@ -355,7 +640,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_1_1_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_1_1_REG (
         .CLK        (ACLK),
@@ -371,7 +656,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_1_2_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_1_2_REG (
         .CLK        (ACLK),
@@ -387,7 +672,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_1_3_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_1_3_REG (
         .CLK        (ACLK),
@@ -403,7 +688,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_1_4_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_1_4_REG (
         .CLK        (ACLK),
@@ -419,7 +704,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_1_5_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_1_5_REG (
         .CLK        (ACLK),
@@ -435,7 +720,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_1_6_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_1_6_REG (
         .CLK        (ACLK),
@@ -451,7 +736,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_1_7_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_1_7_REG (
         .CLK        (ACLK),
@@ -467,7 +752,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_1_8_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_1_8_REG (
         .CLK        (ACLK),
@@ -477,13 +762,269 @@ module CORTEZ_REGPOOL (
         .VALUE_OUT  (hl_weights_1_8_value_out)
     );
         
+    // HL_WEIGHTS_1_9: Weights for neuron 1 of the hidden layer
+    reg hl_weights_1_9_wreq;
+    wire hl_weights_1_9_wreq_filtered;
+    wire [7:0] hl_weights_1_9_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_1_9_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_1_9_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_1_9_value_out)
+    );
+        
+    // HL_WEIGHTS_1_10: Weights for neuron 1 of the hidden layer
+    reg hl_weights_1_10_wreq;
+    wire hl_weights_1_10_wreq_filtered;
+    wire [7:0] hl_weights_1_10_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_1_10_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_1_10_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_1_10_value_out)
+    );
+        
+    // HL_WEIGHTS_1_11: Weights for neuron 1 of the hidden layer
+    reg hl_weights_1_11_wreq;
+    wire hl_weights_1_11_wreq_filtered;
+    wire [7:0] hl_weights_1_11_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_1_11_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_1_11_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_1_11_value_out)
+    );
+        
+    // HL_WEIGHTS_1_12: Weights for neuron 1 of the hidden layer
+    reg hl_weights_1_12_wreq;
+    wire hl_weights_1_12_wreq_filtered;
+    wire [7:0] hl_weights_1_12_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_1_12_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_1_12_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_1_12_value_out)
+    );
+        
+    // HL_WEIGHTS_1_13: Weights for neuron 1 of the hidden layer
+    reg hl_weights_1_13_wreq;
+    wire hl_weights_1_13_wreq_filtered;
+    wire [7:0] hl_weights_1_13_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_1_13_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_1_13_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_1_13_value_out)
+    );
+        
+    // HL_WEIGHTS_1_14: Weights for neuron 1 of the hidden layer
+    reg hl_weights_1_14_wreq;
+    wire hl_weights_1_14_wreq_filtered;
+    wire [7:0] hl_weights_1_14_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_1_14_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_1_14_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_1_14_value_out)
+    );
+        
+    // HL_WEIGHTS_1_15: Weights for neuron 1 of the hidden layer
+    reg hl_weights_1_15_wreq;
+    wire hl_weights_1_15_wreq_filtered;
+    wire [7:0] hl_weights_1_15_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_1_15_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_1_15_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_1_15_value_out)
+    );
+        
+    // HL_WEIGHTS_1_16: Weights for neuron 1 of the hidden layer
+    reg hl_weights_1_16_wreq;
+    wire hl_weights_1_16_wreq_filtered;
+    wire [7:0] hl_weights_1_16_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_1_16_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_1_16_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_1_16_value_out)
+    );
+        
+    // HL_WEIGHTS_1_17: Weights for neuron 1 of the hidden layer
+    reg hl_weights_1_17_wreq;
+    wire hl_weights_1_17_wreq_filtered;
+    wire [7:0] hl_weights_1_17_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_1_17_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_1_17_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_1_17_value_out)
+    );
+        
+    // HL_WEIGHTS_1_18: Weights for neuron 1 of the hidden layer
+    reg hl_weights_1_18_wreq;
+    wire hl_weights_1_18_wreq_filtered;
+    wire [7:0] hl_weights_1_18_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_1_18_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_1_18_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_1_18_value_out)
+    );
+        
+    // HL_WEIGHTS_1_19: Weights for neuron 1 of the hidden layer
+    reg hl_weights_1_19_wreq;
+    wire hl_weights_1_19_wreq_filtered;
+    wire [7:0] hl_weights_1_19_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_1_19_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_1_19_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_1_19_value_out)
+    );
+        
+    // HL_WEIGHTS_1_20: Weights for neuron 1 of the hidden layer
+    reg hl_weights_1_20_wreq;
+    wire hl_weights_1_20_wreq_filtered;
+    wire [7:0] hl_weights_1_20_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_1_20_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_1_20_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_1_20_value_out)
+    );
+        
+    // HL_WEIGHTS_1_21: Weights for neuron 1 of the hidden layer
+    reg hl_weights_1_21_wreq;
+    wire hl_weights_1_21_wreq_filtered;
+    wire [7:0] hl_weights_1_21_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_1_21_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_1_21_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_1_21_value_out)
+    );
+        
+    // HL_WEIGHTS_1_22: Weights for neuron 1 of the hidden layer
+    reg hl_weights_1_22_wreq;
+    wire hl_weights_1_22_wreq_filtered;
+    wire [7:0] hl_weights_1_22_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_1_22_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_1_22_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_1_22_value_out)
+    );
+        
+    // HL_WEIGHTS_1_23: Weights for neuron 1 of the hidden layer
+    reg hl_weights_1_23_wreq;
+    wire hl_weights_1_23_wreq_filtered;
+    wire [7:0] hl_weights_1_23_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_1_23_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_1_23_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_1_23_value_out)
+    );
+        
+    // HL_WEIGHTS_1_24: Weights for neuron 1 of the hidden layer
+    reg hl_weights_1_24_wreq;
+    wire hl_weights_1_24_wreq_filtered;
+    wire [7:0] hl_weights_1_24_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_1_24_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_1_24_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_1_24_value_out)
+    );
+        
     // HL_WEIGHTS_2_0: Weights for neuron 2 of the hidden layer
     reg hl_weights_2_0_wreq;
     wire hl_weights_2_0_wreq_filtered;
     wire [7:0] hl_weights_2_0_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_2_0_REG (
         .CLK        (ACLK),
@@ -499,7 +1040,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_2_1_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_2_1_REG (
         .CLK        (ACLK),
@@ -515,7 +1056,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_2_2_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_2_2_REG (
         .CLK        (ACLK),
@@ -531,7 +1072,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_2_3_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_2_3_REG (
         .CLK        (ACLK),
@@ -547,7 +1088,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_2_4_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_2_4_REG (
         .CLK        (ACLK),
@@ -563,7 +1104,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_2_5_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_2_5_REG (
         .CLK        (ACLK),
@@ -579,7 +1120,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_2_6_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_2_6_REG (
         .CLK        (ACLK),
@@ -595,7 +1136,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_2_7_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_2_7_REG (
         .CLK        (ACLK),
@@ -611,7 +1152,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_2_8_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_2_8_REG (
         .CLK        (ACLK),
@@ -621,13 +1162,269 @@ module CORTEZ_REGPOOL (
         .VALUE_OUT  (hl_weights_2_8_value_out)
     );
         
+    // HL_WEIGHTS_2_9: Weights for neuron 2 of the hidden layer
+    reg hl_weights_2_9_wreq;
+    wire hl_weights_2_9_wreq_filtered;
+    wire [7:0] hl_weights_2_9_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_2_9_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_2_9_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_2_9_value_out)
+    );
+        
+    // HL_WEIGHTS_2_10: Weights for neuron 2 of the hidden layer
+    reg hl_weights_2_10_wreq;
+    wire hl_weights_2_10_wreq_filtered;
+    wire [7:0] hl_weights_2_10_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_2_10_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_2_10_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_2_10_value_out)
+    );
+        
+    // HL_WEIGHTS_2_11: Weights for neuron 2 of the hidden layer
+    reg hl_weights_2_11_wreq;
+    wire hl_weights_2_11_wreq_filtered;
+    wire [7:0] hl_weights_2_11_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_2_11_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_2_11_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_2_11_value_out)
+    );
+        
+    // HL_WEIGHTS_2_12: Weights for neuron 2 of the hidden layer
+    reg hl_weights_2_12_wreq;
+    wire hl_weights_2_12_wreq_filtered;
+    wire [7:0] hl_weights_2_12_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_2_12_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_2_12_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_2_12_value_out)
+    );
+        
+    // HL_WEIGHTS_2_13: Weights for neuron 2 of the hidden layer
+    reg hl_weights_2_13_wreq;
+    wire hl_weights_2_13_wreq_filtered;
+    wire [7:0] hl_weights_2_13_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_2_13_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_2_13_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_2_13_value_out)
+    );
+        
+    // HL_WEIGHTS_2_14: Weights for neuron 2 of the hidden layer
+    reg hl_weights_2_14_wreq;
+    wire hl_weights_2_14_wreq_filtered;
+    wire [7:0] hl_weights_2_14_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_2_14_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_2_14_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_2_14_value_out)
+    );
+        
+    // HL_WEIGHTS_2_15: Weights for neuron 2 of the hidden layer
+    reg hl_weights_2_15_wreq;
+    wire hl_weights_2_15_wreq_filtered;
+    wire [7:0] hl_weights_2_15_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_2_15_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_2_15_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_2_15_value_out)
+    );
+        
+    // HL_WEIGHTS_2_16: Weights for neuron 2 of the hidden layer
+    reg hl_weights_2_16_wreq;
+    wire hl_weights_2_16_wreq_filtered;
+    wire [7:0] hl_weights_2_16_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_2_16_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_2_16_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_2_16_value_out)
+    );
+        
+    // HL_WEIGHTS_2_17: Weights for neuron 2 of the hidden layer
+    reg hl_weights_2_17_wreq;
+    wire hl_weights_2_17_wreq_filtered;
+    wire [7:0] hl_weights_2_17_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_2_17_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_2_17_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_2_17_value_out)
+    );
+        
+    // HL_WEIGHTS_2_18: Weights for neuron 2 of the hidden layer
+    reg hl_weights_2_18_wreq;
+    wire hl_weights_2_18_wreq_filtered;
+    wire [7:0] hl_weights_2_18_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_2_18_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_2_18_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_2_18_value_out)
+    );
+        
+    // HL_WEIGHTS_2_19: Weights for neuron 2 of the hidden layer
+    reg hl_weights_2_19_wreq;
+    wire hl_weights_2_19_wreq_filtered;
+    wire [7:0] hl_weights_2_19_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_2_19_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_2_19_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_2_19_value_out)
+    );
+        
+    // HL_WEIGHTS_2_20: Weights for neuron 2 of the hidden layer
+    reg hl_weights_2_20_wreq;
+    wire hl_weights_2_20_wreq_filtered;
+    wire [7:0] hl_weights_2_20_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_2_20_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_2_20_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_2_20_value_out)
+    );
+        
+    // HL_WEIGHTS_2_21: Weights for neuron 2 of the hidden layer
+    reg hl_weights_2_21_wreq;
+    wire hl_weights_2_21_wreq_filtered;
+    wire [7:0] hl_weights_2_21_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_2_21_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_2_21_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_2_21_value_out)
+    );
+        
+    // HL_WEIGHTS_2_22: Weights for neuron 2 of the hidden layer
+    reg hl_weights_2_22_wreq;
+    wire hl_weights_2_22_wreq_filtered;
+    wire [7:0] hl_weights_2_22_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_2_22_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_2_22_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_2_22_value_out)
+    );
+        
+    // HL_WEIGHTS_2_23: Weights for neuron 2 of the hidden layer
+    reg hl_weights_2_23_wreq;
+    wire hl_weights_2_23_wreq_filtered;
+    wire [7:0] hl_weights_2_23_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_2_23_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_2_23_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_2_23_value_out)
+    );
+        
+    // HL_WEIGHTS_2_24: Weights for neuron 2 of the hidden layer
+    reg hl_weights_2_24_wreq;
+    wire hl_weights_2_24_wreq_filtered;
+    wire [7:0] hl_weights_2_24_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_2_24_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_2_24_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_2_24_value_out)
+    );
+        
     // HL_WEIGHTS_3_0: Weights for neuron 3 of the hidden layer
     reg hl_weights_3_0_wreq;
     wire hl_weights_3_0_wreq_filtered;
     wire [7:0] hl_weights_3_0_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_3_0_REG (
         .CLK        (ACLK),
@@ -643,7 +1440,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_3_1_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_3_1_REG (
         .CLK        (ACLK),
@@ -659,7 +1456,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_3_2_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_3_2_REG (
         .CLK        (ACLK),
@@ -675,7 +1472,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_3_3_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_3_3_REG (
         .CLK        (ACLK),
@@ -691,7 +1488,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_3_4_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_3_4_REG (
         .CLK        (ACLK),
@@ -707,7 +1504,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_3_5_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_3_5_REG (
         .CLK        (ACLK),
@@ -723,7 +1520,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_3_6_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_3_6_REG (
         .CLK        (ACLK),
@@ -739,7 +1536,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_3_7_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_3_7_REG (
         .CLK        (ACLK),
@@ -755,7 +1552,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_3_8_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_3_8_REG (
         .CLK        (ACLK),
@@ -765,13 +1562,269 @@ module CORTEZ_REGPOOL (
         .VALUE_OUT  (hl_weights_3_8_value_out)
     );
         
+    // HL_WEIGHTS_3_9: Weights for neuron 3 of the hidden layer
+    reg hl_weights_3_9_wreq;
+    wire hl_weights_3_9_wreq_filtered;
+    wire [7:0] hl_weights_3_9_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_3_9_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_3_9_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_3_9_value_out)
+    );
+        
+    // HL_WEIGHTS_3_10: Weights for neuron 3 of the hidden layer
+    reg hl_weights_3_10_wreq;
+    wire hl_weights_3_10_wreq_filtered;
+    wire [7:0] hl_weights_3_10_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_3_10_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_3_10_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_3_10_value_out)
+    );
+        
+    // HL_WEIGHTS_3_11: Weights for neuron 3 of the hidden layer
+    reg hl_weights_3_11_wreq;
+    wire hl_weights_3_11_wreq_filtered;
+    wire [7:0] hl_weights_3_11_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_3_11_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_3_11_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_3_11_value_out)
+    );
+        
+    // HL_WEIGHTS_3_12: Weights for neuron 3 of the hidden layer
+    reg hl_weights_3_12_wreq;
+    wire hl_weights_3_12_wreq_filtered;
+    wire [7:0] hl_weights_3_12_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_3_12_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_3_12_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_3_12_value_out)
+    );
+        
+    // HL_WEIGHTS_3_13: Weights for neuron 3 of the hidden layer
+    reg hl_weights_3_13_wreq;
+    wire hl_weights_3_13_wreq_filtered;
+    wire [7:0] hl_weights_3_13_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_3_13_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_3_13_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_3_13_value_out)
+    );
+        
+    // HL_WEIGHTS_3_14: Weights for neuron 3 of the hidden layer
+    reg hl_weights_3_14_wreq;
+    wire hl_weights_3_14_wreq_filtered;
+    wire [7:0] hl_weights_3_14_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_3_14_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_3_14_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_3_14_value_out)
+    );
+        
+    // HL_WEIGHTS_3_15: Weights for neuron 3 of the hidden layer
+    reg hl_weights_3_15_wreq;
+    wire hl_weights_3_15_wreq_filtered;
+    wire [7:0] hl_weights_3_15_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_3_15_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_3_15_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_3_15_value_out)
+    );
+        
+    // HL_WEIGHTS_3_16: Weights for neuron 3 of the hidden layer
+    reg hl_weights_3_16_wreq;
+    wire hl_weights_3_16_wreq_filtered;
+    wire [7:0] hl_weights_3_16_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_3_16_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_3_16_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_3_16_value_out)
+    );
+        
+    // HL_WEIGHTS_3_17: Weights for neuron 3 of the hidden layer
+    reg hl_weights_3_17_wreq;
+    wire hl_weights_3_17_wreq_filtered;
+    wire [7:0] hl_weights_3_17_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_3_17_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_3_17_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_3_17_value_out)
+    );
+        
+    // HL_WEIGHTS_3_18: Weights for neuron 3 of the hidden layer
+    reg hl_weights_3_18_wreq;
+    wire hl_weights_3_18_wreq_filtered;
+    wire [7:0] hl_weights_3_18_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_3_18_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_3_18_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_3_18_value_out)
+    );
+        
+    // HL_WEIGHTS_3_19: Weights for neuron 3 of the hidden layer
+    reg hl_weights_3_19_wreq;
+    wire hl_weights_3_19_wreq_filtered;
+    wire [7:0] hl_weights_3_19_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_3_19_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_3_19_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_3_19_value_out)
+    );
+        
+    // HL_WEIGHTS_3_20: Weights for neuron 3 of the hidden layer
+    reg hl_weights_3_20_wreq;
+    wire hl_weights_3_20_wreq_filtered;
+    wire [7:0] hl_weights_3_20_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_3_20_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_3_20_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_3_20_value_out)
+    );
+        
+    // HL_WEIGHTS_3_21: Weights for neuron 3 of the hidden layer
+    reg hl_weights_3_21_wreq;
+    wire hl_weights_3_21_wreq_filtered;
+    wire [7:0] hl_weights_3_21_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_3_21_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_3_21_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_3_21_value_out)
+    );
+        
+    // HL_WEIGHTS_3_22: Weights for neuron 3 of the hidden layer
+    reg hl_weights_3_22_wreq;
+    wire hl_weights_3_22_wreq_filtered;
+    wire [7:0] hl_weights_3_22_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_3_22_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_3_22_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_3_22_value_out)
+    );
+        
+    // HL_WEIGHTS_3_23: Weights for neuron 3 of the hidden layer
+    reg hl_weights_3_23_wreq;
+    wire hl_weights_3_23_wreq_filtered;
+    wire [7:0] hl_weights_3_23_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_3_23_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_3_23_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_3_23_value_out)
+    );
+        
+    // HL_WEIGHTS_3_24: Weights for neuron 3 of the hidden layer
+    reg hl_weights_3_24_wreq;
+    wire hl_weights_3_24_wreq_filtered;
+    wire [7:0] hl_weights_3_24_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_3_24_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_3_24_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_3_24_value_out)
+    );
+        
     // HL_WEIGHTS_4_0: Weights for neuron 4 of the hidden layer
     reg hl_weights_4_0_wreq;
     wire hl_weights_4_0_wreq_filtered;
     wire [7:0] hl_weights_4_0_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_4_0_REG (
         .CLK        (ACLK),
@@ -787,7 +1840,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_4_1_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_4_1_REG (
         .CLK        (ACLK),
@@ -803,7 +1856,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_4_2_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_4_2_REG (
         .CLK        (ACLK),
@@ -819,7 +1872,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_4_3_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_4_3_REG (
         .CLK        (ACLK),
@@ -835,7 +1888,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_4_4_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_4_4_REG (
         .CLK        (ACLK),
@@ -851,7 +1904,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_4_5_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_4_5_REG (
         .CLK        (ACLK),
@@ -867,7 +1920,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_4_6_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_4_6_REG (
         .CLK        (ACLK),
@@ -883,7 +1936,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_4_7_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_4_7_REG (
         .CLK        (ACLK),
@@ -899,7 +1952,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_4_8_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_4_8_REG (
         .CLK        (ACLK),
@@ -909,13 +1962,269 @@ module CORTEZ_REGPOOL (
         .VALUE_OUT  (hl_weights_4_8_value_out)
     );
         
+    // HL_WEIGHTS_4_9: Weights for neuron 4 of the hidden layer
+    reg hl_weights_4_9_wreq;
+    wire hl_weights_4_9_wreq_filtered;
+    wire [7:0] hl_weights_4_9_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_4_9_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_4_9_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_4_9_value_out)
+    );
+        
+    // HL_WEIGHTS_4_10: Weights for neuron 4 of the hidden layer
+    reg hl_weights_4_10_wreq;
+    wire hl_weights_4_10_wreq_filtered;
+    wire [7:0] hl_weights_4_10_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_4_10_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_4_10_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_4_10_value_out)
+    );
+        
+    // HL_WEIGHTS_4_11: Weights for neuron 4 of the hidden layer
+    reg hl_weights_4_11_wreq;
+    wire hl_weights_4_11_wreq_filtered;
+    wire [7:0] hl_weights_4_11_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_4_11_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_4_11_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_4_11_value_out)
+    );
+        
+    // HL_WEIGHTS_4_12: Weights for neuron 4 of the hidden layer
+    reg hl_weights_4_12_wreq;
+    wire hl_weights_4_12_wreq_filtered;
+    wire [7:0] hl_weights_4_12_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_4_12_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_4_12_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_4_12_value_out)
+    );
+        
+    // HL_WEIGHTS_4_13: Weights for neuron 4 of the hidden layer
+    reg hl_weights_4_13_wreq;
+    wire hl_weights_4_13_wreq_filtered;
+    wire [7:0] hl_weights_4_13_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_4_13_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_4_13_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_4_13_value_out)
+    );
+        
+    // HL_WEIGHTS_4_14: Weights for neuron 4 of the hidden layer
+    reg hl_weights_4_14_wreq;
+    wire hl_weights_4_14_wreq_filtered;
+    wire [7:0] hl_weights_4_14_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_4_14_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_4_14_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_4_14_value_out)
+    );
+        
+    // HL_WEIGHTS_4_15: Weights for neuron 4 of the hidden layer
+    reg hl_weights_4_15_wreq;
+    wire hl_weights_4_15_wreq_filtered;
+    wire [7:0] hl_weights_4_15_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_4_15_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_4_15_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_4_15_value_out)
+    );
+        
+    // HL_WEIGHTS_4_16: Weights for neuron 4 of the hidden layer
+    reg hl_weights_4_16_wreq;
+    wire hl_weights_4_16_wreq_filtered;
+    wire [7:0] hl_weights_4_16_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_4_16_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_4_16_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_4_16_value_out)
+    );
+        
+    // HL_WEIGHTS_4_17: Weights for neuron 4 of the hidden layer
+    reg hl_weights_4_17_wreq;
+    wire hl_weights_4_17_wreq_filtered;
+    wire [7:0] hl_weights_4_17_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_4_17_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_4_17_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_4_17_value_out)
+    );
+        
+    // HL_WEIGHTS_4_18: Weights for neuron 4 of the hidden layer
+    reg hl_weights_4_18_wreq;
+    wire hl_weights_4_18_wreq_filtered;
+    wire [7:0] hl_weights_4_18_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_4_18_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_4_18_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_4_18_value_out)
+    );
+        
+    // HL_WEIGHTS_4_19: Weights for neuron 4 of the hidden layer
+    reg hl_weights_4_19_wreq;
+    wire hl_weights_4_19_wreq_filtered;
+    wire [7:0] hl_weights_4_19_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_4_19_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_4_19_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_4_19_value_out)
+    );
+        
+    // HL_WEIGHTS_4_20: Weights for neuron 4 of the hidden layer
+    reg hl_weights_4_20_wreq;
+    wire hl_weights_4_20_wreq_filtered;
+    wire [7:0] hl_weights_4_20_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_4_20_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_4_20_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_4_20_value_out)
+    );
+        
+    // HL_WEIGHTS_4_21: Weights for neuron 4 of the hidden layer
+    reg hl_weights_4_21_wreq;
+    wire hl_weights_4_21_wreq_filtered;
+    wire [7:0] hl_weights_4_21_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_4_21_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_4_21_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_4_21_value_out)
+    );
+        
+    // HL_WEIGHTS_4_22: Weights for neuron 4 of the hidden layer
+    reg hl_weights_4_22_wreq;
+    wire hl_weights_4_22_wreq_filtered;
+    wire [7:0] hl_weights_4_22_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_4_22_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_4_22_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_4_22_value_out)
+    );
+        
+    // HL_WEIGHTS_4_23: Weights for neuron 4 of the hidden layer
+    reg hl_weights_4_23_wreq;
+    wire hl_weights_4_23_wreq_filtered;
+    wire [7:0] hl_weights_4_23_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_4_23_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_4_23_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_4_23_value_out)
+    );
+        
+    // HL_WEIGHTS_4_24: Weights for neuron 4 of the hidden layer
+    reg hl_weights_4_24_wreq;
+    wire hl_weights_4_24_wreq_filtered;
+    wire [7:0] hl_weights_4_24_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_4_24_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_4_24_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_4_24_value_out)
+    );
+        
     // HL_WEIGHTS_5_0: Weights for neuron 5 of the hidden layer
     reg hl_weights_5_0_wreq;
     wire hl_weights_5_0_wreq_filtered;
     wire [7:0] hl_weights_5_0_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_5_0_REG (
         .CLK        (ACLK),
@@ -931,7 +2240,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_5_1_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_5_1_REG (
         .CLK        (ACLK),
@@ -947,7 +2256,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_5_2_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_5_2_REG (
         .CLK        (ACLK),
@@ -963,7 +2272,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_5_3_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_5_3_REG (
         .CLK        (ACLK),
@@ -979,7 +2288,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_5_4_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_5_4_REG (
         .CLK        (ACLK),
@@ -995,7 +2304,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_5_5_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_5_5_REG (
         .CLK        (ACLK),
@@ -1011,7 +2320,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_5_6_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_5_6_REG (
         .CLK        (ACLK),
@@ -1027,7 +2336,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_5_7_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_5_7_REG (
         .CLK        (ACLK),
@@ -1043,7 +2352,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] hl_weights_5_8_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_WEIGHTS_5_8_REG (
         .CLK        (ACLK),
@@ -1053,13 +2362,1869 @@ module CORTEZ_REGPOOL (
         .VALUE_OUT  (hl_weights_5_8_value_out)
     );
         
-    // HL_BIAS_0: Bias for neuron 0 of the hidden layer
+    // HL_WEIGHTS_5_9: Weights for neuron 5 of the hidden layer
+    reg hl_weights_5_9_wreq;
+    wire hl_weights_5_9_wreq_filtered;
+    wire [7:0] hl_weights_5_9_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_5_9_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_5_9_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_5_9_value_out)
+    );
+        
+    // HL_WEIGHTS_5_10: Weights for neuron 5 of the hidden layer
+    reg hl_weights_5_10_wreq;
+    wire hl_weights_5_10_wreq_filtered;
+    wire [7:0] hl_weights_5_10_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_5_10_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_5_10_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_5_10_value_out)
+    );
+        
+    // HL_WEIGHTS_5_11: Weights for neuron 5 of the hidden layer
+    reg hl_weights_5_11_wreq;
+    wire hl_weights_5_11_wreq_filtered;
+    wire [7:0] hl_weights_5_11_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_5_11_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_5_11_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_5_11_value_out)
+    );
+        
+    // HL_WEIGHTS_5_12: Weights for neuron 5 of the hidden layer
+    reg hl_weights_5_12_wreq;
+    wire hl_weights_5_12_wreq_filtered;
+    wire [7:0] hl_weights_5_12_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_5_12_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_5_12_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_5_12_value_out)
+    );
+        
+    // HL_WEIGHTS_5_13: Weights for neuron 5 of the hidden layer
+    reg hl_weights_5_13_wreq;
+    wire hl_weights_5_13_wreq_filtered;
+    wire [7:0] hl_weights_5_13_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_5_13_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_5_13_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_5_13_value_out)
+    );
+        
+    // HL_WEIGHTS_5_14: Weights for neuron 5 of the hidden layer
+    reg hl_weights_5_14_wreq;
+    wire hl_weights_5_14_wreq_filtered;
+    wire [7:0] hl_weights_5_14_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_5_14_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_5_14_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_5_14_value_out)
+    );
+        
+    // HL_WEIGHTS_5_15: Weights for neuron 5 of the hidden layer
+    reg hl_weights_5_15_wreq;
+    wire hl_weights_5_15_wreq_filtered;
+    wire [7:0] hl_weights_5_15_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_5_15_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_5_15_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_5_15_value_out)
+    );
+        
+    // HL_WEIGHTS_5_16: Weights for neuron 5 of the hidden layer
+    reg hl_weights_5_16_wreq;
+    wire hl_weights_5_16_wreq_filtered;
+    wire [7:0] hl_weights_5_16_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_5_16_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_5_16_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_5_16_value_out)
+    );
+        
+    // HL_WEIGHTS_5_17: Weights for neuron 5 of the hidden layer
+    reg hl_weights_5_17_wreq;
+    wire hl_weights_5_17_wreq_filtered;
+    wire [7:0] hl_weights_5_17_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_5_17_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_5_17_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_5_17_value_out)
+    );
+        
+    // HL_WEIGHTS_5_18: Weights for neuron 5 of the hidden layer
+    reg hl_weights_5_18_wreq;
+    wire hl_weights_5_18_wreq_filtered;
+    wire [7:0] hl_weights_5_18_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_5_18_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_5_18_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_5_18_value_out)
+    );
+        
+    // HL_WEIGHTS_5_19: Weights for neuron 5 of the hidden layer
+    reg hl_weights_5_19_wreq;
+    wire hl_weights_5_19_wreq_filtered;
+    wire [7:0] hl_weights_5_19_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_5_19_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_5_19_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_5_19_value_out)
+    );
+        
+    // HL_WEIGHTS_5_20: Weights for neuron 5 of the hidden layer
+    reg hl_weights_5_20_wreq;
+    wire hl_weights_5_20_wreq_filtered;
+    wire [7:0] hl_weights_5_20_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_5_20_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_5_20_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_5_20_value_out)
+    );
+        
+    // HL_WEIGHTS_5_21: Weights for neuron 5 of the hidden layer
+    reg hl_weights_5_21_wreq;
+    wire hl_weights_5_21_wreq_filtered;
+    wire [7:0] hl_weights_5_21_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_5_21_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_5_21_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_5_21_value_out)
+    );
+        
+    // HL_WEIGHTS_5_22: Weights for neuron 5 of the hidden layer
+    reg hl_weights_5_22_wreq;
+    wire hl_weights_5_22_wreq_filtered;
+    wire [7:0] hl_weights_5_22_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_5_22_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_5_22_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_5_22_value_out)
+    );
+        
+    // HL_WEIGHTS_5_23: Weights for neuron 5 of the hidden layer
+    reg hl_weights_5_23_wreq;
+    wire hl_weights_5_23_wreq_filtered;
+    wire [7:0] hl_weights_5_23_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_5_23_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_5_23_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_5_23_value_out)
+    );
+        
+    // HL_WEIGHTS_5_24: Weights for neuron 5 of the hidden layer
+    reg hl_weights_5_24_wreq;
+    wire hl_weights_5_24_wreq_filtered;
+    wire [7:0] hl_weights_5_24_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_5_24_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_5_24_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_5_24_value_out)
+    );
+        
+    // HL_WEIGHTS_6_0: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_0_wreq;
+    wire hl_weights_6_0_wreq_filtered;
+    wire [7:0] hl_weights_6_0_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_0_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_0_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_0_value_out)
+    );
+        
+    // HL_WEIGHTS_6_1: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_1_wreq;
+    wire hl_weights_6_1_wreq_filtered;
+    wire [7:0] hl_weights_6_1_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_1_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_1_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_1_value_out)
+    );
+        
+    // HL_WEIGHTS_6_2: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_2_wreq;
+    wire hl_weights_6_2_wreq_filtered;
+    wire [7:0] hl_weights_6_2_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_2_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_2_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_2_value_out)
+    );
+        
+    // HL_WEIGHTS_6_3: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_3_wreq;
+    wire hl_weights_6_3_wreq_filtered;
+    wire [7:0] hl_weights_6_3_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_3_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_3_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_3_value_out)
+    );
+        
+    // HL_WEIGHTS_6_4: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_4_wreq;
+    wire hl_weights_6_4_wreq_filtered;
+    wire [7:0] hl_weights_6_4_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_4_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_4_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_4_value_out)
+    );
+        
+    // HL_WEIGHTS_6_5: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_5_wreq;
+    wire hl_weights_6_5_wreq_filtered;
+    wire [7:0] hl_weights_6_5_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_5_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_5_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_5_value_out)
+    );
+        
+    // HL_WEIGHTS_6_6: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_6_wreq;
+    wire hl_weights_6_6_wreq_filtered;
+    wire [7:0] hl_weights_6_6_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_6_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_6_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_6_value_out)
+    );
+        
+    // HL_WEIGHTS_6_7: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_7_wreq;
+    wire hl_weights_6_7_wreq_filtered;
+    wire [7:0] hl_weights_6_7_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_7_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_7_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_7_value_out)
+    );
+        
+    // HL_WEIGHTS_6_8: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_8_wreq;
+    wire hl_weights_6_8_wreq_filtered;
+    wire [7:0] hl_weights_6_8_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_8_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_8_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_8_value_out)
+    );
+        
+    // HL_WEIGHTS_6_9: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_9_wreq;
+    wire hl_weights_6_9_wreq_filtered;
+    wire [7:0] hl_weights_6_9_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_9_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_9_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_9_value_out)
+    );
+        
+    // HL_WEIGHTS_6_10: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_10_wreq;
+    wire hl_weights_6_10_wreq_filtered;
+    wire [7:0] hl_weights_6_10_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_10_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_10_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_10_value_out)
+    );
+        
+    // HL_WEIGHTS_6_11: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_11_wreq;
+    wire hl_weights_6_11_wreq_filtered;
+    wire [7:0] hl_weights_6_11_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_11_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_11_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_11_value_out)
+    );
+        
+    // HL_WEIGHTS_6_12: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_12_wreq;
+    wire hl_weights_6_12_wreq_filtered;
+    wire [7:0] hl_weights_6_12_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_12_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_12_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_12_value_out)
+    );
+        
+    // HL_WEIGHTS_6_13: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_13_wreq;
+    wire hl_weights_6_13_wreq_filtered;
+    wire [7:0] hl_weights_6_13_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_13_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_13_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_13_value_out)
+    );
+        
+    // HL_WEIGHTS_6_14: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_14_wreq;
+    wire hl_weights_6_14_wreq_filtered;
+    wire [7:0] hl_weights_6_14_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_14_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_14_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_14_value_out)
+    );
+        
+    // HL_WEIGHTS_6_15: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_15_wreq;
+    wire hl_weights_6_15_wreq_filtered;
+    wire [7:0] hl_weights_6_15_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_15_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_15_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_15_value_out)
+    );
+        
+    // HL_WEIGHTS_6_16: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_16_wreq;
+    wire hl_weights_6_16_wreq_filtered;
+    wire [7:0] hl_weights_6_16_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_16_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_16_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_16_value_out)
+    );
+        
+    // HL_WEIGHTS_6_17: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_17_wreq;
+    wire hl_weights_6_17_wreq_filtered;
+    wire [7:0] hl_weights_6_17_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_17_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_17_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_17_value_out)
+    );
+        
+    // HL_WEIGHTS_6_18: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_18_wreq;
+    wire hl_weights_6_18_wreq_filtered;
+    wire [7:0] hl_weights_6_18_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_18_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_18_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_18_value_out)
+    );
+        
+    // HL_WEIGHTS_6_19: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_19_wreq;
+    wire hl_weights_6_19_wreq_filtered;
+    wire [7:0] hl_weights_6_19_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_19_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_19_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_19_value_out)
+    );
+        
+    // HL_WEIGHTS_6_20: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_20_wreq;
+    wire hl_weights_6_20_wreq_filtered;
+    wire [7:0] hl_weights_6_20_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_20_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_20_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_20_value_out)
+    );
+        
+    // HL_WEIGHTS_6_21: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_21_wreq;
+    wire hl_weights_6_21_wreq_filtered;
+    wire [7:0] hl_weights_6_21_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_21_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_21_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_21_value_out)
+    );
+        
+    // HL_WEIGHTS_6_22: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_22_wreq;
+    wire hl_weights_6_22_wreq_filtered;
+    wire [7:0] hl_weights_6_22_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_22_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_22_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_22_value_out)
+    );
+        
+    // HL_WEIGHTS_6_23: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_23_wreq;
+    wire hl_weights_6_23_wreq_filtered;
+    wire [7:0] hl_weights_6_23_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_23_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_23_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_23_value_out)
+    );
+        
+    // HL_WEIGHTS_6_24: Weights for neuron 6 of the hidden layer
+    reg hl_weights_6_24_wreq;
+    wire hl_weights_6_24_wreq_filtered;
+    wire [7:0] hl_weights_6_24_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_6_24_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_6_24_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_6_24_value_out)
+    );
+        
+    // HL_WEIGHTS_7_0: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_0_wreq;
+    wire hl_weights_7_0_wreq_filtered;
+    wire [7:0] hl_weights_7_0_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_0_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_0_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_0_value_out)
+    );
+        
+    // HL_WEIGHTS_7_1: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_1_wreq;
+    wire hl_weights_7_1_wreq_filtered;
+    wire [7:0] hl_weights_7_1_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_1_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_1_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_1_value_out)
+    );
+        
+    // HL_WEIGHTS_7_2: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_2_wreq;
+    wire hl_weights_7_2_wreq_filtered;
+    wire [7:0] hl_weights_7_2_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_2_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_2_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_2_value_out)
+    );
+        
+    // HL_WEIGHTS_7_3: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_3_wreq;
+    wire hl_weights_7_3_wreq_filtered;
+    wire [7:0] hl_weights_7_3_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_3_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_3_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_3_value_out)
+    );
+        
+    // HL_WEIGHTS_7_4: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_4_wreq;
+    wire hl_weights_7_4_wreq_filtered;
+    wire [7:0] hl_weights_7_4_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_4_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_4_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_4_value_out)
+    );
+        
+    // HL_WEIGHTS_7_5: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_5_wreq;
+    wire hl_weights_7_5_wreq_filtered;
+    wire [7:0] hl_weights_7_5_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_5_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_5_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_5_value_out)
+    );
+        
+    // HL_WEIGHTS_7_6: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_6_wreq;
+    wire hl_weights_7_6_wreq_filtered;
+    wire [7:0] hl_weights_7_6_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_6_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_6_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_6_value_out)
+    );
+        
+    // HL_WEIGHTS_7_7: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_7_wreq;
+    wire hl_weights_7_7_wreq_filtered;
+    wire [7:0] hl_weights_7_7_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_7_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_7_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_7_value_out)
+    );
+        
+    // HL_WEIGHTS_7_8: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_8_wreq;
+    wire hl_weights_7_8_wreq_filtered;
+    wire [7:0] hl_weights_7_8_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_8_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_8_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_8_value_out)
+    );
+        
+    // HL_WEIGHTS_7_9: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_9_wreq;
+    wire hl_weights_7_9_wreq_filtered;
+    wire [7:0] hl_weights_7_9_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_9_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_9_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_9_value_out)
+    );
+        
+    // HL_WEIGHTS_7_10: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_10_wreq;
+    wire hl_weights_7_10_wreq_filtered;
+    wire [7:0] hl_weights_7_10_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_10_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_10_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_10_value_out)
+    );
+        
+    // HL_WEIGHTS_7_11: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_11_wreq;
+    wire hl_weights_7_11_wreq_filtered;
+    wire [7:0] hl_weights_7_11_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_11_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_11_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_11_value_out)
+    );
+        
+    // HL_WEIGHTS_7_12: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_12_wreq;
+    wire hl_weights_7_12_wreq_filtered;
+    wire [7:0] hl_weights_7_12_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_12_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_12_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_12_value_out)
+    );
+        
+    // HL_WEIGHTS_7_13: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_13_wreq;
+    wire hl_weights_7_13_wreq_filtered;
+    wire [7:0] hl_weights_7_13_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_13_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_13_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_13_value_out)
+    );
+        
+    // HL_WEIGHTS_7_14: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_14_wreq;
+    wire hl_weights_7_14_wreq_filtered;
+    wire [7:0] hl_weights_7_14_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_14_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_14_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_14_value_out)
+    );
+        
+    // HL_WEIGHTS_7_15: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_15_wreq;
+    wire hl_weights_7_15_wreq_filtered;
+    wire [7:0] hl_weights_7_15_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_15_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_15_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_15_value_out)
+    );
+        
+    // HL_WEIGHTS_7_16: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_16_wreq;
+    wire hl_weights_7_16_wreq_filtered;
+    wire [7:0] hl_weights_7_16_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_16_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_16_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_16_value_out)
+    );
+        
+    // HL_WEIGHTS_7_17: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_17_wreq;
+    wire hl_weights_7_17_wreq_filtered;
+    wire [7:0] hl_weights_7_17_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_17_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_17_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_17_value_out)
+    );
+        
+    // HL_WEIGHTS_7_18: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_18_wreq;
+    wire hl_weights_7_18_wreq_filtered;
+    wire [7:0] hl_weights_7_18_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_18_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_18_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_18_value_out)
+    );
+        
+    // HL_WEIGHTS_7_19: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_19_wreq;
+    wire hl_weights_7_19_wreq_filtered;
+    wire [7:0] hl_weights_7_19_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_19_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_19_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_19_value_out)
+    );
+        
+    // HL_WEIGHTS_7_20: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_20_wreq;
+    wire hl_weights_7_20_wreq_filtered;
+    wire [7:0] hl_weights_7_20_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_20_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_20_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_20_value_out)
+    );
+        
+    // HL_WEIGHTS_7_21: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_21_wreq;
+    wire hl_weights_7_21_wreq_filtered;
+    wire [7:0] hl_weights_7_21_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_21_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_21_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_21_value_out)
+    );
+        
+    // HL_WEIGHTS_7_22: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_22_wreq;
+    wire hl_weights_7_22_wreq_filtered;
+    wire [7:0] hl_weights_7_22_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_22_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_22_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_22_value_out)
+    );
+        
+    // HL_WEIGHTS_7_23: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_23_wreq;
+    wire hl_weights_7_23_wreq_filtered;
+    wire [7:0] hl_weights_7_23_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_23_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_23_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_23_value_out)
+    );
+        
+    // HL_WEIGHTS_7_24: Weights for neuron 7 of the hidden layer
+    reg hl_weights_7_24_wreq;
+    wire hl_weights_7_24_wreq_filtered;
+    wire [7:0] hl_weights_7_24_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_7_24_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_7_24_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_7_24_value_out)
+    );
+        
+    // HL_WEIGHTS_8_0: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_0_wreq;
+    wire hl_weights_8_0_wreq_filtered;
+    wire [7:0] hl_weights_8_0_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_0_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_0_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_0_value_out)
+    );
+        
+    // HL_WEIGHTS_8_1: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_1_wreq;
+    wire hl_weights_8_1_wreq_filtered;
+    wire [7:0] hl_weights_8_1_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_1_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_1_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_1_value_out)
+    );
+        
+    // HL_WEIGHTS_8_2: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_2_wreq;
+    wire hl_weights_8_2_wreq_filtered;
+    wire [7:0] hl_weights_8_2_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_2_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_2_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_2_value_out)
+    );
+        
+    // HL_WEIGHTS_8_3: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_3_wreq;
+    wire hl_weights_8_3_wreq_filtered;
+    wire [7:0] hl_weights_8_3_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_3_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_3_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_3_value_out)
+    );
+        
+    // HL_WEIGHTS_8_4: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_4_wreq;
+    wire hl_weights_8_4_wreq_filtered;
+    wire [7:0] hl_weights_8_4_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_4_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_4_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_4_value_out)
+    );
+        
+    // HL_WEIGHTS_8_5: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_5_wreq;
+    wire hl_weights_8_5_wreq_filtered;
+    wire [7:0] hl_weights_8_5_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_5_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_5_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_5_value_out)
+    );
+        
+    // HL_WEIGHTS_8_6: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_6_wreq;
+    wire hl_weights_8_6_wreq_filtered;
+    wire [7:0] hl_weights_8_6_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_6_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_6_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_6_value_out)
+    );
+        
+    // HL_WEIGHTS_8_7: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_7_wreq;
+    wire hl_weights_8_7_wreq_filtered;
+    wire [7:0] hl_weights_8_7_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_7_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_7_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_7_value_out)
+    );
+        
+    // HL_WEIGHTS_8_8: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_8_wreq;
+    wire hl_weights_8_8_wreq_filtered;
+    wire [7:0] hl_weights_8_8_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_8_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_8_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_8_value_out)
+    );
+        
+    // HL_WEIGHTS_8_9: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_9_wreq;
+    wire hl_weights_8_9_wreq_filtered;
+    wire [7:0] hl_weights_8_9_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_9_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_9_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_9_value_out)
+    );
+        
+    // HL_WEIGHTS_8_10: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_10_wreq;
+    wire hl_weights_8_10_wreq_filtered;
+    wire [7:0] hl_weights_8_10_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_10_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_10_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_10_value_out)
+    );
+        
+    // HL_WEIGHTS_8_11: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_11_wreq;
+    wire hl_weights_8_11_wreq_filtered;
+    wire [7:0] hl_weights_8_11_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_11_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_11_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_11_value_out)
+    );
+        
+    // HL_WEIGHTS_8_12: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_12_wreq;
+    wire hl_weights_8_12_wreq_filtered;
+    wire [7:0] hl_weights_8_12_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_12_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_12_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_12_value_out)
+    );
+        
+    // HL_WEIGHTS_8_13: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_13_wreq;
+    wire hl_weights_8_13_wreq_filtered;
+    wire [7:0] hl_weights_8_13_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_13_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_13_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_13_value_out)
+    );
+        
+    // HL_WEIGHTS_8_14: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_14_wreq;
+    wire hl_weights_8_14_wreq_filtered;
+    wire [7:0] hl_weights_8_14_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_14_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_14_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_14_value_out)
+    );
+        
+    // HL_WEIGHTS_8_15: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_15_wreq;
+    wire hl_weights_8_15_wreq_filtered;
+    wire [7:0] hl_weights_8_15_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_15_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_15_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_15_value_out)
+    );
+        
+    // HL_WEIGHTS_8_16: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_16_wreq;
+    wire hl_weights_8_16_wreq_filtered;
+    wire [7:0] hl_weights_8_16_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_16_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_16_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_16_value_out)
+    );
+        
+    // HL_WEIGHTS_8_17: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_17_wreq;
+    wire hl_weights_8_17_wreq_filtered;
+    wire [7:0] hl_weights_8_17_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_17_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_17_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_17_value_out)
+    );
+        
+    // HL_WEIGHTS_8_18: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_18_wreq;
+    wire hl_weights_8_18_wreq_filtered;
+    wire [7:0] hl_weights_8_18_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_18_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_18_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_18_value_out)
+    );
+        
+    // HL_WEIGHTS_8_19: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_19_wreq;
+    wire hl_weights_8_19_wreq_filtered;
+    wire [7:0] hl_weights_8_19_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_19_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_19_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_19_value_out)
+    );
+        
+    // HL_WEIGHTS_8_20: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_20_wreq;
+    wire hl_weights_8_20_wreq_filtered;
+    wire [7:0] hl_weights_8_20_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_20_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_20_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_20_value_out)
+    );
+        
+    // HL_WEIGHTS_8_21: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_21_wreq;
+    wire hl_weights_8_21_wreq_filtered;
+    wire [7:0] hl_weights_8_21_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_21_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_21_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_21_value_out)
+    );
+        
+    // HL_WEIGHTS_8_22: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_22_wreq;
+    wire hl_weights_8_22_wreq_filtered;
+    wire [7:0] hl_weights_8_22_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_22_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_22_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_22_value_out)
+    );
+        
+    // HL_WEIGHTS_8_23: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_23_wreq;
+    wire hl_weights_8_23_wreq_filtered;
+    wire [7:0] hl_weights_8_23_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_23_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_23_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_23_value_out)
+    );
+        
+    // HL_WEIGHTS_8_24: Weights for neuron 8 of the hidden layer
+    reg hl_weights_8_24_wreq;
+    wire hl_weights_8_24_wreq_filtered;
+    wire [7:0] hl_weights_8_24_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_8_24_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_8_24_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_8_24_value_out)
+    );
+        
+    // HL_WEIGHTS_9_0: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_0_wreq;
+    wire hl_weights_9_0_wreq_filtered;
+    wire [7:0] hl_weights_9_0_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_0_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_0_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_0_value_out)
+    );
+        
+    // HL_WEIGHTS_9_1: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_1_wreq;
+    wire hl_weights_9_1_wreq_filtered;
+    wire [7:0] hl_weights_9_1_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_1_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_1_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_1_value_out)
+    );
+        
+    // HL_WEIGHTS_9_2: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_2_wreq;
+    wire hl_weights_9_2_wreq_filtered;
+    wire [7:0] hl_weights_9_2_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_2_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_2_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_2_value_out)
+    );
+        
+    // HL_WEIGHTS_9_3: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_3_wreq;
+    wire hl_weights_9_3_wreq_filtered;
+    wire [7:0] hl_weights_9_3_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_3_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_3_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_3_value_out)
+    );
+        
+    // HL_WEIGHTS_9_4: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_4_wreq;
+    wire hl_weights_9_4_wreq_filtered;
+    wire [7:0] hl_weights_9_4_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_4_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_4_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_4_value_out)
+    );
+        
+    // HL_WEIGHTS_9_5: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_5_wreq;
+    wire hl_weights_9_5_wreq_filtered;
+    wire [7:0] hl_weights_9_5_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_5_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_5_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_5_value_out)
+    );
+        
+    // HL_WEIGHTS_9_6: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_6_wreq;
+    wire hl_weights_9_6_wreq_filtered;
+    wire [7:0] hl_weights_9_6_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_6_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_6_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_6_value_out)
+    );
+        
+    // HL_WEIGHTS_9_7: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_7_wreq;
+    wire hl_weights_9_7_wreq_filtered;
+    wire [7:0] hl_weights_9_7_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_7_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_7_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_7_value_out)
+    );
+        
+    // HL_WEIGHTS_9_8: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_8_wreq;
+    wire hl_weights_9_8_wreq_filtered;
+    wire [7:0] hl_weights_9_8_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_8_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_8_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_8_value_out)
+    );
+        
+    // HL_WEIGHTS_9_9: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_9_wreq;
+    wire hl_weights_9_9_wreq_filtered;
+    wire [7:0] hl_weights_9_9_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_9_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_9_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_9_value_out)
+    );
+        
+    // HL_WEIGHTS_9_10: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_10_wreq;
+    wire hl_weights_9_10_wreq_filtered;
+    wire [7:0] hl_weights_9_10_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_10_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_10_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_10_value_out)
+    );
+        
+    // HL_WEIGHTS_9_11: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_11_wreq;
+    wire hl_weights_9_11_wreq_filtered;
+    wire [7:0] hl_weights_9_11_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_11_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_11_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_11_value_out)
+    );
+        
+    // HL_WEIGHTS_9_12: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_12_wreq;
+    wire hl_weights_9_12_wreq_filtered;
+    wire [7:0] hl_weights_9_12_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_12_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_12_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_12_value_out)
+    );
+        
+    // HL_WEIGHTS_9_13: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_13_wreq;
+    wire hl_weights_9_13_wreq_filtered;
+    wire [7:0] hl_weights_9_13_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_13_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_13_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_13_value_out)
+    );
+        
+    // HL_WEIGHTS_9_14: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_14_wreq;
+    wire hl_weights_9_14_wreq_filtered;
+    wire [7:0] hl_weights_9_14_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_14_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_14_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_14_value_out)
+    );
+        
+    // HL_WEIGHTS_9_15: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_15_wreq;
+    wire hl_weights_9_15_wreq_filtered;
+    wire [7:0] hl_weights_9_15_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_15_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_15_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_15_value_out)
+    );
+        
+    // HL_WEIGHTS_9_16: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_16_wreq;
+    wire hl_weights_9_16_wreq_filtered;
+    wire [7:0] hl_weights_9_16_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_16_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_16_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_16_value_out)
+    );
+        
+    // HL_WEIGHTS_9_17: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_17_wreq;
+    wire hl_weights_9_17_wreq_filtered;
+    wire [7:0] hl_weights_9_17_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_17_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_17_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_17_value_out)
+    );
+        
+    // HL_WEIGHTS_9_18: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_18_wreq;
+    wire hl_weights_9_18_wreq_filtered;
+    wire [7:0] hl_weights_9_18_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_18_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_18_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_18_value_out)
+    );
+        
+    // HL_WEIGHTS_9_19: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_19_wreq;
+    wire hl_weights_9_19_wreq_filtered;
+    wire [7:0] hl_weights_9_19_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_19_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_19_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_19_value_out)
+    );
+        
+    // HL_WEIGHTS_9_20: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_20_wreq;
+    wire hl_weights_9_20_wreq_filtered;
+    wire [7:0] hl_weights_9_20_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_20_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_20_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_20_value_out)
+    );
+        
+    // HL_WEIGHTS_9_21: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_21_wreq;
+    wire hl_weights_9_21_wreq_filtered;
+    wire [7:0] hl_weights_9_21_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_21_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_21_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_21_value_out)
+    );
+        
+    // HL_WEIGHTS_9_22: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_22_wreq;
+    wire hl_weights_9_22_wreq_filtered;
+    wire [7:0] hl_weights_9_22_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_22_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_22_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_22_value_out)
+    );
+        
+    // HL_WEIGHTS_9_23: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_23_wreq;
+    wire hl_weights_9_23_wreq_filtered;
+    wire [7:0] hl_weights_9_23_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_23_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_23_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_23_value_out)
+    );
+        
+    // HL_WEIGHTS_9_24: Weights for neuron 9 of the hidden layer
+    reg hl_weights_9_24_wreq;
+    wire hl_weights_9_24_wreq_filtered;
+    wire [7:0] hl_weights_9_24_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_WEIGHTS_9_24_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_weights_9_24_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_weights_9_24_value_out)
+    );
+        
+    // HL_BIAS_0: Bias for neuron 0 of the hidden layer'
     reg hl_bias_0_wreq;
     wire hl_bias_0_wreq_filtered;
     wire [7:0] hl_bias_0_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_BIAS_0_REG (
         .CLK        (ACLK),
@@ -1069,13 +4234,13 @@ module CORTEZ_REGPOOL (
         .VALUE_OUT  (hl_bias_0_value_out)
     );
         
-    // HL_BIAS_1: Bias for neuron 1 of the hidden layer
+    // HL_BIAS_1: Bias for neuron 1 of the hidden layer'
     reg hl_bias_1_wreq;
     wire hl_bias_1_wreq_filtered;
     wire [7:0] hl_bias_1_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_BIAS_1_REG (
         .CLK        (ACLK),
@@ -1085,13 +4250,13 @@ module CORTEZ_REGPOOL (
         .VALUE_OUT  (hl_bias_1_value_out)
     );
         
-    // HL_BIAS_2: Bias for neuron 2 of the hidden layer
+    // HL_BIAS_2: Bias for neuron 2 of the hidden layer'
     reg hl_bias_2_wreq;
     wire hl_bias_2_wreq_filtered;
     wire [7:0] hl_bias_2_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_BIAS_2_REG (
         .CLK        (ACLK),
@@ -1101,13 +4266,13 @@ module CORTEZ_REGPOOL (
         .VALUE_OUT  (hl_bias_2_value_out)
     );
         
-    // HL_BIAS_3: Bias for neuron 3 of the hidden layer
+    // HL_BIAS_3: Bias for neuron 3 of the hidden layer'
     reg hl_bias_3_wreq;
     wire hl_bias_3_wreq_filtered;
     wire [7:0] hl_bias_3_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_BIAS_3_REG (
         .CLK        (ACLK),
@@ -1117,13 +4282,13 @@ module CORTEZ_REGPOOL (
         .VALUE_OUT  (hl_bias_3_value_out)
     );
         
-    // HL_BIAS_4: Bias for neuron 4 of the hidden layer
+    // HL_BIAS_4: Bias for neuron 4 of the hidden layer'
     reg hl_bias_4_wreq;
     wire hl_bias_4_wreq_filtered;
     wire [7:0] hl_bias_4_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_BIAS_4_REG (
         .CLK        (ACLK),
@@ -1133,13 +4298,13 @@ module CORTEZ_REGPOOL (
         .VALUE_OUT  (hl_bias_4_value_out)
     );
         
-    // HL_BIAS_5: Bias for neuron 5 of the hidden layer
+    // HL_BIAS_5: Bias for neuron 5 of the hidden layer'
     reg hl_bias_5_wreq;
     wire hl_bias_5_wreq_filtered;
     wire [7:0] hl_bias_5_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     HL_BIAS_5_REG (
         .CLK        (ACLK),
@@ -1149,13 +4314,77 @@ module CORTEZ_REGPOOL (
         .VALUE_OUT  (hl_bias_5_value_out)
     );
         
+    // HL_BIAS_6: Bias for neuron 6 of the hidden layer'
+    reg hl_bias_6_wreq;
+    wire hl_bias_6_wreq_filtered;
+    wire [7:0] hl_bias_6_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_BIAS_6_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_bias_6_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_bias_6_value_out)
+    );
+        
+    // HL_BIAS_7: Bias for neuron 7 of the hidden layer'
+    reg hl_bias_7_wreq;
+    wire hl_bias_7_wreq_filtered;
+    wire [7:0] hl_bias_7_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_BIAS_7_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_bias_7_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_bias_7_value_out)
+    );
+        
+    // HL_BIAS_8: Bias for neuron 8 of the hidden layer'
+    reg hl_bias_8_wreq;
+    wire hl_bias_8_wreq_filtered;
+    wire [7:0] hl_bias_8_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_BIAS_8_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_bias_8_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_bias_8_value_out)
+    );
+        
+    // HL_BIAS_9: Bias for neuron 9 of the hidden layer'
+    reg hl_bias_9_wreq;
+    wire hl_bias_9_wreq_filtered;
+    wire [7:0] hl_bias_9_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    HL_BIAS_9_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (hl_bias_9_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (hl_bias_9_value_out)
+    );
+        
     // OL_WEIGHTS_0_0: Weights for neuron 0 of the output layer
     reg ol_weights_0_0_wreq;
     wire ol_weights_0_0_wreq_filtered;
     wire [7:0] ol_weights_0_0_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_WEIGHTS_0_0_REG (
         .CLK        (ACLK),
@@ -1171,7 +4400,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] ol_weights_0_1_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_WEIGHTS_0_1_REG (
         .CLK        (ACLK),
@@ -1187,7 +4416,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] ol_weights_0_2_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_WEIGHTS_0_2_REG (
         .CLK        (ACLK),
@@ -1203,7 +4432,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] ol_weights_0_3_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_WEIGHTS_0_3_REG (
         .CLK        (ACLK),
@@ -1219,7 +4448,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] ol_weights_0_4_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_WEIGHTS_0_4_REG (
         .CLK        (ACLK),
@@ -1235,7 +4464,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] ol_weights_0_5_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_WEIGHTS_0_5_REG (
         .CLK        (ACLK),
@@ -1245,13 +4474,77 @@ module CORTEZ_REGPOOL (
         .VALUE_OUT  (ol_weights_0_5_value_out)
     );
         
+    // OL_WEIGHTS_0_6: Weights for neuron 0 of the output layer
+    reg ol_weights_0_6_wreq;
+    wire ol_weights_0_6_wreq_filtered;
+    wire [7:0] ol_weights_0_6_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_0_6_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_0_6_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_0_6_value_out)
+    );
+        
+    // OL_WEIGHTS_0_7: Weights for neuron 0 of the output layer
+    reg ol_weights_0_7_wreq;
+    wire ol_weights_0_7_wreq_filtered;
+    wire [7:0] ol_weights_0_7_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_0_7_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_0_7_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_0_7_value_out)
+    );
+        
+    // OL_WEIGHTS_0_8: Weights for neuron 0 of the output layer
+    reg ol_weights_0_8_wreq;
+    wire ol_weights_0_8_wreq_filtered;
+    wire [7:0] ol_weights_0_8_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_0_8_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_0_8_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_0_8_value_out)
+    );
+        
+    // OL_WEIGHTS_0_9: Weights for neuron 0 of the output layer
+    reg ol_weights_0_9_wreq;
+    wire ol_weights_0_9_wreq_filtered;
+    wire [7:0] ol_weights_0_9_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_0_9_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_0_9_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_0_9_value_out)
+    );
+        
     // OL_WEIGHTS_1_0: Weights for neuron 1 of the output layer
     reg ol_weights_1_0_wreq;
     wire ol_weights_1_0_wreq_filtered;
     wire [7:0] ol_weights_1_0_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_WEIGHTS_1_0_REG (
         .CLK        (ACLK),
@@ -1267,7 +4560,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] ol_weights_1_1_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_WEIGHTS_1_1_REG (
         .CLK        (ACLK),
@@ -1283,7 +4576,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] ol_weights_1_2_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_WEIGHTS_1_2_REG (
         .CLK        (ACLK),
@@ -1299,7 +4592,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] ol_weights_1_3_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_WEIGHTS_1_3_REG (
         .CLK        (ACLK),
@@ -1315,7 +4608,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] ol_weights_1_4_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_WEIGHTS_1_4_REG (
         .CLK        (ACLK),
@@ -1331,7 +4624,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] ol_weights_1_5_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_WEIGHTS_1_5_REG (
         .CLK        (ACLK),
@@ -1341,13 +4634,77 @@ module CORTEZ_REGPOOL (
         .VALUE_OUT  (ol_weights_1_5_value_out)
     );
         
+    // OL_WEIGHTS_1_6: Weights for neuron 1 of the output layer
+    reg ol_weights_1_6_wreq;
+    wire ol_weights_1_6_wreq_filtered;
+    wire [7:0] ol_weights_1_6_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_1_6_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_1_6_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_1_6_value_out)
+    );
+        
+    // OL_WEIGHTS_1_7: Weights for neuron 1 of the output layer
+    reg ol_weights_1_7_wreq;
+    wire ol_weights_1_7_wreq_filtered;
+    wire [7:0] ol_weights_1_7_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_1_7_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_1_7_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_1_7_value_out)
+    );
+        
+    // OL_WEIGHTS_1_8: Weights for neuron 1 of the output layer
+    reg ol_weights_1_8_wreq;
+    wire ol_weights_1_8_wreq_filtered;
+    wire [7:0] ol_weights_1_8_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_1_8_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_1_8_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_1_8_value_out)
+    );
+        
+    // OL_WEIGHTS_1_9: Weights for neuron 1 of the output layer
+    reg ol_weights_1_9_wreq;
+    wire ol_weights_1_9_wreq_filtered;
+    wire [7:0] ol_weights_1_9_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_1_9_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_1_9_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_1_9_value_out)
+    );
+        
     // OL_WEIGHTS_2_0: Weights for neuron 2 of the output layer
     reg ol_weights_2_0_wreq;
     wire ol_weights_2_0_wreq_filtered;
     wire [7:0] ol_weights_2_0_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_WEIGHTS_2_0_REG (
         .CLK        (ACLK),
@@ -1363,7 +4720,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] ol_weights_2_1_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_WEIGHTS_2_1_REG (
         .CLK        (ACLK),
@@ -1379,7 +4736,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] ol_weights_2_2_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_WEIGHTS_2_2_REG (
         .CLK        (ACLK),
@@ -1395,7 +4752,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] ol_weights_2_3_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_WEIGHTS_2_3_REG (
         .CLK        (ACLK),
@@ -1411,7 +4768,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] ol_weights_2_4_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_WEIGHTS_2_4_REG (
         .CLK        (ACLK),
@@ -1427,7 +4784,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] ol_weights_2_5_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_WEIGHTS_2_5_REG (
         .CLK        (ACLK),
@@ -1437,13 +4794,397 @@ module CORTEZ_REGPOOL (
         .VALUE_OUT  (ol_weights_2_5_value_out)
     );
         
+    // OL_WEIGHTS_2_6: Weights for neuron 2 of the output layer
+    reg ol_weights_2_6_wreq;
+    wire ol_weights_2_6_wreq_filtered;
+    wire [7:0] ol_weights_2_6_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_2_6_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_2_6_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_2_6_value_out)
+    );
+        
+    // OL_WEIGHTS_2_7: Weights for neuron 2 of the output layer
+    reg ol_weights_2_7_wreq;
+    wire ol_weights_2_7_wreq_filtered;
+    wire [7:0] ol_weights_2_7_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_2_7_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_2_7_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_2_7_value_out)
+    );
+        
+    // OL_WEIGHTS_2_8: Weights for neuron 2 of the output layer
+    reg ol_weights_2_8_wreq;
+    wire ol_weights_2_8_wreq_filtered;
+    wire [7:0] ol_weights_2_8_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_2_8_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_2_8_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_2_8_value_out)
+    );
+        
+    // OL_WEIGHTS_2_9: Weights for neuron 2 of the output layer
+    reg ol_weights_2_9_wreq;
+    wire ol_weights_2_9_wreq_filtered;
+    wire [7:0] ol_weights_2_9_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_2_9_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_2_9_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_2_9_value_out)
+    );
+        
+    // OL_WEIGHTS_3_0: Weights for neuron 3 of the output layer
+    reg ol_weights_3_0_wreq;
+    wire ol_weights_3_0_wreq_filtered;
+    wire [7:0] ol_weights_3_0_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_3_0_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_3_0_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_3_0_value_out)
+    );
+        
+    // OL_WEIGHTS_3_1: Weights for neuron 3 of the output layer
+    reg ol_weights_3_1_wreq;
+    wire ol_weights_3_1_wreq_filtered;
+    wire [7:0] ol_weights_3_1_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_3_1_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_3_1_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_3_1_value_out)
+    );
+        
+    // OL_WEIGHTS_3_2: Weights for neuron 3 of the output layer
+    reg ol_weights_3_2_wreq;
+    wire ol_weights_3_2_wreq_filtered;
+    wire [7:0] ol_weights_3_2_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_3_2_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_3_2_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_3_2_value_out)
+    );
+        
+    // OL_WEIGHTS_3_3: Weights for neuron 3 of the output layer
+    reg ol_weights_3_3_wreq;
+    wire ol_weights_3_3_wreq_filtered;
+    wire [7:0] ol_weights_3_3_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_3_3_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_3_3_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_3_3_value_out)
+    );
+        
+    // OL_WEIGHTS_3_4: Weights for neuron 3 of the output layer
+    reg ol_weights_3_4_wreq;
+    wire ol_weights_3_4_wreq_filtered;
+    wire [7:0] ol_weights_3_4_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_3_4_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_3_4_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_3_4_value_out)
+    );
+        
+    // OL_WEIGHTS_3_5: Weights for neuron 3 of the output layer
+    reg ol_weights_3_5_wreq;
+    wire ol_weights_3_5_wreq_filtered;
+    wire [7:0] ol_weights_3_5_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_3_5_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_3_5_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_3_5_value_out)
+    );
+        
+    // OL_WEIGHTS_3_6: Weights for neuron 3 of the output layer
+    reg ol_weights_3_6_wreq;
+    wire ol_weights_3_6_wreq_filtered;
+    wire [7:0] ol_weights_3_6_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_3_6_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_3_6_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_3_6_value_out)
+    );
+        
+    // OL_WEIGHTS_3_7: Weights for neuron 3 of the output layer
+    reg ol_weights_3_7_wreq;
+    wire ol_weights_3_7_wreq_filtered;
+    wire [7:0] ol_weights_3_7_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_3_7_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_3_7_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_3_7_value_out)
+    );
+        
+    // OL_WEIGHTS_3_8: Weights for neuron 3 of the output layer
+    reg ol_weights_3_8_wreq;
+    wire ol_weights_3_8_wreq_filtered;
+    wire [7:0] ol_weights_3_8_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_3_8_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_3_8_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_3_8_value_out)
+    );
+        
+    // OL_WEIGHTS_3_9: Weights for neuron 3 of the output layer
+    reg ol_weights_3_9_wreq;
+    wire ol_weights_3_9_wreq_filtered;
+    wire [7:0] ol_weights_3_9_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_3_9_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_3_9_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_3_9_value_out)
+    );
+        
+    // OL_WEIGHTS_4_0: Weights for neuron 4 of the output layer
+    reg ol_weights_4_0_wreq;
+    wire ol_weights_4_0_wreq_filtered;
+    wire [7:0] ol_weights_4_0_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_4_0_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_4_0_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_4_0_value_out)
+    );
+        
+    // OL_WEIGHTS_4_1: Weights for neuron 4 of the output layer
+    reg ol_weights_4_1_wreq;
+    wire ol_weights_4_1_wreq_filtered;
+    wire [7:0] ol_weights_4_1_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_4_1_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_4_1_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_4_1_value_out)
+    );
+        
+    // OL_WEIGHTS_4_2: Weights for neuron 4 of the output layer
+    reg ol_weights_4_2_wreq;
+    wire ol_weights_4_2_wreq_filtered;
+    wire [7:0] ol_weights_4_2_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_4_2_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_4_2_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_4_2_value_out)
+    );
+        
+    // OL_WEIGHTS_4_3: Weights for neuron 4 of the output layer
+    reg ol_weights_4_3_wreq;
+    wire ol_weights_4_3_wreq_filtered;
+    wire [7:0] ol_weights_4_3_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_4_3_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_4_3_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_4_3_value_out)
+    );
+        
+    // OL_WEIGHTS_4_4: Weights for neuron 4 of the output layer
+    reg ol_weights_4_4_wreq;
+    wire ol_weights_4_4_wreq_filtered;
+    wire [7:0] ol_weights_4_4_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_4_4_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_4_4_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_4_4_value_out)
+    );
+        
+    // OL_WEIGHTS_4_5: Weights for neuron 4 of the output layer
+    reg ol_weights_4_5_wreq;
+    wire ol_weights_4_5_wreq_filtered;
+    wire [7:0] ol_weights_4_5_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_4_5_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_4_5_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_4_5_value_out)
+    );
+        
+    // OL_WEIGHTS_4_6: Weights for neuron 4 of the output layer
+    reg ol_weights_4_6_wreq;
+    wire ol_weights_4_6_wreq_filtered;
+    wire [7:0] ol_weights_4_6_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_4_6_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_4_6_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_4_6_value_out)
+    );
+        
+    // OL_WEIGHTS_4_7: Weights for neuron 4 of the output layer
+    reg ol_weights_4_7_wreq;
+    wire ol_weights_4_7_wreq_filtered;
+    wire [7:0] ol_weights_4_7_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_4_7_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_4_7_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_4_7_value_out)
+    );
+        
+    // OL_WEIGHTS_4_8: Weights for neuron 4 of the output layer
+    reg ol_weights_4_8_wreq;
+    wire ol_weights_4_8_wreq_filtered;
+    wire [7:0] ol_weights_4_8_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_4_8_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_4_8_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_4_8_value_out)
+    );
+        
+    // OL_WEIGHTS_4_9: Weights for neuron 4 of the output layer
+    reg ol_weights_4_9_wreq;
+    wire ol_weights_4_9_wreq_filtered;
+    wire [7:0] ol_weights_4_9_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_WEIGHTS_4_9_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_weights_4_9_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_weights_4_9_value_out)
+    );
+        
     // OL_BIAS_0: Bias for neuron 0 of the output layer
     reg ol_bias_0_wreq;
     wire ol_bias_0_wreq_filtered;
     wire [7:0] ol_bias_0_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_BIAS_0_REG (
         .CLK        (ACLK),
@@ -1459,7 +5200,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] ol_bias_1_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_BIAS_1_REG (
         .CLK        (ACLK),
@@ -1475,7 +5216,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] ol_bias_2_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OL_BIAS_2_REG (
         .CLK        (ACLK),
@@ -1485,13 +5226,45 @@ module CORTEZ_REGPOOL (
         .VALUE_OUT  (ol_bias_2_value_out)
     );
         
+    // OL_BIAS_3: Bias for neuron 3 of the output layer
+    reg ol_bias_3_wreq;
+    wire ol_bias_3_wreq_filtered;
+    wire [7:0] ol_bias_3_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_BIAS_3_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_bias_3_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_bias_3_value_out)
+    );
+        
+    // OL_BIAS_4: Bias for neuron 4 of the output layer
+    reg ol_bias_4_wreq;
+    wire ol_bias_4_wreq_filtered;
+    wire [7:0] ol_bias_4_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OL_BIAS_4_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (ol_bias_4_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (ol_bias_4_value_out)
+    );
+        
     // INPUT_GRID_0: Pixel 0 of the input character
     reg input_grid_0_wreq;
     wire input_grid_0_wreq_filtered;
     wire [7:0] input_grid_0_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     INPUT_GRID_0_REG (
         .CLK        (ACLK),
@@ -1507,7 +5280,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] input_grid_1_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     INPUT_GRID_1_REG (
         .CLK        (ACLK),
@@ -1523,7 +5296,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] input_grid_2_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     INPUT_GRID_2_REG (
         .CLK        (ACLK),
@@ -1539,7 +5312,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] input_grid_3_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     INPUT_GRID_3_REG (
         .CLK        (ACLK),
@@ -1555,7 +5328,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] input_grid_4_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     INPUT_GRID_4_REG (
         .CLK        (ACLK),
@@ -1571,7 +5344,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] input_grid_5_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     INPUT_GRID_5_REG (
         .CLK        (ACLK),
@@ -1587,7 +5360,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] input_grid_6_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     INPUT_GRID_6_REG (
         .CLK        (ACLK),
@@ -1603,7 +5376,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] input_grid_7_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     INPUT_GRID_7_REG (
         .CLK        (ACLK),
@@ -1619,7 +5392,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] input_grid_8_value_out;
     RW_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     INPUT_GRID_8_REG (
         .CLK        (ACLK),
@@ -1629,12 +5402,268 @@ module CORTEZ_REGPOOL (
         .VALUE_OUT  (input_grid_8_value_out)
     );
         
+    // INPUT_GRID_9: Pixel 9 of the input character
+    reg input_grid_9_wreq;
+    wire input_grid_9_wreq_filtered;
+    wire [7:0] input_grid_9_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_9_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_9_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_9_value_out)
+    );
+        
+    // INPUT_GRID_10: Pixel 10 of the input character
+    reg input_grid_10_wreq;
+    wire input_grid_10_wreq_filtered;
+    wire [7:0] input_grid_10_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_10_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_10_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_10_value_out)
+    );
+        
+    // INPUT_GRID_11: Pixel 11 of the input character
+    reg input_grid_11_wreq;
+    wire input_grid_11_wreq_filtered;
+    wire [7:0] input_grid_11_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_11_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_11_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_11_value_out)
+    );
+        
+    // INPUT_GRID_12: Pixel 12 of the input character
+    reg input_grid_12_wreq;
+    wire input_grid_12_wreq_filtered;
+    wire [7:0] input_grid_12_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_12_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_12_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_12_value_out)
+    );
+        
+    // INPUT_GRID_13: Pixel 13 of the input character
+    reg input_grid_13_wreq;
+    wire input_grid_13_wreq_filtered;
+    wire [7:0] input_grid_13_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_13_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_13_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_13_value_out)
+    );
+        
+    // INPUT_GRID_14: Pixel 14 of the input character
+    reg input_grid_14_wreq;
+    wire input_grid_14_wreq_filtered;
+    wire [7:0] input_grid_14_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_14_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_14_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_14_value_out)
+    );
+        
+    // INPUT_GRID_15: Pixel 15 of the input character
+    reg input_grid_15_wreq;
+    wire input_grid_15_wreq_filtered;
+    wire [7:0] input_grid_15_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_15_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_15_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_15_value_out)
+    );
+        
+    // INPUT_GRID_16: Pixel 16 of the input character
+    reg input_grid_16_wreq;
+    wire input_grid_16_wreq_filtered;
+    wire [7:0] input_grid_16_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_16_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_16_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_16_value_out)
+    );
+        
+    // INPUT_GRID_17: Pixel 17 of the input character
+    reg input_grid_17_wreq;
+    wire input_grid_17_wreq_filtered;
+    wire [7:0] input_grid_17_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_17_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_17_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_17_value_out)
+    );
+        
+    // INPUT_GRID_18: Pixel 18 of the input character
+    reg input_grid_18_wreq;
+    wire input_grid_18_wreq_filtered;
+    wire [7:0] input_grid_18_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_18_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_18_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_18_value_out)
+    );
+        
+    // INPUT_GRID_19: Pixel 19 of the input character
+    reg input_grid_19_wreq;
+    wire input_grid_19_wreq_filtered;
+    wire [7:0] input_grid_19_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_19_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_19_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_19_value_out)
+    );
+        
+    // INPUT_GRID_20: Pixel 20 of the input character
+    reg input_grid_20_wreq;
+    wire input_grid_20_wreq_filtered;
+    wire [7:0] input_grid_20_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_20_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_20_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_20_value_out)
+    );
+        
+    // INPUT_GRID_21: Pixel 21 of the input character
+    reg input_grid_21_wreq;
+    wire input_grid_21_wreq_filtered;
+    wire [7:0] input_grid_21_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_21_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_21_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_21_value_out)
+    );
+        
+    // INPUT_GRID_22: Pixel 22 of the input character
+    reg input_grid_22_wreq;
+    wire input_grid_22_wreq_filtered;
+    wire [7:0] input_grid_22_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_22_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_22_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_22_value_out)
+    );
+        
+    // INPUT_GRID_23: Pixel 23 of the input character
+    reg input_grid_23_wreq;
+    wire input_grid_23_wreq_filtered;
+    wire [7:0] input_grid_23_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_23_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_23_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_23_value_out)
+    );
+        
+    // INPUT_GRID_24: Pixel 24 of the input character
+    reg input_grid_24_wreq;
+    wire input_grid_24_wreq_filtered;
+    wire [7:0] input_grid_24_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_24_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_24_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_24_value_out)
+    );
+        
     // OUTPUT_SOLUTION_0: Digit 0 of the output solution
     wire [7:0] output_solution_0_value_in;
     wire [7:0] output_solution_0_value_out;
     RO_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OUTPUT_SOLUTION_0_REG (
         .CLK        (ACLK),
@@ -1648,7 +5677,7 @@ module CORTEZ_REGPOOL (
     wire [7:0] output_solution_1_value_out;
     RO_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OUTPUT_SOLUTION_1_REG (
         .CLK        (ACLK),
@@ -1662,13 +5691,41 @@ module CORTEZ_REGPOOL (
     wire [7:0] output_solution_2_value_out;
     RO_REG #(
         .DATA_WIDTH (8),
-        .HAS_RESET  (1)
+        .HAS_RESET  (0)
     )
     OUTPUT_SOLUTION_2_REG (
         .CLK        (ACLK),
         .RSTN       (ARESETN),
         .VALUE_IN   (output_solution_2_value_in),
         .VALUE_OUT  (output_solution_2_value_out)
+    );
+        
+    // OUTPUT_SOLUTION_3: Digit 3 of the output solution
+    wire [7:0] output_solution_3_value_in;
+    wire [7:0] output_solution_3_value_out;
+    RO_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OUTPUT_SOLUTION_3_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .VALUE_IN   (output_solution_3_value_in),
+        .VALUE_OUT  (output_solution_3_value_out)
+    );
+        
+    // OUTPUT_SOLUTION_4: Digit 4 of the output solution
+    wire [7:0] output_solution_4_value_in;
+    wire [7:0] output_solution_4_value_out;
+    RO_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    OUTPUT_SOLUTION_4_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .VALUE_IN   (output_solution_4_value_in),
+        .VALUE_OUT  (output_solution_4_value_out)
     );
         
     // CORE_CTRL: Core control register
@@ -1703,32 +5760,18 @@ module CORTEZ_REGPOOL (
         .VALUE_OUT  (core_debug_info_value_out)
     );
         
-    // CORE_STATUS_RESET: Core status register
-    wire [7:0] core_status_reset_value_in;
-    wire [7:0] core_status_reset_value_out;
+    // CORE_STATUS: Core status register
+    wire [7:0] core_status_value_in;
+    wire [7:0] core_status_value_out;
     RO_REG #(
         .DATA_WIDTH (8),
         .HAS_RESET  (1)
     )
-    CORE_STATUS_RESET_REG (
+    CORE_STATUS_REG (
         .CLK        (ACLK),
         .RSTN       (ARESETN),
-        .VALUE_IN   (core_status_reset_value_in),
-        .VALUE_OUT  (core_status_reset_value_out)
-    );
-        
-    // CORE_STATUS_NO_RESET: Core status register
-    wire [7:0] core_status_no_reset_value_in;
-    wire [7:0] core_status_no_reset_value_out;
-    RO_REG #(
-        .DATA_WIDTH (8),
-        .HAS_RESET  (0)
-    )
-    CORE_STATUS_NO_RESET_REG (
-        .CLK        (ACLK),
-        .RSTN       (ARESETN),
-        .VALUE_IN   (core_status_no_reset_value_in),
-        .VALUE_OUT  (core_status_no_reset_value_out)
+        .VALUE_IN   (core_status_value_in),
+        .VALUE_OUT  (core_status_value_out)
     );
         
     // SEVENSEG_0: 7-segments display contents: .gfedcba
@@ -1810,6 +5853,22 @@ module CORTEZ_REGPOOL (
         hl_weights_0_6_wreq <= 1'b0;
         hl_weights_0_7_wreq <= 1'b0;
         hl_weights_0_8_wreq <= 1'b0;
+        hl_weights_0_9_wreq <= 1'b0;
+        hl_weights_0_10_wreq <= 1'b0;
+        hl_weights_0_11_wreq <= 1'b0;
+        hl_weights_0_12_wreq <= 1'b0;
+        hl_weights_0_13_wreq <= 1'b0;
+        hl_weights_0_14_wreq <= 1'b0;
+        hl_weights_0_15_wreq <= 1'b0;
+        hl_weights_0_16_wreq <= 1'b0;
+        hl_weights_0_17_wreq <= 1'b0;
+        hl_weights_0_18_wreq <= 1'b0;
+        hl_weights_0_19_wreq <= 1'b0;
+        hl_weights_0_20_wreq <= 1'b0;
+        hl_weights_0_21_wreq <= 1'b0;
+        hl_weights_0_22_wreq <= 1'b0;
+        hl_weights_0_23_wreq <= 1'b0;
+        hl_weights_0_24_wreq <= 1'b0;
         hl_weights_1_0_wreq <= 1'b0;
         hl_weights_1_1_wreq <= 1'b0;
         hl_weights_1_2_wreq <= 1'b0;
@@ -1819,6 +5878,22 @@ module CORTEZ_REGPOOL (
         hl_weights_1_6_wreq <= 1'b0;
         hl_weights_1_7_wreq <= 1'b0;
         hl_weights_1_8_wreq <= 1'b0;
+        hl_weights_1_9_wreq <= 1'b0;
+        hl_weights_1_10_wreq <= 1'b0;
+        hl_weights_1_11_wreq <= 1'b0;
+        hl_weights_1_12_wreq <= 1'b0;
+        hl_weights_1_13_wreq <= 1'b0;
+        hl_weights_1_14_wreq <= 1'b0;
+        hl_weights_1_15_wreq <= 1'b0;
+        hl_weights_1_16_wreq <= 1'b0;
+        hl_weights_1_17_wreq <= 1'b0;
+        hl_weights_1_18_wreq <= 1'b0;
+        hl_weights_1_19_wreq <= 1'b0;
+        hl_weights_1_20_wreq <= 1'b0;
+        hl_weights_1_21_wreq <= 1'b0;
+        hl_weights_1_22_wreq <= 1'b0;
+        hl_weights_1_23_wreq <= 1'b0;
+        hl_weights_1_24_wreq <= 1'b0;
         hl_weights_2_0_wreq <= 1'b0;
         hl_weights_2_1_wreq <= 1'b0;
         hl_weights_2_2_wreq <= 1'b0;
@@ -1828,6 +5903,22 @@ module CORTEZ_REGPOOL (
         hl_weights_2_6_wreq <= 1'b0;
         hl_weights_2_7_wreq <= 1'b0;
         hl_weights_2_8_wreq <= 1'b0;
+        hl_weights_2_9_wreq <= 1'b0;
+        hl_weights_2_10_wreq <= 1'b0;
+        hl_weights_2_11_wreq <= 1'b0;
+        hl_weights_2_12_wreq <= 1'b0;
+        hl_weights_2_13_wreq <= 1'b0;
+        hl_weights_2_14_wreq <= 1'b0;
+        hl_weights_2_15_wreq <= 1'b0;
+        hl_weights_2_16_wreq <= 1'b0;
+        hl_weights_2_17_wreq <= 1'b0;
+        hl_weights_2_18_wreq <= 1'b0;
+        hl_weights_2_19_wreq <= 1'b0;
+        hl_weights_2_20_wreq <= 1'b0;
+        hl_weights_2_21_wreq <= 1'b0;
+        hl_weights_2_22_wreq <= 1'b0;
+        hl_weights_2_23_wreq <= 1'b0;
+        hl_weights_2_24_wreq <= 1'b0;
         hl_weights_3_0_wreq <= 1'b0;
         hl_weights_3_1_wreq <= 1'b0;
         hl_weights_3_2_wreq <= 1'b0;
@@ -1837,6 +5928,22 @@ module CORTEZ_REGPOOL (
         hl_weights_3_6_wreq <= 1'b0;
         hl_weights_3_7_wreq <= 1'b0;
         hl_weights_3_8_wreq <= 1'b0;
+        hl_weights_3_9_wreq <= 1'b0;
+        hl_weights_3_10_wreq <= 1'b0;
+        hl_weights_3_11_wreq <= 1'b0;
+        hl_weights_3_12_wreq <= 1'b0;
+        hl_weights_3_13_wreq <= 1'b0;
+        hl_weights_3_14_wreq <= 1'b0;
+        hl_weights_3_15_wreq <= 1'b0;
+        hl_weights_3_16_wreq <= 1'b0;
+        hl_weights_3_17_wreq <= 1'b0;
+        hl_weights_3_18_wreq <= 1'b0;
+        hl_weights_3_19_wreq <= 1'b0;
+        hl_weights_3_20_wreq <= 1'b0;
+        hl_weights_3_21_wreq <= 1'b0;
+        hl_weights_3_22_wreq <= 1'b0;
+        hl_weights_3_23_wreq <= 1'b0;
+        hl_weights_3_24_wreq <= 1'b0;
         hl_weights_4_0_wreq <= 1'b0;
         hl_weights_4_1_wreq <= 1'b0;
         hl_weights_4_2_wreq <= 1'b0;
@@ -1846,6 +5953,22 @@ module CORTEZ_REGPOOL (
         hl_weights_4_6_wreq <= 1'b0;
         hl_weights_4_7_wreq <= 1'b0;
         hl_weights_4_8_wreq <= 1'b0;
+        hl_weights_4_9_wreq <= 1'b0;
+        hl_weights_4_10_wreq <= 1'b0;
+        hl_weights_4_11_wreq <= 1'b0;
+        hl_weights_4_12_wreq <= 1'b0;
+        hl_weights_4_13_wreq <= 1'b0;
+        hl_weights_4_14_wreq <= 1'b0;
+        hl_weights_4_15_wreq <= 1'b0;
+        hl_weights_4_16_wreq <= 1'b0;
+        hl_weights_4_17_wreq <= 1'b0;
+        hl_weights_4_18_wreq <= 1'b0;
+        hl_weights_4_19_wreq <= 1'b0;
+        hl_weights_4_20_wreq <= 1'b0;
+        hl_weights_4_21_wreq <= 1'b0;
+        hl_weights_4_22_wreq <= 1'b0;
+        hl_weights_4_23_wreq <= 1'b0;
+        hl_weights_4_24_wreq <= 1'b0;
         hl_weights_5_0_wreq <= 1'b0;
         hl_weights_5_1_wreq <= 1'b0;
         hl_weights_5_2_wreq <= 1'b0;
@@ -1855,33 +5978,187 @@ module CORTEZ_REGPOOL (
         hl_weights_5_6_wreq <= 1'b0;
         hl_weights_5_7_wreq <= 1'b0;
         hl_weights_5_8_wreq <= 1'b0;
+        hl_weights_5_9_wreq <= 1'b0;
+        hl_weights_5_10_wreq <= 1'b0;
+        hl_weights_5_11_wreq <= 1'b0;
+        hl_weights_5_12_wreq <= 1'b0;
+        hl_weights_5_13_wreq <= 1'b0;
+        hl_weights_5_14_wreq <= 1'b0;
+        hl_weights_5_15_wreq <= 1'b0;
+        hl_weights_5_16_wreq <= 1'b0;
+        hl_weights_5_17_wreq <= 1'b0;
+        hl_weights_5_18_wreq <= 1'b0;
+        hl_weights_5_19_wreq <= 1'b0;
+        hl_weights_5_20_wreq <= 1'b0;
+        hl_weights_5_21_wreq <= 1'b0;
+        hl_weights_5_22_wreq <= 1'b0;
+        hl_weights_5_23_wreq <= 1'b0;
+        hl_weights_5_24_wreq <= 1'b0;
+        hl_weights_6_0_wreq <= 1'b0;
+        hl_weights_6_1_wreq <= 1'b0;
+        hl_weights_6_2_wreq <= 1'b0;
+        hl_weights_6_3_wreq <= 1'b0;
+        hl_weights_6_4_wreq <= 1'b0;
+        hl_weights_6_5_wreq <= 1'b0;
+        hl_weights_6_6_wreq <= 1'b0;
+        hl_weights_6_7_wreq <= 1'b0;
+        hl_weights_6_8_wreq <= 1'b0;
+        hl_weights_6_9_wreq <= 1'b0;
+        hl_weights_6_10_wreq <= 1'b0;
+        hl_weights_6_11_wreq <= 1'b0;
+        hl_weights_6_12_wreq <= 1'b0;
+        hl_weights_6_13_wreq <= 1'b0;
+        hl_weights_6_14_wreq <= 1'b0;
+        hl_weights_6_15_wreq <= 1'b0;
+        hl_weights_6_16_wreq <= 1'b0;
+        hl_weights_6_17_wreq <= 1'b0;
+        hl_weights_6_18_wreq <= 1'b0;
+        hl_weights_6_19_wreq <= 1'b0;
+        hl_weights_6_20_wreq <= 1'b0;
+        hl_weights_6_21_wreq <= 1'b0;
+        hl_weights_6_22_wreq <= 1'b0;
+        hl_weights_6_23_wreq <= 1'b0;
+        hl_weights_6_24_wreq <= 1'b0;
+        hl_weights_7_0_wreq <= 1'b0;
+        hl_weights_7_1_wreq <= 1'b0;
+        hl_weights_7_2_wreq <= 1'b0;
+        hl_weights_7_3_wreq <= 1'b0;
+        hl_weights_7_4_wreq <= 1'b0;
+        hl_weights_7_5_wreq <= 1'b0;
+        hl_weights_7_6_wreq <= 1'b0;
+        hl_weights_7_7_wreq <= 1'b0;
+        hl_weights_7_8_wreq <= 1'b0;
+        hl_weights_7_9_wreq <= 1'b0;
+        hl_weights_7_10_wreq <= 1'b0;
+        hl_weights_7_11_wreq <= 1'b0;
+        hl_weights_7_12_wreq <= 1'b0;
+        hl_weights_7_13_wreq <= 1'b0;
+        hl_weights_7_14_wreq <= 1'b0;
+        hl_weights_7_15_wreq <= 1'b0;
+        hl_weights_7_16_wreq <= 1'b0;
+        hl_weights_7_17_wreq <= 1'b0;
+        hl_weights_7_18_wreq <= 1'b0;
+        hl_weights_7_19_wreq <= 1'b0;
+        hl_weights_7_20_wreq <= 1'b0;
+        hl_weights_7_21_wreq <= 1'b0;
+        hl_weights_7_22_wreq <= 1'b0;
+        hl_weights_7_23_wreq <= 1'b0;
+        hl_weights_7_24_wreq <= 1'b0;
+        hl_weights_8_0_wreq <= 1'b0;
+        hl_weights_8_1_wreq <= 1'b0;
+        hl_weights_8_2_wreq <= 1'b0;
+        hl_weights_8_3_wreq <= 1'b0;
+        hl_weights_8_4_wreq <= 1'b0;
+        hl_weights_8_5_wreq <= 1'b0;
+        hl_weights_8_6_wreq <= 1'b0;
+        hl_weights_8_7_wreq <= 1'b0;
+        hl_weights_8_8_wreq <= 1'b0;
+        hl_weights_8_9_wreq <= 1'b0;
+        hl_weights_8_10_wreq <= 1'b0;
+        hl_weights_8_11_wreq <= 1'b0;
+        hl_weights_8_12_wreq <= 1'b0;
+        hl_weights_8_13_wreq <= 1'b0;
+        hl_weights_8_14_wreq <= 1'b0;
+        hl_weights_8_15_wreq <= 1'b0;
+        hl_weights_8_16_wreq <= 1'b0;
+        hl_weights_8_17_wreq <= 1'b0;
+        hl_weights_8_18_wreq <= 1'b0;
+        hl_weights_8_19_wreq <= 1'b0;
+        hl_weights_8_20_wreq <= 1'b0;
+        hl_weights_8_21_wreq <= 1'b0;
+        hl_weights_8_22_wreq <= 1'b0;
+        hl_weights_8_23_wreq <= 1'b0;
+        hl_weights_8_24_wreq <= 1'b0;
+        hl_weights_9_0_wreq <= 1'b0;
+        hl_weights_9_1_wreq <= 1'b0;
+        hl_weights_9_2_wreq <= 1'b0;
+        hl_weights_9_3_wreq <= 1'b0;
+        hl_weights_9_4_wreq <= 1'b0;
+        hl_weights_9_5_wreq <= 1'b0;
+        hl_weights_9_6_wreq <= 1'b0;
+        hl_weights_9_7_wreq <= 1'b0;
+        hl_weights_9_8_wreq <= 1'b0;
+        hl_weights_9_9_wreq <= 1'b0;
+        hl_weights_9_10_wreq <= 1'b0;
+        hl_weights_9_11_wreq <= 1'b0;
+        hl_weights_9_12_wreq <= 1'b0;
+        hl_weights_9_13_wreq <= 1'b0;
+        hl_weights_9_14_wreq <= 1'b0;
+        hl_weights_9_15_wreq <= 1'b0;
+        hl_weights_9_16_wreq <= 1'b0;
+        hl_weights_9_17_wreq <= 1'b0;
+        hl_weights_9_18_wreq <= 1'b0;
+        hl_weights_9_19_wreq <= 1'b0;
+        hl_weights_9_20_wreq <= 1'b0;
+        hl_weights_9_21_wreq <= 1'b0;
+        hl_weights_9_22_wreq <= 1'b0;
+        hl_weights_9_23_wreq <= 1'b0;
+        hl_weights_9_24_wreq <= 1'b0;
         hl_bias_0_wreq <= 1'b0;
         hl_bias_1_wreq <= 1'b0;
         hl_bias_2_wreq <= 1'b0;
         hl_bias_3_wreq <= 1'b0;
         hl_bias_4_wreq <= 1'b0;
         hl_bias_5_wreq <= 1'b0;
+        hl_bias_6_wreq <= 1'b0;
+        hl_bias_7_wreq <= 1'b0;
+        hl_bias_8_wreq <= 1'b0;
+        hl_bias_9_wreq <= 1'b0;
         ol_weights_0_0_wreq <= 1'b0;
         ol_weights_0_1_wreq <= 1'b0;
         ol_weights_0_2_wreq <= 1'b0;
         ol_weights_0_3_wreq <= 1'b0;
         ol_weights_0_4_wreq <= 1'b0;
         ol_weights_0_5_wreq <= 1'b0;
+        ol_weights_0_6_wreq <= 1'b0;
+        ol_weights_0_7_wreq <= 1'b0;
+        ol_weights_0_8_wreq <= 1'b0;
+        ol_weights_0_9_wreq <= 1'b0;
         ol_weights_1_0_wreq <= 1'b0;
         ol_weights_1_1_wreq <= 1'b0;
         ol_weights_1_2_wreq <= 1'b0;
         ol_weights_1_3_wreq <= 1'b0;
         ol_weights_1_4_wreq <= 1'b0;
         ol_weights_1_5_wreq <= 1'b0;
+        ol_weights_1_6_wreq <= 1'b0;
+        ol_weights_1_7_wreq <= 1'b0;
+        ol_weights_1_8_wreq <= 1'b0;
+        ol_weights_1_9_wreq <= 1'b0;
         ol_weights_2_0_wreq <= 1'b0;
         ol_weights_2_1_wreq <= 1'b0;
         ol_weights_2_2_wreq <= 1'b0;
         ol_weights_2_3_wreq <= 1'b0;
         ol_weights_2_4_wreq <= 1'b0;
         ol_weights_2_5_wreq <= 1'b0;
+        ol_weights_2_6_wreq <= 1'b0;
+        ol_weights_2_7_wreq <= 1'b0;
+        ol_weights_2_8_wreq <= 1'b0;
+        ol_weights_2_9_wreq <= 1'b0;
+        ol_weights_3_0_wreq <= 1'b0;
+        ol_weights_3_1_wreq <= 1'b0;
+        ol_weights_3_2_wreq <= 1'b0;
+        ol_weights_3_3_wreq <= 1'b0;
+        ol_weights_3_4_wreq <= 1'b0;
+        ol_weights_3_5_wreq <= 1'b0;
+        ol_weights_3_6_wreq <= 1'b0;
+        ol_weights_3_7_wreq <= 1'b0;
+        ol_weights_3_8_wreq <= 1'b0;
+        ol_weights_3_9_wreq <= 1'b0;
+        ol_weights_4_0_wreq <= 1'b0;
+        ol_weights_4_1_wreq <= 1'b0;
+        ol_weights_4_2_wreq <= 1'b0;
+        ol_weights_4_3_wreq <= 1'b0;
+        ol_weights_4_4_wreq <= 1'b0;
+        ol_weights_4_5_wreq <= 1'b0;
+        ol_weights_4_6_wreq <= 1'b0;
+        ol_weights_4_7_wreq <= 1'b0;
+        ol_weights_4_8_wreq <= 1'b0;
+        ol_weights_4_9_wreq <= 1'b0;
         ol_bias_0_wreq <= 1'b0;
         ol_bias_1_wreq <= 1'b0;
         ol_bias_2_wreq <= 1'b0;
+        ol_bias_3_wreq <= 1'b0;
+        ol_bias_4_wreq <= 1'b0;
         input_grid_0_wreq <= 1'b0;
         input_grid_1_wreq <= 1'b0;
         input_grid_2_wreq <= 1'b0;
@@ -1891,6 +6168,22 @@ module CORTEZ_REGPOOL (
         input_grid_6_wreq <= 1'b0;
         input_grid_7_wreq <= 1'b0;
         input_grid_8_wreq <= 1'b0;
+        input_grid_9_wreq <= 1'b0;
+        input_grid_10_wreq <= 1'b0;
+        input_grid_11_wreq <= 1'b0;
+        input_grid_12_wreq <= 1'b0;
+        input_grid_13_wreq <= 1'b0;
+        input_grid_14_wreq <= 1'b0;
+        input_grid_15_wreq <= 1'b0;
+        input_grid_16_wreq <= 1'b0;
+        input_grid_17_wreq <= 1'b0;
+        input_grid_18_wreq <= 1'b0;
+        input_grid_19_wreq <= 1'b0;
+        input_grid_20_wreq <= 1'b0;
+        input_grid_21_wreq <= 1'b0;
+        input_grid_22_wreq <= 1'b0;
+        input_grid_23_wreq <= 1'b0;
+        input_grid_24_wreq <= 1'b0;
         core_ctrl_wreq <= 1'b0;
         core_debug_info_wreq <= 1'b0;
         sevenseg_0_wreq <= 1'b0;
@@ -1912,6 +6205,22 @@ module CORTEZ_REGPOOL (
             `HL_WEIGHTS_0_6_OFFSET : begin hl_weights_0_6_wreq <= 1'b1; end
             `HL_WEIGHTS_0_7_OFFSET : begin hl_weights_0_7_wreq <= 1'b1; end
             `HL_WEIGHTS_0_8_OFFSET : begin hl_weights_0_8_wreq <= 1'b1; end
+            `HL_WEIGHTS_0_9_OFFSET : begin hl_weights_0_9_wreq <= 1'b1; end
+            `HL_WEIGHTS_0_10_OFFSET : begin hl_weights_0_10_wreq <= 1'b1; end
+            `HL_WEIGHTS_0_11_OFFSET : begin hl_weights_0_11_wreq <= 1'b1; end
+            `HL_WEIGHTS_0_12_OFFSET : begin hl_weights_0_12_wreq <= 1'b1; end
+            `HL_WEIGHTS_0_13_OFFSET : begin hl_weights_0_13_wreq <= 1'b1; end
+            `HL_WEIGHTS_0_14_OFFSET : begin hl_weights_0_14_wreq <= 1'b1; end
+            `HL_WEIGHTS_0_15_OFFSET : begin hl_weights_0_15_wreq <= 1'b1; end
+            `HL_WEIGHTS_0_16_OFFSET : begin hl_weights_0_16_wreq <= 1'b1; end
+            `HL_WEIGHTS_0_17_OFFSET : begin hl_weights_0_17_wreq <= 1'b1; end
+            `HL_WEIGHTS_0_18_OFFSET : begin hl_weights_0_18_wreq <= 1'b1; end
+            `HL_WEIGHTS_0_19_OFFSET : begin hl_weights_0_19_wreq <= 1'b1; end
+            `HL_WEIGHTS_0_20_OFFSET : begin hl_weights_0_20_wreq <= 1'b1; end
+            `HL_WEIGHTS_0_21_OFFSET : begin hl_weights_0_21_wreq <= 1'b1; end
+            `HL_WEIGHTS_0_22_OFFSET : begin hl_weights_0_22_wreq <= 1'b1; end
+            `HL_WEIGHTS_0_23_OFFSET : begin hl_weights_0_23_wreq <= 1'b1; end
+            `HL_WEIGHTS_0_24_OFFSET : begin hl_weights_0_24_wreq <= 1'b1; end
             `HL_WEIGHTS_1_0_OFFSET : begin hl_weights_1_0_wreq <= 1'b1; end
             `HL_WEIGHTS_1_1_OFFSET : begin hl_weights_1_1_wreq <= 1'b1; end
             `HL_WEIGHTS_1_2_OFFSET : begin hl_weights_1_2_wreq <= 1'b1; end
@@ -1921,6 +6230,22 @@ module CORTEZ_REGPOOL (
             `HL_WEIGHTS_1_6_OFFSET : begin hl_weights_1_6_wreq <= 1'b1; end
             `HL_WEIGHTS_1_7_OFFSET : begin hl_weights_1_7_wreq <= 1'b1; end
             `HL_WEIGHTS_1_8_OFFSET : begin hl_weights_1_8_wreq <= 1'b1; end
+            `HL_WEIGHTS_1_9_OFFSET : begin hl_weights_1_9_wreq <= 1'b1; end
+            `HL_WEIGHTS_1_10_OFFSET : begin hl_weights_1_10_wreq <= 1'b1; end
+            `HL_WEIGHTS_1_11_OFFSET : begin hl_weights_1_11_wreq <= 1'b1; end
+            `HL_WEIGHTS_1_12_OFFSET : begin hl_weights_1_12_wreq <= 1'b1; end
+            `HL_WEIGHTS_1_13_OFFSET : begin hl_weights_1_13_wreq <= 1'b1; end
+            `HL_WEIGHTS_1_14_OFFSET : begin hl_weights_1_14_wreq <= 1'b1; end
+            `HL_WEIGHTS_1_15_OFFSET : begin hl_weights_1_15_wreq <= 1'b1; end
+            `HL_WEIGHTS_1_16_OFFSET : begin hl_weights_1_16_wreq <= 1'b1; end
+            `HL_WEIGHTS_1_17_OFFSET : begin hl_weights_1_17_wreq <= 1'b1; end
+            `HL_WEIGHTS_1_18_OFFSET : begin hl_weights_1_18_wreq <= 1'b1; end
+            `HL_WEIGHTS_1_19_OFFSET : begin hl_weights_1_19_wreq <= 1'b1; end
+            `HL_WEIGHTS_1_20_OFFSET : begin hl_weights_1_20_wreq <= 1'b1; end
+            `HL_WEIGHTS_1_21_OFFSET : begin hl_weights_1_21_wreq <= 1'b1; end
+            `HL_WEIGHTS_1_22_OFFSET : begin hl_weights_1_22_wreq <= 1'b1; end
+            `HL_WEIGHTS_1_23_OFFSET : begin hl_weights_1_23_wreq <= 1'b1; end
+            `HL_WEIGHTS_1_24_OFFSET : begin hl_weights_1_24_wreq <= 1'b1; end
             `HL_WEIGHTS_2_0_OFFSET : begin hl_weights_2_0_wreq <= 1'b1; end
             `HL_WEIGHTS_2_1_OFFSET : begin hl_weights_2_1_wreq <= 1'b1; end
             `HL_WEIGHTS_2_2_OFFSET : begin hl_weights_2_2_wreq <= 1'b1; end
@@ -1930,6 +6255,22 @@ module CORTEZ_REGPOOL (
             `HL_WEIGHTS_2_6_OFFSET : begin hl_weights_2_6_wreq <= 1'b1; end
             `HL_WEIGHTS_2_7_OFFSET : begin hl_weights_2_7_wreq <= 1'b1; end
             `HL_WEIGHTS_2_8_OFFSET : begin hl_weights_2_8_wreq <= 1'b1; end
+            `HL_WEIGHTS_2_9_OFFSET : begin hl_weights_2_9_wreq <= 1'b1; end
+            `HL_WEIGHTS_2_10_OFFSET : begin hl_weights_2_10_wreq <= 1'b1; end
+            `HL_WEIGHTS_2_11_OFFSET : begin hl_weights_2_11_wreq <= 1'b1; end
+            `HL_WEIGHTS_2_12_OFFSET : begin hl_weights_2_12_wreq <= 1'b1; end
+            `HL_WEIGHTS_2_13_OFFSET : begin hl_weights_2_13_wreq <= 1'b1; end
+            `HL_WEIGHTS_2_14_OFFSET : begin hl_weights_2_14_wreq <= 1'b1; end
+            `HL_WEIGHTS_2_15_OFFSET : begin hl_weights_2_15_wreq <= 1'b1; end
+            `HL_WEIGHTS_2_16_OFFSET : begin hl_weights_2_16_wreq <= 1'b1; end
+            `HL_WEIGHTS_2_17_OFFSET : begin hl_weights_2_17_wreq <= 1'b1; end
+            `HL_WEIGHTS_2_18_OFFSET : begin hl_weights_2_18_wreq <= 1'b1; end
+            `HL_WEIGHTS_2_19_OFFSET : begin hl_weights_2_19_wreq <= 1'b1; end
+            `HL_WEIGHTS_2_20_OFFSET : begin hl_weights_2_20_wreq <= 1'b1; end
+            `HL_WEIGHTS_2_21_OFFSET : begin hl_weights_2_21_wreq <= 1'b1; end
+            `HL_WEIGHTS_2_22_OFFSET : begin hl_weights_2_22_wreq <= 1'b1; end
+            `HL_WEIGHTS_2_23_OFFSET : begin hl_weights_2_23_wreq <= 1'b1; end
+            `HL_WEIGHTS_2_24_OFFSET : begin hl_weights_2_24_wreq <= 1'b1; end
             `HL_WEIGHTS_3_0_OFFSET : begin hl_weights_3_0_wreq <= 1'b1; end
             `HL_WEIGHTS_3_1_OFFSET : begin hl_weights_3_1_wreq <= 1'b1; end
             `HL_WEIGHTS_3_2_OFFSET : begin hl_weights_3_2_wreq <= 1'b1; end
@@ -1939,6 +6280,22 @@ module CORTEZ_REGPOOL (
             `HL_WEIGHTS_3_6_OFFSET : begin hl_weights_3_6_wreq <= 1'b1; end
             `HL_WEIGHTS_3_7_OFFSET : begin hl_weights_3_7_wreq <= 1'b1; end
             `HL_WEIGHTS_3_8_OFFSET : begin hl_weights_3_8_wreq <= 1'b1; end
+            `HL_WEIGHTS_3_9_OFFSET : begin hl_weights_3_9_wreq <= 1'b1; end
+            `HL_WEIGHTS_3_10_OFFSET : begin hl_weights_3_10_wreq <= 1'b1; end
+            `HL_WEIGHTS_3_11_OFFSET : begin hl_weights_3_11_wreq <= 1'b1; end
+            `HL_WEIGHTS_3_12_OFFSET : begin hl_weights_3_12_wreq <= 1'b1; end
+            `HL_WEIGHTS_3_13_OFFSET : begin hl_weights_3_13_wreq <= 1'b1; end
+            `HL_WEIGHTS_3_14_OFFSET : begin hl_weights_3_14_wreq <= 1'b1; end
+            `HL_WEIGHTS_3_15_OFFSET : begin hl_weights_3_15_wreq <= 1'b1; end
+            `HL_WEIGHTS_3_16_OFFSET : begin hl_weights_3_16_wreq <= 1'b1; end
+            `HL_WEIGHTS_3_17_OFFSET : begin hl_weights_3_17_wreq <= 1'b1; end
+            `HL_WEIGHTS_3_18_OFFSET : begin hl_weights_3_18_wreq <= 1'b1; end
+            `HL_WEIGHTS_3_19_OFFSET : begin hl_weights_3_19_wreq <= 1'b1; end
+            `HL_WEIGHTS_3_20_OFFSET : begin hl_weights_3_20_wreq <= 1'b1; end
+            `HL_WEIGHTS_3_21_OFFSET : begin hl_weights_3_21_wreq <= 1'b1; end
+            `HL_WEIGHTS_3_22_OFFSET : begin hl_weights_3_22_wreq <= 1'b1; end
+            `HL_WEIGHTS_3_23_OFFSET : begin hl_weights_3_23_wreq <= 1'b1; end
+            `HL_WEIGHTS_3_24_OFFSET : begin hl_weights_3_24_wreq <= 1'b1; end
             `HL_WEIGHTS_4_0_OFFSET : begin hl_weights_4_0_wreq <= 1'b1; end
             `HL_WEIGHTS_4_1_OFFSET : begin hl_weights_4_1_wreq <= 1'b1; end
             `HL_WEIGHTS_4_2_OFFSET : begin hl_weights_4_2_wreq <= 1'b1; end
@@ -1948,6 +6305,22 @@ module CORTEZ_REGPOOL (
             `HL_WEIGHTS_4_6_OFFSET : begin hl_weights_4_6_wreq <= 1'b1; end
             `HL_WEIGHTS_4_7_OFFSET : begin hl_weights_4_7_wreq <= 1'b1; end
             `HL_WEIGHTS_4_8_OFFSET : begin hl_weights_4_8_wreq <= 1'b1; end
+            `HL_WEIGHTS_4_9_OFFSET : begin hl_weights_4_9_wreq <= 1'b1; end
+            `HL_WEIGHTS_4_10_OFFSET : begin hl_weights_4_10_wreq <= 1'b1; end
+            `HL_WEIGHTS_4_11_OFFSET : begin hl_weights_4_11_wreq <= 1'b1; end
+            `HL_WEIGHTS_4_12_OFFSET : begin hl_weights_4_12_wreq <= 1'b1; end
+            `HL_WEIGHTS_4_13_OFFSET : begin hl_weights_4_13_wreq <= 1'b1; end
+            `HL_WEIGHTS_4_14_OFFSET : begin hl_weights_4_14_wreq <= 1'b1; end
+            `HL_WEIGHTS_4_15_OFFSET : begin hl_weights_4_15_wreq <= 1'b1; end
+            `HL_WEIGHTS_4_16_OFFSET : begin hl_weights_4_16_wreq <= 1'b1; end
+            `HL_WEIGHTS_4_17_OFFSET : begin hl_weights_4_17_wreq <= 1'b1; end
+            `HL_WEIGHTS_4_18_OFFSET : begin hl_weights_4_18_wreq <= 1'b1; end
+            `HL_WEIGHTS_4_19_OFFSET : begin hl_weights_4_19_wreq <= 1'b1; end
+            `HL_WEIGHTS_4_20_OFFSET : begin hl_weights_4_20_wreq <= 1'b1; end
+            `HL_WEIGHTS_4_21_OFFSET : begin hl_weights_4_21_wreq <= 1'b1; end
+            `HL_WEIGHTS_4_22_OFFSET : begin hl_weights_4_22_wreq <= 1'b1; end
+            `HL_WEIGHTS_4_23_OFFSET : begin hl_weights_4_23_wreq <= 1'b1; end
+            `HL_WEIGHTS_4_24_OFFSET : begin hl_weights_4_24_wreq <= 1'b1; end
             `HL_WEIGHTS_5_0_OFFSET : begin hl_weights_5_0_wreq <= 1'b1; end
             `HL_WEIGHTS_5_1_OFFSET : begin hl_weights_5_1_wreq <= 1'b1; end
             `HL_WEIGHTS_5_2_OFFSET : begin hl_weights_5_2_wreq <= 1'b1; end
@@ -1957,33 +6330,187 @@ module CORTEZ_REGPOOL (
             `HL_WEIGHTS_5_6_OFFSET : begin hl_weights_5_6_wreq <= 1'b1; end
             `HL_WEIGHTS_5_7_OFFSET : begin hl_weights_5_7_wreq <= 1'b1; end
             `HL_WEIGHTS_5_8_OFFSET : begin hl_weights_5_8_wreq <= 1'b1; end
+            `HL_WEIGHTS_5_9_OFFSET : begin hl_weights_5_9_wreq <= 1'b1; end
+            `HL_WEIGHTS_5_10_OFFSET : begin hl_weights_5_10_wreq <= 1'b1; end
+            `HL_WEIGHTS_5_11_OFFSET : begin hl_weights_5_11_wreq <= 1'b1; end
+            `HL_WEIGHTS_5_12_OFFSET : begin hl_weights_5_12_wreq <= 1'b1; end
+            `HL_WEIGHTS_5_13_OFFSET : begin hl_weights_5_13_wreq <= 1'b1; end
+            `HL_WEIGHTS_5_14_OFFSET : begin hl_weights_5_14_wreq <= 1'b1; end
+            `HL_WEIGHTS_5_15_OFFSET : begin hl_weights_5_15_wreq <= 1'b1; end
+            `HL_WEIGHTS_5_16_OFFSET : begin hl_weights_5_16_wreq <= 1'b1; end
+            `HL_WEIGHTS_5_17_OFFSET : begin hl_weights_5_17_wreq <= 1'b1; end
+            `HL_WEIGHTS_5_18_OFFSET : begin hl_weights_5_18_wreq <= 1'b1; end
+            `HL_WEIGHTS_5_19_OFFSET : begin hl_weights_5_19_wreq <= 1'b1; end
+            `HL_WEIGHTS_5_20_OFFSET : begin hl_weights_5_20_wreq <= 1'b1; end
+            `HL_WEIGHTS_5_21_OFFSET : begin hl_weights_5_21_wreq <= 1'b1; end
+            `HL_WEIGHTS_5_22_OFFSET : begin hl_weights_5_22_wreq <= 1'b1; end
+            `HL_WEIGHTS_5_23_OFFSET : begin hl_weights_5_23_wreq <= 1'b1; end
+            `HL_WEIGHTS_5_24_OFFSET : begin hl_weights_5_24_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_0_OFFSET : begin hl_weights_6_0_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_1_OFFSET : begin hl_weights_6_1_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_2_OFFSET : begin hl_weights_6_2_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_3_OFFSET : begin hl_weights_6_3_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_4_OFFSET : begin hl_weights_6_4_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_5_OFFSET : begin hl_weights_6_5_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_6_OFFSET : begin hl_weights_6_6_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_7_OFFSET : begin hl_weights_6_7_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_8_OFFSET : begin hl_weights_6_8_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_9_OFFSET : begin hl_weights_6_9_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_10_OFFSET : begin hl_weights_6_10_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_11_OFFSET : begin hl_weights_6_11_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_12_OFFSET : begin hl_weights_6_12_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_13_OFFSET : begin hl_weights_6_13_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_14_OFFSET : begin hl_weights_6_14_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_15_OFFSET : begin hl_weights_6_15_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_16_OFFSET : begin hl_weights_6_16_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_17_OFFSET : begin hl_weights_6_17_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_18_OFFSET : begin hl_weights_6_18_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_19_OFFSET : begin hl_weights_6_19_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_20_OFFSET : begin hl_weights_6_20_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_21_OFFSET : begin hl_weights_6_21_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_22_OFFSET : begin hl_weights_6_22_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_23_OFFSET : begin hl_weights_6_23_wreq <= 1'b1; end
+            `HL_WEIGHTS_6_24_OFFSET : begin hl_weights_6_24_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_0_OFFSET : begin hl_weights_7_0_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_1_OFFSET : begin hl_weights_7_1_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_2_OFFSET : begin hl_weights_7_2_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_3_OFFSET : begin hl_weights_7_3_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_4_OFFSET : begin hl_weights_7_4_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_5_OFFSET : begin hl_weights_7_5_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_6_OFFSET : begin hl_weights_7_6_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_7_OFFSET : begin hl_weights_7_7_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_8_OFFSET : begin hl_weights_7_8_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_9_OFFSET : begin hl_weights_7_9_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_10_OFFSET : begin hl_weights_7_10_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_11_OFFSET : begin hl_weights_7_11_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_12_OFFSET : begin hl_weights_7_12_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_13_OFFSET : begin hl_weights_7_13_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_14_OFFSET : begin hl_weights_7_14_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_15_OFFSET : begin hl_weights_7_15_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_16_OFFSET : begin hl_weights_7_16_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_17_OFFSET : begin hl_weights_7_17_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_18_OFFSET : begin hl_weights_7_18_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_19_OFFSET : begin hl_weights_7_19_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_20_OFFSET : begin hl_weights_7_20_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_21_OFFSET : begin hl_weights_7_21_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_22_OFFSET : begin hl_weights_7_22_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_23_OFFSET : begin hl_weights_7_23_wreq <= 1'b1; end
+            `HL_WEIGHTS_7_24_OFFSET : begin hl_weights_7_24_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_0_OFFSET : begin hl_weights_8_0_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_1_OFFSET : begin hl_weights_8_1_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_2_OFFSET : begin hl_weights_8_2_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_3_OFFSET : begin hl_weights_8_3_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_4_OFFSET : begin hl_weights_8_4_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_5_OFFSET : begin hl_weights_8_5_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_6_OFFSET : begin hl_weights_8_6_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_7_OFFSET : begin hl_weights_8_7_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_8_OFFSET : begin hl_weights_8_8_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_9_OFFSET : begin hl_weights_8_9_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_10_OFFSET : begin hl_weights_8_10_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_11_OFFSET : begin hl_weights_8_11_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_12_OFFSET : begin hl_weights_8_12_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_13_OFFSET : begin hl_weights_8_13_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_14_OFFSET : begin hl_weights_8_14_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_15_OFFSET : begin hl_weights_8_15_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_16_OFFSET : begin hl_weights_8_16_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_17_OFFSET : begin hl_weights_8_17_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_18_OFFSET : begin hl_weights_8_18_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_19_OFFSET : begin hl_weights_8_19_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_20_OFFSET : begin hl_weights_8_20_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_21_OFFSET : begin hl_weights_8_21_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_22_OFFSET : begin hl_weights_8_22_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_23_OFFSET : begin hl_weights_8_23_wreq <= 1'b1; end
+            `HL_WEIGHTS_8_24_OFFSET : begin hl_weights_8_24_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_0_OFFSET : begin hl_weights_9_0_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_1_OFFSET : begin hl_weights_9_1_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_2_OFFSET : begin hl_weights_9_2_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_3_OFFSET : begin hl_weights_9_3_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_4_OFFSET : begin hl_weights_9_4_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_5_OFFSET : begin hl_weights_9_5_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_6_OFFSET : begin hl_weights_9_6_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_7_OFFSET : begin hl_weights_9_7_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_8_OFFSET : begin hl_weights_9_8_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_9_OFFSET : begin hl_weights_9_9_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_10_OFFSET : begin hl_weights_9_10_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_11_OFFSET : begin hl_weights_9_11_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_12_OFFSET : begin hl_weights_9_12_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_13_OFFSET : begin hl_weights_9_13_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_14_OFFSET : begin hl_weights_9_14_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_15_OFFSET : begin hl_weights_9_15_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_16_OFFSET : begin hl_weights_9_16_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_17_OFFSET : begin hl_weights_9_17_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_18_OFFSET : begin hl_weights_9_18_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_19_OFFSET : begin hl_weights_9_19_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_20_OFFSET : begin hl_weights_9_20_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_21_OFFSET : begin hl_weights_9_21_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_22_OFFSET : begin hl_weights_9_22_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_23_OFFSET : begin hl_weights_9_23_wreq <= 1'b1; end
+            `HL_WEIGHTS_9_24_OFFSET : begin hl_weights_9_24_wreq <= 1'b1; end
             `HL_BIAS_0_OFFSET : begin hl_bias_0_wreq <= 1'b1; end
             `HL_BIAS_1_OFFSET : begin hl_bias_1_wreq <= 1'b1; end
             `HL_BIAS_2_OFFSET : begin hl_bias_2_wreq <= 1'b1; end
             `HL_BIAS_3_OFFSET : begin hl_bias_3_wreq <= 1'b1; end
             `HL_BIAS_4_OFFSET : begin hl_bias_4_wreq <= 1'b1; end
             `HL_BIAS_5_OFFSET : begin hl_bias_5_wreq <= 1'b1; end
+            `HL_BIAS_6_OFFSET : begin hl_bias_6_wreq <= 1'b1; end
+            `HL_BIAS_7_OFFSET : begin hl_bias_7_wreq <= 1'b1; end
+            `HL_BIAS_8_OFFSET : begin hl_bias_8_wreq <= 1'b1; end
+            `HL_BIAS_9_OFFSET : begin hl_bias_9_wreq <= 1'b1; end
             `OL_WEIGHTS_0_0_OFFSET : begin ol_weights_0_0_wreq <= 1'b1; end
             `OL_WEIGHTS_0_1_OFFSET : begin ol_weights_0_1_wreq <= 1'b1; end
             `OL_WEIGHTS_0_2_OFFSET : begin ol_weights_0_2_wreq <= 1'b1; end
             `OL_WEIGHTS_0_3_OFFSET : begin ol_weights_0_3_wreq <= 1'b1; end
             `OL_WEIGHTS_0_4_OFFSET : begin ol_weights_0_4_wreq <= 1'b1; end
             `OL_WEIGHTS_0_5_OFFSET : begin ol_weights_0_5_wreq <= 1'b1; end
+            `OL_WEIGHTS_0_6_OFFSET : begin ol_weights_0_6_wreq <= 1'b1; end
+            `OL_WEIGHTS_0_7_OFFSET : begin ol_weights_0_7_wreq <= 1'b1; end
+            `OL_WEIGHTS_0_8_OFFSET : begin ol_weights_0_8_wreq <= 1'b1; end
+            `OL_WEIGHTS_0_9_OFFSET : begin ol_weights_0_9_wreq <= 1'b1; end
             `OL_WEIGHTS_1_0_OFFSET : begin ol_weights_1_0_wreq <= 1'b1; end
             `OL_WEIGHTS_1_1_OFFSET : begin ol_weights_1_1_wreq <= 1'b1; end
             `OL_WEIGHTS_1_2_OFFSET : begin ol_weights_1_2_wreq <= 1'b1; end
             `OL_WEIGHTS_1_3_OFFSET : begin ol_weights_1_3_wreq <= 1'b1; end
             `OL_WEIGHTS_1_4_OFFSET : begin ol_weights_1_4_wreq <= 1'b1; end
             `OL_WEIGHTS_1_5_OFFSET : begin ol_weights_1_5_wreq <= 1'b1; end
+            `OL_WEIGHTS_1_6_OFFSET : begin ol_weights_1_6_wreq <= 1'b1; end
+            `OL_WEIGHTS_1_7_OFFSET : begin ol_weights_1_7_wreq <= 1'b1; end
+            `OL_WEIGHTS_1_8_OFFSET : begin ol_weights_1_8_wreq <= 1'b1; end
+            `OL_WEIGHTS_1_9_OFFSET : begin ol_weights_1_9_wreq <= 1'b1; end
             `OL_WEIGHTS_2_0_OFFSET : begin ol_weights_2_0_wreq <= 1'b1; end
             `OL_WEIGHTS_2_1_OFFSET : begin ol_weights_2_1_wreq <= 1'b1; end
             `OL_WEIGHTS_2_2_OFFSET : begin ol_weights_2_2_wreq <= 1'b1; end
             `OL_WEIGHTS_2_3_OFFSET : begin ol_weights_2_3_wreq <= 1'b1; end
             `OL_WEIGHTS_2_4_OFFSET : begin ol_weights_2_4_wreq <= 1'b1; end
             `OL_WEIGHTS_2_5_OFFSET : begin ol_weights_2_5_wreq <= 1'b1; end
+            `OL_WEIGHTS_2_6_OFFSET : begin ol_weights_2_6_wreq <= 1'b1; end
+            `OL_WEIGHTS_2_7_OFFSET : begin ol_weights_2_7_wreq <= 1'b1; end
+            `OL_WEIGHTS_2_8_OFFSET : begin ol_weights_2_8_wreq <= 1'b1; end
+            `OL_WEIGHTS_2_9_OFFSET : begin ol_weights_2_9_wreq <= 1'b1; end
+            `OL_WEIGHTS_3_0_OFFSET : begin ol_weights_3_0_wreq <= 1'b1; end
+            `OL_WEIGHTS_3_1_OFFSET : begin ol_weights_3_1_wreq <= 1'b1; end
+            `OL_WEIGHTS_3_2_OFFSET : begin ol_weights_3_2_wreq <= 1'b1; end
+            `OL_WEIGHTS_3_3_OFFSET : begin ol_weights_3_3_wreq <= 1'b1; end
+            `OL_WEIGHTS_3_4_OFFSET : begin ol_weights_3_4_wreq <= 1'b1; end
+            `OL_WEIGHTS_3_5_OFFSET : begin ol_weights_3_5_wreq <= 1'b1; end
+            `OL_WEIGHTS_3_6_OFFSET : begin ol_weights_3_6_wreq <= 1'b1; end
+            `OL_WEIGHTS_3_7_OFFSET : begin ol_weights_3_7_wreq <= 1'b1; end
+            `OL_WEIGHTS_3_8_OFFSET : begin ol_weights_3_8_wreq <= 1'b1; end
+            `OL_WEIGHTS_3_9_OFFSET : begin ol_weights_3_9_wreq <= 1'b1; end
+            `OL_WEIGHTS_4_0_OFFSET : begin ol_weights_4_0_wreq <= 1'b1; end
+            `OL_WEIGHTS_4_1_OFFSET : begin ol_weights_4_1_wreq <= 1'b1; end
+            `OL_WEIGHTS_4_2_OFFSET : begin ol_weights_4_2_wreq <= 1'b1; end
+            `OL_WEIGHTS_4_3_OFFSET : begin ol_weights_4_3_wreq <= 1'b1; end
+            `OL_WEIGHTS_4_4_OFFSET : begin ol_weights_4_4_wreq <= 1'b1; end
+            `OL_WEIGHTS_4_5_OFFSET : begin ol_weights_4_5_wreq <= 1'b1; end
+            `OL_WEIGHTS_4_6_OFFSET : begin ol_weights_4_6_wreq <= 1'b1; end
+            `OL_WEIGHTS_4_7_OFFSET : begin ol_weights_4_7_wreq <= 1'b1; end
+            `OL_WEIGHTS_4_8_OFFSET : begin ol_weights_4_8_wreq <= 1'b1; end
+            `OL_WEIGHTS_4_9_OFFSET : begin ol_weights_4_9_wreq <= 1'b1; end
             `OL_BIAS_0_OFFSET : begin ol_bias_0_wreq <= 1'b1; end
             `OL_BIAS_1_OFFSET : begin ol_bias_1_wreq <= 1'b1; end
             `OL_BIAS_2_OFFSET : begin ol_bias_2_wreq <= 1'b1; end
+            `OL_BIAS_3_OFFSET : begin ol_bias_3_wreq <= 1'b1; end
+            `OL_BIAS_4_OFFSET : begin ol_bias_4_wreq <= 1'b1; end
             `INPUT_GRID_0_OFFSET : begin input_grid_0_wreq <= 1'b1; end
             `INPUT_GRID_1_OFFSET : begin input_grid_1_wreq <= 1'b1; end
             `INPUT_GRID_2_OFFSET : begin input_grid_2_wreq <= 1'b1; end
@@ -1993,6 +6520,22 @@ module CORTEZ_REGPOOL (
             `INPUT_GRID_6_OFFSET : begin input_grid_6_wreq <= 1'b1; end
             `INPUT_GRID_7_OFFSET : begin input_grid_7_wreq <= 1'b1; end
             `INPUT_GRID_8_OFFSET : begin input_grid_8_wreq <= 1'b1; end
+            `INPUT_GRID_9_OFFSET : begin input_grid_9_wreq <= 1'b1; end
+            `INPUT_GRID_10_OFFSET : begin input_grid_10_wreq <= 1'b1; end
+            `INPUT_GRID_11_OFFSET : begin input_grid_11_wreq <= 1'b1; end
+            `INPUT_GRID_12_OFFSET : begin input_grid_12_wreq <= 1'b1; end
+            `INPUT_GRID_13_OFFSET : begin input_grid_13_wreq <= 1'b1; end
+            `INPUT_GRID_14_OFFSET : begin input_grid_14_wreq <= 1'b1; end
+            `INPUT_GRID_15_OFFSET : begin input_grid_15_wreq <= 1'b1; end
+            `INPUT_GRID_16_OFFSET : begin input_grid_16_wreq <= 1'b1; end
+            `INPUT_GRID_17_OFFSET : begin input_grid_17_wreq <= 1'b1; end
+            `INPUT_GRID_18_OFFSET : begin input_grid_18_wreq <= 1'b1; end
+            `INPUT_GRID_19_OFFSET : begin input_grid_19_wreq <= 1'b1; end
+            `INPUT_GRID_20_OFFSET : begin input_grid_20_wreq <= 1'b1; end
+            `INPUT_GRID_21_OFFSET : begin input_grid_21_wreq <= 1'b1; end
+            `INPUT_GRID_22_OFFSET : begin input_grid_22_wreq <= 1'b1; end
+            `INPUT_GRID_23_OFFSET : begin input_grid_23_wreq <= 1'b1; end
+            `INPUT_GRID_24_OFFSET : begin input_grid_24_wreq <= 1'b1; end
             `CORE_CTRL_OFFSET : begin core_ctrl_wreq <= 1'b1; end
             `CORE_DEBUG_INFO_OFFSET : begin core_debug_info_wreq <= 1'b1; end
             `SEVENSEG_0_OFFSET : begin sevenseg_0_wreq <= 1'b1; end
@@ -2021,6 +6564,22 @@ module CORTEZ_REGPOOL (
     assign hl_weights_0_6_wreq_filtered = hl_weights_0_6_wreq & regpool_wen_resampled;
     assign hl_weights_0_7_wreq_filtered = hl_weights_0_7_wreq & regpool_wen_resampled;
     assign hl_weights_0_8_wreq_filtered = hl_weights_0_8_wreq & regpool_wen_resampled;
+    assign hl_weights_0_9_wreq_filtered = hl_weights_0_9_wreq & regpool_wen_resampled;
+    assign hl_weights_0_10_wreq_filtered = hl_weights_0_10_wreq & regpool_wen_resampled;
+    assign hl_weights_0_11_wreq_filtered = hl_weights_0_11_wreq & regpool_wen_resampled;
+    assign hl_weights_0_12_wreq_filtered = hl_weights_0_12_wreq & regpool_wen_resampled;
+    assign hl_weights_0_13_wreq_filtered = hl_weights_0_13_wreq & regpool_wen_resampled;
+    assign hl_weights_0_14_wreq_filtered = hl_weights_0_14_wreq & regpool_wen_resampled;
+    assign hl_weights_0_15_wreq_filtered = hl_weights_0_15_wreq & regpool_wen_resampled;
+    assign hl_weights_0_16_wreq_filtered = hl_weights_0_16_wreq & regpool_wen_resampled;
+    assign hl_weights_0_17_wreq_filtered = hl_weights_0_17_wreq & regpool_wen_resampled;
+    assign hl_weights_0_18_wreq_filtered = hl_weights_0_18_wreq & regpool_wen_resampled;
+    assign hl_weights_0_19_wreq_filtered = hl_weights_0_19_wreq & regpool_wen_resampled;
+    assign hl_weights_0_20_wreq_filtered = hl_weights_0_20_wreq & regpool_wen_resampled;
+    assign hl_weights_0_21_wreq_filtered = hl_weights_0_21_wreq & regpool_wen_resampled;
+    assign hl_weights_0_22_wreq_filtered = hl_weights_0_22_wreq & regpool_wen_resampled;
+    assign hl_weights_0_23_wreq_filtered = hl_weights_0_23_wreq & regpool_wen_resampled;
+    assign hl_weights_0_24_wreq_filtered = hl_weights_0_24_wreq & regpool_wen_resampled;
     assign hl_weights_1_0_wreq_filtered = hl_weights_1_0_wreq & regpool_wen_resampled;
     assign hl_weights_1_1_wreq_filtered = hl_weights_1_1_wreq & regpool_wen_resampled;
     assign hl_weights_1_2_wreq_filtered = hl_weights_1_2_wreq & regpool_wen_resampled;
@@ -2030,6 +6589,22 @@ module CORTEZ_REGPOOL (
     assign hl_weights_1_6_wreq_filtered = hl_weights_1_6_wreq & regpool_wen_resampled;
     assign hl_weights_1_7_wreq_filtered = hl_weights_1_7_wreq & regpool_wen_resampled;
     assign hl_weights_1_8_wreq_filtered = hl_weights_1_8_wreq & regpool_wen_resampled;
+    assign hl_weights_1_9_wreq_filtered = hl_weights_1_9_wreq & regpool_wen_resampled;
+    assign hl_weights_1_10_wreq_filtered = hl_weights_1_10_wreq & regpool_wen_resampled;
+    assign hl_weights_1_11_wreq_filtered = hl_weights_1_11_wreq & regpool_wen_resampled;
+    assign hl_weights_1_12_wreq_filtered = hl_weights_1_12_wreq & regpool_wen_resampled;
+    assign hl_weights_1_13_wreq_filtered = hl_weights_1_13_wreq & regpool_wen_resampled;
+    assign hl_weights_1_14_wreq_filtered = hl_weights_1_14_wreq & regpool_wen_resampled;
+    assign hl_weights_1_15_wreq_filtered = hl_weights_1_15_wreq & regpool_wen_resampled;
+    assign hl_weights_1_16_wreq_filtered = hl_weights_1_16_wreq & regpool_wen_resampled;
+    assign hl_weights_1_17_wreq_filtered = hl_weights_1_17_wreq & regpool_wen_resampled;
+    assign hl_weights_1_18_wreq_filtered = hl_weights_1_18_wreq & regpool_wen_resampled;
+    assign hl_weights_1_19_wreq_filtered = hl_weights_1_19_wreq & regpool_wen_resampled;
+    assign hl_weights_1_20_wreq_filtered = hl_weights_1_20_wreq & regpool_wen_resampled;
+    assign hl_weights_1_21_wreq_filtered = hl_weights_1_21_wreq & regpool_wen_resampled;
+    assign hl_weights_1_22_wreq_filtered = hl_weights_1_22_wreq & regpool_wen_resampled;
+    assign hl_weights_1_23_wreq_filtered = hl_weights_1_23_wreq & regpool_wen_resampled;
+    assign hl_weights_1_24_wreq_filtered = hl_weights_1_24_wreq & regpool_wen_resampled;
     assign hl_weights_2_0_wreq_filtered = hl_weights_2_0_wreq & regpool_wen_resampled;
     assign hl_weights_2_1_wreq_filtered = hl_weights_2_1_wreq & regpool_wen_resampled;
     assign hl_weights_2_2_wreq_filtered = hl_weights_2_2_wreq & regpool_wen_resampled;
@@ -2039,6 +6614,22 @@ module CORTEZ_REGPOOL (
     assign hl_weights_2_6_wreq_filtered = hl_weights_2_6_wreq & regpool_wen_resampled;
     assign hl_weights_2_7_wreq_filtered = hl_weights_2_7_wreq & regpool_wen_resampled;
     assign hl_weights_2_8_wreq_filtered = hl_weights_2_8_wreq & regpool_wen_resampled;
+    assign hl_weights_2_9_wreq_filtered = hl_weights_2_9_wreq & regpool_wen_resampled;
+    assign hl_weights_2_10_wreq_filtered = hl_weights_2_10_wreq & regpool_wen_resampled;
+    assign hl_weights_2_11_wreq_filtered = hl_weights_2_11_wreq & regpool_wen_resampled;
+    assign hl_weights_2_12_wreq_filtered = hl_weights_2_12_wreq & regpool_wen_resampled;
+    assign hl_weights_2_13_wreq_filtered = hl_weights_2_13_wreq & regpool_wen_resampled;
+    assign hl_weights_2_14_wreq_filtered = hl_weights_2_14_wreq & regpool_wen_resampled;
+    assign hl_weights_2_15_wreq_filtered = hl_weights_2_15_wreq & regpool_wen_resampled;
+    assign hl_weights_2_16_wreq_filtered = hl_weights_2_16_wreq & regpool_wen_resampled;
+    assign hl_weights_2_17_wreq_filtered = hl_weights_2_17_wreq & regpool_wen_resampled;
+    assign hl_weights_2_18_wreq_filtered = hl_weights_2_18_wreq & regpool_wen_resampled;
+    assign hl_weights_2_19_wreq_filtered = hl_weights_2_19_wreq & regpool_wen_resampled;
+    assign hl_weights_2_20_wreq_filtered = hl_weights_2_20_wreq & regpool_wen_resampled;
+    assign hl_weights_2_21_wreq_filtered = hl_weights_2_21_wreq & regpool_wen_resampled;
+    assign hl_weights_2_22_wreq_filtered = hl_weights_2_22_wreq & regpool_wen_resampled;
+    assign hl_weights_2_23_wreq_filtered = hl_weights_2_23_wreq & regpool_wen_resampled;
+    assign hl_weights_2_24_wreq_filtered = hl_weights_2_24_wreq & regpool_wen_resampled;
     assign hl_weights_3_0_wreq_filtered = hl_weights_3_0_wreq & regpool_wen_resampled;
     assign hl_weights_3_1_wreq_filtered = hl_weights_3_1_wreq & regpool_wen_resampled;
     assign hl_weights_3_2_wreq_filtered = hl_weights_3_2_wreq & regpool_wen_resampled;
@@ -2048,6 +6639,22 @@ module CORTEZ_REGPOOL (
     assign hl_weights_3_6_wreq_filtered = hl_weights_3_6_wreq & regpool_wen_resampled;
     assign hl_weights_3_7_wreq_filtered = hl_weights_3_7_wreq & regpool_wen_resampled;
     assign hl_weights_3_8_wreq_filtered = hl_weights_3_8_wreq & regpool_wen_resampled;
+    assign hl_weights_3_9_wreq_filtered = hl_weights_3_9_wreq & regpool_wen_resampled;
+    assign hl_weights_3_10_wreq_filtered = hl_weights_3_10_wreq & regpool_wen_resampled;
+    assign hl_weights_3_11_wreq_filtered = hl_weights_3_11_wreq & regpool_wen_resampled;
+    assign hl_weights_3_12_wreq_filtered = hl_weights_3_12_wreq & regpool_wen_resampled;
+    assign hl_weights_3_13_wreq_filtered = hl_weights_3_13_wreq & regpool_wen_resampled;
+    assign hl_weights_3_14_wreq_filtered = hl_weights_3_14_wreq & regpool_wen_resampled;
+    assign hl_weights_3_15_wreq_filtered = hl_weights_3_15_wreq & regpool_wen_resampled;
+    assign hl_weights_3_16_wreq_filtered = hl_weights_3_16_wreq & regpool_wen_resampled;
+    assign hl_weights_3_17_wreq_filtered = hl_weights_3_17_wreq & regpool_wen_resampled;
+    assign hl_weights_3_18_wreq_filtered = hl_weights_3_18_wreq & regpool_wen_resampled;
+    assign hl_weights_3_19_wreq_filtered = hl_weights_3_19_wreq & regpool_wen_resampled;
+    assign hl_weights_3_20_wreq_filtered = hl_weights_3_20_wreq & regpool_wen_resampled;
+    assign hl_weights_3_21_wreq_filtered = hl_weights_3_21_wreq & regpool_wen_resampled;
+    assign hl_weights_3_22_wreq_filtered = hl_weights_3_22_wreq & regpool_wen_resampled;
+    assign hl_weights_3_23_wreq_filtered = hl_weights_3_23_wreq & regpool_wen_resampled;
+    assign hl_weights_3_24_wreq_filtered = hl_weights_3_24_wreq & regpool_wen_resampled;
     assign hl_weights_4_0_wreq_filtered = hl_weights_4_0_wreq & regpool_wen_resampled;
     assign hl_weights_4_1_wreq_filtered = hl_weights_4_1_wreq & regpool_wen_resampled;
     assign hl_weights_4_2_wreq_filtered = hl_weights_4_2_wreq & regpool_wen_resampled;
@@ -2057,6 +6664,22 @@ module CORTEZ_REGPOOL (
     assign hl_weights_4_6_wreq_filtered = hl_weights_4_6_wreq & regpool_wen_resampled;
     assign hl_weights_4_7_wreq_filtered = hl_weights_4_7_wreq & regpool_wen_resampled;
     assign hl_weights_4_8_wreq_filtered = hl_weights_4_8_wreq & regpool_wen_resampled;
+    assign hl_weights_4_9_wreq_filtered = hl_weights_4_9_wreq & regpool_wen_resampled;
+    assign hl_weights_4_10_wreq_filtered = hl_weights_4_10_wreq & regpool_wen_resampled;
+    assign hl_weights_4_11_wreq_filtered = hl_weights_4_11_wreq & regpool_wen_resampled;
+    assign hl_weights_4_12_wreq_filtered = hl_weights_4_12_wreq & regpool_wen_resampled;
+    assign hl_weights_4_13_wreq_filtered = hl_weights_4_13_wreq & regpool_wen_resampled;
+    assign hl_weights_4_14_wreq_filtered = hl_weights_4_14_wreq & regpool_wen_resampled;
+    assign hl_weights_4_15_wreq_filtered = hl_weights_4_15_wreq & regpool_wen_resampled;
+    assign hl_weights_4_16_wreq_filtered = hl_weights_4_16_wreq & regpool_wen_resampled;
+    assign hl_weights_4_17_wreq_filtered = hl_weights_4_17_wreq & regpool_wen_resampled;
+    assign hl_weights_4_18_wreq_filtered = hl_weights_4_18_wreq & regpool_wen_resampled;
+    assign hl_weights_4_19_wreq_filtered = hl_weights_4_19_wreq & regpool_wen_resampled;
+    assign hl_weights_4_20_wreq_filtered = hl_weights_4_20_wreq & regpool_wen_resampled;
+    assign hl_weights_4_21_wreq_filtered = hl_weights_4_21_wreq & regpool_wen_resampled;
+    assign hl_weights_4_22_wreq_filtered = hl_weights_4_22_wreq & regpool_wen_resampled;
+    assign hl_weights_4_23_wreq_filtered = hl_weights_4_23_wreq & regpool_wen_resampled;
+    assign hl_weights_4_24_wreq_filtered = hl_weights_4_24_wreq & regpool_wen_resampled;
     assign hl_weights_5_0_wreq_filtered = hl_weights_5_0_wreq & regpool_wen_resampled;
     assign hl_weights_5_1_wreq_filtered = hl_weights_5_1_wreq & regpool_wen_resampled;
     assign hl_weights_5_2_wreq_filtered = hl_weights_5_2_wreq & regpool_wen_resampled;
@@ -2066,33 +6689,187 @@ module CORTEZ_REGPOOL (
     assign hl_weights_5_6_wreq_filtered = hl_weights_5_6_wreq & regpool_wen_resampled;
     assign hl_weights_5_7_wreq_filtered = hl_weights_5_7_wreq & regpool_wen_resampled;
     assign hl_weights_5_8_wreq_filtered = hl_weights_5_8_wreq & regpool_wen_resampled;
+    assign hl_weights_5_9_wreq_filtered = hl_weights_5_9_wreq & regpool_wen_resampled;
+    assign hl_weights_5_10_wreq_filtered = hl_weights_5_10_wreq & regpool_wen_resampled;
+    assign hl_weights_5_11_wreq_filtered = hl_weights_5_11_wreq & regpool_wen_resampled;
+    assign hl_weights_5_12_wreq_filtered = hl_weights_5_12_wreq & regpool_wen_resampled;
+    assign hl_weights_5_13_wreq_filtered = hl_weights_5_13_wreq & regpool_wen_resampled;
+    assign hl_weights_5_14_wreq_filtered = hl_weights_5_14_wreq & regpool_wen_resampled;
+    assign hl_weights_5_15_wreq_filtered = hl_weights_5_15_wreq & regpool_wen_resampled;
+    assign hl_weights_5_16_wreq_filtered = hl_weights_5_16_wreq & regpool_wen_resampled;
+    assign hl_weights_5_17_wreq_filtered = hl_weights_5_17_wreq & regpool_wen_resampled;
+    assign hl_weights_5_18_wreq_filtered = hl_weights_5_18_wreq & regpool_wen_resampled;
+    assign hl_weights_5_19_wreq_filtered = hl_weights_5_19_wreq & regpool_wen_resampled;
+    assign hl_weights_5_20_wreq_filtered = hl_weights_5_20_wreq & regpool_wen_resampled;
+    assign hl_weights_5_21_wreq_filtered = hl_weights_5_21_wreq & regpool_wen_resampled;
+    assign hl_weights_5_22_wreq_filtered = hl_weights_5_22_wreq & regpool_wen_resampled;
+    assign hl_weights_5_23_wreq_filtered = hl_weights_5_23_wreq & regpool_wen_resampled;
+    assign hl_weights_5_24_wreq_filtered = hl_weights_5_24_wreq & regpool_wen_resampled;
+    assign hl_weights_6_0_wreq_filtered = hl_weights_6_0_wreq & regpool_wen_resampled;
+    assign hl_weights_6_1_wreq_filtered = hl_weights_6_1_wreq & regpool_wen_resampled;
+    assign hl_weights_6_2_wreq_filtered = hl_weights_6_2_wreq & regpool_wen_resampled;
+    assign hl_weights_6_3_wreq_filtered = hl_weights_6_3_wreq & regpool_wen_resampled;
+    assign hl_weights_6_4_wreq_filtered = hl_weights_6_4_wreq & regpool_wen_resampled;
+    assign hl_weights_6_5_wreq_filtered = hl_weights_6_5_wreq & regpool_wen_resampled;
+    assign hl_weights_6_6_wreq_filtered = hl_weights_6_6_wreq & regpool_wen_resampled;
+    assign hl_weights_6_7_wreq_filtered = hl_weights_6_7_wreq & regpool_wen_resampled;
+    assign hl_weights_6_8_wreq_filtered = hl_weights_6_8_wreq & regpool_wen_resampled;
+    assign hl_weights_6_9_wreq_filtered = hl_weights_6_9_wreq & regpool_wen_resampled;
+    assign hl_weights_6_10_wreq_filtered = hl_weights_6_10_wreq & regpool_wen_resampled;
+    assign hl_weights_6_11_wreq_filtered = hl_weights_6_11_wreq & regpool_wen_resampled;
+    assign hl_weights_6_12_wreq_filtered = hl_weights_6_12_wreq & regpool_wen_resampled;
+    assign hl_weights_6_13_wreq_filtered = hl_weights_6_13_wreq & regpool_wen_resampled;
+    assign hl_weights_6_14_wreq_filtered = hl_weights_6_14_wreq & regpool_wen_resampled;
+    assign hl_weights_6_15_wreq_filtered = hl_weights_6_15_wreq & regpool_wen_resampled;
+    assign hl_weights_6_16_wreq_filtered = hl_weights_6_16_wreq & regpool_wen_resampled;
+    assign hl_weights_6_17_wreq_filtered = hl_weights_6_17_wreq & regpool_wen_resampled;
+    assign hl_weights_6_18_wreq_filtered = hl_weights_6_18_wreq & regpool_wen_resampled;
+    assign hl_weights_6_19_wreq_filtered = hl_weights_6_19_wreq & regpool_wen_resampled;
+    assign hl_weights_6_20_wreq_filtered = hl_weights_6_20_wreq & regpool_wen_resampled;
+    assign hl_weights_6_21_wreq_filtered = hl_weights_6_21_wreq & regpool_wen_resampled;
+    assign hl_weights_6_22_wreq_filtered = hl_weights_6_22_wreq & regpool_wen_resampled;
+    assign hl_weights_6_23_wreq_filtered = hl_weights_6_23_wreq & regpool_wen_resampled;
+    assign hl_weights_6_24_wreq_filtered = hl_weights_6_24_wreq & regpool_wen_resampled;
+    assign hl_weights_7_0_wreq_filtered = hl_weights_7_0_wreq & regpool_wen_resampled;
+    assign hl_weights_7_1_wreq_filtered = hl_weights_7_1_wreq & regpool_wen_resampled;
+    assign hl_weights_7_2_wreq_filtered = hl_weights_7_2_wreq & regpool_wen_resampled;
+    assign hl_weights_7_3_wreq_filtered = hl_weights_7_3_wreq & regpool_wen_resampled;
+    assign hl_weights_7_4_wreq_filtered = hl_weights_7_4_wreq & regpool_wen_resampled;
+    assign hl_weights_7_5_wreq_filtered = hl_weights_7_5_wreq & regpool_wen_resampled;
+    assign hl_weights_7_6_wreq_filtered = hl_weights_7_6_wreq & regpool_wen_resampled;
+    assign hl_weights_7_7_wreq_filtered = hl_weights_7_7_wreq & regpool_wen_resampled;
+    assign hl_weights_7_8_wreq_filtered = hl_weights_7_8_wreq & regpool_wen_resampled;
+    assign hl_weights_7_9_wreq_filtered = hl_weights_7_9_wreq & regpool_wen_resampled;
+    assign hl_weights_7_10_wreq_filtered = hl_weights_7_10_wreq & regpool_wen_resampled;
+    assign hl_weights_7_11_wreq_filtered = hl_weights_7_11_wreq & regpool_wen_resampled;
+    assign hl_weights_7_12_wreq_filtered = hl_weights_7_12_wreq & regpool_wen_resampled;
+    assign hl_weights_7_13_wreq_filtered = hl_weights_7_13_wreq & regpool_wen_resampled;
+    assign hl_weights_7_14_wreq_filtered = hl_weights_7_14_wreq & regpool_wen_resampled;
+    assign hl_weights_7_15_wreq_filtered = hl_weights_7_15_wreq & regpool_wen_resampled;
+    assign hl_weights_7_16_wreq_filtered = hl_weights_7_16_wreq & regpool_wen_resampled;
+    assign hl_weights_7_17_wreq_filtered = hl_weights_7_17_wreq & regpool_wen_resampled;
+    assign hl_weights_7_18_wreq_filtered = hl_weights_7_18_wreq & regpool_wen_resampled;
+    assign hl_weights_7_19_wreq_filtered = hl_weights_7_19_wreq & regpool_wen_resampled;
+    assign hl_weights_7_20_wreq_filtered = hl_weights_7_20_wreq & regpool_wen_resampled;
+    assign hl_weights_7_21_wreq_filtered = hl_weights_7_21_wreq & regpool_wen_resampled;
+    assign hl_weights_7_22_wreq_filtered = hl_weights_7_22_wreq & regpool_wen_resampled;
+    assign hl_weights_7_23_wreq_filtered = hl_weights_7_23_wreq & regpool_wen_resampled;
+    assign hl_weights_7_24_wreq_filtered = hl_weights_7_24_wreq & regpool_wen_resampled;
+    assign hl_weights_8_0_wreq_filtered = hl_weights_8_0_wreq & regpool_wen_resampled;
+    assign hl_weights_8_1_wreq_filtered = hl_weights_8_1_wreq & regpool_wen_resampled;
+    assign hl_weights_8_2_wreq_filtered = hl_weights_8_2_wreq & regpool_wen_resampled;
+    assign hl_weights_8_3_wreq_filtered = hl_weights_8_3_wreq & regpool_wen_resampled;
+    assign hl_weights_8_4_wreq_filtered = hl_weights_8_4_wreq & regpool_wen_resampled;
+    assign hl_weights_8_5_wreq_filtered = hl_weights_8_5_wreq & regpool_wen_resampled;
+    assign hl_weights_8_6_wreq_filtered = hl_weights_8_6_wreq & regpool_wen_resampled;
+    assign hl_weights_8_7_wreq_filtered = hl_weights_8_7_wreq & regpool_wen_resampled;
+    assign hl_weights_8_8_wreq_filtered = hl_weights_8_8_wreq & regpool_wen_resampled;
+    assign hl_weights_8_9_wreq_filtered = hl_weights_8_9_wreq & regpool_wen_resampled;
+    assign hl_weights_8_10_wreq_filtered = hl_weights_8_10_wreq & regpool_wen_resampled;
+    assign hl_weights_8_11_wreq_filtered = hl_weights_8_11_wreq & regpool_wen_resampled;
+    assign hl_weights_8_12_wreq_filtered = hl_weights_8_12_wreq & regpool_wen_resampled;
+    assign hl_weights_8_13_wreq_filtered = hl_weights_8_13_wreq & regpool_wen_resampled;
+    assign hl_weights_8_14_wreq_filtered = hl_weights_8_14_wreq & regpool_wen_resampled;
+    assign hl_weights_8_15_wreq_filtered = hl_weights_8_15_wreq & regpool_wen_resampled;
+    assign hl_weights_8_16_wreq_filtered = hl_weights_8_16_wreq & regpool_wen_resampled;
+    assign hl_weights_8_17_wreq_filtered = hl_weights_8_17_wreq & regpool_wen_resampled;
+    assign hl_weights_8_18_wreq_filtered = hl_weights_8_18_wreq & regpool_wen_resampled;
+    assign hl_weights_8_19_wreq_filtered = hl_weights_8_19_wreq & regpool_wen_resampled;
+    assign hl_weights_8_20_wreq_filtered = hl_weights_8_20_wreq & regpool_wen_resampled;
+    assign hl_weights_8_21_wreq_filtered = hl_weights_8_21_wreq & regpool_wen_resampled;
+    assign hl_weights_8_22_wreq_filtered = hl_weights_8_22_wreq & regpool_wen_resampled;
+    assign hl_weights_8_23_wreq_filtered = hl_weights_8_23_wreq & regpool_wen_resampled;
+    assign hl_weights_8_24_wreq_filtered = hl_weights_8_24_wreq & regpool_wen_resampled;
+    assign hl_weights_9_0_wreq_filtered = hl_weights_9_0_wreq & regpool_wen_resampled;
+    assign hl_weights_9_1_wreq_filtered = hl_weights_9_1_wreq & regpool_wen_resampled;
+    assign hl_weights_9_2_wreq_filtered = hl_weights_9_2_wreq & regpool_wen_resampled;
+    assign hl_weights_9_3_wreq_filtered = hl_weights_9_3_wreq & regpool_wen_resampled;
+    assign hl_weights_9_4_wreq_filtered = hl_weights_9_4_wreq & regpool_wen_resampled;
+    assign hl_weights_9_5_wreq_filtered = hl_weights_9_5_wreq & regpool_wen_resampled;
+    assign hl_weights_9_6_wreq_filtered = hl_weights_9_6_wreq & regpool_wen_resampled;
+    assign hl_weights_9_7_wreq_filtered = hl_weights_9_7_wreq & regpool_wen_resampled;
+    assign hl_weights_9_8_wreq_filtered = hl_weights_9_8_wreq & regpool_wen_resampled;
+    assign hl_weights_9_9_wreq_filtered = hl_weights_9_9_wreq & regpool_wen_resampled;
+    assign hl_weights_9_10_wreq_filtered = hl_weights_9_10_wreq & regpool_wen_resampled;
+    assign hl_weights_9_11_wreq_filtered = hl_weights_9_11_wreq & regpool_wen_resampled;
+    assign hl_weights_9_12_wreq_filtered = hl_weights_9_12_wreq & regpool_wen_resampled;
+    assign hl_weights_9_13_wreq_filtered = hl_weights_9_13_wreq & regpool_wen_resampled;
+    assign hl_weights_9_14_wreq_filtered = hl_weights_9_14_wreq & regpool_wen_resampled;
+    assign hl_weights_9_15_wreq_filtered = hl_weights_9_15_wreq & regpool_wen_resampled;
+    assign hl_weights_9_16_wreq_filtered = hl_weights_9_16_wreq & regpool_wen_resampled;
+    assign hl_weights_9_17_wreq_filtered = hl_weights_9_17_wreq & regpool_wen_resampled;
+    assign hl_weights_9_18_wreq_filtered = hl_weights_9_18_wreq & regpool_wen_resampled;
+    assign hl_weights_9_19_wreq_filtered = hl_weights_9_19_wreq & regpool_wen_resampled;
+    assign hl_weights_9_20_wreq_filtered = hl_weights_9_20_wreq & regpool_wen_resampled;
+    assign hl_weights_9_21_wreq_filtered = hl_weights_9_21_wreq & regpool_wen_resampled;
+    assign hl_weights_9_22_wreq_filtered = hl_weights_9_22_wreq & regpool_wen_resampled;
+    assign hl_weights_9_23_wreq_filtered = hl_weights_9_23_wreq & regpool_wen_resampled;
+    assign hl_weights_9_24_wreq_filtered = hl_weights_9_24_wreq & regpool_wen_resampled;
     assign hl_bias_0_wreq_filtered = hl_bias_0_wreq & regpool_wen_resampled;
     assign hl_bias_1_wreq_filtered = hl_bias_1_wreq & regpool_wen_resampled;
     assign hl_bias_2_wreq_filtered = hl_bias_2_wreq & regpool_wen_resampled;
     assign hl_bias_3_wreq_filtered = hl_bias_3_wreq & regpool_wen_resampled;
     assign hl_bias_4_wreq_filtered = hl_bias_4_wreq & regpool_wen_resampled;
     assign hl_bias_5_wreq_filtered = hl_bias_5_wreq & regpool_wen_resampled;
+    assign hl_bias_6_wreq_filtered = hl_bias_6_wreq & regpool_wen_resampled;
+    assign hl_bias_7_wreq_filtered = hl_bias_7_wreq & regpool_wen_resampled;
+    assign hl_bias_8_wreq_filtered = hl_bias_8_wreq & regpool_wen_resampled;
+    assign hl_bias_9_wreq_filtered = hl_bias_9_wreq & regpool_wen_resampled;
     assign ol_weights_0_0_wreq_filtered = ol_weights_0_0_wreq & regpool_wen_resampled;
     assign ol_weights_0_1_wreq_filtered = ol_weights_0_1_wreq & regpool_wen_resampled;
     assign ol_weights_0_2_wreq_filtered = ol_weights_0_2_wreq & regpool_wen_resampled;
     assign ol_weights_0_3_wreq_filtered = ol_weights_0_3_wreq & regpool_wen_resampled;
     assign ol_weights_0_4_wreq_filtered = ol_weights_0_4_wreq & regpool_wen_resampled;
     assign ol_weights_0_5_wreq_filtered = ol_weights_0_5_wreq & regpool_wen_resampled;
+    assign ol_weights_0_6_wreq_filtered = ol_weights_0_6_wreq & regpool_wen_resampled;
+    assign ol_weights_0_7_wreq_filtered = ol_weights_0_7_wreq & regpool_wen_resampled;
+    assign ol_weights_0_8_wreq_filtered = ol_weights_0_8_wreq & regpool_wen_resampled;
+    assign ol_weights_0_9_wreq_filtered = ol_weights_0_9_wreq & regpool_wen_resampled;
     assign ol_weights_1_0_wreq_filtered = ol_weights_1_0_wreq & regpool_wen_resampled;
     assign ol_weights_1_1_wreq_filtered = ol_weights_1_1_wreq & regpool_wen_resampled;
     assign ol_weights_1_2_wreq_filtered = ol_weights_1_2_wreq & regpool_wen_resampled;
     assign ol_weights_1_3_wreq_filtered = ol_weights_1_3_wreq & regpool_wen_resampled;
     assign ol_weights_1_4_wreq_filtered = ol_weights_1_4_wreq & regpool_wen_resampled;
     assign ol_weights_1_5_wreq_filtered = ol_weights_1_5_wreq & regpool_wen_resampled;
+    assign ol_weights_1_6_wreq_filtered = ol_weights_1_6_wreq & regpool_wen_resampled;
+    assign ol_weights_1_7_wreq_filtered = ol_weights_1_7_wreq & regpool_wen_resampled;
+    assign ol_weights_1_8_wreq_filtered = ol_weights_1_8_wreq & regpool_wen_resampled;
+    assign ol_weights_1_9_wreq_filtered = ol_weights_1_9_wreq & regpool_wen_resampled;
     assign ol_weights_2_0_wreq_filtered = ol_weights_2_0_wreq & regpool_wen_resampled;
     assign ol_weights_2_1_wreq_filtered = ol_weights_2_1_wreq & regpool_wen_resampled;
     assign ol_weights_2_2_wreq_filtered = ol_weights_2_2_wreq & regpool_wen_resampled;
     assign ol_weights_2_3_wreq_filtered = ol_weights_2_3_wreq & regpool_wen_resampled;
     assign ol_weights_2_4_wreq_filtered = ol_weights_2_4_wreq & regpool_wen_resampled;
     assign ol_weights_2_5_wreq_filtered = ol_weights_2_5_wreq & regpool_wen_resampled;
+    assign ol_weights_2_6_wreq_filtered = ol_weights_2_6_wreq & regpool_wen_resampled;
+    assign ol_weights_2_7_wreq_filtered = ol_weights_2_7_wreq & regpool_wen_resampled;
+    assign ol_weights_2_8_wreq_filtered = ol_weights_2_8_wreq & regpool_wen_resampled;
+    assign ol_weights_2_9_wreq_filtered = ol_weights_2_9_wreq & regpool_wen_resampled;
+    assign ol_weights_3_0_wreq_filtered = ol_weights_3_0_wreq & regpool_wen_resampled;
+    assign ol_weights_3_1_wreq_filtered = ol_weights_3_1_wreq & regpool_wen_resampled;
+    assign ol_weights_3_2_wreq_filtered = ol_weights_3_2_wreq & regpool_wen_resampled;
+    assign ol_weights_3_3_wreq_filtered = ol_weights_3_3_wreq & regpool_wen_resampled;
+    assign ol_weights_3_4_wreq_filtered = ol_weights_3_4_wreq & regpool_wen_resampled;
+    assign ol_weights_3_5_wreq_filtered = ol_weights_3_5_wreq & regpool_wen_resampled;
+    assign ol_weights_3_6_wreq_filtered = ol_weights_3_6_wreq & regpool_wen_resampled;
+    assign ol_weights_3_7_wreq_filtered = ol_weights_3_7_wreq & regpool_wen_resampled;
+    assign ol_weights_3_8_wreq_filtered = ol_weights_3_8_wreq & regpool_wen_resampled;
+    assign ol_weights_3_9_wreq_filtered = ol_weights_3_9_wreq & regpool_wen_resampled;
+    assign ol_weights_4_0_wreq_filtered = ol_weights_4_0_wreq & regpool_wen_resampled;
+    assign ol_weights_4_1_wreq_filtered = ol_weights_4_1_wreq & regpool_wen_resampled;
+    assign ol_weights_4_2_wreq_filtered = ol_weights_4_2_wreq & regpool_wen_resampled;
+    assign ol_weights_4_3_wreq_filtered = ol_weights_4_3_wreq & regpool_wen_resampled;
+    assign ol_weights_4_4_wreq_filtered = ol_weights_4_4_wreq & regpool_wen_resampled;
+    assign ol_weights_4_5_wreq_filtered = ol_weights_4_5_wreq & regpool_wen_resampled;
+    assign ol_weights_4_6_wreq_filtered = ol_weights_4_6_wreq & regpool_wen_resampled;
+    assign ol_weights_4_7_wreq_filtered = ol_weights_4_7_wreq & regpool_wen_resampled;
+    assign ol_weights_4_8_wreq_filtered = ol_weights_4_8_wreq & regpool_wen_resampled;
+    assign ol_weights_4_9_wreq_filtered = ol_weights_4_9_wreq & regpool_wen_resampled;
     assign ol_bias_0_wreq_filtered = ol_bias_0_wreq & regpool_wen_resampled;
     assign ol_bias_1_wreq_filtered = ol_bias_1_wreq & regpool_wen_resampled;
     assign ol_bias_2_wreq_filtered = ol_bias_2_wreq & regpool_wen_resampled;
+    assign ol_bias_3_wreq_filtered = ol_bias_3_wreq & regpool_wen_resampled;
+    assign ol_bias_4_wreq_filtered = ol_bias_4_wreq & regpool_wen_resampled;
     assign input_grid_0_wreq_filtered = input_grid_0_wreq & regpool_wen_resampled;
     assign input_grid_1_wreq_filtered = input_grid_1_wreq & regpool_wen_resampled;
     assign input_grid_2_wreq_filtered = input_grid_2_wreq & regpool_wen_resampled;
@@ -2102,6 +6879,22 @@ module CORTEZ_REGPOOL (
     assign input_grid_6_wreq_filtered = input_grid_6_wreq & regpool_wen_resampled;
     assign input_grid_7_wreq_filtered = input_grid_7_wreq & regpool_wen_resampled;
     assign input_grid_8_wreq_filtered = input_grid_8_wreq & regpool_wen_resampled;
+    assign input_grid_9_wreq_filtered = input_grid_9_wreq & regpool_wen_resampled;
+    assign input_grid_10_wreq_filtered = input_grid_10_wreq & regpool_wen_resampled;
+    assign input_grid_11_wreq_filtered = input_grid_11_wreq & regpool_wen_resampled;
+    assign input_grid_12_wreq_filtered = input_grid_12_wreq & regpool_wen_resampled;
+    assign input_grid_13_wreq_filtered = input_grid_13_wreq & regpool_wen_resampled;
+    assign input_grid_14_wreq_filtered = input_grid_14_wreq & regpool_wen_resampled;
+    assign input_grid_15_wreq_filtered = input_grid_15_wreq & regpool_wen_resampled;
+    assign input_grid_16_wreq_filtered = input_grid_16_wreq & regpool_wen_resampled;
+    assign input_grid_17_wreq_filtered = input_grid_17_wreq & regpool_wen_resampled;
+    assign input_grid_18_wreq_filtered = input_grid_18_wreq & regpool_wen_resampled;
+    assign input_grid_19_wreq_filtered = input_grid_19_wreq & regpool_wen_resampled;
+    assign input_grid_20_wreq_filtered = input_grid_20_wreq & regpool_wen_resampled;
+    assign input_grid_21_wreq_filtered = input_grid_21_wreq & regpool_wen_resampled;
+    assign input_grid_22_wreq_filtered = input_grid_22_wreq & regpool_wen_resampled;
+    assign input_grid_23_wreq_filtered = input_grid_23_wreq & regpool_wen_resampled;
+    assign input_grid_24_wreq_filtered = input_grid_24_wreq & regpool_wen_resampled;
     assign core_ctrl_wreq_filtered = core_ctrl_wreq & regpool_wen_resampled;
     assign core_debug_info_wreq_filtered = core_debug_info_wreq & regpool_wen_resampled;
     assign sevenseg_0_wreq_filtered = sevenseg_0_wreq & regpool_wen_resampled;
@@ -2130,6 +6923,22 @@ module CORTEZ_REGPOOL (
             `HL_WEIGHTS_0_6_OFFSET : begin regpool_rdata <= hl_weights_0_6_value_out; end
             `HL_WEIGHTS_0_7_OFFSET : begin regpool_rdata <= hl_weights_0_7_value_out; end
             `HL_WEIGHTS_0_8_OFFSET : begin regpool_rdata <= hl_weights_0_8_value_out; end
+            `HL_WEIGHTS_0_9_OFFSET : begin regpool_rdata <= hl_weights_0_9_value_out; end
+            `HL_WEIGHTS_0_10_OFFSET : begin regpool_rdata <= hl_weights_0_10_value_out; end
+            `HL_WEIGHTS_0_11_OFFSET : begin regpool_rdata <= hl_weights_0_11_value_out; end
+            `HL_WEIGHTS_0_12_OFFSET : begin regpool_rdata <= hl_weights_0_12_value_out; end
+            `HL_WEIGHTS_0_13_OFFSET : begin regpool_rdata <= hl_weights_0_13_value_out; end
+            `HL_WEIGHTS_0_14_OFFSET : begin regpool_rdata <= hl_weights_0_14_value_out; end
+            `HL_WEIGHTS_0_15_OFFSET : begin regpool_rdata <= hl_weights_0_15_value_out; end
+            `HL_WEIGHTS_0_16_OFFSET : begin regpool_rdata <= hl_weights_0_16_value_out; end
+            `HL_WEIGHTS_0_17_OFFSET : begin regpool_rdata <= hl_weights_0_17_value_out; end
+            `HL_WEIGHTS_0_18_OFFSET : begin regpool_rdata <= hl_weights_0_18_value_out; end
+            `HL_WEIGHTS_0_19_OFFSET : begin regpool_rdata <= hl_weights_0_19_value_out; end
+            `HL_WEIGHTS_0_20_OFFSET : begin regpool_rdata <= hl_weights_0_20_value_out; end
+            `HL_WEIGHTS_0_21_OFFSET : begin regpool_rdata <= hl_weights_0_21_value_out; end
+            `HL_WEIGHTS_0_22_OFFSET : begin regpool_rdata <= hl_weights_0_22_value_out; end
+            `HL_WEIGHTS_0_23_OFFSET : begin regpool_rdata <= hl_weights_0_23_value_out; end
+            `HL_WEIGHTS_0_24_OFFSET : begin regpool_rdata <= hl_weights_0_24_value_out; end
             `HL_WEIGHTS_1_0_OFFSET : begin regpool_rdata <= hl_weights_1_0_value_out; end
             `HL_WEIGHTS_1_1_OFFSET : begin regpool_rdata <= hl_weights_1_1_value_out; end
             `HL_WEIGHTS_1_2_OFFSET : begin regpool_rdata <= hl_weights_1_2_value_out; end
@@ -2139,6 +6948,22 @@ module CORTEZ_REGPOOL (
             `HL_WEIGHTS_1_6_OFFSET : begin regpool_rdata <= hl_weights_1_6_value_out; end
             `HL_WEIGHTS_1_7_OFFSET : begin regpool_rdata <= hl_weights_1_7_value_out; end
             `HL_WEIGHTS_1_8_OFFSET : begin regpool_rdata <= hl_weights_1_8_value_out; end
+            `HL_WEIGHTS_1_9_OFFSET : begin regpool_rdata <= hl_weights_1_9_value_out; end
+            `HL_WEIGHTS_1_10_OFFSET : begin regpool_rdata <= hl_weights_1_10_value_out; end
+            `HL_WEIGHTS_1_11_OFFSET : begin regpool_rdata <= hl_weights_1_11_value_out; end
+            `HL_WEIGHTS_1_12_OFFSET : begin regpool_rdata <= hl_weights_1_12_value_out; end
+            `HL_WEIGHTS_1_13_OFFSET : begin regpool_rdata <= hl_weights_1_13_value_out; end
+            `HL_WEIGHTS_1_14_OFFSET : begin regpool_rdata <= hl_weights_1_14_value_out; end
+            `HL_WEIGHTS_1_15_OFFSET : begin regpool_rdata <= hl_weights_1_15_value_out; end
+            `HL_WEIGHTS_1_16_OFFSET : begin regpool_rdata <= hl_weights_1_16_value_out; end
+            `HL_WEIGHTS_1_17_OFFSET : begin regpool_rdata <= hl_weights_1_17_value_out; end
+            `HL_WEIGHTS_1_18_OFFSET : begin regpool_rdata <= hl_weights_1_18_value_out; end
+            `HL_WEIGHTS_1_19_OFFSET : begin regpool_rdata <= hl_weights_1_19_value_out; end
+            `HL_WEIGHTS_1_20_OFFSET : begin regpool_rdata <= hl_weights_1_20_value_out; end
+            `HL_WEIGHTS_1_21_OFFSET : begin regpool_rdata <= hl_weights_1_21_value_out; end
+            `HL_WEIGHTS_1_22_OFFSET : begin regpool_rdata <= hl_weights_1_22_value_out; end
+            `HL_WEIGHTS_1_23_OFFSET : begin regpool_rdata <= hl_weights_1_23_value_out; end
+            `HL_WEIGHTS_1_24_OFFSET : begin regpool_rdata <= hl_weights_1_24_value_out; end
             `HL_WEIGHTS_2_0_OFFSET : begin regpool_rdata <= hl_weights_2_0_value_out; end
             `HL_WEIGHTS_2_1_OFFSET : begin regpool_rdata <= hl_weights_2_1_value_out; end
             `HL_WEIGHTS_2_2_OFFSET : begin regpool_rdata <= hl_weights_2_2_value_out; end
@@ -2148,6 +6973,22 @@ module CORTEZ_REGPOOL (
             `HL_WEIGHTS_2_6_OFFSET : begin regpool_rdata <= hl_weights_2_6_value_out; end
             `HL_WEIGHTS_2_7_OFFSET : begin regpool_rdata <= hl_weights_2_7_value_out; end
             `HL_WEIGHTS_2_8_OFFSET : begin regpool_rdata <= hl_weights_2_8_value_out; end
+            `HL_WEIGHTS_2_9_OFFSET : begin regpool_rdata <= hl_weights_2_9_value_out; end
+            `HL_WEIGHTS_2_10_OFFSET : begin regpool_rdata <= hl_weights_2_10_value_out; end
+            `HL_WEIGHTS_2_11_OFFSET : begin regpool_rdata <= hl_weights_2_11_value_out; end
+            `HL_WEIGHTS_2_12_OFFSET : begin regpool_rdata <= hl_weights_2_12_value_out; end
+            `HL_WEIGHTS_2_13_OFFSET : begin regpool_rdata <= hl_weights_2_13_value_out; end
+            `HL_WEIGHTS_2_14_OFFSET : begin regpool_rdata <= hl_weights_2_14_value_out; end
+            `HL_WEIGHTS_2_15_OFFSET : begin regpool_rdata <= hl_weights_2_15_value_out; end
+            `HL_WEIGHTS_2_16_OFFSET : begin regpool_rdata <= hl_weights_2_16_value_out; end
+            `HL_WEIGHTS_2_17_OFFSET : begin regpool_rdata <= hl_weights_2_17_value_out; end
+            `HL_WEIGHTS_2_18_OFFSET : begin regpool_rdata <= hl_weights_2_18_value_out; end
+            `HL_WEIGHTS_2_19_OFFSET : begin regpool_rdata <= hl_weights_2_19_value_out; end
+            `HL_WEIGHTS_2_20_OFFSET : begin regpool_rdata <= hl_weights_2_20_value_out; end
+            `HL_WEIGHTS_2_21_OFFSET : begin regpool_rdata <= hl_weights_2_21_value_out; end
+            `HL_WEIGHTS_2_22_OFFSET : begin regpool_rdata <= hl_weights_2_22_value_out; end
+            `HL_WEIGHTS_2_23_OFFSET : begin regpool_rdata <= hl_weights_2_23_value_out; end
+            `HL_WEIGHTS_2_24_OFFSET : begin regpool_rdata <= hl_weights_2_24_value_out; end
             `HL_WEIGHTS_3_0_OFFSET : begin regpool_rdata <= hl_weights_3_0_value_out; end
             `HL_WEIGHTS_3_1_OFFSET : begin regpool_rdata <= hl_weights_3_1_value_out; end
             `HL_WEIGHTS_3_2_OFFSET : begin regpool_rdata <= hl_weights_3_2_value_out; end
@@ -2157,6 +6998,22 @@ module CORTEZ_REGPOOL (
             `HL_WEIGHTS_3_6_OFFSET : begin regpool_rdata <= hl_weights_3_6_value_out; end
             `HL_WEIGHTS_3_7_OFFSET : begin regpool_rdata <= hl_weights_3_7_value_out; end
             `HL_WEIGHTS_3_8_OFFSET : begin regpool_rdata <= hl_weights_3_8_value_out; end
+            `HL_WEIGHTS_3_9_OFFSET : begin regpool_rdata <= hl_weights_3_9_value_out; end
+            `HL_WEIGHTS_3_10_OFFSET : begin regpool_rdata <= hl_weights_3_10_value_out; end
+            `HL_WEIGHTS_3_11_OFFSET : begin regpool_rdata <= hl_weights_3_11_value_out; end
+            `HL_WEIGHTS_3_12_OFFSET : begin regpool_rdata <= hl_weights_3_12_value_out; end
+            `HL_WEIGHTS_3_13_OFFSET : begin regpool_rdata <= hl_weights_3_13_value_out; end
+            `HL_WEIGHTS_3_14_OFFSET : begin regpool_rdata <= hl_weights_3_14_value_out; end
+            `HL_WEIGHTS_3_15_OFFSET : begin regpool_rdata <= hl_weights_3_15_value_out; end
+            `HL_WEIGHTS_3_16_OFFSET : begin regpool_rdata <= hl_weights_3_16_value_out; end
+            `HL_WEIGHTS_3_17_OFFSET : begin regpool_rdata <= hl_weights_3_17_value_out; end
+            `HL_WEIGHTS_3_18_OFFSET : begin regpool_rdata <= hl_weights_3_18_value_out; end
+            `HL_WEIGHTS_3_19_OFFSET : begin regpool_rdata <= hl_weights_3_19_value_out; end
+            `HL_WEIGHTS_3_20_OFFSET : begin regpool_rdata <= hl_weights_3_20_value_out; end
+            `HL_WEIGHTS_3_21_OFFSET : begin regpool_rdata <= hl_weights_3_21_value_out; end
+            `HL_WEIGHTS_3_22_OFFSET : begin regpool_rdata <= hl_weights_3_22_value_out; end
+            `HL_WEIGHTS_3_23_OFFSET : begin regpool_rdata <= hl_weights_3_23_value_out; end
+            `HL_WEIGHTS_3_24_OFFSET : begin regpool_rdata <= hl_weights_3_24_value_out; end
             `HL_WEIGHTS_4_0_OFFSET : begin regpool_rdata <= hl_weights_4_0_value_out; end
             `HL_WEIGHTS_4_1_OFFSET : begin regpool_rdata <= hl_weights_4_1_value_out; end
             `HL_WEIGHTS_4_2_OFFSET : begin regpool_rdata <= hl_weights_4_2_value_out; end
@@ -2166,6 +7023,22 @@ module CORTEZ_REGPOOL (
             `HL_WEIGHTS_4_6_OFFSET : begin regpool_rdata <= hl_weights_4_6_value_out; end
             `HL_WEIGHTS_4_7_OFFSET : begin regpool_rdata <= hl_weights_4_7_value_out; end
             `HL_WEIGHTS_4_8_OFFSET : begin regpool_rdata <= hl_weights_4_8_value_out; end
+            `HL_WEIGHTS_4_9_OFFSET : begin regpool_rdata <= hl_weights_4_9_value_out; end
+            `HL_WEIGHTS_4_10_OFFSET : begin regpool_rdata <= hl_weights_4_10_value_out; end
+            `HL_WEIGHTS_4_11_OFFSET : begin regpool_rdata <= hl_weights_4_11_value_out; end
+            `HL_WEIGHTS_4_12_OFFSET : begin regpool_rdata <= hl_weights_4_12_value_out; end
+            `HL_WEIGHTS_4_13_OFFSET : begin regpool_rdata <= hl_weights_4_13_value_out; end
+            `HL_WEIGHTS_4_14_OFFSET : begin regpool_rdata <= hl_weights_4_14_value_out; end
+            `HL_WEIGHTS_4_15_OFFSET : begin regpool_rdata <= hl_weights_4_15_value_out; end
+            `HL_WEIGHTS_4_16_OFFSET : begin regpool_rdata <= hl_weights_4_16_value_out; end
+            `HL_WEIGHTS_4_17_OFFSET : begin regpool_rdata <= hl_weights_4_17_value_out; end
+            `HL_WEIGHTS_4_18_OFFSET : begin regpool_rdata <= hl_weights_4_18_value_out; end
+            `HL_WEIGHTS_4_19_OFFSET : begin regpool_rdata <= hl_weights_4_19_value_out; end
+            `HL_WEIGHTS_4_20_OFFSET : begin regpool_rdata <= hl_weights_4_20_value_out; end
+            `HL_WEIGHTS_4_21_OFFSET : begin regpool_rdata <= hl_weights_4_21_value_out; end
+            `HL_WEIGHTS_4_22_OFFSET : begin regpool_rdata <= hl_weights_4_22_value_out; end
+            `HL_WEIGHTS_4_23_OFFSET : begin regpool_rdata <= hl_weights_4_23_value_out; end
+            `HL_WEIGHTS_4_24_OFFSET : begin regpool_rdata <= hl_weights_4_24_value_out; end
             `HL_WEIGHTS_5_0_OFFSET : begin regpool_rdata <= hl_weights_5_0_value_out; end
             `HL_WEIGHTS_5_1_OFFSET : begin regpool_rdata <= hl_weights_5_1_value_out; end
             `HL_WEIGHTS_5_2_OFFSET : begin regpool_rdata <= hl_weights_5_2_value_out; end
@@ -2175,33 +7048,187 @@ module CORTEZ_REGPOOL (
             `HL_WEIGHTS_5_6_OFFSET : begin regpool_rdata <= hl_weights_5_6_value_out; end
             `HL_WEIGHTS_5_7_OFFSET : begin regpool_rdata <= hl_weights_5_7_value_out; end
             `HL_WEIGHTS_5_8_OFFSET : begin regpool_rdata <= hl_weights_5_8_value_out; end
+            `HL_WEIGHTS_5_9_OFFSET : begin regpool_rdata <= hl_weights_5_9_value_out; end
+            `HL_WEIGHTS_5_10_OFFSET : begin regpool_rdata <= hl_weights_5_10_value_out; end
+            `HL_WEIGHTS_5_11_OFFSET : begin regpool_rdata <= hl_weights_5_11_value_out; end
+            `HL_WEIGHTS_5_12_OFFSET : begin regpool_rdata <= hl_weights_5_12_value_out; end
+            `HL_WEIGHTS_5_13_OFFSET : begin regpool_rdata <= hl_weights_5_13_value_out; end
+            `HL_WEIGHTS_5_14_OFFSET : begin regpool_rdata <= hl_weights_5_14_value_out; end
+            `HL_WEIGHTS_5_15_OFFSET : begin regpool_rdata <= hl_weights_5_15_value_out; end
+            `HL_WEIGHTS_5_16_OFFSET : begin regpool_rdata <= hl_weights_5_16_value_out; end
+            `HL_WEIGHTS_5_17_OFFSET : begin regpool_rdata <= hl_weights_5_17_value_out; end
+            `HL_WEIGHTS_5_18_OFFSET : begin regpool_rdata <= hl_weights_5_18_value_out; end
+            `HL_WEIGHTS_5_19_OFFSET : begin regpool_rdata <= hl_weights_5_19_value_out; end
+            `HL_WEIGHTS_5_20_OFFSET : begin regpool_rdata <= hl_weights_5_20_value_out; end
+            `HL_WEIGHTS_5_21_OFFSET : begin regpool_rdata <= hl_weights_5_21_value_out; end
+            `HL_WEIGHTS_5_22_OFFSET : begin regpool_rdata <= hl_weights_5_22_value_out; end
+            `HL_WEIGHTS_5_23_OFFSET : begin regpool_rdata <= hl_weights_5_23_value_out; end
+            `HL_WEIGHTS_5_24_OFFSET : begin regpool_rdata <= hl_weights_5_24_value_out; end
+            `HL_WEIGHTS_6_0_OFFSET : begin regpool_rdata <= hl_weights_6_0_value_out; end
+            `HL_WEIGHTS_6_1_OFFSET : begin regpool_rdata <= hl_weights_6_1_value_out; end
+            `HL_WEIGHTS_6_2_OFFSET : begin regpool_rdata <= hl_weights_6_2_value_out; end
+            `HL_WEIGHTS_6_3_OFFSET : begin regpool_rdata <= hl_weights_6_3_value_out; end
+            `HL_WEIGHTS_6_4_OFFSET : begin regpool_rdata <= hl_weights_6_4_value_out; end
+            `HL_WEIGHTS_6_5_OFFSET : begin regpool_rdata <= hl_weights_6_5_value_out; end
+            `HL_WEIGHTS_6_6_OFFSET : begin regpool_rdata <= hl_weights_6_6_value_out; end
+            `HL_WEIGHTS_6_7_OFFSET : begin regpool_rdata <= hl_weights_6_7_value_out; end
+            `HL_WEIGHTS_6_8_OFFSET : begin regpool_rdata <= hl_weights_6_8_value_out; end
+            `HL_WEIGHTS_6_9_OFFSET : begin regpool_rdata <= hl_weights_6_9_value_out; end
+            `HL_WEIGHTS_6_10_OFFSET : begin regpool_rdata <= hl_weights_6_10_value_out; end
+            `HL_WEIGHTS_6_11_OFFSET : begin regpool_rdata <= hl_weights_6_11_value_out; end
+            `HL_WEIGHTS_6_12_OFFSET : begin regpool_rdata <= hl_weights_6_12_value_out; end
+            `HL_WEIGHTS_6_13_OFFSET : begin regpool_rdata <= hl_weights_6_13_value_out; end
+            `HL_WEIGHTS_6_14_OFFSET : begin regpool_rdata <= hl_weights_6_14_value_out; end
+            `HL_WEIGHTS_6_15_OFFSET : begin regpool_rdata <= hl_weights_6_15_value_out; end
+            `HL_WEIGHTS_6_16_OFFSET : begin regpool_rdata <= hl_weights_6_16_value_out; end
+            `HL_WEIGHTS_6_17_OFFSET : begin regpool_rdata <= hl_weights_6_17_value_out; end
+            `HL_WEIGHTS_6_18_OFFSET : begin regpool_rdata <= hl_weights_6_18_value_out; end
+            `HL_WEIGHTS_6_19_OFFSET : begin regpool_rdata <= hl_weights_6_19_value_out; end
+            `HL_WEIGHTS_6_20_OFFSET : begin regpool_rdata <= hl_weights_6_20_value_out; end
+            `HL_WEIGHTS_6_21_OFFSET : begin regpool_rdata <= hl_weights_6_21_value_out; end
+            `HL_WEIGHTS_6_22_OFFSET : begin regpool_rdata <= hl_weights_6_22_value_out; end
+            `HL_WEIGHTS_6_23_OFFSET : begin regpool_rdata <= hl_weights_6_23_value_out; end
+            `HL_WEIGHTS_6_24_OFFSET : begin regpool_rdata <= hl_weights_6_24_value_out; end
+            `HL_WEIGHTS_7_0_OFFSET : begin regpool_rdata <= hl_weights_7_0_value_out; end
+            `HL_WEIGHTS_7_1_OFFSET : begin regpool_rdata <= hl_weights_7_1_value_out; end
+            `HL_WEIGHTS_7_2_OFFSET : begin regpool_rdata <= hl_weights_7_2_value_out; end
+            `HL_WEIGHTS_7_3_OFFSET : begin regpool_rdata <= hl_weights_7_3_value_out; end
+            `HL_WEIGHTS_7_4_OFFSET : begin regpool_rdata <= hl_weights_7_4_value_out; end
+            `HL_WEIGHTS_7_5_OFFSET : begin regpool_rdata <= hl_weights_7_5_value_out; end
+            `HL_WEIGHTS_7_6_OFFSET : begin regpool_rdata <= hl_weights_7_6_value_out; end
+            `HL_WEIGHTS_7_7_OFFSET : begin regpool_rdata <= hl_weights_7_7_value_out; end
+            `HL_WEIGHTS_7_8_OFFSET : begin regpool_rdata <= hl_weights_7_8_value_out; end
+            `HL_WEIGHTS_7_9_OFFSET : begin regpool_rdata <= hl_weights_7_9_value_out; end
+            `HL_WEIGHTS_7_10_OFFSET : begin regpool_rdata <= hl_weights_7_10_value_out; end
+            `HL_WEIGHTS_7_11_OFFSET : begin regpool_rdata <= hl_weights_7_11_value_out; end
+            `HL_WEIGHTS_7_12_OFFSET : begin regpool_rdata <= hl_weights_7_12_value_out; end
+            `HL_WEIGHTS_7_13_OFFSET : begin regpool_rdata <= hl_weights_7_13_value_out; end
+            `HL_WEIGHTS_7_14_OFFSET : begin regpool_rdata <= hl_weights_7_14_value_out; end
+            `HL_WEIGHTS_7_15_OFFSET : begin regpool_rdata <= hl_weights_7_15_value_out; end
+            `HL_WEIGHTS_7_16_OFFSET : begin regpool_rdata <= hl_weights_7_16_value_out; end
+            `HL_WEIGHTS_7_17_OFFSET : begin regpool_rdata <= hl_weights_7_17_value_out; end
+            `HL_WEIGHTS_7_18_OFFSET : begin regpool_rdata <= hl_weights_7_18_value_out; end
+            `HL_WEIGHTS_7_19_OFFSET : begin regpool_rdata <= hl_weights_7_19_value_out; end
+            `HL_WEIGHTS_7_20_OFFSET : begin regpool_rdata <= hl_weights_7_20_value_out; end
+            `HL_WEIGHTS_7_21_OFFSET : begin regpool_rdata <= hl_weights_7_21_value_out; end
+            `HL_WEIGHTS_7_22_OFFSET : begin regpool_rdata <= hl_weights_7_22_value_out; end
+            `HL_WEIGHTS_7_23_OFFSET : begin regpool_rdata <= hl_weights_7_23_value_out; end
+            `HL_WEIGHTS_7_24_OFFSET : begin regpool_rdata <= hl_weights_7_24_value_out; end
+            `HL_WEIGHTS_8_0_OFFSET : begin regpool_rdata <= hl_weights_8_0_value_out; end
+            `HL_WEIGHTS_8_1_OFFSET : begin regpool_rdata <= hl_weights_8_1_value_out; end
+            `HL_WEIGHTS_8_2_OFFSET : begin regpool_rdata <= hl_weights_8_2_value_out; end
+            `HL_WEIGHTS_8_3_OFFSET : begin regpool_rdata <= hl_weights_8_3_value_out; end
+            `HL_WEIGHTS_8_4_OFFSET : begin regpool_rdata <= hl_weights_8_4_value_out; end
+            `HL_WEIGHTS_8_5_OFFSET : begin regpool_rdata <= hl_weights_8_5_value_out; end
+            `HL_WEIGHTS_8_6_OFFSET : begin regpool_rdata <= hl_weights_8_6_value_out; end
+            `HL_WEIGHTS_8_7_OFFSET : begin regpool_rdata <= hl_weights_8_7_value_out; end
+            `HL_WEIGHTS_8_8_OFFSET : begin regpool_rdata <= hl_weights_8_8_value_out; end
+            `HL_WEIGHTS_8_9_OFFSET : begin regpool_rdata <= hl_weights_8_9_value_out; end
+            `HL_WEIGHTS_8_10_OFFSET : begin regpool_rdata <= hl_weights_8_10_value_out; end
+            `HL_WEIGHTS_8_11_OFFSET : begin regpool_rdata <= hl_weights_8_11_value_out; end
+            `HL_WEIGHTS_8_12_OFFSET : begin regpool_rdata <= hl_weights_8_12_value_out; end
+            `HL_WEIGHTS_8_13_OFFSET : begin regpool_rdata <= hl_weights_8_13_value_out; end
+            `HL_WEIGHTS_8_14_OFFSET : begin regpool_rdata <= hl_weights_8_14_value_out; end
+            `HL_WEIGHTS_8_15_OFFSET : begin regpool_rdata <= hl_weights_8_15_value_out; end
+            `HL_WEIGHTS_8_16_OFFSET : begin regpool_rdata <= hl_weights_8_16_value_out; end
+            `HL_WEIGHTS_8_17_OFFSET : begin regpool_rdata <= hl_weights_8_17_value_out; end
+            `HL_WEIGHTS_8_18_OFFSET : begin regpool_rdata <= hl_weights_8_18_value_out; end
+            `HL_WEIGHTS_8_19_OFFSET : begin regpool_rdata <= hl_weights_8_19_value_out; end
+            `HL_WEIGHTS_8_20_OFFSET : begin regpool_rdata <= hl_weights_8_20_value_out; end
+            `HL_WEIGHTS_8_21_OFFSET : begin regpool_rdata <= hl_weights_8_21_value_out; end
+            `HL_WEIGHTS_8_22_OFFSET : begin regpool_rdata <= hl_weights_8_22_value_out; end
+            `HL_WEIGHTS_8_23_OFFSET : begin regpool_rdata <= hl_weights_8_23_value_out; end
+            `HL_WEIGHTS_8_24_OFFSET : begin regpool_rdata <= hl_weights_8_24_value_out; end
+            `HL_WEIGHTS_9_0_OFFSET : begin regpool_rdata <= hl_weights_9_0_value_out; end
+            `HL_WEIGHTS_9_1_OFFSET : begin regpool_rdata <= hl_weights_9_1_value_out; end
+            `HL_WEIGHTS_9_2_OFFSET : begin regpool_rdata <= hl_weights_9_2_value_out; end
+            `HL_WEIGHTS_9_3_OFFSET : begin regpool_rdata <= hl_weights_9_3_value_out; end
+            `HL_WEIGHTS_9_4_OFFSET : begin regpool_rdata <= hl_weights_9_4_value_out; end
+            `HL_WEIGHTS_9_5_OFFSET : begin regpool_rdata <= hl_weights_9_5_value_out; end
+            `HL_WEIGHTS_9_6_OFFSET : begin regpool_rdata <= hl_weights_9_6_value_out; end
+            `HL_WEIGHTS_9_7_OFFSET : begin regpool_rdata <= hl_weights_9_7_value_out; end
+            `HL_WEIGHTS_9_8_OFFSET : begin regpool_rdata <= hl_weights_9_8_value_out; end
+            `HL_WEIGHTS_9_9_OFFSET : begin regpool_rdata <= hl_weights_9_9_value_out; end
+            `HL_WEIGHTS_9_10_OFFSET : begin regpool_rdata <= hl_weights_9_10_value_out; end
+            `HL_WEIGHTS_9_11_OFFSET : begin regpool_rdata <= hl_weights_9_11_value_out; end
+            `HL_WEIGHTS_9_12_OFFSET : begin regpool_rdata <= hl_weights_9_12_value_out; end
+            `HL_WEIGHTS_9_13_OFFSET : begin regpool_rdata <= hl_weights_9_13_value_out; end
+            `HL_WEIGHTS_9_14_OFFSET : begin regpool_rdata <= hl_weights_9_14_value_out; end
+            `HL_WEIGHTS_9_15_OFFSET : begin regpool_rdata <= hl_weights_9_15_value_out; end
+            `HL_WEIGHTS_9_16_OFFSET : begin regpool_rdata <= hl_weights_9_16_value_out; end
+            `HL_WEIGHTS_9_17_OFFSET : begin regpool_rdata <= hl_weights_9_17_value_out; end
+            `HL_WEIGHTS_9_18_OFFSET : begin regpool_rdata <= hl_weights_9_18_value_out; end
+            `HL_WEIGHTS_9_19_OFFSET : begin regpool_rdata <= hl_weights_9_19_value_out; end
+            `HL_WEIGHTS_9_20_OFFSET : begin regpool_rdata <= hl_weights_9_20_value_out; end
+            `HL_WEIGHTS_9_21_OFFSET : begin regpool_rdata <= hl_weights_9_21_value_out; end
+            `HL_WEIGHTS_9_22_OFFSET : begin regpool_rdata <= hl_weights_9_22_value_out; end
+            `HL_WEIGHTS_9_23_OFFSET : begin regpool_rdata <= hl_weights_9_23_value_out; end
+            `HL_WEIGHTS_9_24_OFFSET : begin regpool_rdata <= hl_weights_9_24_value_out; end
             `HL_BIAS_0_OFFSET : begin regpool_rdata <= hl_bias_0_value_out; end
             `HL_BIAS_1_OFFSET : begin regpool_rdata <= hl_bias_1_value_out; end
             `HL_BIAS_2_OFFSET : begin regpool_rdata <= hl_bias_2_value_out; end
             `HL_BIAS_3_OFFSET : begin regpool_rdata <= hl_bias_3_value_out; end
             `HL_BIAS_4_OFFSET : begin regpool_rdata <= hl_bias_4_value_out; end
             `HL_BIAS_5_OFFSET : begin regpool_rdata <= hl_bias_5_value_out; end
+            `HL_BIAS_6_OFFSET : begin regpool_rdata <= hl_bias_6_value_out; end
+            `HL_BIAS_7_OFFSET : begin regpool_rdata <= hl_bias_7_value_out; end
+            `HL_BIAS_8_OFFSET : begin regpool_rdata <= hl_bias_8_value_out; end
+            `HL_BIAS_9_OFFSET : begin regpool_rdata <= hl_bias_9_value_out; end
             `OL_WEIGHTS_0_0_OFFSET : begin regpool_rdata <= ol_weights_0_0_value_out; end
             `OL_WEIGHTS_0_1_OFFSET : begin regpool_rdata <= ol_weights_0_1_value_out; end
             `OL_WEIGHTS_0_2_OFFSET : begin regpool_rdata <= ol_weights_0_2_value_out; end
             `OL_WEIGHTS_0_3_OFFSET : begin regpool_rdata <= ol_weights_0_3_value_out; end
             `OL_WEIGHTS_0_4_OFFSET : begin regpool_rdata <= ol_weights_0_4_value_out; end
             `OL_WEIGHTS_0_5_OFFSET : begin regpool_rdata <= ol_weights_0_5_value_out; end
+            `OL_WEIGHTS_0_6_OFFSET : begin regpool_rdata <= ol_weights_0_6_value_out; end
+            `OL_WEIGHTS_0_7_OFFSET : begin regpool_rdata <= ol_weights_0_7_value_out; end
+            `OL_WEIGHTS_0_8_OFFSET : begin regpool_rdata <= ol_weights_0_8_value_out; end
+            `OL_WEIGHTS_0_9_OFFSET : begin regpool_rdata <= ol_weights_0_9_value_out; end
             `OL_WEIGHTS_1_0_OFFSET : begin regpool_rdata <= ol_weights_1_0_value_out; end
             `OL_WEIGHTS_1_1_OFFSET : begin regpool_rdata <= ol_weights_1_1_value_out; end
             `OL_WEIGHTS_1_2_OFFSET : begin regpool_rdata <= ol_weights_1_2_value_out; end
             `OL_WEIGHTS_1_3_OFFSET : begin regpool_rdata <= ol_weights_1_3_value_out; end
             `OL_WEIGHTS_1_4_OFFSET : begin regpool_rdata <= ol_weights_1_4_value_out; end
             `OL_WEIGHTS_1_5_OFFSET : begin regpool_rdata <= ol_weights_1_5_value_out; end
+            `OL_WEIGHTS_1_6_OFFSET : begin regpool_rdata <= ol_weights_1_6_value_out; end
+            `OL_WEIGHTS_1_7_OFFSET : begin regpool_rdata <= ol_weights_1_7_value_out; end
+            `OL_WEIGHTS_1_8_OFFSET : begin regpool_rdata <= ol_weights_1_8_value_out; end
+            `OL_WEIGHTS_1_9_OFFSET : begin regpool_rdata <= ol_weights_1_9_value_out; end
             `OL_WEIGHTS_2_0_OFFSET : begin regpool_rdata <= ol_weights_2_0_value_out; end
             `OL_WEIGHTS_2_1_OFFSET : begin regpool_rdata <= ol_weights_2_1_value_out; end
             `OL_WEIGHTS_2_2_OFFSET : begin regpool_rdata <= ol_weights_2_2_value_out; end
             `OL_WEIGHTS_2_3_OFFSET : begin regpool_rdata <= ol_weights_2_3_value_out; end
             `OL_WEIGHTS_2_4_OFFSET : begin regpool_rdata <= ol_weights_2_4_value_out; end
             `OL_WEIGHTS_2_5_OFFSET : begin regpool_rdata <= ol_weights_2_5_value_out; end
+            `OL_WEIGHTS_2_6_OFFSET : begin regpool_rdata <= ol_weights_2_6_value_out; end
+            `OL_WEIGHTS_2_7_OFFSET : begin regpool_rdata <= ol_weights_2_7_value_out; end
+            `OL_WEIGHTS_2_8_OFFSET : begin regpool_rdata <= ol_weights_2_8_value_out; end
+            `OL_WEIGHTS_2_9_OFFSET : begin regpool_rdata <= ol_weights_2_9_value_out; end
+            `OL_WEIGHTS_3_0_OFFSET : begin regpool_rdata <= ol_weights_3_0_value_out; end
+            `OL_WEIGHTS_3_1_OFFSET : begin regpool_rdata <= ol_weights_3_1_value_out; end
+            `OL_WEIGHTS_3_2_OFFSET : begin regpool_rdata <= ol_weights_3_2_value_out; end
+            `OL_WEIGHTS_3_3_OFFSET : begin regpool_rdata <= ol_weights_3_3_value_out; end
+            `OL_WEIGHTS_3_4_OFFSET : begin regpool_rdata <= ol_weights_3_4_value_out; end
+            `OL_WEIGHTS_3_5_OFFSET : begin regpool_rdata <= ol_weights_3_5_value_out; end
+            `OL_WEIGHTS_3_6_OFFSET : begin regpool_rdata <= ol_weights_3_6_value_out; end
+            `OL_WEIGHTS_3_7_OFFSET : begin regpool_rdata <= ol_weights_3_7_value_out; end
+            `OL_WEIGHTS_3_8_OFFSET : begin regpool_rdata <= ol_weights_3_8_value_out; end
+            `OL_WEIGHTS_3_9_OFFSET : begin regpool_rdata <= ol_weights_3_9_value_out; end
+            `OL_WEIGHTS_4_0_OFFSET : begin regpool_rdata <= ol_weights_4_0_value_out; end
+            `OL_WEIGHTS_4_1_OFFSET : begin regpool_rdata <= ol_weights_4_1_value_out; end
+            `OL_WEIGHTS_4_2_OFFSET : begin regpool_rdata <= ol_weights_4_2_value_out; end
+            `OL_WEIGHTS_4_3_OFFSET : begin regpool_rdata <= ol_weights_4_3_value_out; end
+            `OL_WEIGHTS_4_4_OFFSET : begin regpool_rdata <= ol_weights_4_4_value_out; end
+            `OL_WEIGHTS_4_5_OFFSET : begin regpool_rdata <= ol_weights_4_5_value_out; end
+            `OL_WEIGHTS_4_6_OFFSET : begin regpool_rdata <= ol_weights_4_6_value_out; end
+            `OL_WEIGHTS_4_7_OFFSET : begin regpool_rdata <= ol_weights_4_7_value_out; end
+            `OL_WEIGHTS_4_8_OFFSET : begin regpool_rdata <= ol_weights_4_8_value_out; end
+            `OL_WEIGHTS_4_9_OFFSET : begin regpool_rdata <= ol_weights_4_9_value_out; end
             `OL_BIAS_0_OFFSET : begin regpool_rdata <= ol_bias_0_value_out; end
             `OL_BIAS_1_OFFSET : begin regpool_rdata <= ol_bias_1_value_out; end
             `OL_BIAS_2_OFFSET : begin regpool_rdata <= ol_bias_2_value_out; end
+            `OL_BIAS_3_OFFSET : begin regpool_rdata <= ol_bias_3_value_out; end
+            `OL_BIAS_4_OFFSET : begin regpool_rdata <= ol_bias_4_value_out; end
             `INPUT_GRID_0_OFFSET : begin regpool_rdata <= input_grid_0_value_out; end
             `INPUT_GRID_1_OFFSET : begin regpool_rdata <= input_grid_1_value_out; end
             `INPUT_GRID_2_OFFSET : begin regpool_rdata <= input_grid_2_value_out; end
@@ -2211,13 +7238,30 @@ module CORTEZ_REGPOOL (
             `INPUT_GRID_6_OFFSET : begin regpool_rdata <= input_grid_6_value_out; end
             `INPUT_GRID_7_OFFSET : begin regpool_rdata <= input_grid_7_value_out; end
             `INPUT_GRID_8_OFFSET : begin regpool_rdata <= input_grid_8_value_out; end
+            `INPUT_GRID_9_OFFSET : begin regpool_rdata <= input_grid_9_value_out; end
+            `INPUT_GRID_10_OFFSET : begin regpool_rdata <= input_grid_10_value_out; end
+            `INPUT_GRID_11_OFFSET : begin regpool_rdata <= input_grid_11_value_out; end
+            `INPUT_GRID_12_OFFSET : begin regpool_rdata <= input_grid_12_value_out; end
+            `INPUT_GRID_13_OFFSET : begin regpool_rdata <= input_grid_13_value_out; end
+            `INPUT_GRID_14_OFFSET : begin regpool_rdata <= input_grid_14_value_out; end
+            `INPUT_GRID_15_OFFSET : begin regpool_rdata <= input_grid_15_value_out; end
+            `INPUT_GRID_16_OFFSET : begin regpool_rdata <= input_grid_16_value_out; end
+            `INPUT_GRID_17_OFFSET : begin regpool_rdata <= input_grid_17_value_out; end
+            `INPUT_GRID_18_OFFSET : begin regpool_rdata <= input_grid_18_value_out; end
+            `INPUT_GRID_19_OFFSET : begin regpool_rdata <= input_grid_19_value_out; end
+            `INPUT_GRID_20_OFFSET : begin regpool_rdata <= input_grid_20_value_out; end
+            `INPUT_GRID_21_OFFSET : begin regpool_rdata <= input_grid_21_value_out; end
+            `INPUT_GRID_22_OFFSET : begin regpool_rdata <= input_grid_22_value_out; end
+            `INPUT_GRID_23_OFFSET : begin regpool_rdata <= input_grid_23_value_out; end
+            `INPUT_GRID_24_OFFSET : begin regpool_rdata <= input_grid_24_value_out; end
             `OUTPUT_SOLUTION_0_OFFSET : begin regpool_rdata <= output_solution_0_value_out; end
             `OUTPUT_SOLUTION_1_OFFSET : begin regpool_rdata <= output_solution_1_value_out; end
             `OUTPUT_SOLUTION_2_OFFSET : begin regpool_rdata <= output_solution_2_value_out; end
+            `OUTPUT_SOLUTION_3_OFFSET : begin regpool_rdata <= output_solution_3_value_out; end
+            `OUTPUT_SOLUTION_4_OFFSET : begin regpool_rdata <= output_solution_4_value_out; end
             `CORE_CTRL_OFFSET : begin regpool_rdata <= core_ctrl_value_out; end
             `CORE_DEBUG_INFO_OFFSET : begin regpool_rdata <= core_debug_info_value_out; end
-            `CORE_STATUS_RESET_OFFSET : begin regpool_rdata <= core_status_reset_value_out; end
-            `CORE_STATUS_NO_RESET_OFFSET : begin regpool_rdata <= core_status_no_reset_value_out; end
+            `CORE_STATUS_OFFSET : begin regpool_rdata <= core_status_value_out; end
             `SEVENSEG_0_OFFSET : begin regpool_rdata <= sevenseg_0_value_out; end
             `SEVENSEG_1_OFFSET : begin regpool_rdata <= sevenseg_1_value_out; end
             `SEVENSEG_2_OFFSET : begin regpool_rdata <= sevenseg_2_value_out; end
@@ -2242,6 +7286,22 @@ module CORTEZ_REGPOOL (
     assign HWIF_OUT_HL_WEIGHTS_0[6*8+:8] = hl_weights_0_6_value_out;
     assign HWIF_OUT_HL_WEIGHTS_0[7*8+:8] = hl_weights_0_7_value_out;
     assign HWIF_OUT_HL_WEIGHTS_0[8*8+:8] = hl_weights_0_8_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_0[9*8+:8] = hl_weights_0_9_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_0[10*8+:8] = hl_weights_0_10_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_0[11*8+:8] = hl_weights_0_11_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_0[12*8+:8] = hl_weights_0_12_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_0[13*8+:8] = hl_weights_0_13_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_0[14*8+:8] = hl_weights_0_14_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_0[15*8+:8] = hl_weights_0_15_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_0[16*8+:8] = hl_weights_0_16_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_0[17*8+:8] = hl_weights_0_17_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_0[18*8+:8] = hl_weights_0_18_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_0[19*8+:8] = hl_weights_0_19_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_0[20*8+:8] = hl_weights_0_20_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_0[21*8+:8] = hl_weights_0_21_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_0[22*8+:8] = hl_weights_0_22_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_0[23*8+:8] = hl_weights_0_23_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_0[24*8+:8] = hl_weights_0_24_value_out;
     assign HWIF_OUT_HL_WEIGHTS_1[0*8+:8] = hl_weights_1_0_value_out;
     assign HWIF_OUT_HL_WEIGHTS_1[1*8+:8] = hl_weights_1_1_value_out;
     assign HWIF_OUT_HL_WEIGHTS_1[2*8+:8] = hl_weights_1_2_value_out;
@@ -2251,6 +7311,22 @@ module CORTEZ_REGPOOL (
     assign HWIF_OUT_HL_WEIGHTS_1[6*8+:8] = hl_weights_1_6_value_out;
     assign HWIF_OUT_HL_WEIGHTS_1[7*8+:8] = hl_weights_1_7_value_out;
     assign HWIF_OUT_HL_WEIGHTS_1[8*8+:8] = hl_weights_1_8_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_1[9*8+:8] = hl_weights_1_9_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_1[10*8+:8] = hl_weights_1_10_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_1[11*8+:8] = hl_weights_1_11_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_1[12*8+:8] = hl_weights_1_12_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_1[13*8+:8] = hl_weights_1_13_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_1[14*8+:8] = hl_weights_1_14_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_1[15*8+:8] = hl_weights_1_15_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_1[16*8+:8] = hl_weights_1_16_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_1[17*8+:8] = hl_weights_1_17_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_1[18*8+:8] = hl_weights_1_18_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_1[19*8+:8] = hl_weights_1_19_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_1[20*8+:8] = hl_weights_1_20_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_1[21*8+:8] = hl_weights_1_21_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_1[22*8+:8] = hl_weights_1_22_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_1[23*8+:8] = hl_weights_1_23_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_1[24*8+:8] = hl_weights_1_24_value_out;
     assign HWIF_OUT_HL_WEIGHTS_2[0*8+:8] = hl_weights_2_0_value_out;
     assign HWIF_OUT_HL_WEIGHTS_2[1*8+:8] = hl_weights_2_1_value_out;
     assign HWIF_OUT_HL_WEIGHTS_2[2*8+:8] = hl_weights_2_2_value_out;
@@ -2260,6 +7336,22 @@ module CORTEZ_REGPOOL (
     assign HWIF_OUT_HL_WEIGHTS_2[6*8+:8] = hl_weights_2_6_value_out;
     assign HWIF_OUT_HL_WEIGHTS_2[7*8+:8] = hl_weights_2_7_value_out;
     assign HWIF_OUT_HL_WEIGHTS_2[8*8+:8] = hl_weights_2_8_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_2[9*8+:8] = hl_weights_2_9_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_2[10*8+:8] = hl_weights_2_10_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_2[11*8+:8] = hl_weights_2_11_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_2[12*8+:8] = hl_weights_2_12_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_2[13*8+:8] = hl_weights_2_13_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_2[14*8+:8] = hl_weights_2_14_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_2[15*8+:8] = hl_weights_2_15_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_2[16*8+:8] = hl_weights_2_16_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_2[17*8+:8] = hl_weights_2_17_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_2[18*8+:8] = hl_weights_2_18_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_2[19*8+:8] = hl_weights_2_19_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_2[20*8+:8] = hl_weights_2_20_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_2[21*8+:8] = hl_weights_2_21_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_2[22*8+:8] = hl_weights_2_22_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_2[23*8+:8] = hl_weights_2_23_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_2[24*8+:8] = hl_weights_2_24_value_out;
     assign HWIF_OUT_HL_WEIGHTS_3[0*8+:8] = hl_weights_3_0_value_out;
     assign HWIF_OUT_HL_WEIGHTS_3[1*8+:8] = hl_weights_3_1_value_out;
     assign HWIF_OUT_HL_WEIGHTS_3[2*8+:8] = hl_weights_3_2_value_out;
@@ -2269,6 +7361,22 @@ module CORTEZ_REGPOOL (
     assign HWIF_OUT_HL_WEIGHTS_3[6*8+:8] = hl_weights_3_6_value_out;
     assign HWIF_OUT_HL_WEIGHTS_3[7*8+:8] = hl_weights_3_7_value_out;
     assign HWIF_OUT_HL_WEIGHTS_3[8*8+:8] = hl_weights_3_8_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_3[9*8+:8] = hl_weights_3_9_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_3[10*8+:8] = hl_weights_3_10_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_3[11*8+:8] = hl_weights_3_11_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_3[12*8+:8] = hl_weights_3_12_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_3[13*8+:8] = hl_weights_3_13_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_3[14*8+:8] = hl_weights_3_14_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_3[15*8+:8] = hl_weights_3_15_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_3[16*8+:8] = hl_weights_3_16_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_3[17*8+:8] = hl_weights_3_17_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_3[18*8+:8] = hl_weights_3_18_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_3[19*8+:8] = hl_weights_3_19_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_3[20*8+:8] = hl_weights_3_20_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_3[21*8+:8] = hl_weights_3_21_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_3[22*8+:8] = hl_weights_3_22_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_3[23*8+:8] = hl_weights_3_23_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_3[24*8+:8] = hl_weights_3_24_value_out;
     assign HWIF_OUT_HL_WEIGHTS_4[0*8+:8] = hl_weights_4_0_value_out;
     assign HWIF_OUT_HL_WEIGHTS_4[1*8+:8] = hl_weights_4_1_value_out;
     assign HWIF_OUT_HL_WEIGHTS_4[2*8+:8] = hl_weights_4_2_value_out;
@@ -2278,6 +7386,22 @@ module CORTEZ_REGPOOL (
     assign HWIF_OUT_HL_WEIGHTS_4[6*8+:8] = hl_weights_4_6_value_out;
     assign HWIF_OUT_HL_WEIGHTS_4[7*8+:8] = hl_weights_4_7_value_out;
     assign HWIF_OUT_HL_WEIGHTS_4[8*8+:8] = hl_weights_4_8_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_4[9*8+:8] = hl_weights_4_9_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_4[10*8+:8] = hl_weights_4_10_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_4[11*8+:8] = hl_weights_4_11_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_4[12*8+:8] = hl_weights_4_12_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_4[13*8+:8] = hl_weights_4_13_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_4[14*8+:8] = hl_weights_4_14_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_4[15*8+:8] = hl_weights_4_15_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_4[16*8+:8] = hl_weights_4_16_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_4[17*8+:8] = hl_weights_4_17_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_4[18*8+:8] = hl_weights_4_18_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_4[19*8+:8] = hl_weights_4_19_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_4[20*8+:8] = hl_weights_4_20_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_4[21*8+:8] = hl_weights_4_21_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_4[22*8+:8] = hl_weights_4_22_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_4[23*8+:8] = hl_weights_4_23_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_4[24*8+:8] = hl_weights_4_24_value_out;
     assign HWIF_OUT_HL_WEIGHTS_5[0*8+:8] = hl_weights_5_0_value_out;
     assign HWIF_OUT_HL_WEIGHTS_5[1*8+:8] = hl_weights_5_1_value_out;
     assign HWIF_OUT_HL_WEIGHTS_5[2*8+:8] = hl_weights_5_2_value_out;
@@ -2287,33 +7411,187 @@ module CORTEZ_REGPOOL (
     assign HWIF_OUT_HL_WEIGHTS_5[6*8+:8] = hl_weights_5_6_value_out;
     assign HWIF_OUT_HL_WEIGHTS_5[7*8+:8] = hl_weights_5_7_value_out;
     assign HWIF_OUT_HL_WEIGHTS_5[8*8+:8] = hl_weights_5_8_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_5[9*8+:8] = hl_weights_5_9_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_5[10*8+:8] = hl_weights_5_10_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_5[11*8+:8] = hl_weights_5_11_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_5[12*8+:8] = hl_weights_5_12_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_5[13*8+:8] = hl_weights_5_13_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_5[14*8+:8] = hl_weights_5_14_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_5[15*8+:8] = hl_weights_5_15_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_5[16*8+:8] = hl_weights_5_16_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_5[17*8+:8] = hl_weights_5_17_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_5[18*8+:8] = hl_weights_5_18_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_5[19*8+:8] = hl_weights_5_19_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_5[20*8+:8] = hl_weights_5_20_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_5[21*8+:8] = hl_weights_5_21_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_5[22*8+:8] = hl_weights_5_22_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_5[23*8+:8] = hl_weights_5_23_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_5[24*8+:8] = hl_weights_5_24_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[0*8+:8] = hl_weights_6_0_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[1*8+:8] = hl_weights_6_1_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[2*8+:8] = hl_weights_6_2_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[3*8+:8] = hl_weights_6_3_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[4*8+:8] = hl_weights_6_4_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[5*8+:8] = hl_weights_6_5_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[6*8+:8] = hl_weights_6_6_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[7*8+:8] = hl_weights_6_7_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[8*8+:8] = hl_weights_6_8_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[9*8+:8] = hl_weights_6_9_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[10*8+:8] = hl_weights_6_10_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[11*8+:8] = hl_weights_6_11_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[12*8+:8] = hl_weights_6_12_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[13*8+:8] = hl_weights_6_13_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[14*8+:8] = hl_weights_6_14_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[15*8+:8] = hl_weights_6_15_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[16*8+:8] = hl_weights_6_16_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[17*8+:8] = hl_weights_6_17_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[18*8+:8] = hl_weights_6_18_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[19*8+:8] = hl_weights_6_19_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[20*8+:8] = hl_weights_6_20_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[21*8+:8] = hl_weights_6_21_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[22*8+:8] = hl_weights_6_22_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[23*8+:8] = hl_weights_6_23_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_6[24*8+:8] = hl_weights_6_24_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[0*8+:8] = hl_weights_7_0_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[1*8+:8] = hl_weights_7_1_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[2*8+:8] = hl_weights_7_2_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[3*8+:8] = hl_weights_7_3_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[4*8+:8] = hl_weights_7_4_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[5*8+:8] = hl_weights_7_5_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[6*8+:8] = hl_weights_7_6_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[7*8+:8] = hl_weights_7_7_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[8*8+:8] = hl_weights_7_8_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[9*8+:8] = hl_weights_7_9_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[10*8+:8] = hl_weights_7_10_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[11*8+:8] = hl_weights_7_11_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[12*8+:8] = hl_weights_7_12_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[13*8+:8] = hl_weights_7_13_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[14*8+:8] = hl_weights_7_14_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[15*8+:8] = hl_weights_7_15_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[16*8+:8] = hl_weights_7_16_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[17*8+:8] = hl_weights_7_17_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[18*8+:8] = hl_weights_7_18_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[19*8+:8] = hl_weights_7_19_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[20*8+:8] = hl_weights_7_20_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[21*8+:8] = hl_weights_7_21_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[22*8+:8] = hl_weights_7_22_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[23*8+:8] = hl_weights_7_23_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_7[24*8+:8] = hl_weights_7_24_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[0*8+:8] = hl_weights_8_0_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[1*8+:8] = hl_weights_8_1_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[2*8+:8] = hl_weights_8_2_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[3*8+:8] = hl_weights_8_3_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[4*8+:8] = hl_weights_8_4_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[5*8+:8] = hl_weights_8_5_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[6*8+:8] = hl_weights_8_6_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[7*8+:8] = hl_weights_8_7_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[8*8+:8] = hl_weights_8_8_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[9*8+:8] = hl_weights_8_9_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[10*8+:8] = hl_weights_8_10_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[11*8+:8] = hl_weights_8_11_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[12*8+:8] = hl_weights_8_12_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[13*8+:8] = hl_weights_8_13_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[14*8+:8] = hl_weights_8_14_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[15*8+:8] = hl_weights_8_15_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[16*8+:8] = hl_weights_8_16_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[17*8+:8] = hl_weights_8_17_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[18*8+:8] = hl_weights_8_18_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[19*8+:8] = hl_weights_8_19_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[20*8+:8] = hl_weights_8_20_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[21*8+:8] = hl_weights_8_21_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[22*8+:8] = hl_weights_8_22_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[23*8+:8] = hl_weights_8_23_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_8[24*8+:8] = hl_weights_8_24_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[0*8+:8] = hl_weights_9_0_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[1*8+:8] = hl_weights_9_1_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[2*8+:8] = hl_weights_9_2_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[3*8+:8] = hl_weights_9_3_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[4*8+:8] = hl_weights_9_4_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[5*8+:8] = hl_weights_9_5_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[6*8+:8] = hl_weights_9_6_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[7*8+:8] = hl_weights_9_7_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[8*8+:8] = hl_weights_9_8_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[9*8+:8] = hl_weights_9_9_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[10*8+:8] = hl_weights_9_10_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[11*8+:8] = hl_weights_9_11_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[12*8+:8] = hl_weights_9_12_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[13*8+:8] = hl_weights_9_13_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[14*8+:8] = hl_weights_9_14_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[15*8+:8] = hl_weights_9_15_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[16*8+:8] = hl_weights_9_16_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[17*8+:8] = hl_weights_9_17_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[18*8+:8] = hl_weights_9_18_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[19*8+:8] = hl_weights_9_19_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[20*8+:8] = hl_weights_9_20_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[21*8+:8] = hl_weights_9_21_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[22*8+:8] = hl_weights_9_22_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[23*8+:8] = hl_weights_9_23_value_out;
+    assign HWIF_OUT_HL_WEIGHTS_9[24*8+:8] = hl_weights_9_24_value_out;
     assign HWIF_OUT_HL_BIAS_0 = hl_bias_0_value_out;
     assign HWIF_OUT_HL_BIAS_1 = hl_bias_1_value_out;
     assign HWIF_OUT_HL_BIAS_2 = hl_bias_2_value_out;
     assign HWIF_OUT_HL_BIAS_3 = hl_bias_3_value_out;
     assign HWIF_OUT_HL_BIAS_4 = hl_bias_4_value_out;
     assign HWIF_OUT_HL_BIAS_5 = hl_bias_5_value_out;
+    assign HWIF_OUT_HL_BIAS_6 = hl_bias_6_value_out;
+    assign HWIF_OUT_HL_BIAS_7 = hl_bias_7_value_out;
+    assign HWIF_OUT_HL_BIAS_8 = hl_bias_8_value_out;
+    assign HWIF_OUT_HL_BIAS_9 = hl_bias_9_value_out;
     assign HWIF_OUT_OL_WEIGHTS_0[0*8+:8] = ol_weights_0_0_value_out;
     assign HWIF_OUT_OL_WEIGHTS_0[1*8+:8] = ol_weights_0_1_value_out;
     assign HWIF_OUT_OL_WEIGHTS_0[2*8+:8] = ol_weights_0_2_value_out;
     assign HWIF_OUT_OL_WEIGHTS_0[3*8+:8] = ol_weights_0_3_value_out;
     assign HWIF_OUT_OL_WEIGHTS_0[4*8+:8] = ol_weights_0_4_value_out;
     assign HWIF_OUT_OL_WEIGHTS_0[5*8+:8] = ol_weights_0_5_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_0[6*8+:8] = ol_weights_0_6_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_0[7*8+:8] = ol_weights_0_7_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_0[8*8+:8] = ol_weights_0_8_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_0[9*8+:8] = ol_weights_0_9_value_out;
     assign HWIF_OUT_OL_WEIGHTS_1[0*8+:8] = ol_weights_1_0_value_out;
     assign HWIF_OUT_OL_WEIGHTS_1[1*8+:8] = ol_weights_1_1_value_out;
     assign HWIF_OUT_OL_WEIGHTS_1[2*8+:8] = ol_weights_1_2_value_out;
     assign HWIF_OUT_OL_WEIGHTS_1[3*8+:8] = ol_weights_1_3_value_out;
     assign HWIF_OUT_OL_WEIGHTS_1[4*8+:8] = ol_weights_1_4_value_out;
     assign HWIF_OUT_OL_WEIGHTS_1[5*8+:8] = ol_weights_1_5_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_1[6*8+:8] = ol_weights_1_6_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_1[7*8+:8] = ol_weights_1_7_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_1[8*8+:8] = ol_weights_1_8_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_1[9*8+:8] = ol_weights_1_9_value_out;
     assign HWIF_OUT_OL_WEIGHTS_2[0*8+:8] = ol_weights_2_0_value_out;
     assign HWIF_OUT_OL_WEIGHTS_2[1*8+:8] = ol_weights_2_1_value_out;
     assign HWIF_OUT_OL_WEIGHTS_2[2*8+:8] = ol_weights_2_2_value_out;
     assign HWIF_OUT_OL_WEIGHTS_2[3*8+:8] = ol_weights_2_3_value_out;
     assign HWIF_OUT_OL_WEIGHTS_2[4*8+:8] = ol_weights_2_4_value_out;
     assign HWIF_OUT_OL_WEIGHTS_2[5*8+:8] = ol_weights_2_5_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_2[6*8+:8] = ol_weights_2_6_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_2[7*8+:8] = ol_weights_2_7_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_2[8*8+:8] = ol_weights_2_8_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_2[9*8+:8] = ol_weights_2_9_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_3[0*8+:8] = ol_weights_3_0_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_3[1*8+:8] = ol_weights_3_1_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_3[2*8+:8] = ol_weights_3_2_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_3[3*8+:8] = ol_weights_3_3_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_3[4*8+:8] = ol_weights_3_4_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_3[5*8+:8] = ol_weights_3_5_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_3[6*8+:8] = ol_weights_3_6_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_3[7*8+:8] = ol_weights_3_7_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_3[8*8+:8] = ol_weights_3_8_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_3[9*8+:8] = ol_weights_3_9_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_4[0*8+:8] = ol_weights_4_0_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_4[1*8+:8] = ol_weights_4_1_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_4[2*8+:8] = ol_weights_4_2_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_4[3*8+:8] = ol_weights_4_3_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_4[4*8+:8] = ol_weights_4_4_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_4[5*8+:8] = ol_weights_4_5_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_4[6*8+:8] = ol_weights_4_6_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_4[7*8+:8] = ol_weights_4_7_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_4[8*8+:8] = ol_weights_4_8_value_out;
+    assign HWIF_OUT_OL_WEIGHTS_4[9*8+:8] = ol_weights_4_9_value_out;
     assign HWIF_OUT_OL_BIAS_0 = ol_bias_0_value_out;
     assign HWIF_OUT_OL_BIAS_1 = ol_bias_1_value_out;
     assign HWIF_OUT_OL_BIAS_2 = ol_bias_2_value_out;
+    assign HWIF_OUT_OL_BIAS_3 = ol_bias_3_value_out;
+    assign HWIF_OUT_OL_BIAS_4 = ol_bias_4_value_out;
     assign HWIF_OUT_INPUT_GRID_0 = input_grid_0_value_out;
     assign HWIF_OUT_INPUT_GRID_1 = input_grid_1_value_out;
     assign HWIF_OUT_INPUT_GRID_2 = input_grid_2_value_out;
@@ -2323,13 +7601,30 @@ module CORTEZ_REGPOOL (
     assign HWIF_OUT_INPUT_GRID_6 = input_grid_6_value_out;
     assign HWIF_OUT_INPUT_GRID_7 = input_grid_7_value_out;
     assign HWIF_OUT_INPUT_GRID_8 = input_grid_8_value_out;
+    assign HWIF_OUT_INPUT_GRID_9 = input_grid_9_value_out;
+    assign HWIF_OUT_INPUT_GRID_10 = input_grid_10_value_out;
+    assign HWIF_OUT_INPUT_GRID_11 = input_grid_11_value_out;
+    assign HWIF_OUT_INPUT_GRID_12 = input_grid_12_value_out;
+    assign HWIF_OUT_INPUT_GRID_13 = input_grid_13_value_out;
+    assign HWIF_OUT_INPUT_GRID_14 = input_grid_14_value_out;
+    assign HWIF_OUT_INPUT_GRID_15 = input_grid_15_value_out;
+    assign HWIF_OUT_INPUT_GRID_16 = input_grid_16_value_out;
+    assign HWIF_OUT_INPUT_GRID_17 = input_grid_17_value_out;
+    assign HWIF_OUT_INPUT_GRID_18 = input_grid_18_value_out;
+    assign HWIF_OUT_INPUT_GRID_19 = input_grid_19_value_out;
+    assign HWIF_OUT_INPUT_GRID_20 = input_grid_20_value_out;
+    assign HWIF_OUT_INPUT_GRID_21 = input_grid_21_value_out;
+    assign HWIF_OUT_INPUT_GRID_22 = input_grid_22_value_out;
+    assign HWIF_OUT_INPUT_GRID_23 = input_grid_23_value_out;
+    assign HWIF_OUT_INPUT_GRID_24 = input_grid_24_value_out;
     assign output_solution_0_value_in = HWIF_IN_OUTPUT_SOLUTION_0;
     assign output_solution_1_value_in = HWIF_IN_OUTPUT_SOLUTION_1;
     assign output_solution_2_value_in = HWIF_IN_OUTPUT_SOLUTION_2;
+    assign output_solution_3_value_in = HWIF_IN_OUTPUT_SOLUTION_3;
+    assign output_solution_4_value_in = HWIF_IN_OUTPUT_SOLUTION_4;
     assign HWIF_OUT_CORE_CTRL = core_ctrl_value_out;
     assign HWIF_OUT_CORE_DEBUG_INFO = core_debug_info_value_out;
-    assign core_status_reset_value_in = HWIF_IN_CORE_STATUS_RESET;
-    assign core_status_no_reset_value_in = HWIF_IN_CORE_STATUS_NO_RESET;
+    assign core_status_value_in = HWIF_IN_CORE_STATUS;
     assign HWIF_OUT_SEVENSEG_0 = sevenseg_0_value_out;
     assign HWIF_OUT_SEVENSEG_1 = sevenseg_1_value_out;
     assign HWIF_OUT_SEVENSEG_2 = sevenseg_2_value_out;

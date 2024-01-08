@@ -25,6 +25,38 @@
 		 [7:0] data sw=rw
 	 HL_WEIGHTS_0[8]
 		 [7:0] data sw=rw
+	 HL_WEIGHTS_0[9]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_0[10]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_0[11]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_0[12]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_0[13]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_0[14]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_0[15]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_0[16]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_0[17]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_0[18]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_0[19]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_0[20]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_0[21]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_0[22]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_0[23]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_0[24]
+		 [7:0] data sw=rw
 	 HL_WEIGHTS_1[0]
 		 [7:0] data sw=rw
 	 HL_WEIGHTS_1[1]
@@ -42,6 +74,38 @@
 	 HL_WEIGHTS_1[7]
 		 [7:0] data sw=rw
 	 HL_WEIGHTS_1[8]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_1[9]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_1[10]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_1[11]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_1[12]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_1[13]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_1[14]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_1[15]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_1[16]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_1[17]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_1[18]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_1[19]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_1[20]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_1[21]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_1[22]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_1[23]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_1[24]
 		 [7:0] data sw=rw
 	 HL_WEIGHTS_2[0]
 		 [7:0] data sw=rw
@@ -61,6 +125,38 @@
 		 [7:0] data sw=rw
 	 HL_WEIGHTS_2[8]
 		 [7:0] data sw=rw
+	 HL_WEIGHTS_2[9]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_2[10]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_2[11]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_2[12]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_2[13]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_2[14]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_2[15]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_2[16]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_2[17]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_2[18]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_2[19]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_2[20]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_2[21]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_2[22]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_2[23]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_2[24]
+		 [7:0] data sw=rw
 	 HL_WEIGHTS_3[0]
 		 [7:0] data sw=rw
 	 HL_WEIGHTS_3[1]
@@ -78,6 +174,38 @@
 	 HL_WEIGHTS_3[7]
 		 [7:0] data sw=rw
 	 HL_WEIGHTS_3[8]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_3[9]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_3[10]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_3[11]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_3[12]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_3[13]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_3[14]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_3[15]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_3[16]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_3[17]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_3[18]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_3[19]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_3[20]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_3[21]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_3[22]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_3[23]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_3[24]
 		 [7:0] data sw=rw
 	 HL_WEIGHTS_4[0]
 		 [7:0] data sw=rw
@@ -97,6 +225,38 @@
 		 [7:0] data sw=rw
 	 HL_WEIGHTS_4[8]
 		 [7:0] data sw=rw
+	 HL_WEIGHTS_4[9]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_4[10]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_4[11]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_4[12]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_4[13]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_4[14]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_4[15]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_4[16]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_4[17]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_4[18]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_4[19]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_4[20]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_4[21]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_4[22]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_4[23]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_4[24]
+		 [7:0] data sw=rw
 	 HL_WEIGHTS_5[0]
 		 [7:0] data sw=rw
 	 HL_WEIGHTS_5[1]
@@ -115,6 +275,238 @@
 		 [7:0] data sw=rw
 	 HL_WEIGHTS_5[8]
 		 [7:0] data sw=rw
+	 HL_WEIGHTS_5[9]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_5[10]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_5[11]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_5[12]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_5[13]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_5[14]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_5[15]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_5[16]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_5[17]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_5[18]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_5[19]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_5[20]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_5[21]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_5[22]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_5[23]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_5[24]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[0]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[1]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[2]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[3]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[4]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[5]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[6]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[7]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[8]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[9]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[10]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[11]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[12]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[13]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[14]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[15]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[16]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[17]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[18]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[19]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[20]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[21]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[22]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[23]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_6[24]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[0]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[1]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[2]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[3]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[4]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[5]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[6]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[7]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[8]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[9]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[10]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[11]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[12]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[13]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[14]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[15]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[16]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[17]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[18]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[19]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[20]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[21]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[22]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[23]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_7[24]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[0]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[1]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[2]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[3]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[4]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[5]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[6]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[7]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[8]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[9]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[10]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[11]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[12]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[13]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[14]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[15]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[16]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[17]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[18]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[19]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[20]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[21]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[22]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[23]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_8[24]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[0]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[1]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[2]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[3]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[4]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[5]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[6]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[7]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[8]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[9]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[10]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[11]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[12]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[13]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[14]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[15]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[16]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[17]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[18]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[19]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[20]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[21]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[22]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[23]
+		 [7:0] data sw=rw
+	 HL_WEIGHTS_9[24]
+		 [7:0] data sw=rw
 	 HL_BIAS_0
 		 [7:0] data sw=rw
 	 HL_BIAS_1
@@ -126,6 +518,14 @@
 	 HL_BIAS_4
 		 [7:0] data sw=rw
 	 HL_BIAS_5
+		 [7:0] data sw=rw
+	 HL_BIAS_6
+		 [7:0] data sw=rw
+	 HL_BIAS_7
+		 [7:0] data sw=rw
+	 HL_BIAS_8
+		 [7:0] data sw=rw
+	 HL_BIAS_9
 		 [7:0] data sw=rw
 	 OL_WEIGHTS_0[0]
 		 [7:0] data sw=rw
@@ -139,6 +539,14 @@
 		 [7:0] data sw=rw
 	 OL_WEIGHTS_0[5]
 		 [7:0] data sw=rw
+	 OL_WEIGHTS_0[6]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_0[7]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_0[8]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_0[9]
+		 [7:0] data sw=rw
 	 OL_WEIGHTS_1[0]
 		 [7:0] data sw=rw
 	 OL_WEIGHTS_1[1]
@@ -150,6 +558,14 @@
 	 OL_WEIGHTS_1[4]
 		 [7:0] data sw=rw
 	 OL_WEIGHTS_1[5]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_1[6]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_1[7]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_1[8]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_1[9]
 		 [7:0] data sw=rw
 	 OL_WEIGHTS_2[0]
 		 [7:0] data sw=rw
@@ -163,11 +579,63 @@
 		 [7:0] data sw=rw
 	 OL_WEIGHTS_2[5]
 		 [7:0] data sw=rw
+	 OL_WEIGHTS_2[6]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_2[7]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_2[8]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_2[9]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_3[0]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_3[1]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_3[2]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_3[3]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_3[4]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_3[5]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_3[6]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_3[7]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_3[8]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_3[9]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_4[0]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_4[1]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_4[2]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_4[3]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_4[4]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_4[5]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_4[6]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_4[7]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_4[8]
+		 [7:0] data sw=rw
+	 OL_WEIGHTS_4[9]
+		 [7:0] data sw=rw
 	 OL_BIAS_0
 		 [7:0] data sw=rw
 	 OL_BIAS_1
 		 [7:0] data sw=rw
 	 OL_BIAS_2
+		 [7:0] data sw=rw
+	 OL_BIAS_3
+		 [7:0] data sw=rw
+	 OL_BIAS_4
 		 [7:0] data sw=rw
 	 INPUT_GRID_0
 		 [7:0] data sw=rw
@@ -187,11 +655,47 @@
 		 [7:0] data sw=rw
 	 INPUT_GRID_8
 		 [7:0] data sw=rw
+	 INPUT_GRID_9
+		 [7:0] data sw=rw
+	 INPUT_GRID_10
+		 [7:0] data sw=rw
+	 INPUT_GRID_11
+		 [7:0] data sw=rw
+	 INPUT_GRID_12
+		 [7:0] data sw=rw
+	 INPUT_GRID_13
+		 [7:0] data sw=rw
+	 INPUT_GRID_14
+		 [7:0] data sw=rw
+	 INPUT_GRID_15
+		 [7:0] data sw=rw
+	 INPUT_GRID_16
+		 [7:0] data sw=rw
+	 INPUT_GRID_17
+		 [7:0] data sw=rw
+	 INPUT_GRID_18
+		 [7:0] data sw=rw
+	 INPUT_GRID_19
+		 [7:0] data sw=rw
+	 INPUT_GRID_20
+		 [7:0] data sw=rw
+	 INPUT_GRID_21
+		 [7:0] data sw=rw
+	 INPUT_GRID_22
+		 [7:0] data sw=rw
+	 INPUT_GRID_23
+		 [7:0] data sw=rw
+	 INPUT_GRID_24
+		 [7:0] data sw=rw
 	 OUTPUT_SOLUTION_0
 		 [7:0] data sw=r
 	 OUTPUT_SOLUTION_1
 		 [7:0] data sw=r
 	 OUTPUT_SOLUTION_2
+		 [7:0] data sw=r
+	 OUTPUT_SOLUTION_3
+		 [7:0] data sw=r
+	 OUTPUT_SOLUTION_4
 		 [7:0] data sw=r
 	 CORE_CTRL
 		 [0:0] RESET sw=rw
@@ -207,10 +711,7 @@
 		 [5:5] TEST_END sw=rw
 		 [6:6] TEST_ERR sw=rw
 		 [7:7] reserved sw=rw
-	 CORE_STATUS_RESET
-		 [0:0] VALID_OUT sw=r
-		 [7:1] reserved sw=r
-	 CORE_STATUS_NO_RESET
+	 CORE_STATUS
 		 [0:0] VALID_OUT sw=r
 		 [7:1] reserved sw=r
 	 SEVENSEG_0

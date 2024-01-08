@@ -1,0 +1,58 @@
+// Register map definition
+
+`include "common.rdl"
+`include "regs.rdl"
+
+addrmap regpool {
+    desc = "The CORTEZ CSR block";
+
+    // First registers are for debug only
+    `REF_CGPREG(GP, DBUG_REG_0, "General-purpose register for debug")
+    DBUG_REG_0->resetreg = 1;
+    `REF_CGPREG(GP, DBUG_REG_1, "General-purpose register for debug")
+    DBUG_REG_1->resetreg = 1;
+    `REF_CGPREG(GP, DBUG_REG_2, "General-purpose register for debug")
+    DBUG_REG_2->resetreg = 1;
+    `REF_CGPREG(GP, DBUG_REG_3, "General-purpose register for debug")
+    DBUG_REG_3->resetreg = 1;
+
+    // Weights of the hidden layer, one vector for every neuron
+    __HL_WEIGHTS__
+
+    // Bias of the hidden layer
+    __HL_BIAS__
+
+    // Weights of the output layer, one vector for every neuron
+    __OL_WEIGHTS__
+
+    // Bias of the output layer
+    __OL_BIAS__
+
+    // Input problem, one vector for each pixel
+    __INPUT_GRID__
+
+    // Output solution, one vector for each character
+    __OUTPUT_SOLUTION__
+
+    // Control register
+    `REF_CREG(CORE_CTRL, CORE_CTRL)
+    CORE_CTRL->resetreg = 1;
+
+    // Debug register
+    `REF_CREG(CORE_DEBUG_INFO, CORE_DEBUG_INFO)
+    CORE_DEBUG_INFO->resetreg = 1;
+
+    // Status register
+    `REF_SREG(CORE_STATUS, CORE_STATUS)
+    CORE_STATUS->resetreg = 1;
+
+    // 7-segments control registers
+    `REF_CGPREG(GP, SEVENSEG_0, "7-segments display contents: .gfedcba")
+    SEVENSEG_0->resetreg = 1;
+    `REF_CGPREG(GP, SEVENSEG_1, "7-segments display contents: .gfedcba")
+    SEVENSEG_1->resetreg = 1;
+    `REF_CGPREG(GP, SEVENSEG_2, "7-segments display contents: .gfedcba")
+    SEVENSEG_2->resetreg = 1;
+    `REF_CGPREG(GP, SEVENSEG_3, "7-segments display contents: .gfedcba")
+    SEVENSEG_3->resetreg = 1;
+};

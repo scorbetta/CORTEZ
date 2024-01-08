@@ -214,21 +214,21 @@ def train_network(config, net, grid_size, chars_in, chars_out):
     bcast_ol = fp_create_matrix(b.shape, int(config['fp_width'])-int(config['fp_frac']), int(config['fp_frac']), True, b)
  
     # Dump weights and biases from all layers
-    dump_to_file(net.layers[0].weights, "hidden_layer_weights.txt")
-    dump_to_file(net.layers[0].bias, "hidden_layer_bias.txt")
-    dump_to_file(net.layers[2].weights, "output_layer_weights.txt")
-    dump_to_file(net.layers[2].bias, "output_layer_bias.txt")
-    dump_to_file(wcast_hl, "hidden_layer_weights_fp.txt")
-    dump_to_file(bcast_hl, "hidden_layer_bias_fp.txt")
-    dump_to_file(wcast_ol, "output_layer_weights_fp.txt")
-    dump_to_file(bcast_ol, "output_layer_bias_fp.txt")
+    dump_to_file(net.layers[0].weights.transpose(), "hidden_layer_weights.txt")
+    dump_to_file(net.layers[0].bias.transpose(), "hidden_layer_bias.txt")
+    dump_to_file(net.layers[2].weights.transpose(), "output_layer_weights.txt")
+    dump_to_file(net.layers[2].bias.transpose(), "output_layer_bias.txt")
+    dump_to_file(wcast_hl.transpose(), "hidden_layer_weights_fp.txt")
+    dump_to_file(bcast_hl.transpose(), "hidden_layer_bias_fp.txt")
+    dump_to_file(wcast_ol.transpose(), "output_layer_weights_fp.txt")
+    dump_to_file(bcast_ol.transpose(), "output_layer_bias_fp.txt")
 
     # Dump fixed-point weights and bias in hex format for RTL simulation and on-chip Software
     # configuration
-    dump_to_file(wcast_hl, "hidden_layer_weights_fp_hex.txt", True, int(config['fp_width']), int(config['fp_frac']))
-    dump_to_file(bcast_hl, "hidden_layer_bias_fp_hex.txt", True, int(config['fp_width']), int(config['fp_frac']))
-    dump_to_file(wcast_ol, "output_layer_weights_fp_hex.txt", True, int(config['fp_width']), int(config['fp_frac']))
-    dump_to_file(bcast_ol, "output_layer_bias_fp_hex.txt", True, int(config['fp_width']), int(config['fp_frac']))
+    dump_to_file(wcast_hl.transpose(), "hidden_layer_weights_fp_hex.txt", True, int(config['fp_width']), int(config['fp_frac']))
+    dump_to_file(bcast_hl.transpose(), "hidden_layer_bias_fp_hex.txt", True, int(config['fp_width']), int(config['fp_frac']))
+    dump_to_file(wcast_ol.transpose(), "output_layer_weights_fp_hex.txt", True, int(config['fp_width']), int(config['fp_frac']))
+    dump_to_file(bcast_ol.transpose(), "output_layer_bias_fp_hex.txt", True, int(config['fp_width']), int(config['fp_frac']))
 
     # Cast to float, otherwise testing the network will fail (numpy matrices require float)
     wcast_hl = cast_all_to_float(wcast_hl)

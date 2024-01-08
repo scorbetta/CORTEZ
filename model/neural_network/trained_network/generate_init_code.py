@@ -4,6 +4,8 @@ import jinja2 as jj
 from jinja2 import Environment, FileSystemLoader
 import numpy as np
 import csv
+import configparser
+import re
 
 # Create JINJA environment
 jj_env = jj.Environment(loader=jj.FileSystemLoader('./'))
@@ -39,12 +41,23 @@ with open('output_layer_bias_fp_hex.txt', 'r') as fid:
     for col in csv_reader:
         ol_bias.append(col)
 
+# Read configuration from INI file
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+# Retrieve size of input problem from boulder file name
+b_fname = config['default']['boulder']
+grid_specs_substring = re.search("_g[0-9]+.", b_fname).group()
+# Remove leading  _g  and trailing  .  
+grid_size = grid_specs_substring[2:-1]
+num_inputs = int(grid_size) * int(grid_size)
+
 # Build Jinja template context
 context = {
     "template_file": "cortez_init.template",
-    "num_inputs" : 9,
-    "num_hl_nodes": 6,
-    "num_outputs": 3,
+    "num_inputs" : num_inputs,
+    "num_hl_nodes": int(config['default']['hl_neurons']),
+    "num_outputs": int(config['default']['ol_neurons']),
     "hl_weights" : hl_weights,
     "hl_bias" : hl_bias,
     "ol_weights" : ol_weights,

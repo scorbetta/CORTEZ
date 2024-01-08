@@ -1,5 +1,12 @@
 // A collection of reusable RDL entities for the CSR pool generation
 
+// User-defined properties
+property resetreg {
+    component = reg;
+    type = number;
+    default = 0;
+};
+
 // Status registers are Read-only (from a Software view-point), and they are prefixed with an 'S'.
 // Control registers are Read-Write, and they are prefixed with a 'C'. Delta registers are one
 // particular case of a status register, and they are prefixed with a 'D'.
@@ -9,14 +16,16 @@
     reg SREG_``name { \
         regwidth = 8; \
         default hw = rw; \
-        default sw = r;
+        default sw = r; \
+        resetreg;
 
 // Define a named control register
 `define DEF_CREG(name) \
     reg CREG_``name { \
         regwidth = 8; \
         default hw = r; \
-        default sw = rw;
+        default sw = rw; \
+        resetreg;
 
 // Define a named delta register
 `define DEF_DREG(name) \
@@ -24,7 +33,8 @@
         regwidth = 8; \
         default hw = rw; \
         default sw = r; \
-        default intr = true;
+        default intr = true; \
+        resetreg;
 
 // Single-field registers are common, and they often share layout with registers with flattened
 // fields (i.e., legacy registers or registers designed with no fields in mind). These are

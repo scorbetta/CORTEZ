@@ -1,0 +1,12 @@
+[default]
+hl_neurons = __HL_NEURONS__
+ol_neurons = __OL_NEURONS__
+fp_width = __FP_WIDTH__
+fp_frac = __FP_FRAC__
+boulder = inputs/noiseless_c__OL_NEURONS___g__GRID_SIZE__.json
+max_noisy_pixels = __MAX_NOISY_PIXELS__
+training_len = __TRAINING_LEN__
+test_len = __TEST_LEN__
+epochs = __EPOCHS__
+alpha = __ALPHA__
+plot_png = 0

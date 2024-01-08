@@ -22,13 +22,13 @@ module NETWORK_TOP
 );
 
     // Internal connections
-    wire signed [9*8-1:0]   values_in;
+    wire signed [25*8-1:0]   values_in;
+    wire signed [10*25*8-1:0] hl_weights;
+    wire signed [10*8-1:0]   hl_bias;
+    wire signed [5*10*8-1:0] ol_weights;
+    wire signed [5*8-1:0]   ol_bias;
+    wire signed [5*8-1:0]  values_out;
     wire                    valid_in;
-    wire signed [6*9*8-1:0] hl_weights;
-    wire signed [6*8-1:0]   hl_bias;
-    wire signed [3*6*8-1:0] ol_weights;
-    wire signed [3*8-1:0]   ol_bias;
-    wire signed [3*8-1:0]   values_out;
     wire                    valid_out;
     wire [3:0]              kit_swing;
     wire                    reset_asserted;
@@ -142,24 +142,36 @@ module NETWORK_TOP
         .HWIF_OUT_DBUG_REG_1        (), //
         .HWIF_OUT_DBUG_REG_2        (), //
         .HWIF_OUT_DBUG_REG_3        (), //
-        .HWIF_OUT_HL_WEIGHTS_0      (hl_weights[0*9*8 +: 9*8]),
-        .HWIF_OUT_HL_WEIGHTS_1      (hl_weights[1*9*8 +: 9*8]),
-        .HWIF_OUT_HL_WEIGHTS_2      (hl_weights[2*9*8 +: 9*8]),
-        .HWIF_OUT_HL_WEIGHTS_3      (hl_weights[3*9*8 +: 9*8]),
-        .HWIF_OUT_HL_WEIGHTS_4      (hl_weights[4*9*8 +: 9*8]),
-        .HWIF_OUT_HL_WEIGHTS_5      (hl_weights[5*9*8 +: 9*8]),
+        .HWIF_OUT_HL_WEIGHTS_0      (hl_weights[0*25*8 +: 25*8]),
+        .HWIF_OUT_HL_WEIGHTS_1      (hl_weights[1*25*8 +: 25*8]),
+        .HWIF_OUT_HL_WEIGHTS_2      (hl_weights[2*25*8 +: 25*8]),
+        .HWIF_OUT_HL_WEIGHTS_3      (hl_weights[3*25*8 +: 25*8]),
+        .HWIF_OUT_HL_WEIGHTS_4      (hl_weights[4*25*8 +: 25*8]),
+        .HWIF_OUT_HL_WEIGHTS_5      (hl_weights[5*25*8 +: 25*8]),
+        .HWIF_OUT_HL_WEIGHTS_6      (hl_weights[6*25*8 +: 25*8]),
+        .HWIF_OUT_HL_WEIGHTS_7      (hl_weights[7*25*8 +: 25*8]),
+        .HWIF_OUT_HL_WEIGHTS_8      (hl_weights[8*25*8 +: 25*8]),
+        .HWIF_OUT_HL_WEIGHTS_9      (hl_weights[9*25*8 +: 25*8]),
         .HWIF_OUT_HL_BIAS_0         (hl_bias[0*8 +: 8]),
         .HWIF_OUT_HL_BIAS_1         (hl_bias[1*8 +: 8]),
         .HWIF_OUT_HL_BIAS_2         (hl_bias[2*8 +: 8]),
         .HWIF_OUT_HL_BIAS_3         (hl_bias[3*8 +: 8]),
         .HWIF_OUT_HL_BIAS_4         (hl_bias[4*8 +: 8]),
         .HWIF_OUT_HL_BIAS_5         (hl_bias[5*8 +: 8]),
-        .HWIF_OUT_OL_WEIGHTS_0      (ol_weights[0*6*8 +: 6*8]),
-        .HWIF_OUT_OL_WEIGHTS_1      (ol_weights[1*6*8 +: 6*8]),
-        .HWIF_OUT_OL_WEIGHTS_2      (ol_weights[2*6*8 +: 6*8]),
+        .HWIF_OUT_HL_BIAS_6         (hl_bias[6*8 +: 8]),
+        .HWIF_OUT_HL_BIAS_7         (hl_bias[7*8 +: 8]),
+        .HWIF_OUT_HL_BIAS_8         (hl_bias[8*8 +: 8]),
+        .HWIF_OUT_HL_BIAS_9         (hl_bias[9*8 +: 8]),
+        .HWIF_OUT_OL_WEIGHTS_0      (ol_weights[0*10*8 +: 10*8]),
+        .HWIF_OUT_OL_WEIGHTS_1      (ol_weights[1*10*8 +: 10*8]),
+        .HWIF_OUT_OL_WEIGHTS_2      (ol_weights[2*10*8 +: 10*8]),
+        .HWIF_OUT_OL_WEIGHTS_3      (ol_weights[3*10*8 +: 10*8]),
+        .HWIF_OUT_OL_WEIGHTS_4      (ol_weights[4*10*8 +: 10*8]),
         .HWIF_OUT_OL_BIAS_0         (ol_bias[0*8 +: 8]),
         .HWIF_OUT_OL_BIAS_1         (ol_bias[1*8 +: 8]),
         .HWIF_OUT_OL_BIAS_2         (ol_bias[2*8 +: 8]),
+        .HWIF_OUT_OL_BIAS_3         (ol_bias[3*8 +: 8]),
+        .HWIF_OUT_OL_BIAS_4         (ol_bias[4*8 +: 8]),
         .HWIF_OUT_INPUT_GRID_0      (values_in[0*8 +: 8]),
         .HWIF_OUT_INPUT_GRID_1      (values_in[1*8 +: 8]),
         .HWIF_OUT_INPUT_GRID_2      (values_in[2*8 +: 8]),
@@ -169,9 +181,27 @@ module NETWORK_TOP
         .HWIF_OUT_INPUT_GRID_6      (values_in[6*8 +: 8]),
         .HWIF_OUT_INPUT_GRID_7      (values_in[7*8 +: 8]),
         .HWIF_OUT_INPUT_GRID_8      (values_in[8*8 +: 8]),
+        .HWIF_OUT_INPUT_GRID_9      (values_in[9*8 +: 8]),
+        .HWIF_OUT_INPUT_GRID_10      (values_in[10*8 +: 8]),
+        .HWIF_OUT_INPUT_GRID_11      (values_in[11*8 +: 8]),
+        .HWIF_OUT_INPUT_GRID_12      (values_in[12*8 +: 8]),
+        .HWIF_OUT_INPUT_GRID_13      (values_in[13*8 +: 8]),
+        .HWIF_OUT_INPUT_GRID_14      (values_in[14*8 +: 8]),
+        .HWIF_OUT_INPUT_GRID_15      (values_in[15*8 +: 8]),
+        .HWIF_OUT_INPUT_GRID_16      (values_in[16*8 +: 8]),
+        .HWIF_OUT_INPUT_GRID_17      (values_in[17*8 +: 8]),
+        .HWIF_OUT_INPUT_GRID_18      (values_in[18*8 +: 8]),
+        .HWIF_OUT_INPUT_GRID_19      (values_in[19*8 +: 8]),
+        .HWIF_OUT_INPUT_GRID_20      (values_in[20*8 +: 8]),
+        .HWIF_OUT_INPUT_GRID_21      (values_in[21*8 +: 8]),
+        .HWIF_OUT_INPUT_GRID_22      (values_in[22*8 +: 8]),
+        .HWIF_OUT_INPUT_GRID_23      (values_in[23*8 +: 8]),
+        .HWIF_OUT_INPUT_GRID_24      (values_in[24*8 +: 8]),
         .HWIF_IN_OUTPUT_SOLUTION_0  (values_out[0*8 +: 8]),
         .HWIF_IN_OUTPUT_SOLUTION_1  (values_out[1*8 +: 8]),
         .HWIF_IN_OUTPUT_SOLUTION_2  (values_out[2*8 +: 8]),
+        .HWIF_IN_OUTPUT_SOLUTION_3  (values_out[3*8 +: 8]),
+        .HWIF_IN_OUTPUT_SOLUTION_4  (values_out[4*8 +: 8]),
         .HWIF_OUT_CORE_CTRL         (core_ctrl),
         .HWIF_OUT_CORE_DEBUG_INFO   (core_debug_info),
         .HWIF_IN_CORE_STATUS        (core_status),
@@ -207,7 +237,14 @@ module NETWORK_TOP
     assign core_status[7:1] = 7'b0000000;
 
     // The network
-    NETWORK NETWORK (
+    NETWORK #(
+        .FP_WIDTH   (8),
+        .FP_FRAC    (5),
+        .NUM_INPUTS (25),
+        .HL_NEURONS (10),
+        .OL_NEURONS (5)
+    )
+    NETWORK (
         .CLK            (CLK),
         .RSTN           (rstn),
         .VALUES_IN      (values_in),
