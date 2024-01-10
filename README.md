@@ -40,8 +40,8 @@ The script will run through the following steps:
 - Top-level RTL design generation;
 - Simple simulation.
 
-To run the flow, open `generate_design.sh` and modify the following constants according to your
-desired network architecture and input problem:
+Before running the flow, open `generate_design.sh` and modify the following constants according to
+your desired network architecture and input problem:
 
 | CONSTANT | BRIEF |
 |-|-|
@@ -55,3 +55,11 @@ desired network architecture and input problem:
 | `TEST_LEN` | Number of test vectors |
 | `EPOCHS` | Number of training epochs |
 | `ALPHA` | Learning rate |
+
+At this point, run the flow:
+
+```bash
+./generate_design.sh
+```
+
+Logs are created for each step, look for any `*.log` file in the subfolders.
