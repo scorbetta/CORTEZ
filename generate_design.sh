@@ -76,7 +76,6 @@ pushd model/neural_network >/dev/null
     cp output_layer_weights_fp_hex.txt trained_network
     cp output_layer_weights_fp.txt trained_network
     cp output_layer_weights.txt trained_network
-    cp *.png trained_network
     cp weights.npz trained_network
 
     # Generate init code
