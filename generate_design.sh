@@ -81,6 +81,7 @@ pushd model/neural_network >/dev/null
 
     # Generate init code
     pushd trained_network >/dev/null
+        echo -e "${BLUE}info: Generating init code${NONE}"
         ./generate_init_code.py
     popd >/dev/null
 popd >/dev/null

@@ -3,24 +3,641 @@
 
 //---- INITIALIZE HIDDEN LAYER WEIGHTS ----------------
 //    Input 0 -> Hidden Neuron 0
-CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_0_OFFSET << 2)), 0xc);
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_0_OFFSET << 2)), 0xf7);
 //    Input 1 -> Hidden Neuron 0
-CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_1_OFFSET << 2)), 0xfc);
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_1_OFFSET << 2)), 0xf9);
 //    Input 2 -> Hidden Neuron 0
-CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_2_OFFSET << 2)), 0xe);
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_2_OFFSET << 2)), 0x7);
 //    Input 3 -> Hidden Neuron 0
-CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_3_OFFSET << 2)), 0x0);
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_3_OFFSET << 2)), 0xf9);
 //    Input 4 -> Hidden Neuron 0
-CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_4_OFFSET << 2)), 0xfa);
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_4_OFFSET << 2)), 0xa);
 //    Input 5 -> Hidden Neuron 0
-CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_5_OFFSET << 2)), 0xa);
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_5_OFFSET << 2)), 0xe6);
 //    Input 6 -> Hidden Neuron 0
-CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_6_OFFSET << 2)), 0x4);
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_6_OFFSET << 2)), 0x8);
 //    Input 7 -> Hidden Neuron 0
-CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_7_OFFSET << 2)), 0xf2);
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_7_OFFSET << 2)), 0x5);
 //    Input 8 -> Hidden Neuron 0
-CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_8_OFFSET << 2)), 0x1e);
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_8_OFFSET << 2)), 0xf2);
 //    Input 9 -> Hidden Neuron 0
-CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_9_OFFSET << 2)), 0xf4);
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_9_OFFSET << 2)), 0x8);
 //    Input 10 -> Hidden Neuron 0
-CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_10_OFFSET << 2)), 
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_10_OFFSET << 2)), 0xfb);
+//    Input 11 -> Hidden Neuron 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_11_OFFSET << 2)), 0xed);
+//    Input 12 -> Hidden Neuron 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_12_OFFSET << 2)), 0xf2);
+//    Input 13 -> Hidden Neuron 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_13_OFFSET << 2)), 0xec);
+//    Input 14 -> Hidden Neuron 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_14_OFFSET << 2)), 0xf2);
+//    Input 15 -> Hidden Neuron 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_15_OFFSET << 2)), 0x5);
+//    Input 16 -> Hidden Neuron 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_16_OFFSET << 2)), 0xa);
+//    Input 17 -> Hidden Neuron 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_17_OFFSET << 2)), 0xf7);
+//    Input 18 -> Hidden Neuron 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_18_OFFSET << 2)), 0xfc);
+//    Input 19 -> Hidden Neuron 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_19_OFFSET << 2)), 0x5);
+//    Input 20 -> Hidden Neuron 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_20_OFFSET << 2)), 0xa);
+//    Input 21 -> Hidden Neuron 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_21_OFFSET << 2)), 0x7);
+//    Input 22 -> Hidden Neuron 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_22_OFFSET << 2)), 0x14);
+//    Input 23 -> Hidden Neuron 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_23_OFFSET << 2)), 0xb);
+//    Input 24 -> Hidden Neuron 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_0_24_OFFSET << 2)), 0x0);
+//    Input 0 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_0_OFFSET << 2)), 0xf7);
+//    Input 1 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_1_OFFSET << 2)), 0xf6);
+//    Input 2 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_2_OFFSET << 2)), 0xa);
+//    Input 3 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_3_OFFSET << 2)), 0xeb);
+//    Input 4 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_4_OFFSET << 2)), 0x8);
+//    Input 5 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_5_OFFSET << 2)), 0xf3);
+//    Input 6 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_6_OFFSET << 2)), 0x14);
+//    Input 7 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_7_OFFSET << 2)), 0xf7);
+//    Input 8 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_8_OFFSET << 2)), 0xf5);
+//    Input 9 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_9_OFFSET << 2)), 0xf5);
+//    Input 10 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_10_OFFSET << 2)), 0xf1);
+//    Input 11 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_11_OFFSET << 2)), 0xe);
+//    Input 12 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_12_OFFSET << 2)), 0xb);
+//    Input 13 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_13_OFFSET << 2)), 0xa);
+//    Input 14 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_14_OFFSET << 2)), 0xd);
+//    Input 15 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_15_OFFSET << 2)), 0x5);
+//    Input 16 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_16_OFFSET << 2)), 0xe2);
+//    Input 17 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_17_OFFSET << 2)), 0xfb);
+//    Input 18 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_18_OFFSET << 2)), 0x0);
+//    Input 19 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_19_OFFSET << 2)), 0xe6);
+//    Input 20 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_20_OFFSET << 2)), 0xf7);
+//    Input 21 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_21_OFFSET << 2)), 0xd);
+//    Input 22 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_22_OFFSET << 2)), 0xd);
+//    Input 23 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_23_OFFSET << 2)), 0x4);
+//    Input 24 -> Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_1_24_OFFSET << 2)), 0xf4);
+//    Input 0 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_0_OFFSET << 2)), 0xf2);
+//    Input 1 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_1_OFFSET << 2)), 0x10);
+//    Input 2 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_2_OFFSET << 2)), 0x1b);
+//    Input 3 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_3_OFFSET << 2)), 0xfc);
+//    Input 4 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_4_OFFSET << 2)), 0xa);
+//    Input 5 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_5_OFFSET << 2)), 0xfa);
+//    Input 6 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_6_OFFSET << 2)), 0xf7);
+//    Input 7 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_7_OFFSET << 2)), 0xf5);
+//    Input 8 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_8_OFFSET << 2)), 0xf3);
+//    Input 9 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_9_OFFSET << 2)), 0x9);
+//    Input 10 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_10_OFFSET << 2)), 0xf0);
+//    Input 11 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_11_OFFSET << 2)), 0xfb);
+//    Input 12 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_12_OFFSET << 2)), 0x6);
+//    Input 13 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_13_OFFSET << 2)), 0xe2);
+//    Input 14 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_14_OFFSET << 2)), 0x1e);
+//    Input 15 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_15_OFFSET << 2)), 0x5);
+//    Input 16 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_16_OFFSET << 2)), 0xe2);
+//    Input 17 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_17_OFFSET << 2)), 0x1e);
+//    Input 18 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_18_OFFSET << 2)), 0xf5);
+//    Input 19 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_19_OFFSET << 2)), 0xec);
+//    Input 20 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_20_OFFSET << 2)), 0x4);
+//    Input 21 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_21_OFFSET << 2)), 0xf6);
+//    Input 22 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_22_OFFSET << 2)), 0xa);
+//    Input 23 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_23_OFFSET << 2)), 0xfc);
+//    Input 24 -> Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_2_24_OFFSET << 2)), 0xf4);
+//    Input 0 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_0_OFFSET << 2)), 0x8);
+//    Input 1 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_1_OFFSET << 2)), 0xf4);
+//    Input 2 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_2_OFFSET << 2)), 0xf6);
+//    Input 3 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_3_OFFSET << 2)), 0x9);
+//    Input 4 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_4_OFFSET << 2)), 0x4);
+//    Input 5 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_5_OFFSET << 2)), 0xd);
+//    Input 6 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_6_OFFSET << 2)), 0xf5);
+//    Input 7 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_7_OFFSET << 2)), 0xe2);
+//    Input 8 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_8_OFFSET << 2)), 0xa);
+//    Input 9 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_9_OFFSET << 2)), 0xf5);
+//    Input 10 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_10_OFFSET << 2)), 0xfb);
+//    Input 11 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_11_OFFSET << 2)), 0xf2);
+//    Input 12 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_12_OFFSET << 2)), 0xf9);
+//    Input 13 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_13_OFFSET << 2)), 0xf6);
+//    Input 14 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_14_OFFSET << 2)), 0x9);
+//    Input 15 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_15_OFFSET << 2)), 0xf6);
+//    Input 16 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_16_OFFSET << 2)), 0xf5);
+//    Input 17 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_17_OFFSET << 2)), 0xf2);
+//    Input 18 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_18_OFFSET << 2)), 0x0);
+//    Input 19 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_19_OFFSET << 2)), 0xf7);
+//    Input 20 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_20_OFFSET << 2)), 0x6);
+//    Input 21 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_21_OFFSET << 2)), 0x10);
+//    Input 22 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_22_OFFSET << 2)), 0xe);
+//    Input 23 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_23_OFFSET << 2)), 0x8);
+//    Input 24 -> Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_3_24_OFFSET << 2)), 0x7);
+//    Input 0 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_0_OFFSET << 2)), 0xfa);
+//    Input 1 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_1_OFFSET << 2)), 0x7);
+//    Input 2 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_2_OFFSET << 2)), 0xe);
+//    Input 3 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_3_OFFSET << 2)), 0x1e);
+//    Input 4 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_4_OFFSET << 2)), 0x1e);
+//    Input 5 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_5_OFFSET << 2)), 0x7);
+//    Input 6 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_6_OFFSET << 2)), 0xf6);
+//    Input 7 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_7_OFFSET << 2)), 0xe2);
+//    Input 8 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_8_OFFSET << 2)), 0x0);
+//    Input 9 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_9_OFFSET << 2)), 0xfb);
+//    Input 10 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_10_OFFSET << 2)), 0xc);
+//    Input 11 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_11_OFFSET << 2)), 0xa);
+//    Input 12 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_12_OFFSET << 2)), 0x14);
+//    Input 13 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_13_OFFSET << 2)), 0xa);
+//    Input 14 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_14_OFFSET << 2)), 0xfb);
+//    Input 15 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_15_OFFSET << 2)), 0xf7);
+//    Input 16 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_16_OFFSET << 2)), 0xf5);
+//    Input 17 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_17_OFFSET << 2)), 0xf5);
+//    Input 18 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_18_OFFSET << 2)), 0xf6);
+//    Input 19 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_19_OFFSET << 2)), 0xf1);
+//    Input 20 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_20_OFFSET << 2)), 0x14);
+//    Input 21 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_21_OFFSET << 2)), 0xf7);
+//    Input 22 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_22_OFFSET << 2)), 0xf6);
+//    Input 23 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_23_OFFSET << 2)), 0xfc);
+//    Input 24 -> Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_4_24_OFFSET << 2)), 0xf5);
+//    Input 0 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_0_OFFSET << 2)), 0x7);
+//    Input 1 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_1_OFFSET << 2)), 0xf3);
+//    Input 2 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_2_OFFSET << 2)), 0x6);
+//    Input 3 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_3_OFFSET << 2)), 0xf5);
+//    Input 4 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_4_OFFSET << 2)), 0x5);
+//    Input 5 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_5_OFFSET << 2)), 0xfa);
+//    Input 6 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_6_OFFSET << 2)), 0x1e);
+//    Input 7 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_7_OFFSET << 2)), 0xa);
+//    Input 8 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_8_OFFSET << 2)), 0x5);
+//    Input 9 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_9_OFFSET << 2)), 0xf0);
+//    Input 10 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_10_OFFSET << 2)), 0x14);
+//    Input 11 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_11_OFFSET << 2)), 0xf8);
+//    Input 12 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_12_OFFSET << 2)), 0xfc);
+//    Input 13 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_13_OFFSET << 2)), 0xe);
+//    Input 14 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_14_OFFSET << 2)), 0x8);
+//    Input 15 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_15_OFFSET << 2)), 0xfb);
+//    Input 16 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_16_OFFSET << 2)), 0xfb);
+//    Input 17 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_17_OFFSET << 2)), 0x6);
+//    Input 18 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_18_OFFSET << 2)), 0x0);
+//    Input 19 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_19_OFFSET << 2)), 0xe2);
+//    Input 20 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_20_OFFSET << 2)), 0xc);
+//    Input 21 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_21_OFFSET << 2)), 0xf);
+//    Input 22 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_22_OFFSET << 2)), 0xa);
+//    Input 23 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_23_OFFSET << 2)), 0x15);
+//    Input 24 -> Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_5_24_OFFSET << 2)), 0x4);
+//    Input 0 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_0_OFFSET << 2)), 0xf6);
+//    Input 1 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_1_OFFSET << 2)), 0x19);
+//    Input 2 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_2_OFFSET << 2)), 0x2a);
+//    Input 3 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_3_OFFSET << 2)), 0xd);
+//    Input 4 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_4_OFFSET << 2)), 0xf8);
+//    Input 5 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_5_OFFSET << 2)), 0x0);
+//    Input 6 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_6_OFFSET << 2)), 0xc);
+//    Input 7 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_7_OFFSET << 2)), 0x5);
+//    Input 8 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_8_OFFSET << 2)), 0xb);
+//    Input 9 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_9_OFFSET << 2)), 0xeb);
+//    Input 10 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_10_OFFSET << 2)), 0xf8);
+//    Input 11 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_11_OFFSET << 2)), 0x4);
+//    Input 12 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_12_OFFSET << 2)), 0xfb);
+//    Input 13 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_13_OFFSET << 2)), 0xf8);
+//    Input 14 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_14_OFFSET << 2)), 0xb);
+//    Input 15 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_15_OFFSET << 2)), 0x4);
+//    Input 16 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_16_OFFSET << 2)), 0x8);
+//    Input 17 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_17_OFFSET << 2)), 0xf0);
+//    Input 18 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_18_OFFSET << 2)), 0xfb);
+//    Input 19 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_19_OFFSET << 2)), 0x0);
+//    Input 20 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_20_OFFSET << 2)), 0xf6);
+//    Input 21 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_21_OFFSET << 2)), 0x19);
+//    Input 22 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_22_OFFSET << 2)), 0x1a);
+//    Input 23 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_23_OFFSET << 2)), 0x1b);
+//    Input 24 -> Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_6_24_OFFSET << 2)), 0x8);
+//    Input 0 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_0_OFFSET << 2)), 0xa);
+//    Input 1 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_1_OFFSET << 2)), 0xf6);
+//    Input 2 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_2_OFFSET << 2)), 0xf9);
+//    Input 3 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_3_OFFSET << 2)), 0x6);
+//    Input 4 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_4_OFFSET << 2)), 0xf4);
+//    Input 5 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_5_OFFSET << 2)), 0xb);
+//    Input 6 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_6_OFFSET << 2)), 0xf5);
+//    Input 7 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_7_OFFSET << 2)), 0xf1);
+//    Input 8 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_8_OFFSET << 2)), 0xfb);
+//    Input 9 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_9_OFFSET << 2)), 0x5);
+//    Input 10 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_10_OFFSET << 2)), 0x12);
+//    Input 11 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_11_OFFSET << 2)), 0xec);
+//    Input 12 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_12_OFFSET << 2)), 0xe);
+//    Input 13 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_13_OFFSET << 2)), 0x9);
+//    Input 14 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_14_OFFSET << 2)), 0xd);
+//    Input 15 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_15_OFFSET << 2)), 0xa);
+//    Input 16 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_16_OFFSET << 2)), 0xfa);
+//    Input 17 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_17_OFFSET << 2)), 0xf0);
+//    Input 18 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_18_OFFSET << 2)), 0x9);
+//    Input 19 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_19_OFFSET << 2)), 0x0);
+//    Input 20 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_20_OFFSET << 2)), 0xb);
+//    Input 21 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_21_OFFSET << 2)), 0xa);
+//    Input 22 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_22_OFFSET << 2)), 0xf1);
+//    Input 23 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_23_OFFSET << 2)), 0xb);
+//    Input 24 -> Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_7_24_OFFSET << 2)), 0xb);
+//    Input 0 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_0_OFFSET << 2)), 0xe2);
+//    Input 1 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_1_OFFSET << 2)), 0x1a);
+//    Input 2 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_2_OFFSET << 2)), 0x12);
+//    Input 3 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_3_OFFSET << 2)), 0xd);
+//    Input 4 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_4_OFFSET << 2)), 0xfb);
+//    Input 5 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_5_OFFSET << 2)), 0xf5);
+//    Input 6 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_6_OFFSET << 2)), 0x6);
+//    Input 7 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_7_OFFSET << 2)), 0xf0);
+//    Input 8 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_8_OFFSET << 2)), 0x8);
+//    Input 9 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_9_OFFSET << 2)), 0x1a);
+//    Input 10 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_10_OFFSET << 2)), 0xfc);
+//    Input 11 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_11_OFFSET << 2)), 0xf6);
+//    Input 12 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_12_OFFSET << 2)), 0xf5);
+//    Input 13 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_13_OFFSET << 2)), 0xf7);
+//    Input 14 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_14_OFFSET << 2)), 0xe2);
+//    Input 15 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_15_OFFSET << 2)), 0x9);
+//    Input 16 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_16_OFFSET << 2)), 0x4);
+//    Input 17 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_17_OFFSET << 2)), 0xf8);
+//    Input 18 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_18_OFFSET << 2)), 0x1a);
+//    Input 19 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_19_OFFSET << 2)), 0xc);
+//    Input 20 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_20_OFFSET << 2)), 0x0);
+//    Input 21 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_21_OFFSET << 2)), 0x14);
+//    Input 22 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_22_OFFSET << 2)), 0xf6);
+//    Input 23 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_23_OFFSET << 2)), 0xf1);
+//    Input 24 -> Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_8_24_OFFSET << 2)), 0x6);
+//    Input 0 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_0_OFFSET << 2)), 0xc);
+//    Input 1 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_1_OFFSET << 2)), 0x9);
+//    Input 2 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_2_OFFSET << 2)), 0x1a);
+//    Input 3 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_3_OFFSET << 2)), 0xfa);
+//    Input 4 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_4_OFFSET << 2)), 0xb);
+//    Input 5 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_5_OFFSET << 2)), 0xf3);
+//    Input 6 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_6_OFFSET << 2)), 0xf2);
+//    Input 7 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_7_OFFSET << 2)), 0x0);
+//    Input 8 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_8_OFFSET << 2)), 0xf1);
+//    Input 9 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_9_OFFSET << 2)), 0xf5);
+//    Input 10 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_10_OFFSET << 2)), 0x14);
+//    Input 11 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_11_OFFSET << 2)), 0xf8);
+//    Input 12 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_12_OFFSET << 2)), 0xa);
+//    Input 13 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_13_OFFSET << 2)), 0xf5);
+//    Input 14 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_14_OFFSET << 2)), 0xf6);
+//    Input 15 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_15_OFFSET << 2)), 0xb);
+//    Input 16 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_16_OFFSET << 2)), 0xfb);
+//    Input 17 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_17_OFFSET << 2)), 0xf6);
+//    Input 18 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_18_OFFSET << 2)), 0xf7);
+//    Input 19 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_19_OFFSET << 2)), 0xf8);
+//    Input 20 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_20_OFFSET << 2)), 0xf4);
+//    Input 21 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_21_OFFSET << 2)), 0x9);
+//    Input 22 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_22_OFFSET << 2)), 0x6);
+//    Input 23 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_23_OFFSET << 2)), 0xf0);
+//    Input 24 -> Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_WEIGHTS_9_24_OFFSET << 2)), 0xd);
+
+
+//---- INITIALIZE HIDDEN LAYER BIAS ----------------
+//    Hidden Neuron 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_BIAS_0_OFFSET << 2)), 0xfc);
+//    Hidden Neuron 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_BIAS_1_OFFSET << 2)), );
+//    Hidden Neuron 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_BIAS_2_OFFSET << 2)), );
+//    Hidden Neuron 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_BIAS_3_OFFSET << 2)), );
+//    Hidden Neuron 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_BIAS_4_OFFSET << 2)), );
+//    Hidden Neuron 5
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_BIAS_5_OFFSET << 2)), );
+//    Hidden Neuron 6
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_BIAS_6_OFFSET << 2)), );
+//    Hidden Neuron 7
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_BIAS_7_OFFSET << 2)), );
+//    Hidden Neuron 8
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_BIAS_8_OFFSET << 2)), );
+//    Hidden Neuron 9
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_HL_BIAS_9_OFFSET << 2)), );
+
+
+//---- INITIALIZE OUTPUT LAYER WEIGHTS ----------------
+//    Hidden Neuron 0 -> Output 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_0_0_OFFSET << 2)), 0xc);
+//    Hidden Neuron 1 -> Output 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_0_1_OFFSET << 2)), 0x6);
+//    Hidden Neuron 2 -> Output 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_0_2_OFFSET << 2)), 0xe1);
+//    Hidden Neuron 3 -> Output 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_0_3_OFFSET << 2)), 0x7);
+//    Hidden Neuron 4 -> Output 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_0_4_OFFSET << 2)), 0xe3);
+//    Hidden Neuron 5 -> Output 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_0_5_OFFSET << 2)), 0xa);
+//    Hidden Neuron 6 -> Output 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_0_6_OFFSET << 2)), 0xd9);
+//    Hidden Neuron 7 -> Output 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_0_7_OFFSET << 2)), 0x19);
+//    Hidden Neuron 8 -> Output 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_0_8_OFFSET << 2)), 0xf0);
+//    Hidden Neuron 9 -> Output 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_0_9_OFFSET << 2)), 0xe5);
+//    Hidden Neuron 0 -> Output 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_1_0_OFFSET << 2)), 0x20);
+//    Hidden Neuron 1 -> Output 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_1_1_OFFSET << 2)), 0xee);
+//    Hidden Neuron 2 -> Output 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_1_2_OFFSET << 2)), 0x6);
+//    Hidden Neuron 3 -> Output 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_1_3_OFFSET << 2)), 0x4);
+//    Hidden Neuron 4 -> Output 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_1_4_OFFSET << 2)), 0xf7);
+//    Hidden Neuron 5 -> Output 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_1_5_OFFSET << 2)), 0x0);
+//    Hidden Neuron 6 -> Output 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_1_6_OFFSET << 2)), 0x30);
+//    Hidden Neuron 7 -> Output 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_1_7_OFFSET << 2)), 0xf2);
+//    Hidden Neuron 8 -> Output 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_1_8_OFFSET << 2)), 0x2a);
+//    Hidden Neuron 9 -> Output 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_1_9_OFFSET << 2)), 0xed);
+//    Hidden Neuron 0 -> Output 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_2_0_OFFSET << 2)), 0x0);
+//    Hidden Neuron 1 -> Output 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_2_1_OFFSET << 2)), 0x17);
+//    Hidden Neuron 2 -> Output 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_2_2_OFFSET << 2)), 0xf0);
+//    Hidden Neuron 3 -> Output 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_2_3_OFFSET << 2)), 0xe4);
+//    Hidden Neuron 4 -> Output 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_2_4_OFFSET << 2)), 0x14);
+//    Hidden Neuron 5 -> Output 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_2_5_OFFSET << 2)), 0x4);
+//    Hidden Neuron 6 -> Output 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_2_6_OFFSET << 2)), 0xf9);
+//    Hidden Neuron 7 -> Output 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_2_7_OFFSET << 2)), 0xd7);
+//    Hidden Neuron 8 -> Output 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_2_8_OFFSET << 2)), 0xf7);
+//    Hidden Neuron 9 -> Output 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_2_9_OFFSET << 2)), 0xfc);
+//    Hidden Neuron 0 -> Output 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_3_0_OFFSET << 2)), 0xd6);
+//    Hidden Neuron 1 -> Output 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_3_1_OFFSET << 2)), 0xf);
+//    Hidden Neuron 2 -> Output 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_3_2_OFFSET << 2)), 0xda);
+//    Hidden Neuron 3 -> Output 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_3_3_OFFSET << 2)), 0x4);
+//    Hidden Neuron 4 -> Output 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_3_4_OFFSET << 2)), 0x16);
+//    Hidden Neuron 5 -> Output 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_3_5_OFFSET << 2)), 0x10);
+//    Hidden Neuron 6 -> Output 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_3_6_OFFSET << 2)), 0x25);
+//    Hidden Neuron 7 -> Output 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_3_7_OFFSET << 2)), 0x1e);
+//    Hidden Neuron 8 -> Output 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_3_8_OFFSET << 2)), 0xf0);
+//    Hidden Neuron 9 -> Output 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_3_9_OFFSET << 2)), 0xf9);
+//    Hidden Neuron 0 -> Output 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_4_0_OFFSET << 2)), 0xe4);
+//    Hidden Neuron 1 -> Output 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_4_1_OFFSET << 2)), 0xf0);
+//    Hidden Neuron 2 -> Output 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_4_2_OFFSET << 2)), 0xe7);
+//    Hidden Neuron 3 -> Output 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_4_3_OFFSET << 2)), 0xe4);
+//    Hidden Neuron 4 -> Output 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_4_4_OFFSET << 2)), 0x4);
+//    Hidden Neuron 5 -> Output 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_4_5_OFFSET << 2)), 0xf0);
+//    Hidden Neuron 6 -> Output 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_4_6_OFFSET << 2)), 0xf0);
+//    Hidden Neuron 7 -> Output 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_4_7_OFFSET << 2)), 0xb);
+//    Hidden Neuron 8 -> Output 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_4_8_OFFSET << 2)), 0x1e);
+//    Hidden Neuron 9 -> Output 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_WEIGHTS_4_9_OFFSET << 2)), 0xe8);
+
+
+//---- INITIALIZE OUTPUT LAYER BIAS ----------------
+//    Output 0
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_BIAS_0_OFFSET << 2)), 0xe5);
+//    Output 1
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_BIAS_1_OFFSET << 2)), );
+//    Output 2
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_BIAS_2_OFFSET << 2)), );
+//    Output 3
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_BIAS_3_OFFSET << 2)), );
+//    Output 4
+CORTEZ_WRITE_IO((USER_CORE_BASE + (CORTEZ_OL_BIAS_4_OFFSET << 2)), );
