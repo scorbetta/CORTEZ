@@ -11,7 +11,7 @@ within this repository.
 | DESIGN VERSION | BOULDER | SHUTTLE | STATUS |
 |-|-|-|-|
 | `v1.0` | `o`, `u` and `i` recognition on a 3x3 grid | [GFMPW-1](https://repositories.efabless.com/scorbetta/CORTEZ1_GFMPW1) | Submitted |
-| `v1.1` | 'c' and 'f' recognition on a 3x3 grid | None | Deprecated |
+| `v1.1` | `c` and `f` recognition on a 3x3 grid | None | Deprecated |
 | `v1.2` | Vowels recognition on a 5x5 grid | TT06 | Work in progress |
 
 ## Design overview
