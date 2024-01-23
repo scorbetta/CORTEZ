@@ -22,7 +22,7 @@ from fc_layer import FCLayer
 from activation_layer import ActivationLayer
 from activations import tanh, tanh_prime, afun_test, afun_test_prime, all_data
 from losses import mse, mse_prime
-from utils import fp_create_matrix, cast_all_to_float
+from utils import *
 
 sys.path.append(os.path.relpath("../../ver/utils"))
 from my_utils import *
@@ -81,22 +81,34 @@ def create_noisy_data(training_len, grid_size, output_size, chars_in, chars_out,
     return x,y
 
 # Dump matrices to file
-def dump_to_file(matrix, file, print_hex = False, width = 8, frac_bits = 5):
+def dump_fp(matrix, file):
     original_stdout = sys.stdout
 
     with open(file, 'w') as fid:
         sys.stdout = fid
 
         for row in range(matrix.shape[0]):
-            if print_hex == False:
-                print(*matrix[row], sep=',')
-            else:
-                row_str = ''
-                for col in range(matrix.shape[1]):
-                    temp = fp2bin(matrix[row][col], width, frac_bits)
-                    temp_hex = hex(int(str(temp),2))
-                    row_str += f'{temp_hex},'
-                print(f'{row_str[:-1]}')
+            print(*matrix[row], sep=',')
+
+    sys.stdout = original_stdout
+
+def dump_fxp(matrix, file, width, frac_bits, print_hex=False):
+    original_stdout = sys.stdout
+
+    with open(file, 'w') as fid:
+        sys.stdout = fid
+
+        for row in range(matrix.shape[0]):
+            row_str = ''
+            for col in range(matrix.shape[1]):
+                temp = Fxp(matrix[row][col], signed=True, n_word=width, n_frac=frac_bits, config=fxp_get_config())
+
+                if print_hex == True:
+                    row_str += f'{temp.hex()},'
+                else:
+                    row_str += f'{temp.get_val()},'
+
+            print(f'{row_str[:-1]}')
 
     sys.stdout = original_stdout
 
@@ -204,44 +216,48 @@ def train_network(config, net, grid_size, chars_in, chars_out):
     
     # Cast float to fixed and dump them as well
     w = net.layers[0].weights
-    wcast_hl = fp_create_matrix(w.shape, int(config['fp_width'])-int(config['fp_frac']), int(config['fp_frac']), True, w)
+    wcast_hl = Fxp(w, n_word=int(config['fp_width']), n_frac=int(config['fp_frac']), signed=True, config=fxp_get_config())
     b = net.layers[0].bias
-    bcast_hl = fp_create_matrix(b.shape, int(config['fp_width'])-int(config['fp_frac']), int(config['fp_frac']), True, b)
+    bcast_hl = Fxp(b, n_word=int(config['fp_width']), n_frac=int(config['fp_frac']), signed=True, config=fxp_get_config())
 
     w = net.layers[2].weights
-    wcast_ol = fp_create_matrix(w.shape, int(config['fp_width'])-int(config['fp_frac']), int(config['fp_frac']), True, w)
+    wcast_ol = Fxp(w, n_word=int(config['fp_width']), n_frac=int(config['fp_frac']), signed=True, config=fxp_get_config())
     b = net.layers[2].bias
-    bcast_ol = fp_create_matrix(b.shape, int(config['fp_width'])-int(config['fp_frac']), int(config['fp_frac']), True, b)
+    bcast_ol = Fxp(b, n_word=int(config['fp_width']), n_frac=int(config['fp_frac']), signed=True, config=fxp_get_config())
  
-    # Dump weights and biases from all layers
-    dump_to_file(net.layers[0].weights.transpose(), "hidden_layer_weights.txt")
-    dump_to_file(net.layers[0].bias.transpose(), "hidden_layer_bias.txt")
-    dump_to_file(net.layers[2].weights.transpose(), "output_layer_weights.txt")
-    dump_to_file(net.layers[2].bias.transpose(), "output_layer_bias.txt")
-    dump_to_file(wcast_hl.transpose(), "hidden_layer_weights_fp.txt")
-    dump_to_file(bcast_hl.transpose(), "hidden_layer_bias_fp.txt")
-    dump_to_file(wcast_ol.transpose(), "output_layer_weights_fp.txt")
-    dump_to_file(bcast_ol.transpose(), "output_layer_bias_fp.txt")
+    # Dump floating-point weights and biases
+    dump_fp(net.layers[0].weights.transpose(), "hidden_layer_weights_fp.txt")
+    dump_fp(net.layers[0].bias.transpose(), "hidden_layer_bias_fp.txt")
+    dump_fp(net.layers[2].weights.transpose(), "output_layer_weights_fp.txt")
+    dump_fp(net.layers[2].bias.transpose(), "output_layer_bias_fp.txt")
 
-    # Dump fixed-point weights and bias in hex format for RTL simulation and on-chip Software
-    # configuration
-    dump_to_file(wcast_hl.transpose(), "hidden_layer_weights_fp_hex.txt", True, int(config['fp_width']), int(config['fp_frac']))
-    dump_to_file(bcast_hl.transpose(), "hidden_layer_bias_fp_hex.txt", True, int(config['fp_width']), int(config['fp_frac']))
-    dump_to_file(wcast_ol.transpose(), "output_layer_weights_fp_hex.txt", True, int(config['fp_width']), int(config['fp_frac']))
-    dump_to_file(bcast_ol.transpose(), "output_layer_bias_fp_hex.txt", True, int(config['fp_width']), int(config['fp_frac']))
+    # Dump fixed-point weights and biases
+    dump_fxp(wcast_hl.transpose(), "hidden_layer_weights_fxp.txt", int(config['fp_width']), int(config['fp_frac']))
+    dump_fxp(bcast_hl.transpose(), "hidden_layer_bias_fxp.txt", int(config['fp_width']), int(config['fp_frac']))
+    dump_fxp(wcast_ol.transpose(), "output_layer_weights_fxp.txt", int(config['fp_width']), int(config['fp_frac']))
+    dump_fxp(bcast_ol.transpose(), "output_layer_bias_fxp.txt", int(config['fp_width']), int(config['fp_frac']))
+    dump_fxp(wcast_hl.transpose(), "hidden_layer_weights_hex_fxp.txt", int(config['fp_width']), int(config['fp_frac']), True)
+    dump_fxp(bcast_hl.transpose(), "hidden_layer_bias_hex_fxp.txt", int(config['fp_width']), int(config['fp_frac']), True)
+    dump_fxp(wcast_ol.transpose(), "output_layer_weights_hex_fxp.txt", int(config['fp_width']), int(config['fp_frac']), True)
+    dump_fxp(bcast_ol.transpose(), "output_layer_bias_hex_fxp.txt", int(config['fp_width']), int(config['fp_frac']), True)
 
     # Cast to float, otherwise testing the network will fail (numpy matrices require float)
-    wcast_hl = cast_all_to_float(wcast_hl)
-    bcast_hl = cast_all_to_float(bcast_hl)
-    wcast_ol = cast_all_to_float(wcast_ol)
-    bcast_ol = cast_all_to_float(bcast_ol)
+    #wcast_hl_fp = cast_all_to_float(wcast_hl)
+    matrix = wcast_hl
+    wcast_hl_fp = [ [ float(matrix[rdx][cdx]) for cdx in range(matrix.shape[1]) ] for rdx in range(matrix.shape[0]) ]
+    atrix = bcast_hl
+    bcast_hl_fp = [ [ float(matrix[rdx][cdx]) for cdx in range(matrix.shape[1]) ] for rdx in range(matrix.shape[0]) ]
+    matrix = wcast_ol
+    wcast_ol_fp = [ [ float(matrix[rdx][cdx]) for cdx in range(matrix.shape[1]) ] for rdx in range(matrix.shape[0]) ]
+    matrix = bcast_ol
+    bcast_ol_fp = [ [ float(matrix[rdx][cdx]) for cdx in range(matrix.shape[1]) ] for rdx in range(matrix.shape[0]) ]
 
     # Save for later use
     np.savez("weights.npz",
         float_w_hl=net.layers[0].weights, float_b_hl=net.layers[0].bias,
         float_w_ol=net.layers[2].weights, float_b_ol=net.layers[2].bias,
-        fixed_w_hl=wcast_hl, fixed_b_hl=bcast_hl,
-        fixed_w_ol=wcast_ol, fixed_b_ol=bcast_ol
+        fixed_w_hl=wcast_hl_fp, fixed_b_hl=bcast_hl_fp,
+        fixed_w_ol=wcast_ol_fp, fixed_b_ol=bcast_ol_fp
     )
 
     # Test network with training data

@@ -19,7 +19,8 @@ module NEURON #(
     input wire                                  VALID_IN,
     // Output path
     output wire signed [WIDTH-1:0]              VALUE_OUT,
-    output wire                                 VALID_OUT
+    output wire                                 VALID_OUT,
+    output wire                                 OVERFLOW
 );
 
     wire signed [NUM_INPUTS*WIDTH-1:0]  mul_result;
@@ -27,6 +28,10 @@ module NEURON #(
     wire                                all_mul_valid;
     wire signed [WIDTH-1:0]             acc_result;
     wire                                acc_valid;
+    wire [NUM_INPUTS-1:0]               mul_overflow;
+    wire                                acc_overflow;
+    wire                                act_overflow;
+    reg                                 overflow;
     genvar                              gdx;
 
     // Parallel multipliers
@@ -43,7 +48,8 @@ module NEURON #(
                 .VALUE_B_IN (WEIGHTS_IN[gdx*WIDTH +: WIDTH]),
                 .VALID_IN   (VALID_IN),
                 .VALUE_OUT  (mul_result[gdx*WIDTH +: WIDTH]),
-                .VALID_OUT  (mul_valid[gdx])
+                .VALID_OUT  (mul_valid[gdx]),
+                .OVERFLOW   (mul_overflow[gdx])
             );
         end
     endgenerate
@@ -66,7 +72,8 @@ module NEURON #(
         .VALID_IN       (all_mul_valid),
         .EXT_VALUE_IN   (BIAS_IN),
         .VALUE_OUT      (acc_result),
-        .VALID_OUT      (acc_valid)
+        .VALID_OUT      (acc_valid),
+        .OVERFLOW       (acc_overflow)
     );
 
     // Non-linear activation function
@@ -80,8 +87,22 @@ module NEURON #(
         .VALUE_IN   (acc_result),
         .VALID_IN   (acc_valid),
         .VALUE_OUT  (VALUE_OUT),
-        .VALID_OUT  (VALID_OUT)
+        .VALID_OUT  (VALID_OUT),
+        .OVERFLOW   (act_overflow)
     );
+
+    // Overflow is sticky
+    always @(posedge CLK) begin
+        if(!RSTN | VALID_IN) begin
+            overflow <= 1'b0;
+        end
+        else begin
+            overflow <= |mul_overflow | acc_overflow | act_overflow;
+        end
+    end
+
+    // Pinout
+    assign OVERFLOW = overflow;
 endmodule
 
 `default_nettype wire

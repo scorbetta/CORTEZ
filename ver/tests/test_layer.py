@@ -1,41 +1,24 @@
-# Standard imports
-import sys
-import os
-
-# COCOTB imports
 import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, FallingEdge, ClockCycles
-
-# Golden model
-from utils.golden_model import golden_model
+from fxpmath import Fxp
+import sys
+import os
+sys.path.append(os.path.relpath('../'))
 from utils.my_utils import *
-
-# Additional imports
-from fpbinary import FpBinary
-import configparser
-
-def dbug_print(print_flag, message):
-    if print_flag == 1:
-        print(f'{message}')
-
-# Convert binary position to string position:
-#   0 (lsb) becomes strlen-1
-#   ...
-#   strlen-1 (msb) becomes 0
-def stringify(bin_pos, strlen):
-    return (strlen - 1 - bin_pos)
+sys.path.append(os.path.relpath("../../model/neural_network"))
+from activations import afun_test_primitive
 
 @cocotb.test()
 async def test_layer(dut):
     # Config
-    ini_parser = configparser.ConfigParser()
-    ini_parser.read('config.ini')
-    width = int(ini_parser['fixed_point']['fp_width'])
-    frac_bits = int(ini_parser['fixed_point']['frac_bits'])
-    num_inputs = int(ini_parser['network']['num_inputs'])
-    num_outputs = int(ini_parser['network']['num_outputs'])
-    verbose = int(ini_parser['simulation']['verbose'])
+    width = int(dut.WIDTH.value)
+    frac_bits = int(dut.FRAC_BITS.value)
+    num_inputs = int(dut.NUM_INPUTS.value)
+    num_outputs = int(dut.NUM_OUTPUTS.value)
+    verbose = 0
+
+    fxp_quants = 2 ** width - 1
 
     # Run the clock asap
     clock = Clock(dut.CLK, 10, units="ns")
@@ -44,9 +27,7 @@ async def test_layer(dut):
     # One golden model for every Neuron!
     goldens = []
     for odx in range(num_outputs):
-        goldens.append(golden_model(width, frac_bits))
-    for odx in range(num_outputs):
-        goldens[odx].reset_values()
+        goldens.append(Fxp(0.0, signed=True, n_word=width, n_frac=frac_bits, config=fxp_get_config()))
 
     # Defaults
     dut.VALID_IN.value = 0
@@ -61,19 +42,20 @@ async def test_layer(dut):
     for cycle in range(4):
         await RisingEdge(dut.CLK)
 
+    rel_errs = []
     for test in range(1000):
         dbug_print(verbose, f'test: ==== Begin: TEST #{test} ================')
         for odx in range(num_outputs):
-            dbug_print(verbose, f'test: N#{odx}: {goldens[odx].to_str()}')
+            dbug_print(verbose, f'test: N#{odx}: {goldens[odx].hex()}')
 
         # Generate random values
         random_values_in = []
         random_values_in_str = ""
         for vdx in range(num_inputs):
-            random_value,random_value_bit_str = get_random_fixed_point_value(width, frac_bits)
-            value = FpBinary(int_bits=width-frac_bits, frac_bits=frac_bits, signed=True, value=random_value)
-            random_values_in.append(value)
-            random_values_in_str = f'{random_value_bit_str}{random_values_in_str}'
+            random_value = fxp_generate_random(width, frac_bits)
+            random_values_in.append(random_value)
+            random_values_in_str = f'{random_value.bin()}{random_values_in_str}'
+        dbug_print(verbose, f'test: Input vector: {random_values_in}')
 
         # Generate random weights
         random_weights_in = []
@@ -82,46 +64,55 @@ async def test_layer(dut):
             temp = []
             temp_str = ""
             for idx in range(num_inputs):
-                random_value,random_value_bit_str = get_random_fixed_point_value(width, frac_bits)
-                value = FpBinary(int_bits=width-frac_bits, frac_bits=frac_bits, signed=True, value=random_value)
-                temp.append(value)
-                temp_str = f'{temp_str}{random_value_bit_str}'
+                random_value = fxp_generate_random(width, frac_bits)
+                temp.append(random_value)
+                temp_str = f'{random_value.bin()}{temp_str}'
             random_weights_in.append(temp)
             random_weights_in_str = f'{temp_str}{random_weights_in_str}'
+        dbug_print(verbose, f'test: Input weights: {random_weights_in}')
 
         # Generate random bias
         random_bias_in = []
         random_bias_in_str = ""
         for odx in range(num_outputs):
-            random_value,random_value_bit_str = get_random_fixed_point_value(width, frac_bits)
-            value = FpBinary(int_bits=width-frac_bits, frac_bits=frac_bits, signed=True, value=random_value)
-            random_bias_in.append(value)
-            random_bias_in_str = f'{random_value_bit_str}{random_bias_in_str}'
+            random_value = fxp_generate_random(width, frac_bits)
+            random_bias_in.append(random_value)
+            random_bias_in_str = f'{random_value.bin()}{random_bias_in_str}'
+        dbug_print(verbose, f'test: Input bias: {random_bias_in}')
+
+        # Sanity checks
+        assert(len(random_values_in_str) == 8*num_inputs)
+        assert(len(random_weights_in_str) == 8*num_inputs*num_outputs)
+        assert(len(random_bias_in_str) == 8*num_outputs)
 
         # Run golden model on all neurons
         for odx in range(num_outputs):
             # Multiplication
             neuron_muls = []
+            neuron_muls_str = []
             for idx in range(num_inputs):
-                neuron_muls.append(goldens[odx].do_op("mul", random_values_in[idx], random_weights_in[odx][idx]))
-            dbug_print(verbose, f'gldn: N#{odx} after mul: {neuron_muls}')
+                neuron_muls.append(random_values_in[idx] * random_weights_in[odx][idx])
+            dbug_print(verbose, f'gldn: N#{odx}/mul: {[ x.hex() for x in neuron_muls ]}')
 
             # Accumulator
+            neuron_acc = Fxp(0.0, signed=True, n_word=width, n_frac=frac_bits, config=fxp_get_config())
             for idx in range(num_inputs):
-                neuron_acc = goldens[odx].do_op("acc", neuron_muls[idx])
-            neuron_acc = goldens[odx].do_op("acc", random_bias_in[odx])
-            dbug_print(verbose, f'gldn: N#{odx} after acc: {neuron_acc}')
+                neuron_acc += neuron_muls[idx]
+            neuron_acc += random_bias_in[odx]
+            dbug_print(verbose, f'gldn: N#{odx}/acc: {neuron_acc.hex()}')
 
             # Activation function
-            neuron_act_fun = goldens[odx].do_op("act_fun", neuron_acc)
-            dbug_print(verbose, f'gldn: N#{odx} after act_fun: {neuron_act_fun}')
+            retval = afun_test_primitive(neuron_acc.get_val())
+            goldens[odx] = Fxp(val=retval, signed=True, n_word=width, n_frac=frac_bits, config=fxp_get_config())
+            dbug_print(verbose, f'gldn: N#{odx}/act_fun: {goldens[odx].hex()}')
 
         # Run DUT
         await RisingEdge(dut.CLK)
-        dut.VALUES_IN.value = int(random_values_in_str, 2)
-        dut.WEIGHTS_IN.value = int(random_weights_in_str, 2)
-        dut.BIAS_IN.value = int(random_bias_in_str, 2)
-        
+        dut.WEIGHTS_IN.value = int(random_weights_in_str,2)
+        dut.BIAS_IN.value = int(random_bias_in_str,2)
+        await RisingEdge(dut.CLK)
+        dut.VALUES_IN.value = int(random_values_in_str,2)
+
         await RisingEdge(dut.CLK)
         dut.VALID_IN.value = 1
         await RisingEdge(dut.CLK)
@@ -150,20 +141,18 @@ async def test_layer(dut):
                     msb = lsb + width - 1
                     lmc = stringify(msb, strlen)
                     rmc = stringify(lsb, strlen)
-                    values_out[odx] = dut.VALUES_OUT.value[lmc:rmc].binstr
-                    #@DBUGprint(f'{odx} {width} {msb}:{lsb} {lmc}:{rmc} --> {dut.VALUES_OUT.value[lmc:rmc].binstr} {dut.VALUES_OUT.value.binstr}')
+                    values_out[odx] = Fxp(val=f'0b{dut.VALUES_OUT.value[lmc:rmc]}', signed=True, n_word=width, n_frac=frac_bits, config=fxp_get_config())
 
             # End condition
             if fired_count == num_outputs:
                 flag = False
 
-        # Verify w/ margins: exact values not expected. Use double-sided margins instead...
-        margin = 0.05
+        # Verify results are within margins
+        threshold = 0.05
         for odx in range(num_outputs):
-            dut_result = bin2fp(values_out[odx], width, frac_bits)
-            golden_result_lb = abs(goldens[odx].act_fun) * (1.0 - margin)
-            golden_result_ub = abs(goldens[odx].act_fun) * (1.0 + margin)
-            assert(abs(dut_result) >= abs(golden_result_lb) and abs(dut_result) <= abs(golden_result_ub)),print(f'Results mismatch: test={test},odx={odx},dut_result={dut_result},golden_result={goldens[odx].act_fun},golden_result_range=[{golden_result_lb},{golden_result_ub}]')
+            abs_err = fxp_abs_err(goldens[odx], values_out[odx])
+            quant_err = float(abs_err) / float(fxp_lsb) / fxp_quants
+            assert(quant_err <= threshold),print(f'Results differ more than {threshold*100}% LSBs: dut_result={values_out[odx]},golden_result={goldens[odx]},abs_err={abs_err},quant_error={quant_err}')
 
         # Shim delay
         for cycle in range(4):

@@ -70,6 +70,7 @@ module NETWORK_TOP
     reg [7:0]               ss_segments;
     reg [23:0]              ss_counter;
     reg                     ss_overflow;
+    wire                    network_overflow;
 
     // Internal modules use active-low reset as well
     assign rstn = ~RST;
@@ -254,7 +255,8 @@ module NETWORK_TOP
         .OL_WEIGHTS_IN  (ol_weights),
         .OL_BIAS_IN     (ol_bias),
         .VALUES_OUT     (values_out),
-        .VALID_OUT      (valid_out)
+        .VALID_OUT      (valid_out),
+        .OVERFLOW       (network_overflow)
     );
 
     // LEDs control engines

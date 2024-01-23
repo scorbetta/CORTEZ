@@ -1,35 +1,27 @@
-# Standard imports
-import sys
-import os
 import numpy as np
-
-# COCOTB imports
 import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, FallingEdge, ClockCycles
-
-# Golden model
-from utils.golden_model import golden_model
+from fxpmath import *
+import sys
+import os
+sys.path.append(os.path.relpath('../'))
 from utils.my_utils import *
-
-# Additional imports
-from fpbinary import FpBinary
-import configparser
+sys.path.append(os.path.relpath("../../model/neural_network"))
+from activations import afun_test_primitive
 
 @cocotb.test()
 async def test_fixed_point_act_fun(dut):
-    # Config
-    ini_parser = configparser.ConfigParser()
-    ini_parser.read('config.ini')
-    width = int(ini_parser['fixed_point']['fp_width'])
-    frac_bits = int(ini_parser['fixed_point']['frac_bits'])
+    width = int(dut.WIDTH.value)
+    frac_bits = int(dut.FRAC_BITS.value)
+
+    fxp_min,fxp_max = fxp_get_range(width, frac_bits)
+    fxp_lsb = fxp_get_lsb(width, frac_bits)
+    fxp_quants = 2 ** width - 1
 
     # Run the clock asap
     clock = Clock(dut.CLK, 10, units="ns")
     cocotb.start_soon(clock.start())
-
-    # Golden model
-    golden = golden_model(width, frac_bits)
 
     # Defaults
     dut.VALID_IN.value = 0
@@ -44,30 +36,34 @@ async def test_fixed_point_act_fun(dut):
     for cycle in range(4):
         await RisingEdge(dut.CLK)
 
-    # Generate ramp of values within the arctan(x) domain of [-4:+4]
-    ramp_values = np.arange(-4.0, 4.0, 0.001);
+    # Generate ramp of values within the arctan(x) domain supported by the current fixed-point
+    # configuration. Step is chosen lower than the fixed-point LSB to test roundings as well
+    ramp_values = np.arange(fxp_min.get_val(), fxp_max.get_val(), fxp_lsb.get_val());
 
+    rel_err = 0.0
     for rdx in range(len(ramp_values)):
-        value_a = FpBinary(int_bits=width-frac_bits, frac_bits=frac_bits, signed=True, value=ramp_values[rdx])
-        value_a_bit_str = str(bin(value_a))[2:]
-        golden_result = golden.do_op("act_fun", value_a)
+        value_a = Fxp(val=ramp_values[rdx], signed=True, n_word=width, n_frac=frac_bits, config=fxp_get_config())
+
+        # Model
+        retval = afun_test_primitive(value_a.get_val())
+        golden_result = Fxp(val=retval, signed=True, n_word=width, n_frac=frac_bits, config=fxp_get_config())
 
         # DUT
         await RisingEdge(dut.CLK)
-        dut.VALUE_IN.value = int(value_a_bit_str, 2)
+        dut.VALUE_IN.value = int(value_a.hex(),16)
         dut.VALID_IN.value = 1
         await RisingEdge(dut.CLK)
         dut.VALID_IN.value = 0
-        await RisingEdge(dut.VALID_OUT)
 
-        # Verify
+        await RisingEdge(dut.VALID_OUT)
         await FallingEdge(dut.CLK)
-        dut_result = bin2fp(dut.VALUE_OUT.value.binstr, width, frac_bits)
-        # Exact values not expected. Use double-sided margins instead...
-        margin = 0.05
-        golden_result_lb = abs(golden_result) * (1.0 - margin)
-        golden_result_ub = abs(golden_result) * (1.0 + margin)
-        assert(abs(dut_result) >= abs(golden_result_lb) and abs(dut_result) <= abs(golden_result_ub)),print(f'Results mismatch: rdx={rdx},value_in={value_a},dut_result={dut_result},golden_result={golden_result},golden_result_range=[{golden_result_lb},{golden_result_ub}]')
+        dut_result = Fxp(val=f'0b{dut.VALUE_OUT.value}', signed=True, n_word=width, n_frac=frac_bits, config=fxp_get_config())
+
+        # Verify result is within margins
+        threshold = 0.01
+        abs_err = fxp_abs_err(golden_result, dut_result)
+        quant_err = float(abs_err) / float(fxp_lsb) / fxp_quants
+        assert(quant_err <= threshold),print(f'Results differ more than {threshold*100}% LSBs: dut_result={dut_result},golden_result={golden_result},abs_err={abs_err},quant_error={quant_err}')
 
         # Shim delay
         for cycle in range(4):

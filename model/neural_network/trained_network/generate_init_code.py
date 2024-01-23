@@ -12,7 +12,7 @@ jj_env = jj.Environment(loader=jj.FileSystemLoader('./'))
 
 # Load weights as strings, from trained network output
 hl_weights = []
-with open('hidden_layer_weights_fp_hex.txt', 'r') as fid:
+with open('hidden_layer_weights_hex_fxp.txt', 'r') as fid:
     csv_reader = csv.reader(fid, delimiter=',')
     for row in csv_reader:
         new_row = []
@@ -21,13 +21,13 @@ with open('hidden_layer_weights_fp_hex.txt', 'r') as fid:
         hl_weights.append(new_row)
 
 hl_bias = []
-with open('hidden_layer_bias_fp_hex.txt', 'r') as fid:
+with open('hidden_layer_bias_hex_fxp.txt', 'r') as fid:
     csv_reader = csv.reader(fid, delimiter=',')
     for col in csv_reader:
         hl_bias.append(col)
 
 ol_weights = []
-with open('output_layer_weights_fp_hex.txt', 'r') as fid:
+with open('output_layer_weights_hex_fxp.txt', 'r') as fid:
     csv_reader = csv.reader(fid, delimiter=',')
     for row in csv_reader:
         new_row = []
@@ -36,7 +36,7 @@ with open('output_layer_weights_fp_hex.txt', 'r') as fid:
         ol_weights.append(new_row)
 
 ol_bias = []
-with open('output_layer_bias_fp_hex.txt', 'r') as fid:
+with open('output_layer_bias_hex_fxp.txt', 'r') as fid:
     csv_reader = csv.reader(fid, delimiter=',')
     for col in csv_reader:
         ol_bias.append(col)

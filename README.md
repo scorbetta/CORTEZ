@@ -21,7 +21,7 @@ based on the back-propagation algorithm using a piece-wise approximation of the 
 function as activation layer.  The digital design is based on fixed-point rather than floating-point
 to simplify the design and reduce costs (area).
 
-## Contents
+# Contents
 - `grogu/`, register map design files based on [`grogu`](https://github.com/scorbetta/grogu);
 - `model/neural_network/`, the Python model of the neural network;
 - `model/piecewise_approximation/`, the Python and Matlab files of the `tanh()` approximation;
@@ -30,7 +30,7 @@ to simplify the design and reduce costs (area).
 - `ver/`, the verification environment;
 - `generate_design.sh`, the main script to run the design customization flow.
 
-## How-to: design customization
+# How-to: design customization
 The `generate_design.sh` script can be used to run the network customization flow from model to RTL.
 The script will run through the following steps:
 
@@ -63,3 +63,13 @@ At this point, run the flow:
 ```
 
 Logs are created for each step, look for any `*.log` file in the subfolders.
+
+# Verification environment
+Verification is based [`cocotb`](https://www.cocotb.org/), with the `ver/` folder containining
+scripts and Makefiles to run module-based and regression runs.
+
+Some of the components are reused from the [`rdnv`](https://github.com/scorbetta/rdnv) repository;
+for those components, verification is assumed. For all other modules, verification is run using the
+configuration implied by the currently available trained network result. This means network
+configuration and fixed-point configuration is taken from the
+`model/neural_network/trained_network/config.ini` file.

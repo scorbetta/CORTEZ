@@ -29,11 +29,12 @@ module NETWORK
     input wire signed [HL_NEURONS*NUM_INPUTS*FP_WIDTH-1:0]  HL_WEIGHTS_IN,
     input wire signed [HL_NEURONS*FP_WIDTH-1:0]             HL_BIAS_IN,
     // Output layer weights
-    input wire signed [OL_NEURONS*6*FP_WIDTH-1:0]           OL_WEIGHTS_IN,
+    input wire signed [OL_NEURONS*HL_NEURONS*FP_WIDTH-1:0]  OL_WEIGHTS_IN,
     input wire signed [OL_NEURONS*FP_WIDTH-1:0]             OL_BIAS_IN,
     // Output path
     output wire signed [OL_NEURONS*FP_WIDTH-1:0]            VALUES_OUT,
-    output wire                                             VALID_OUT
+    output wire                                             VALID_OUT,
+    output wire                                             OVERFLOW
 );
 
     // Connections
@@ -43,6 +44,8 @@ module NETWORK
     wire                                    ol_valid_in;
     wire signed [OL_NEURONS*FP_WIDTH-1:0]   ol_values_out;
     wire [OL_NEURONS-1:0]                   ol_valids_out;
+    wire                                    hl_overflow;
+    wire                                    ol_overflow;
 
     // Hidden layer
     LAYER #(
@@ -59,7 +62,8 @@ module NETWORK
         .BIAS_IN    (HL_BIAS_IN),
         .VALID_IN   (VALID_IN),
         .VALUES_OUT (hl_values_out),
-        .VALIDS_OUT (hl_valids_out)
+        .VALIDS_OUT (hl_valids_out),
+        .OVERFLOW   (hl_overflow)
     );
 
     // By design, neurons might fire at different times. This logic barriers all incoming valids,
@@ -92,7 +96,8 @@ module NETWORK
         .BIAS_IN    (OL_BIAS_IN),
         .VALID_IN   (ol_valid_in),
         .VALUES_OUT (ol_values_out),
-        .VALIDS_OUT (ol_valids_out)
+        .VALIDS_OUT (ol_valids_out),
+        .OVERFLOW   (ol_overflow)
     );
 
     SHIM_ALIGN #(
@@ -107,6 +112,9 @@ module NETWORK
         .VALUES_OUT (VALUES_OUT),
         .VALID_OUT  (VALID_OUT)
     );
+
+    // Pinout
+    assign OVERFLOW = hl_overflow | ol_overflow;
 endmodule
 
 `default_nettype wire

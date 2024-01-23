@@ -15,7 +15,8 @@ module FIXED_POINT_ACT_FUN
     input wire signed [WIDTH-1:0]   VALUE_IN,
     input wire                      VALID_IN,
     output wire signed [WIDTH-1:0]  VALUE_OUT,
-    output wire                     VALID_OUT
+    output wire                     VALID_OUT,
+    output wire                     OVERFLOW  
 );
 
     wire                    sign;
@@ -41,6 +42,11 @@ module FIXED_POINT_ACT_FUN
     wire                    line_q1_valid;
     wire signed [WIDTH-1:0] line_out;
     wire                    line_valid;
+    wire                    abs_overflow;
+    wire                    mul_overflow;
+    wire                    add_overflow;
+    wire                    change_sign_overflow;
+    reg                     overflow;
 
     // Load parameters
     `include "PIECEWISE_APPROXIMATION_PARAMETERS.vh"
@@ -58,7 +64,8 @@ module FIXED_POINT_ACT_FUN
         .VALUE_IN   (VALUE_IN),
         .VALID_IN   (VALID_IN),
         .VALUE_OUT  (value_in_abs),
-        .VALID_OUT  (abs_valid)
+        .VALID_OUT  (abs_valid),
+        .OVERFLOW   (abs_overflow)
     );
 
     // Fall within [0,arctanh(sqrt(1/3)))
@@ -207,7 +214,8 @@ module FIXED_POINT_ACT_FUN
         .VALUE_B_IN (m),
         .VALID_IN   (abs_valid),
         .VALUE_OUT  (m_times_x),
-        .VALID_OUT  (m_times_x_valid)
+        .VALID_OUT  (m_times_x_valid),
+        .OVERFLOW   (mul_overflow)
     );
 
     FIXED_POINT_ADD #(
@@ -221,7 +229,8 @@ module FIXED_POINT_ACT_FUN
         .VALUE_B_IN (qp),
         .VALID_IN   (m_times_x_valid),
         .VALUE_OUT  (line_q1_out),
-        .VALID_OUT  (line_q1_valid)
+        .VALID_OUT  (line_q1_valid),
+        .OVERFLOW   (add_overflow)
     );
 
     // Adjust sign if needed
@@ -236,12 +245,35 @@ module FIXED_POINT_ACT_FUN
         .VALUE_IN       (line_q1_out),
         .VALID_IN       (line_q1_valid),
         .VALUE_OUT      (line_out),
-        .VALID_OUT      (line_valid)
+        .VALID_OUT      (line_valid),
+        .OVERFLOW       (change_sign_overflow)
     );
+
+    // Overflow is sticky
+    always @(posedge CLK) begin
+        if(!RSTN | VALID_IN) begin
+            overflow <= 1'b0;
+        end
+        else begin
+            if(abs_valid & abs_overflow) begin
+                overflow <= 1'b1;
+            end
+            if(m_times_x_valid & mul_overflow) begin
+                overflow <= 1'b1;
+            end
+            if(line_q1_valid & add_overflow) begin
+                overflow <= 1'b1;
+            end
+            if(line_valid & change_sign_overflow) begin
+                overflow <= 1'b1;
+            end
+        end
+    end
 
     // Pinout
     assign VALUE_OUT    = line_out;
     assign VALID_OUT    = line_valid;
+    assign OVERFLOW     = overflow;
 endmodule
 
 `default_nettype wire

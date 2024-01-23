@@ -1,53 +1,49 @@
-# COCOTB configuration
-TOPLEVEL_LANG = verilog
-SIM ?= verilator
+.PHONY: show_config clean
 
-# Design configuration
-WIDTH ?= 8
-FRAC_BITS ?= 3
-NUM_INPUTS ?= 2
-NUM_OUTPUTS ?= 2
+# Reference network configuration file specs
+INI_FILE = ../model/neural_network/trained_network/config.ini
 
-# Prefix for change of hierarchy. Do *not* modify this line!
-VERILOG_SOURCES = $(shell grep -E "\.[s]*v$$" ../rtl/rtl_sources.list | sed 's/^/\.\.\/rtl\//g' )
+# Retrieve design configuration from trained network
+FP_WIDTH := $(shell grep -w "fp_width" $(INI_FILE) | awk '{print $$3}')
+FP_FRAC := $(shell grep -w "fp_frac" $(INI_FILE) | awk '{print $$3}')
+GRID_SIDE := $(shell grep -w "boulder" $(INI_FILE) | awk '{print $$3}' | sed -nE 's/^.*_g([0-9]+).json/\1/p')
+NUM_INPUTS := $(shell echo "$(GRID_SIDE) * $(GRID_SIDE)" | bc)
+HL_NEURONS := $(shell grep -w "hl_neurons" $(INI_FILE) | awk '{print $$3}')
+OL_NEURONS := $(shell grep -w "ol_neurons" $(INI_FILE) | awk '{print $$3}')
 
-# Top-level module determines also test name
-TOPLEVEL ?= FIXED_POINT_ABS
-MODULE = test.test_$(shell echo $(TOPLEVEL) | tr 'A-Z' 'a-z')
-
-# Miscellanea
-RANDOM_SEED ?= 1697646161
-SEED ?= $(RANDOM_SEED)
+# Optionals to be passed to COCOTB's Makefile
 WAVES ?= 0
 
-# Verilator general options
-EXTRA_ARGS += -I../rtl -I../grogu -I../grogu/grogu.gen/CORTEZ_REGPOOL/rtl +1364-2005ext+v --autoflush --timing
+# Print configuration
+show_config:
+	@echo "cnfg: Network configuration"
+	@echo "cnfg:    INI file: $(INI_FILE)"
+	@echo "cnfg:    Fixed-point ($(FP_WIDTH),$(FP_FRAC))"
+	@echo "cnfg:    Grid size: $(GRID_SIDE)"
+	@echo "cnfg:    Number of inputs: $(NUM_INPUTS)"
+	@echo "cnfg:    Number of outputs: $(NUM_OUTPUTS)"
 
-# Design parameters
-ifneq ($(TOPLEVEL),NETWORK)
-ifneq ($(TOPLEVEL),NETWORK_TOP)
-EXTRA_ARGS += -GWIDTH=$(WIDTH) -GFRAC_BITS=$(FRAC_BITS)
-endif
-endif
+# Available tests, each one has its own options
+test_fixed_point_act_fun:
+	$(MAKE) -C tests TOPLEVEL=FIXED_POINT_ACT_FUN WAVES=$(WAVES) EXTRA_ARGS+="-GWIDTH=$(FP_WIDTH) -GFRAC_BITS=$(FP_FRAC)"
 
-ifeq ($(TOPLEVEL),NEURON)
-EXTRA_ARGS += -GNUM_INPUTS=$(NUM_INPUTS)
-endif
+test_hidden_neuron:
+	$(MAKE) -C tests TOPLEVEL=NEURON WAVES=$(WAVES) EXTRA_ARGS+="-GWIDTH=$(FP_WIDTH) -GFRAC_BITS=$(FP_FRAC) -GNUM_INPUTS=$(NUM_INPUTS)"
 
-ifeq ($(TOPLEVEL),LAYER)
-EXTRA_ARGS += -GNUM_INPUTS=$(NUM_INPUTS) -GNUM_OUTPUTS=$(NUM_OUTPUTS)
-endif
+test_output_neuron:
+	$(MAKE) -C tests TOPLEVEL=NEURON WAVES=$(WAVES) EXTRA_ARGS+="-GWIDTH=$(FP_WIDTH) -GFRAC_BITS=$(FP_FRAC) -GNUM_INPUTS=$(HL_NEURONS)"
 
-# Disable warnings
-EXTRA_ARGS += -Wno-WIDTHEXPAND -Wno-WIDTHTRUNC
+test_hidden_layer:
+	$(MAKE) -C tests TOPLEVEL=LAYER WAVES=$(WAVES) EXTRA_ARGS+="-GWIDTH=$(FP_WIDTH) -GFRAC_BITS=$(FP_FRAC) -GNUM_INPUTS=$(NUM_INPUTS) -GNUM_OUTPUTS=$(HL_NEURONS)"
 
-ifeq ($(WAVES),1)
-EXTRA_ARGS += --trace-fst --trace-structs
-endif
+test_output_layer:
+	$(MAKE) -C tests TOPLEVEL=LAYER WAVES=$(WAVES) EXTRA_ARGS+="-GWIDTH=$(FP_WIDTH) -GFRAC_BITS=$(FP_FRAC) -GNUM_INPUTS=$(HL_NEURONS) -GNUM_OUTPUTS=$(OL_NEURONS)"
 
-# Include COCOTB Makefiles
-include $(shell cocotb-config --makefiles)/Makefile.sim
+test_network:
+	$(MAKE) -C tests TOPLEVEL=NETWORK WAVES=$(WAVES) EXTRA_ARGS+="-GFP_WIDTH=$(FP_WIDTH) -GFP_FRAC=$(FP_FRAC) -GNUM_INPUTS=$(NUM_INPUTS) -GHL_NEURONS=$(HL_NEURONS) -GOL_NEURONS=$(OL_NEURONS)"
 
-# User-defined clean all
-purge: clean
-	find . -name __pycache__ -exec rm -fR {} +
+test_network_top:
+	$(MAKE) -C tests TOPLEVEL=NETWORK_TOP WAVES=$(WAVES) EXTRA_ARGS+="-GWIDTH=$(FP_WIDTH) -GFRAC_BITS=$(FP_FRAC)"
+
+clean:
+	$(MAKE) -C tests purge

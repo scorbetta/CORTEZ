@@ -23,11 +23,9 @@ module FIXED_POINT_ACC
     input wire signed [WIDTH-1:0]               EXT_VALUE_IN,
     // Accumulator
     output wire signed [WIDTH-1:0]              VALUE_OUT,
-    output wire                                 VALID_OUT
+    output wire                                 VALID_OUT,
+    output wire                                 OVERFLOW
 );
-
-    // clog2
-    `include "clog2.vh"
 
     // States encoding
     localparam WAIT_LAST    = 0;
@@ -39,15 +37,19 @@ module FIXED_POINT_ACC
     // accordingly to store the additional entry
     localparam NUM_INPUTS_INT = ( HAS_EXT_BIAS == 1'b1 ? (NUM_INPUTS+1) : NUM_INPUTS );
 
-    reg [clog2(IDLE)-1:0]           curr_state;
-    wire signed [WIDTH-1:0]         acc;
-    reg                             acc_valid;
-    reg [clog2(NUM_INPUTS_INT)-1:0] counter;
-    reg signed [WIDTH-1:0]          adder_in;
-    reg                             adder_enable;
-    wire                            adder_valid;
-    reg [clog2(NUM_INPUTS_INT)-1:0] adder_valid_counter;
-    reg                             adder_valid_counter_reset;
+    reg [$clog2(IDLE)-1:0]              curr_state;
+    reg                                 acc_valid;
+    reg [$clog2(NUM_INPUTS_INT)-1:0]    counter;
+    reg signed [WIDTH-1:0]              adder_in;
+    reg                                 adder_enable;
+    wire                                adder_valid;
+    reg [$clog2(NUM_INPUTS_INT)-1:0]    adder_valid_counter;
+    reg                                 adder_valid_counter_reset;
+    wire                                adder_overflow;
+    reg                                 overflow;
+    wire signed [WIDTH-1:0]             acc_in;
+    wire signed [WIDTH-1:0]             acc_out;
+    wire                                acc_mux;
 
     // Sequentially generate the accumulator value
     always @(posedge CLK) begin
@@ -101,6 +103,10 @@ module FIXED_POINT_ACC
         end
     end
 
+    // Accumulator register shall be reset at every new request
+    assign acc_mux  = ( (curr_state == ACCUMULATE) && (counter == 0 || counter == 1) ? 1'b0 : 1'b1 );
+    assign acc_in   = ( acc_mux ? acc_out : {WIDTH{1'b0}} );
+
     // Shared adder
     FIXED_POINT_ADD #(
         .WIDTH      (WIDTH),
@@ -109,11 +115,12 @@ module FIXED_POINT_ACC
     ADDER (
         .CLK        (CLK),
         .RSTN       (RSTN),
-        .VALUE_A_IN (acc),
+        .VALUE_A_IN (acc_in),
         .VALUE_B_IN (adder_in),
         .VALID_IN   (adder_enable),
-        .VALUE_OUT  (acc),
-        .VALID_OUT  (adder_valid)
+        .VALUE_OUT  (acc_out),
+        .VALID_OUT  (adder_valid),
+        .OVERFLOW   (adder_overflow)
     );
 
     // Count number of valid operations by the adder
@@ -126,9 +133,20 @@ module FIXED_POINT_ACC
         end
     end
 
+    // Overflow is sticky
+    always @(posedge CLK) begin
+        if(!RSTN | VALID_IN) begin
+            overflow <= 1'b0;
+        end
+        else if(adder_valid && adder_overflow) begin
+            overflow <= 1'b1;
+        end
+    end
+
     // Pinout
-    assign VALUE_OUT    = acc;
+    assign VALUE_OUT    = acc_out;
     assign VALID_OUT    = acc_valid;
+    assign OVERFLOW     = overflow;
 endmodule
 
 `default_nettype wire

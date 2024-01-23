@@ -14,14 +14,11 @@ module SHIM_ALIGN
     output wire                                 VALID_OUT
 );
 
-    // clog2
-    `include "clog2.vh"
-
     // States encoding
     localparam BUSY = 0;
     localparam IDLE = 1;
 
-    reg [clog2(IDLE)-1:0]               curr_state;
+    reg [0:0]                           curr_state;
     reg [NUM_INPUTS-1:0]                valids_in;
     reg signed [NUM_INPUTS*WIDTH-1:0]   values_in;
     reg                                 valid_out;

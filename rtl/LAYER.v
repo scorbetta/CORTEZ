@@ -21,10 +21,12 @@ module LAYER #(
     input wire                                              VALID_IN,
     // Output path
     output wire signed [NUM_OUTPUTS*WIDTH-1:0]              VALUES_OUT,
-    output wire [NUM_OUTPUTS-1:0]                           VALIDS_OUT
+    output wire [NUM_OUTPUTS-1:0]                           VALIDS_OUT,
+    output wire                                             OVERFLOW
 );
 
-    genvar gdx;
+    wire [NUM_OUTPUTS-1:0]  overflow;
+    genvar                  gdx;
 
     generate
         for(gdx = 0; gdx < NUM_OUTPUTS; gdx = gdx + 1) begin
@@ -41,10 +43,13 @@ module LAYER #(
                 .VALID_IN   (VALID_IN),
                 .BIAS_IN    (BIAS_IN[gdx*WIDTH +: WIDTH]),
                 .VALUE_OUT  (VALUES_OUT[gdx*WIDTH +: WIDTH]),
-                .VALID_OUT  (VALIDS_OUT[gdx])
+                .VALID_OUT  (VALIDS_OUT[gdx]),
+                .OVERFLOW   (overflow[gdx])
             );
         end
     endgenerate
+
+    assign OVERFLOW = |overflow;
 endmodule
 
 `default_nettype wire

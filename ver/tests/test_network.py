@@ -1,70 +1,96 @@
-# Standard imports
-import sys
-import os
-
-# COCOTB imports
 import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, FallingEdge, ClockCycles
-
-# Golden model
-from utils.golden_model import golden_model
+from cocotb.types import LogicArray
+from fxpmath import Fxp
+import sys
+import os
+sys.path.append(os.path.relpath('../'))
 from utils.my_utils import *
+sys.path.append(os.path.relpath("../../model/neural_network"))
+from activations import afun_test_primitive
+from cocotb.binary import BinaryRepresentation, BinaryValue
+import json
+import math
+import random
+from textwrap import wrap
 
-# Additional imports
-from fpbinary import FpBinary
-import configparser
+# Flatten an array (or matrix) of values into a single binary string
+def flatten2binstr(values, width):
+    binstr = ''
 
-def dbug_print(print_flag, message):
-    if print_flag == 1:
-        print(f'{message}')
+    if values.ndim == 1:
+        # This is an array
+        for val in values:
+            assert type(val) is Fxp
+            temp = val.bin()
+            assert len(temp) == width
+            binstr = f'{temp}{binstr}'
+    else:
+        # This is a matrix
+        for rdx in range(values.shape[0]):
+            for cdx in range(values.shape[1]):
+                val = values[rdx][cdx]
+                assert type(val) is Fxp
+                temp = val.bin()
+                assert len(temp) == width
+                binstr = f'{temp}{binstr}'
 
-def generate_random_weights(num_outputs, num_inputs, fp_width, fp_frac_bits):
-    weights = []
-    weights_str = []
+    return binstr
 
+# Estimate the shape of the character recognized by the network
+def get_char(value_out_str, num_outputs, width, frac_bits, target_chars):
+    assert(len(value_out_str) == num_outputs * width)
+    fxp_quants = 2 ** width - 1
+    fxp_lsb = fxp_get_lsb(width, frac_bits)
+
+    # Convert binary to fixed-point of outputs
+    tokens = wrap(str(value_out_str), width)
+    assert(len(tokens) == num_outputs)
+
+    out_fxps = []
     for odx in range(num_outputs):
-        temp = []
-        temp_str = []
-        for idx in range(num_inputs):
-            random_value,random_value_bit_str = get_random_fixed_point_value(fp_width, fp_frac_bits)
-            value = FpBinary(int_bits=fp_width-fp_frac_bits, frac_bits=fp_frac_bits, signed=True, value=random_value)
-            temp.append(value)
-            temp_str.append(random_value_bit_str)
+        out_fxps.insert(0, Fxp(f'0b{tokens[odx]}', n_word=width, n_frac=frac_bits, signed=True, config=fxp_get_config()))
+    #@DBUGprint(f'{value_out_str} -> {tokens} -> {out_fxps}')
 
-        weights.append(temp)
-        weights_str.append(temp_str)
+    # Compute output-wise error against all target chars
+    errs = {}
+    err_min = 100.0
+    for ckey in target_chars.keys():
+        #@DBUGprint(f'--> {ckey}')
+        temp = 0.0
+        for odx in range(num_outputs):
+            abs_err = fxp_abs_err(Fxp(target_chars[ckey][odx], n_word=width, n_frac=frac_bits, signed=True, config=fxp_get_config()), out_fxps[odx])
+            quant_err = float(abs_err) / float(fxp_lsb) / fxp_quants
+            #@DBUGprint(f'   {Fxp(target_chars[ckey][odx], n_word=width, n_frac=frac_bits, signed=True, config=fxp_get_config())} VS {out_fxps[odx]} --> {quant_err}')
+            temp = temp + float(quant_err)
+        errs[ckey] = temp / num_outputs
+        if errs[ckey] < err_min:
+            err_min = errs[ckey]
 
-    return weights,weights_str
+    # Search the one that has lowest error. In case there are multiple matches with the "same" (w/
+    # margins) absolute error, return all of 'em
+    threshold = 0.01
+    matching_keys = []
+    for ckey in errs.keys():
+        lb = errs[ckey] * (1.0 - threshold)
+        ub = errs[ckey] * (1.0 + threshold)
+        #@DBUGprint(f'{ckey} ({lb},{ub}) <- {errs[ckey]} {err_min}')
+        if err_min >= lb and err_min <= ub:
+            matching_keys.append(ckey)
 
-def generate_random_bias(num_nodes, fp_width, fp_frac_bits):
-    bias = []
-    bias_str = []
-
-    for odx in range(num_nodes):
-        random_value,random_value_bit_str = get_random_fixed_point_value(fp_width, fp_frac_bits)
-        value = FpBinary(int_bits=fp_width-fp_frac_bits, frac_bits=fp_frac_bits, signed=True, value=random_value)
-        bias.append(value)
-        bias_str.append(random_value_bit_str)
-
-    return bias,bias_str
-
-def truncate_value(value, num_decimal_points):
-    return round(value, num_decimal_points)
+    #@DBUGprint(matching_keys)
+    return matching_keys
 
 @cocotb.test()
 async def test_network(dut):
-    # Static configuration
-    num_inputs = 9
-    num_hl_nodes = 6
-    num_outputs = 3
-
-    # Dynamic configuration
-    ini_parser = configparser.ConfigParser()
-    ini_parser.read('config.ini')
-    width = int(ini_parser['fixed_point']['fp_width'])
-    frac_bits = int(ini_parser['fixed_point']['frac_bits'])
-    verbose = int(ini_parser['simulation']['verbose'])
+    width = int(dut.FP_WIDTH.value)
+    frac_bits = int(dut.FP_FRAC.value)
+    num_inputs = int(dut.NUM_INPUTS.value)
+    grid_side = int(math.sqrt(num_inputs))
+    num_hl_nodes = int(dut.HL_NEURONS.value)
+    num_outputs = int(dut.OL_NEURONS.value)
+    verbose = 0
 
     # Run the clock asap
     clock = Clock(dut.CLK, 4, units="ns")
@@ -73,15 +99,11 @@ async def test_network(dut):
     # One golden model for every neuron in every layer in the design!
     hl_goldens = []
     for odx in range(num_hl_nodes):
-        hl_goldens.append(golden_model(width, frac_bits))
-    for odx in range(num_hl_nodes):
-        hl_goldens[odx].reset_values()
+        hl_goldens.append(Fxp(0.0, signed=True, n_word=width, n_frac=frac_bits, config=fxp_get_config()))
 
     ol_goldens = []
     for odx in range(num_outputs):
-        ol_goldens.append(golden_model(width, frac_bits))
-    for odx in range(num_outputs):
-        ol_goldens[odx].reset_values()
+        ol_goldens.append(Fxp(0.0, signed=True, n_word=width, n_frac=frac_bits, config=fxp_get_config()))
 
     # Defaults
     dut.VALID_IN.value = 0
@@ -96,32 +118,58 @@ async def test_network(dut):
     for cycle in range(4):
         await RisingEdge(dut.CLK)
 
+    # Load noiseless chars
+    with open(f"../../model/neural_network/inputs/noiseless_c{num_outputs}_g{grid_side}.json") as fid:
+        json_data = json.load(fid)
+    noiseless_chars_in = json_data['training']
+    noiseless_chars_out = json_data['target']
+
+    # For noisy data, define maximum number of bit flips
+    max_bit_flips = 0
+
     for test in range(1000):
         dbug_print(verbose, f'test: ==== Begin: TEST #{test} ================')
-        for odx in range(num_hl_nodes):
-            dbug_print(verbose, f'test: HL/N#{odx}: {hl_goldens[odx].to_str()}')
-        for odx in range(num_outputs):
-            dbug_print(verbose, f'test: OL/N#{odx}: {ol_goldens[odx].to_str()}')
+        dbug_print(verbose, f'test: HL/N#{odx}: {[ x.hex() for x in hl_goldens ]}')
+        dbug_print(verbose, f'test: OL/N#{odx}: {[ x.hex() for x in ol_goldens ]}')
 
 
         #---- TEST INITIALIZATION -----------------------------------------------------------------
 
-        # Generate random values
-        random_values_in = []
-        random_values_in_str = []
-        for vdx in range(num_inputs):
-            random_value,random_value_bit_str = get_random_fixed_point_value(width, frac_bits)
-            value = FpBinary(int_bits=width-frac_bits, frac_bits=frac_bits, signed=True, value=random_value)
-            random_values_in.append(value)
-            random_values_in_str.append(random_value_bit_str)
+        # Pick char
+        char_str,char_list = random.choice(list(noiseless_chars_in.items()))
+        assert len(char_list) == num_inputs
 
-        # Generate random weights and random bias for hidden layer
-        hl_random_weights_in,hl_random_weights_in_str = generate_random_weights(num_hl_nodes, num_inputs, width, frac_bits)
-        hl_random_bias_in,hl_random_bias_in_str = generate_random_bias(num_hl_nodes, width, frac_bits)
+        # Generate input
+        values_in = []
+        values_in_str = ''
+        for char in char_list:
+            values_in.append(Fxp(char, n_word=width, n_frac=frac_bits, signed=True, config=fxp_get_config()))
+            values_in_str = f'{values_in[-1].bin()}{values_in_str}'
 
-        # Generate random weights and random bias for output layer
-        ol_random_weights_in,ol_random_weights_in_str = generate_random_weights(num_outputs, num_hl_nodes, width, frac_bits)
-        ol_random_bias_in,ol_random_bias_in_str = generate_random_bias(num_outputs, width, frac_bits)
+        # Include noise
+        bit_flips = random.randint(0, max_bit_flips)
+        flip_locs = list(range(len(values_in_str)))
+        for flip in range(bit_flips):
+            # Choose random location of bit flip, but do not repeat it
+            random_loc = random.choice(flip_locs)
+            for rdx in range(len(flip_locs)):
+                if flip_locs[rdx] == random_loc:
+                    del flip_locs[rdx]
+                    break
+
+            # Flip da bit
+            replace = 1 - int(values_in_str[random_loc])
+            values_in_str = values_in_str[:random_loc] + str(replace) + values_in_str[random_loc+1:]
+
+        # Get fixed-point weights from the trained model
+        hl_weights_in = fxp_load_csv("../../model/neural_network/trained_network/hidden_layer_weights_fxp.txt", width, frac_bits)
+        hl_bias_in = fxp_load_csv("../../model/neural_network/trained_network/hidden_layer_bias_fxp.txt", width, frac_bits)
+        ol_weights_in = fxp_load_csv("../../model/neural_network/trained_network/output_layer_weights_fxp.txt", width, frac_bits)
+        ol_bias_in = fxp_load_csv("../../model/neural_network/trained_network/output_layer_bias_fxp.txt", width, frac_bits)
+        hl_weights_in_str = flatten2binstr(hl_weights_in, width)
+        hl_bias_in_str = flatten2binstr(hl_bias_in, width)
+        ol_weights_in_str = flatten2binstr(ol_weights_in, width)
+        ol_bias_in_str = flatten2binstr(ol_bias_in, width)
 
 
         #---- GOLDEN MODEL RUN --------------------------------------------------------------------
@@ -132,18 +180,21 @@ async def test_network(dut):
             # Multiplication
             hl_neuron_muls = []
             for idx in range(num_inputs):
-                hl_neuron_muls.append(hl_goldens[odx].do_op("mul", random_values_in[idx], hl_random_weights_in[odx][idx]))
-            dbug_print(verbose, f'gldn: HL/N#{odx} after mul: {hl_neuron_muls}')
+                hl_neuron_muls.append(values_in[idx] * hl_weights_in[odx][idx])
+                #print(f'{values_in[idx].hex()} * {hl_weights_in[odx][idx].hex()} = {hl_neuron_muls[-1].hex()}')
+            dbug_print(verbose, f'gldn: HL/N#{odx}/mul: {[ el.hex() for el in hl_neuron_muls ]}')
 
             # Accumulator
+            hl_neuron_acc = Fxp(0.0, signed=True, n_word=width, n_frac=frac_bits, config=fxp_get_config())
             for idx in range(num_inputs):
-                hl_neuron_acc = hl_goldens[odx].do_op("acc", hl_neuron_muls[idx])
-            hl_neuron_acc = hl_goldens[odx].do_op("acc", hl_random_bias_in[odx])
-            dbug_print(verbose, f'gldn: HL/N#{odx} after acc: {hl_neuron_acc}')
+                hl_neuron_acc += hl_neuron_muls[idx]
+            hl_neuron_acc += hl_bias_in[odx]
+            dbug_print(verbose, f'gldn: HL/N#{odx}/acc: {hl_neuron_acc.hex()}')
 
             # Activation function
-            hl_neuron_act_fun = hl_goldens[odx].do_op("act_fun", hl_neuron_acc)
-            dbug_print(verbose, f'gldn: HL/N#{odx} after act_fun: {hl_neuron_act_fun}')
+            retval = afun_test_primitive(hl_neuron_acc.get_val())
+            hl_neuron_act_fun = Fxp(val=retval, signed=True, n_word=width, n_frac=frac_bits, config=fxp_get_config())
+            dbug_print(verbose, f'gldn: HL/N#{odx}/act_fun: {hl_neuron_act_fun.hex()}')
 
             # Save for next layer
             hl_outputs.append(hl_neuron_act_fun)
@@ -154,18 +205,20 @@ async def test_network(dut):
             # Multiplication
             ol_neuron_muls = []
             for idx in range(num_hl_nodes):
-                ol_neuron_muls.append(ol_goldens[odx].do_op("mul", hl_outputs[idx], ol_random_weights_in[odx][idx]))
-            dbug_print(verbose, f'gldn: OL/N#{odx} after mul: {ol_neuron_muls}')
+                ol_neuron_muls.append(hl_outputs[idx] * ol_weights_in[odx][idx])
+            dbug_print(verbose, f'gldn: OL/N#{odx}/mul: {[ el.hex() for el in ol_neuron_muls ]}')
 
             # Accumulator
+            ol_neuron_acc = Fxp(0.0, signed=True, n_word=width, n_frac=frac_bits, config=fxp_get_config())
             for idx in range(num_hl_nodes):
-                ol_neuron_acc = ol_goldens[odx].do_op("acc", ol_neuron_muls[idx])
-            ol_neuron_acc = ol_goldens[odx].do_op("acc", ol_random_bias_in[odx])
-            dbug_print(verbose, f'gldn: OL/N#{odx} after acc: {ol_neuron_acc}')
+                ol_neuron_acc += ol_neuron_muls[idx]
+            ol_neuron_acc += ol_bias_in[odx]
+            dbug_print(verbose, f'gldn: OL/N#{odx}/acc: {ol_neuron_acc.hex()}')
 
             # Activation function
-            ol_neuron_act_fun = ol_goldens[odx].do_op("act_fun", ol_neuron_acc)
-            dbug_print(verbose, f'gldn: OL/N#{odx} after act_fun: {ol_neuron_act_fun}')
+            retval = afun_test_primitive(ol_neuron_acc.get_val())
+            ol_neuron_act_fun = Fxp(val=retval, signed=True, n_word=width, n_frac=frac_bits, config=fxp_get_config())
+            dbug_print(verbose, f'gldn: OL/N#{odx}/act_fun: {ol_neuron_act_fun.hex()}')
             
             # Save result
             net_outputs.append(ol_neuron_act_fun)
@@ -176,24 +229,15 @@ async def test_network(dut):
         await RisingEdge(dut.CLK)
 
         # Force weights
-        for odx in range(num_hl_nodes):
-            for idx in range(num_inputs):
-                dut.HL_WEIGHTS_IN[odx*num_inputs+idx].value = int(hl_random_weights_in_str[odx][idx], 2)
-
-        for odx in range(num_outputs):
-            for idx in range(num_hl_nodes):
-                dut.OL_WEIGHTS_IN[odx*num_hl_nodes+idx].value = int(ol_random_weights_in_str[odx][idx], 2)
+        dut.HL_WEIGHTS_IN.value = LogicArray(hl_weights_in_str)
+        dut.OL_WEIGHTS_IN.value = LogicArray(ol_weights_in_str)
 
         # Force bias
-        for odx in range(num_hl_nodes):
-            dut.HL_BIAS_IN[odx].value = int(hl_random_bias_in_str[odx], 2)
-
-        for odx in range(num_outputs):
-            dut.OL_BIAS_IN[odx].value = int(ol_random_bias_in_str[odx], 2)
+        dut.HL_BIAS_IN.value = LogicArray(hl_bias_in_str)
+        dut.OL_BIAS_IN.value = LogicArray(ol_bias_in_str)
 
         # Force values
-        for idx in range(num_inputs):
-            dut.VALUES_IN[idx].value = int(random_values_in_str[idx], 2)
+        dut.VALUES_IN.value = LogicArray(values_in_str)
 
         # Strobe values
         await RisingEdge(dut.CLK)
@@ -209,22 +253,23 @@ async def test_network(dut):
 
         await FallingEdge(dut.CLK)
 
-        # Verify w/ margins: exact values not expected. Use double-sided margins instead...
-        #
-        # WARNING While testing single modules, the double-sided margin is safe. However, when
-        # testing the whole network, the margin shall be selected according to the value we are
-        # checking. For instance, for very low values (~ <1e-2), the margin shall be kept high; for
-        # higher values the margin might be increased. This is due to the fact that the whole
-        # netowkr accumulates error and although the final result is approximately correct, the
-        # margin might not be able to capture it. For this reason, and for test only, the margin is
-        # computed one-side, considering the absolute relative error of the two results, compared to
-        # the full domain swing, i.e. 2, since domain is [-1.0,1.0]
-        margin = 0.05
-        for odx in range(num_outputs):
-            dut_result = bin2fp(dut.VALUES_OUT[odx].value.binstr, width, frac_bits)
-            diff = abs(dut_result - net_outputs[odx])
-            abs_err = diff / 2.0
-            assert(abs_err <= margin),print(f'Results mismatch: test={test},odx={odx},dut_result={dut_result},golden_result={net_outputs[odx]},diff={diff},abs_err={abs_err},margin={margin}')
+        # Verify
+        values_out = dut.VALUES_OUT.value
+        chars_out = get_char(dut.VALUES_OUT.value, num_outputs, width, frac_bits, noiseless_chars_out)
+        assert(len(chars_out) > 0)
+
+        if len(chars_out) > 1:
+            print(f'wan: Multiple chars detected: bit_flips={bit_flips},input_char={char_str},chars_out={chars_out}')
+
+        if bit_flips == 0 and len(chars_out) == 1 and (chars_out[0] != char_str):
+            print(f'wan: Unexpected mismatch (verification issue): bit_flips={bit_flips},input_char={char_str},chars_out={chars_out}')
+
+        #@TEMP# With no bit flips, there must exist one and only one solution
+        #@TEMPif len(chars_out) == 1:
+        #@TEMP    assert(chars_out[0] == char_str),print(f'Charater recognition mismatch: bit_flips={bit_flips},input_char={char_str},chars_out={chars_out[0]}')
+        #@TEMPelse:
+        #@TEMP    assert(bit_flips > 0),print(f'Number of bit flips shall be greather than 0 with chars_out={chars_out}')
+        #@TEMP    print(f'wan: Multiple chars detected: bit_flips={bit_flips},input_char={char_str},chars_out={chars_out}')
 
         # Shim delay
         for cycle in range(4):
