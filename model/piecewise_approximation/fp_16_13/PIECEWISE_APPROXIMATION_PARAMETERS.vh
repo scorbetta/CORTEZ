@@ -10,19 +10,19 @@
 //      Z4 = (arctanh(sqrt(2/3)), 0.0) the point where fourth derivative is 0, meaning the point
 //                                     in which second derivative changes convexity direction
 //      FP = (2.0, 1.0) the approximation poinf of the plateau
-localparam F0_X             = 16'h0; // Equals 0.0, 0.0 before approximation
+localparam F0_X             = 16'h0000; // Equals 0.0, 0.0 before approximation
 localparam Z3_X             = 16'h1512; // Equals 0.658447265625, 0.6584789484624083 before approximation
-localparam Z4_X             = 16'h24ae; // Equals 1.146240234375, 1.1462158347805889 before approximation
+localparam Z4_X             = 16'h24AD; // Equals 1.1461181640625, 1.1462158347805889 before approximation
 localparam FP_X             = 16'h4000; // Equals 2.0, 2.0 before approximation
 
 // Line parameters for quadrant #1
-localparam LINE_M_F0_Z3     = 16'h1c0f; // Equals 0.8768310546875, 0.8768 before approximation
-localparam LINE_QP_F0_Z3    = 16'h0; // Equals 0.0, 0.0 before approximation
-localparam LINE_M_Z3_Z4     = 16'hfb1; // Equals 0.4903, 0.4903 before approximation
-localparam LINE_QP_Z3_Z4    = 16'h825; // Equals 0.2545, 0.2545 before approximation
-localparam LINE_M_Z4_FP     = 16'h6e0; // Equals 0.2149, 0.2149 before approximation
-localparam LINE_QP_Z4_FP    = 16'h123f; // Equals 0.5702, 0.5702 before approximation
-localparam LINE_M_FP_INF    = 16'h0; // Equals 0.0, 0.0 before approximation
+localparam LINE_M_F0_Z3     = 16'h1C0E; // Equals 0.876708984375, 0.8768 before approximation
+localparam LINE_QP_F0_Z3    = 16'h0000; // Equals 0.0, 0.0 before approximation
+localparam LINE_M_Z3_Z4     = 16'h0FB0; // Equals 0.4903, 0.4903 before approximation
+localparam LINE_QP_Z3_Z4    = 16'h0824; // Equals 0.2545, 0.2545 before approximation
+localparam LINE_M_Z4_FP     = 16'h06E0; // Equals 0.2149, 0.2149 before approximation
+localparam LINE_QP_Z4_FP    = 16'h123F; // Equals 0.5702, 0.5702 before approximation
+localparam LINE_M_FP_INF    = 16'h0000; // Equals 0.0, 0.0 before approximation
 localparam LINE_QP_FP_INF   = 16'h2000; // Equals 1.0, 1.0 before approximation
 
 // Line parameters for quadrant #3
