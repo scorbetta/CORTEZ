@@ -4,9 +4,7 @@
 module FIXED_POINT_ABS
 #(
     // Input data width
-    parameter WIDTH         = 8,
-    // Number of fractional bits
-    parameter FRAC_BITS     = 3
+    parameter WIDTH = 8
 )
 (
     input wire                      CLK,
@@ -34,8 +32,7 @@ module FIXED_POINT_ABS
     assign value_b_in = { {WIDTH-1{1'b0}}, 1'b1 };
 
     FIXED_POINT_ADD #(
-        .WIDTH      (WIDTH),
-        .FRAC_BITS  (FRAC_BITS)
+        .WIDTH  (WIDTH)
     )
     ADDER (
         .CLK        (CLK),

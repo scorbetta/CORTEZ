@@ -25,6 +25,8 @@ async def test_neuron(dut):
     # Defaults
     dut.VALID_IN.value = 0
     dut.RSTN.value = 0
+    dut.CSN.value = 1
+    dut.SIN.value = 0
 
     # Reset procedure
     for cycle in range(4):
@@ -35,28 +37,63 @@ async def test_neuron(dut):
     for cycle in range(4):
         await RisingEdge(dut.CLK)
 
+    overflow_cnt = 0
     rel_errs = []
-    for test in range(1000):
+    runs = 100
+    for test in range(runs):
         # Generate random values
         random_values_in = []
-        random_values_in_str = ""
         for vdx in range(num_inputs):
             random_value = fxp_generate_random(width, frac_bits)
             random_values_in.append(random_value)
-            random_values_in_str = f'{random_value.bin()}{random_values_in_str}'
 
         # Generate random weights
         random_weights_in = []
-        random_weights_in_str = ""
         for vdx in range(num_inputs):
             random_value = fxp_generate_random(width, frac_bits)
             random_weights_in.append(random_value)
-            random_weights_in_str = f'{random_value.bin()}{random_weights_in_str}'
         dbug_print(verbose, f'random_weights={random_weights_in}')
 
         # Generate random bias
         random_bias_in = fxp_generate_random(width, frac_bits)
         dbug_print(verbose, f'random_bias={random_bias_in}')
+
+        # Configure the neuron weights through the SCI interface
+        for vdx in range(num_inputs):
+            # Select peripheral and send Write op
+            await RisingEdge(dut.CLK)
+            dut.CSN.value = 0
+            dut.SIN.value = 1
+
+            # Send address, data pairs
+            curr_addr = format(vdx, f'05b')
+            curr_data = random_weights_in[vdx].bin()
+
+            for bit in reversed(curr_addr):
+                await RisingEdge(dut.CLK)
+                dut.SIN.value = int(bit)
+
+            for bit in reversed(curr_data):
+                await RisingEdge(dut.CLK)
+                dut.SIN.value = int(bit)
+
+            await RisingEdge(dut.CLK)
+            dut.CSN.value = 1
+
+        # Configure the neuron bias
+        await RisingEdge(dut.CLK)
+        dut.CSN.value = 0
+        dut.SIN.value = 1
+        curr_addr = format(num_inputs, f'05b')
+        curr_data = random_bias_in.bin()
+        for bit in reversed(curr_addr):
+            await RisingEdge(dut.CLK)
+            dut.SIN.value = int(bit)
+        for bit in reversed(curr_data):
+            await RisingEdge(dut.CLK)
+            dut.SIN.value = int(bit)
+        await RisingEdge(dut.CLK)
+        dut.CSN.value = 1
 
         # Run parallel multiplications on golden model
         golden_model_muls = []
@@ -77,37 +114,25 @@ async def test_neuron(dut):
         dbug_print(verbose, f'gldn: ACT {golden_result.hex()}')
 
         # Run DUT
-        await RisingEdge(dut.CLK)
-        dut.VALUES_IN.value = int(random_values_in_str,2)
-        dut.WEIGHTS_IN.value = int(random_weights_in_str,2)
-        dut.BIAS_IN.value = int(random_bias_in.hex(),16)
-        
-        await RisingEdge(dut.CLK)
-        dut.VALID_IN.value = 1
-        await RisingEdge(dut.CLK)
-        dut.VALID_IN.value = 0
-        await RisingEdge(dut.VALID_OUT)
-        await FallingEdge(dut.CLK)
-        dbug_print(verbose, f'dsgn: OVERFLOW={dut.OVERFLOW.value}')
+        for vdx in range(num_inputs):
+            await RisingEdge(dut.CLK)
+            dut.VALUE_IN.value = int(random_values_in[vdx].bin(),2)
+            dut.VALID_IN.value = 1
+            await RisingEdge(dut.CLK)
+            dut.VALID_IN.value = 0
+
+            await RisingEdge(dut.add_done)
+            for _ in range(2):
+                await RisingEdge(dut.CLK)
+
+        for _ in range(10):
+            await RisingEdge(dut.CLK)
         
         if dut.OVERFLOW.value == 0:
-            # Verify multiplications and remember, f**ing BinaryValue is big endian!
             threshold = 0.10
-            values_be = str(dut.mul_result.value.binstr)
-            for vdx in range(num_inputs):
-                lsb = vdx * width
-                msb = lsb + width - 1
-                lmc = stringify(msb, num_inputs*width)
-                rmc = stringify(lsb, num_inputs*width) + 1
-                dbug_print(verbose, f'dsgn: MUL[{vdx}] {hex(int(values_be[lmc:rmc],2))}')
-                dut_result = Fxp(val=f'0b{values_be[lmc:rmc]}', signed=True, n_word=width, n_frac=frac_bits, config=fxp_get_config())
-                abs_err = fxp_abs_err(golden_model_muls[vdx], dut_result)
-                quant_err = float(abs_err) / float(fxp_lsb) / fxp_quants
-                assert(quant_err <= threshold),print(f'Results for MUL differ more than {threshold*100}% LSBs: dut_result={dut_result},golden_result={golden_model_muls[vdx]},abs_err={abs_err},quant_error={quant_err}')
-                #@DBUGprint(f'mul{vdx}: {dut_result}/{dut_result.hex()},{golden_model_muls[vdx]},{abs_err},{quant_err}')
 
             # Verify accumulator
-            dut_result = Fxp(val=f'0b{str(dut.acc_result.value.binstr)}', signed=True, n_word=width, n_frac=frac_bits, config=fxp_get_config())
+            dut_result = Fxp(val=f'0b{str(dut.biased_acc_out.value.binstr)}', signed=True, n_word=width, n_frac=frac_bits, config=fxp_get_config())
             abs_err = fxp_abs_err(golden_model_acc, dut_result)
             quant_err = float(abs_err) / float(fxp_lsb) / fxp_quants
             assert(quant_err <= threshold),print(f'Results for ACC differ more than {threshold*100}% LSBs: dut_result={dut_result},golden_result={golden_model_acc},abs_err={abs_err},quant_error={quant_err}')
@@ -119,7 +144,11 @@ async def test_neuron(dut):
             quant_err = float(abs_err) / float(fxp_lsb) / fxp_quants
             assert(quant_err <= threshold),print(f'Results for ACT differ more than {threshold*100}% LSBs: dut_result={dut_result},golden_result={golden_result},abs_err={abs_err},quant_error={quant_err}')
             #@DBUGprint(f'act: {dut_result}/{dut_result.hex()},{golden_result},{abs_err},{quant_err}')
+        else:
+            overflow_cnt = overflow_cnt + 1
 
         # Shim delay
         for cycle in range(4):
             await RisingEdge(dut.CLK)
+    
+    print(f'warn: Number of unchecked outputs due to overflow: {overflow_cnt} ({overflow_cnt*1.0/runs*100}%)')

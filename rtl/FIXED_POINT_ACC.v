@@ -5,9 +5,6 @@ module FIXED_POINT_ACC
 #(
     // The width of the input values
     parameter WIDTH         = 8,
-    // Number of bits reserved to the fractional part. Also, the position of the binary point from
-    // LSB. Must be strictly positive
-    parameter FRAC_BITS     = 3,
     // Number of input operands
     parameter NUM_INPUTS    = 16,
     // When 1'b1, the  EXT_VALUE_IN  port is used as well
@@ -109,8 +106,7 @@ module FIXED_POINT_ACC
 
     // Shared adder
     FIXED_POINT_ADD #(
-        .WIDTH      (WIDTH),
-        .FRAC_BITS  (FRAC_BITS)
+        .WIDTH  (WIDTH)
     )
     ADDER (
         .CLK        (CLK),

@@ -2,6 +2,14 @@
 
 `include "CORTEZ_REGPOOL.vh"
 
+// Global configuration
+`define INPUT_SIZE      __INPUT_SIZE__
+`define HL_NEURONS      __HL_NEURONS__
+`define OL_NEURONS      __OL_NEURONS__
+`define AXI_BASE_ADDR   __AXI_BASE_ADDR__
+`define FP_WIDTH        __FP_WIDTH__
+`define FP_FRAC         __FP_FRAC__
+
 module NETWORK_TOP
 (
     input wire          CLK,
@@ -22,54 +30,54 @@ module NETWORK_TOP
 );
 
     // Internal connections
-    wire signed [__INPUT_SIZE__*8-1:0]   values_in;
-    wire signed [__HL_NEURONS__*__INPUT_SIZE__*8-1:0] hl_weights;
-    wire signed [__HL_NEURONS__*8-1:0]   hl_bias;
-    wire signed [__OL_NEURONS__*__HL_NEURONS__*8-1:0] ol_weights;
-    wire signed [__OL_NEURONS__*8-1:0]   ol_bias;
-    wire signed [__OL_NEURONS__*8-1:0]  values_out;
-    wire                    valid_in;
-    wire                    valid_out;
-    wire [3:0]              kit_swing;
-    wire                    reset_asserted;
-    wire                    config_done;
-    wire                    input_valid;
-    wire                    output_ready;
-    wire [7:0]              core_ctrl;
-    wire [7:0]              core_debug_info;
-    wire                    reset_start;
-    wire                    reset_end;
-    wire                    config_start;
-    wire                    config_end;
-    wire                    test_start;
-    wire                    test_end;
-    wire                    test_err;
-    wire [7:0]              core_status;
-    wire [4*8-1:0]          sevensegs;
-    wire [31:0]             awaddr;
-    wire [2:0]              awprot;
-    wire                    awvalid;
-    wire                    awready;
-    wire [7:0]              wdata;
-    wire                    wstrb;
-    wire                    wvalid;
-    wire                    wready;
-    wire [1:0]              bresp;
-    wire                    bvalid;
-    wire                    bready;
-    wire [31:0]             araddr;
-    wire [2:0]              arprot;
-    wire                    arvalid;
-    wire                    arready;
-    wire [7:0]              rdata;
-    wire [1:0]              rresp;
-    wire                    rvalid;
-    wire                    rready;
-    wire                    rstn;
-    reg [3:0]               ss_anodes;
-    reg [7:0]               ss_segments;
-    reg [23:0]              ss_counter;
-    reg                     ss_overflow;
+    wire signed [`INPUT_SIZE*8-1:0]             values_in;
+    wire signed [`HL_NEURONS*`INPUT_SIZE*8-1:0] hl_weights;
+    wire signed [`HL_NEURONS*8-1:0]             hl_bias;
+    wire signed [`OL_NEURONS*`HL_NEURONS*8-1:0] ol_weights;
+    wire signed [`OL_NEURONS*8-1:0]             ol_bias;
+    wire signed [`OL_NEURONS*8-1:0]             values_out;
+    wire                                        valid_in;
+    wire                                        valid_out;
+    wire [3:0]                                  kit_swing;
+    wire                                        reset_asserted;
+    wire                                        config_done;
+    wire                                        input_valid;
+    wire                                        output_ready;
+    wire [7:0]                                  core_ctrl;
+    wire [7:0]                                  core_debug_info;
+    wire                                        reset_start;
+    wire                                        reset_end;
+    wire                                        config_start;
+    wire                                        config_end;
+    wire                                        test_start;
+    wire                                        test_end;
+    wire                                        test_err;
+    wire [7:0]                                  core_status;
+    wire [4*8-1:0]                              sevensegs;
+    wire [31:0]                                 awaddr;
+    wire [2:0]                                  awprot;
+    wire                                        awvalid;
+    wire                                        awready;
+    wire [7:0]                                  wdata;
+    wire                                        wstrb;
+    wire                                        wvalid;
+    wire                                        wready;
+    wire [1:0]                                  bresp;
+    wire                                        bvalid;
+    wire                                        bready;
+    wire [31:0]                                 araddr;
+    wire [2:0]                                  arprot;
+    wire                                        arvalid;
+    wire                                        arready;
+    wire [7:0]                                  rdata;
+    wire [1:0]                                  rresp;
+    wire                                        rvalid;
+    wire                                        rready;
+    wire                                        rstn;
+    reg [3:0]                                   ss_anodes;
+    reg [7:0]                                   ss_segments;
+    reg [23:0]                                  ss_counter;
+    reg                                         ss_overflow;
 
     // Internal modules use active-low reset as well
     assign rstn = ~RST;
@@ -78,7 +86,7 @@ module NETWORK_TOP
     WB2AXI4LITE_BRIDGE #(
         .ADDR_WIDTH     (32),
         .DATA_WIDTH     (8),
-        .AXI_BASE_ADDR  (__AXI_BASE_ADDR__)
+        .AXI_BASE_ADDR  (`AXI_BASE_ADDR)
     )
     WB2AXI_BRIDGE (
         .CLK            (CLK),
@@ -184,11 +192,11 @@ module NETWORK_TOP
 
     // The network
     NETWORK #(
-        .FP_WIDTH   (__FP_WIDTH__),
-        .FP_FRAC    (__FP_FRAC__),
-        .NUM_INPUTS (__INPUT_SIZE__),
-        .HL_NEURONS (__HL_NEURONS__),
-        .OL_NEURONS (__OL_NEURONS__)
+        .FP_WIDTH   (`FP_WIDTH),
+        .FP_FRAC    (`FP_FRAC),
+        .NUM_INPUTS (`INPUT_SIZE),
+        .HL_NEURONS (`HL_NEURONS),
+        .OL_NEURONS (`OL_NEURONS)
     )
     NETWORK (
         .CLK            (CLK),
@@ -200,7 +208,8 @@ module NETWORK_TOP
         .OL_WEIGHTS_IN  (ol_weights),
         .OL_BIAS_IN     (ol_bias),
         .VALUES_OUT     (values_out),
-        .VALID_OUT      (valid_out)
+        .VALID_OUT      (valid_out),
+        .OVERFLOW       () // Unused
     );
 
     // LEDs control engines

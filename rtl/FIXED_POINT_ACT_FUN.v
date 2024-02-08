@@ -16,7 +16,7 @@ module FIXED_POINT_ACT_FUN
     input wire                      VALID_IN,
     output wire signed [WIDTH-1:0]  VALUE_OUT,
     output wire                     VALID_OUT,
-    output wire                     OVERFLOW  
+    output wire                     OVERFLOW
 );
 
     wire                    sign;
@@ -55,8 +55,7 @@ module FIXED_POINT_ACT_FUN
     // we consider only positive values and change sign later if required. Comparison is made on
     // inclusive-on-the-left intervals
     FIXED_POINT_ABS #(
-        .WIDTH      (WIDTH),
-        .FRAC_BITS  (FRAC_BITS)
+        .WIDTH  (WIDTH)
     )
     ABS_ENGINE (
         .CLK        (CLK),
@@ -70,8 +69,7 @@ module FIXED_POINT_ACT_FUN
 
     // Fall within [0,arctanh(sqrt(1/3)))
     FIXED_POINT_COMP #(
-        .WIDTH      (WIDTH),
-        .FRAC_BITS  (FRAC_BITS)
+        .WIDTH  (WIDTH)
     )
     COMP_F0_Z3_0 (
         .VALUE_A_IN (value_in_abs),
@@ -82,8 +80,7 @@ module FIXED_POINT_ACT_FUN
     );
 
     FIXED_POINT_COMP #(
-        .WIDTH      (WIDTH),
-        .FRAC_BITS  (FRAC_BITS)
+        .WIDTH  (WIDTH)
     )
     COMP_F0_Z3_1 (
         .VALUE_A_IN (value_in_abs),
@@ -95,8 +92,7 @@ module FIXED_POINT_ACT_FUN
 
     // Fall within [arctanh(sqrt(1/3)),arctanh(sqrt(2/3)))
     FIXED_POINT_COMP #(
-        .WIDTH      (WIDTH),
-        .FRAC_BITS  (FRAC_BITS)
+        .WIDTH  (WIDTH)
     )
     COMP_Z3_Z4_0 (
         .VALUE_A_IN (value_in_abs),
@@ -107,8 +103,7 @@ module FIXED_POINT_ACT_FUN
     );
 
     FIXED_POINT_COMP #(
-        .WIDTH      (WIDTH),
-        .FRAC_BITS  (FRAC_BITS)
+        .WIDTH  (WIDTH)
     )
     COMP_Z3_Z4_1 (
         .VALUE_A_IN (value_in_abs),
@@ -120,8 +115,7 @@ module FIXED_POINT_ACT_FUN
 
     // Fall within [arctanh(sqrt(2/3)),2)
     FIXED_POINT_COMP #(
-        .WIDTH      (WIDTH),
-        .FRAC_BITS  (FRAC_BITS)
+        .WIDTH  (WIDTH)
     )
     COMP_Z4_FP_0 (
         .VALUE_A_IN (value_in_abs),
@@ -132,8 +126,7 @@ module FIXED_POINT_ACT_FUN
     );
 
     FIXED_POINT_COMP #(
-        .WIDTH      (WIDTH),
-        .FRAC_BITS  (FRAC_BITS)
+        .WIDTH  (WIDTH)
     )
     COMP_Z4_FP_1 (
         .VALUE_A_IN (value_in_abs),
@@ -145,8 +138,7 @@ module FIXED_POINT_ACT_FUN
 
     // Fall within [2,+inf)
     FIXED_POINT_COMP #(
-        .WIDTH      (WIDTH),
-        .FRAC_BITS  (FRAC_BITS)
+        .WIDTH  (WIDTH)
     )
     COMP_FP_INF_0 (
         .VALUE_A_IN (value_in_abs),
@@ -219,8 +211,7 @@ module FIXED_POINT_ACT_FUN
     );
 
     FIXED_POINT_ADD #(
-        .WIDTH      (WIDTH),
-        .FRAC_BITS  (FRAC_BITS)
+        .WIDTH  (WIDTH)
     )
     LINE_ADD (
         .CLK        (CLK),
@@ -235,8 +226,7 @@ module FIXED_POINT_ACT_FUN
 
     // Adjust sign if needed
     FIXED_POINT_CHANGE_SIGN #(
-        .WIDTH      (WIDTH),
-        .FRAC_BITS  (FRAC_BITS)
+        .WIDTH  (WIDTH)
     )
     SIGN_ADJUST (
         .CLK            (CLK),
@@ -251,20 +241,23 @@ module FIXED_POINT_ACT_FUN
 
     // Overflow is sticky
     always @(posedge CLK) begin
-        if(!RSTN | VALID_IN) begin
+        if(!RSTN || VALID_IN) begin
             overflow <= 1'b0;
         end
         else begin
-            if(abs_valid & abs_overflow) begin
+            if(abs_valid && abs_overflow) begin
                 overflow <= 1'b1;
             end
-            if(m_times_x_valid & mul_overflow) begin
+
+            if(m_times_x_valid && mul_overflow) begin
                 overflow <= 1'b1;
             end
-            if(line_q1_valid & add_overflow) begin
+
+            if(line_q1_valid && add_overflow) begin
                 overflow <= 1'b1;
             end
-            if(line_valid & change_sign_overflow) begin
+
+            if(line_valid && change_sign_overflow) begin
                 overflow <= 1'b1;
             end
         end

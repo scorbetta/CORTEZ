@@ -4,10 +4,7 @@
 module FIXED_POINT_ADD
 #(
     // The width of the input values
-    parameter WIDTH     = 8,
-    // Number of bits reserved to the fractional part. Also, the position of the binary point from
-    // LSB. Must be strictly positive
-    parameter FRAC_BITS = 3
+    parameter WIDTH = 8
 )
 (
     input wire                      CLK,

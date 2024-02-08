@@ -13,16 +13,37 @@ else
     source venv/bin/activate
 fi
 
-# Run grogu within virtual environment
-grogu_cmd="./grogu.git/src/grogu.py --rdl regpool.rdl"
-echo "exec: ${grogu_cmd}"
-eval ${grogu_cmd}
+# Tweak input files. Expected args:
+#   @1 Number of primary inputs (boulder size)
+#   @2 Number of primary outputs (solution size, matches also number of OL neurons)
+#   @3 Number of neurons in hidden layer
+sed "s/__NUM_INPUTS__/$1/g" core_regfile.rdl.template > temp.rdl
+sed -i "s/__NUM_OUTPUTS__/$2/g" temp.rdl
+peakrdl_cmd="peakrdl preprocess temp.rdl -o core_regfile.rdl"
+echo "exec: ${peakrdl_cmd}"
+eval ${peakrdl_cmd}
 
-#@VERBOSE# Show tree
-#@VERBOSEcsr_file=$( find grogu.gen -name csr.tree | tail -n 1 )
-#@VERBOSEecho ""
-#@VERBOSEecho "show: Contents of ${csr_file}"
-#@VERBOSEcat ${csr_file}
+sed "s/__NUM_INPUTS__/$1/g" neuron_regfile.rdl.template > temp.rdl
+sed -i "s/__PREFIX__/hl_/g" temp.rdl
+peakrdl_cmd="peakrdl preprocess temp.rdl -o hl_neuron_regfile.rdl"
+echo "exec: ${peakrdl_cmd}"
+eval ${peakrdl_cmd}
+
+sed "s/__NUM_INPUTS__/$3/g" neuron_regfile.rdl.template > temp.rdl
+sed -i "s/__PREFIX__/ol_/g" temp.rdl
+peakrdl_cmd="peakrdl preprocess temp.rdl -o ol_neuron_regfile.rdl"
+echo "exec: ${peakrdl_cmd}"
+eval ${peakrdl_cmd}
+
+# Run grogu within virtual environment, on all files
+fileset=( core_regfile.rdl hl_neuron_regfile.rdl ol_neuron_regfile.rdl )
+for file in ${fileset[@]}
+do
+    basename=$( basename $file .rdl )
+    grogu_cmd="./grogu.git/src/grogu.py --rdl ${file} --prefix ${basename}"
+    echo "exec: ${grogu_cmd}"
+    eval ${grogu_cmd}
+done
 
 # Leave virtual environment
 deactivate

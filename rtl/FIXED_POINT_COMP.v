@@ -4,9 +4,7 @@
 module FIXED_POINT_COMP
 #(
     // Input data width
-    parameter WIDTH         = 8,
-    // Number of fractional bits
-    parameter FRAC_BITS     = 3
+    parameter WIDTH = 8
 )
 (
     input wire signed [WIDTH-1:0]   VALUE_A_IN,

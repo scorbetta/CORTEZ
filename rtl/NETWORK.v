@@ -20,35 +20,55 @@ module NETWORK
     parameter OL_NEURONS    = 3
 )
 (
-    input wire                                              CLK,
-    input wire                                              RSTN,
+    input wire                                      CLK,
+    input wire                                      RSTN,
+    // Serial interface
+    input wire [HL_NEURONS+OL_NEURONS-1:0]          CSN,
+    input wire                                      SIN,
+    input wire [HL_NEURONS+OL_NEURONS-1:0]          SOUT,
+    input wire [HL_NEURONS+OL_NEURONS-1:0]          SACK,
     // Input path
-    input wire signed [NUM_INPUTS*FP_WIDTH-1:0]             VALUES_IN,
-    input wire                                              VALID_IN,
-    // Hidden layer weights
-    input wire signed [HL_NEURONS*NUM_INPUTS*FP_WIDTH-1:0]  HL_WEIGHTS_IN,
-    input wire signed [HL_NEURONS*FP_WIDTH-1:0]             HL_BIAS_IN,
-    // Output layer weights
-    input wire signed [OL_NEURONS*HL_NEURONS*FP_WIDTH-1:0]  OL_WEIGHTS_IN,
-    input wire signed [OL_NEURONS*FP_WIDTH-1:0]             OL_BIAS_IN,
+    input wire signed [NUM_INPUTS*FP_WIDTH-1:0]     VALUES_IN,
+    input wire                                      VALID_IN,
     // Output path
-    output wire signed [OL_NEURONS*FP_WIDTH-1:0]            VALUES_OUT,
-    output wire                                             VALID_OUT,
-    output wire                                             OVERFLOW
+    output wire signed [OL_NEURONS*FP_WIDTH-1:0]    VALUES_OUT,
+    output wire                                     VALID_OUT,
+    output wire                                     OVERFLOW
 );
 
     // Connections
     wire signed [HL_NEURONS*FP_WIDTH-1:0]   hl_values_out;
     wire [HL_NEURONS-1:0]                   hl_valids_out;
-    wire signed [HL_NEURONS*FP_WIDTH-1:0]   ol_values_in;
-    wire                                    ol_valid_in;
     wire signed [OL_NEURONS*FP_WIDTH-1:0]   ol_values_out;
     wire [OL_NEURONS-1:0]                   ol_valids_out;
     wire                                    hl_overflow;
     wire                                    ol_overflow;
+    wire [FP_WIDTH-1:0]                     hl_value_in;
+    wire                                    hl_valid_in;
+    wire [FP_WIDTH-1:0]                     ol_value_in;
+    wire                                    ol_valid_in;
+    wire                                    hl_ready;
+    wire                                    ol_ready;
+    wire signed [HL_NEURONS*FP_WIDTH-1:0]   hl_aligned_values_out;
+    wire                                    hl_aligned_valid_out;
+
+    // Hidden layer sequencer
+    SEQUENCER #(
+        .NUM_INPUTS (NUM_INPUTS),
+        .WIDTH      (FP_WIDTH)
+    )
+    HL_SEQUENCER (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .VALUES_IN  (VALUES_IN),
+        .VALID_IN   (VALID_IN),
+        .TRIGGER    (hl_ready),
+        .VALUE_OUT  (hl_value_in),
+        .VALID_OUT  (hl_valid_in)
+    );
 
     // Hidden layer
-    LAYER #(
+    HIDDEN_LAYER #(
         .NUM_INPUTS     (NUM_INPUTS),
         .NUM_OUTPUTS    (HL_NEURONS),
         .WIDTH          (FP_WIDTH),
@@ -57,10 +77,13 @@ module NETWORK
     HIDDEN_LAYER (
         .CLK        (CLK),
         .RSTN       (RSTN),
-        .VALUES_IN  (VALUES_IN),
-        .WEIGHTS_IN (HL_WEIGHTS_IN),
-        .BIAS_IN    (HL_BIAS_IN),
-        .VALID_IN   (VALID_IN),
+        .CSN        (CSN[HL_NEURONS-1:0]),
+        .SIN        (SIN),
+        .SOUT       (SOUT[HL_NEURONS-1:0]),
+        .SACK       (SACK[HL_NEURONS-1:0]),
+        .READY      (hl_ready),
+        .VALUE_IN   (hl_value_in),
+        .VALID_IN   (hl_valid_in),
         .VALUES_OUT (hl_values_out),
         .VALIDS_OUT (hl_valids_out),
         .OVERFLOW   (hl_overflow)
@@ -72,17 +95,32 @@ module NETWORK
         .NUM_INPUTS (HL_NEURONS),
         .WIDTH      (FP_WIDTH)
     )
-    HL_OL_ALIGNMENT_BARRIER (
+    HL_ALIGNMENT_BARRIER (
         .CLK        (CLK),
         .RSTN       (RSTN),
         .VALUES_IN  (hl_values_out),
         .VALIDS_IN  (hl_valids_out),
-        .VALUES_OUT (ol_values_in),
+        .VALUES_OUT (hl_aligned_values_out),
+        .VALID_OUT  (hl_aligned_valid_out)
+    );
+
+    // Output layer sequencer
+    SEQUENCER #(
+        .NUM_INPUTS (HL_NEURONS),
+        .WIDTH      (FP_WIDTH)
+    )
+    OL_SEQUENCER (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .VALUES_IN  (hl_aligned_values_out),
+        .VALID_IN   (hl_aligned_valid_out),
+        .TRIGGER    (ol_ready),
+        .VALUE_OUT  (ol_value_in),
         .VALID_OUT  (ol_valid_in)
     );
 
     // Output layer
-    LAYER #(
+    OUTPUT_LAYER #(
         .NUM_INPUTS     (HL_NEURONS),
         .NUM_OUTPUTS    (OL_NEURONS),
         .WIDTH          (FP_WIDTH),
@@ -91,9 +129,12 @@ module NETWORK
     OUTPUT_LAYER (
         .CLK        (CLK),
         .RSTN       (RSTN),
-        .VALUES_IN  (ol_values_in),
-        .WEIGHTS_IN (OL_WEIGHTS_IN),
-        .BIAS_IN    (OL_BIAS_IN),
+        .CSN        (CSN[HL_NEURONS +: OL_NEURONS]),
+        .SIN        (SIN),
+        .SOUT       (SOUT[HL_NEURONS +: OL_NEURONS]),
+        .SACK       (SACK[HL_NEURONS +: OL_NEURONS]),
+        .READY      (ol_ready),
+        .VALUE_IN   (ol_value_in),
         .VALID_IN   (ol_valid_in),
         .VALUES_OUT (ol_values_out),
         .VALIDS_OUT (ol_valids_out),
@@ -104,7 +145,7 @@ module NETWORK
         .NUM_INPUTS (OL_NEURONS),
         .WIDTH      (FP_WIDTH)
     )
-    OL_OUTPUT_ALIGNMENT_BARRIER (
+    OL_ALIGNMENT_BARRIER (
         .CLK        (CLK),
         .RSTN       (RSTN),
         .VALUES_IN  (ol_values_out),
