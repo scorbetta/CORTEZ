@@ -1,0 +1,50 @@
+// Core register file
+
+`include "common.rdl"
+`include "regs.rdl"
+
+addrmap core_regfile {
+    desc = "Core register file";
+
+    // Debug only
+    `REF_CGPREG(GP, DBUG_REG_0, "General-purpose register for debug")
+    DBUG_REG_0->resetreg = 1;
+    `REF_CGPREG(GP, DBUG_REG_1, "General-purpose register for debug")
+    DBUG_REG_1->resetreg = 1;
+    `REF_CGPREG(GP, DBUG_REG_2, "General-purpose register for debug")
+    DBUG_REG_2->resetreg = 1;
+    `REF_CGPREG(GP, DBUG_REG_3, "General-purpose register for debug")
+    DBUG_REG_3->resetreg = 1;
+
+    // Input problem, one vector for each pixel
+    <% for($idx=0; $idx<__NUM_INPUTS__; $idx+=1) { %>
+    `REF_CGPREG(GP, INPUT_GRID_<%=$idx%>, "Pixel <%=$idx%> of the input character")
+    <% } %>
+
+    // Output solution, one vector for each character
+    <% for($odx=0; $odx<__NUM_OUTPUTS__; $odx+=1) { %>
+    `REF_SGPREG(GP, OUTPUT_SOLUTION_<%=$odx%>, "Digit <%=$odx%> of the output solution")
+    <% } %>
+
+    // Control register
+    `REF_CREG(CORE_CTRL, CORE_CTRL)
+    CORE_CTRL->resetreg = 1;
+
+    // Debug register
+    `REF_CREG(CORE_DEBUG_INFO, CORE_DEBUG_INFO)
+    CORE_DEBUG_INFO->resetreg = 1;
+
+    // Status register
+    `REF_SREG(CORE_STATUS, CORE_STATUS)
+    CORE_STATUS->resetreg = 1;
+
+    // 7-segments control registers
+    `REF_CGPREG(GP, SEVENSEG_0, "7-segments display contents: .gfedcba")
+    SEVENSEG_0->resetreg = 1;
+    `REF_CGPREG(GP, SEVENSEG_1, "7-segments display contents: .gfedcba")
+    SEVENSEG_1->resetreg = 1;
+    `REF_CGPREG(GP, SEVENSEG_2, "7-segments display contents: .gfedcba")
+    SEVENSEG_2->resetreg = 1;
+    `REF_CGPREG(GP, SEVENSEG_3, "7-segments display contents: .gfedcba")
+    SEVENSEG_3->resetreg = 1;
+};

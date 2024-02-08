@@ -1,0 +1,201 @@
+// Neuron's register file
+
+// A collection of reusable RDL entities for the CSR pool generation
+
+// User-defined properties
+property resetreg {
+    component = reg;
+    type = number;
+    default = 0;
+};
+
+// Status registers are Read-only (from a Software view-point), and they are prefixed with an 'S'.
+// Control registers are Read-Write, and they are prefixed with a 'C'. Delta registers are one
+// particular case of a status register, and they are prefixed with a 'D'.
+
+// Define a named status register
+
+
+// Define a named control register
+
+
+// Define a named delta register
+
+
+// Single-field registers are common, and they often share layout with registers with flattened
+// fields (i.e., legacy registers or registers designed with no fields in mind). These are
+// general-purpose registers, whose properties shall be updated after register creation using
+// pointer-like syntax
+reg SREG_GP { 
+        regwidth = 8; 
+        default hw = rw; 
+        default sw = r; 
+        resetreg;
+    desc = "General purpose status register";
+    field { } data [8];
+};
+
+reg CREG_GP { 
+        regwidth = 8; 
+        default hw = r; 
+        default sw = rw; 
+        resetreg;
+    desc = "General purpose control register";
+    field { } data [8];
+};
+
+reg DREG_GP { 
+        regwidth = 8; 
+        default hw = rw; 
+        default sw = r; 
+        default intr = true; 
+        resetreg;
+    desc = "General purpose delta register";
+    field { } data [8];
+};
+
+// Utilities to instantiate register with consistent naming
+
+
+
+
+
+
+
+
+
+
+
+
+// Utilities to instantiate array of registers
+
+
+
+
+
+
+
+
+
+
+// Multi-field registers definition
+
+// Core control register
+reg CREG_CORE_CTRL { 
+        regwidth = 8; 
+        default hw = r; 
+        default sw = rw; 
+        resetreg;
+    desc = "Core control register";
+
+    field {
+        desc = "When 1'b1, reset the status registers, so that a new input can be loaded in";
+    } RESET [1];
+
+    field {
+        desc = "A pulse on this register loads the neural network with the input data from the INPUT_GRID_* flops";
+    } LOAD_IN [1];
+
+    field {
+        desc = "Core has been properly configured by the processor";
+    } CFG_DONE [1];
+
+    field {
+        desc = "Unused";
+    } reserved [5];
+};
+
+// Firmware-controlled debug information
+reg CREG_CORE_DEBUG_INFO { 
+        regwidth = 8; 
+        default hw = r; 
+        default sw = rw; 
+        resetreg;
+    desc = "Firmware-initiated debug information";
+
+    field {
+        desc = "Core reset procedure start";
+    } RESET_START [1];
+
+    field {
+        desc = "Core reset procedure end";
+    } RESET_END [1];
+
+    field {
+        desc = "Core configuration start";
+    } CONFIG_START [1];
+
+    field {
+        desc = "Core configuration end";
+    } CONFIG_END [1];
+
+    field {
+        desc = "Test start";
+    } TEST_START [1];
+
+    field {
+        desc = "Test end";
+    } TEST_END [1];
+
+    field {
+        desc = "When 1'b1, the Firmware has detected an error and switched to idle state";
+    } TEST_ERR [1];
+
+    field {
+        desc = "Unused";
+    } reserved [1];
+};
+
+// Core status register
+reg SREG_CORE_STATUS { 
+        regwidth = 8; 
+        default hw = rw; 
+        default sw = r; 
+        resetreg;
+    desc = "Core status register";
+
+    field {
+        desc = "This signal goes high whenever the solution is ready on the OUTPUT_SOLUTION_* flops";
+    } VALID_OUT [1];
+
+    field {
+        desc = "Unused";
+    } reserved [7];
+};
+
+
+
+addrmap ol_neuron_regfile {
+    desc = "Neuron's register file";
+
+    // Weights
+    
+    CREG_GP WEIGHT_0; 
+    WEIGHT_0->desc = "Input weight 0";
+    
+    CREG_GP WEIGHT_1; 
+    WEIGHT_1->desc = "Input weight 1";
+    
+    CREG_GP WEIGHT_2; 
+    WEIGHT_2->desc = "Input weight 2";
+    
+    CREG_GP WEIGHT_3; 
+    WEIGHT_3->desc = "Input weight 3";
+    
+    CREG_GP WEIGHT_4; 
+    WEIGHT_4->desc = "Input weight 4";
+    
+    CREG_GP WEIGHT_5; 
+    WEIGHT_5->desc = "Input weight 5";
+    
+    CREG_GP WEIGHT_6; 
+    WEIGHT_6->desc = "Input weight 6";
+    
+    CREG_GP WEIGHT_7; 
+    WEIGHT_7->desc = "Input weight 7";
+    
+
+    // Bias
+    CREG_GP BIAS; 
+    BIAS->desc = "Input bias";
+};

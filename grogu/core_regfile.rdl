@@ -1,0 +1,279 @@
+// Core register file
+
+// A collection of reusable RDL entities for the CSR pool generation
+
+// User-defined properties
+property resetreg {
+    component = reg;
+    type = number;
+    default = 0;
+};
+
+// Status registers are Read-only (from a Software view-point), and they are prefixed with an 'S'.
+// Control registers are Read-Write, and they are prefixed with a 'C'. Delta registers are one
+// particular case of a status register, and they are prefixed with a 'D'.
+
+// Define a named status register
+
+
+// Define a named control register
+
+
+// Define a named delta register
+
+
+// Single-field registers are common, and they often share layout with registers with flattened
+// fields (i.e., legacy registers or registers designed with no fields in mind). These are
+// general-purpose registers, whose properties shall be updated after register creation using
+// pointer-like syntax
+reg SREG_GP { 
+        regwidth = 8; 
+        default hw = rw; 
+        default sw = r; 
+        resetreg;
+    desc = "General purpose status register";
+    field { } data [8];
+};
+
+reg CREG_GP { 
+        regwidth = 8; 
+        default hw = r; 
+        default sw = rw; 
+        resetreg;
+    desc = "General purpose control register";
+    field { } data [8];
+};
+
+reg DREG_GP { 
+        regwidth = 8; 
+        default hw = rw; 
+        default sw = r; 
+        default intr = true; 
+        resetreg;
+    desc = "General purpose delta register";
+    field { } data [8];
+};
+
+// Utilities to instantiate register with consistent naming
+
+
+
+
+
+
+
+
+
+
+
+
+// Utilities to instantiate array of registers
+
+
+
+
+
+
+
+
+
+
+// Multi-field registers definition
+
+// Core control register
+reg CREG_CORE_CTRL { 
+        regwidth = 8; 
+        default hw = r; 
+        default sw = rw; 
+        resetreg;
+    desc = "Core control register";
+
+    field {
+        desc = "When 1'b1, reset the status registers, so that a new input can be loaded in";
+    } RESET [1];
+
+    field {
+        desc = "A pulse on this register loads the neural network with the input data from the INPUT_GRID_* flops";
+    } LOAD_IN [1];
+
+    field {
+        desc = "Core has been properly configured by the processor";
+    } CFG_DONE [1];
+
+    field {
+        desc = "Unused";
+    } reserved [5];
+};
+
+// Firmware-controlled debug information
+reg CREG_CORE_DEBUG_INFO { 
+        regwidth = 8; 
+        default hw = r; 
+        default sw = rw; 
+        resetreg;
+    desc = "Firmware-initiated debug information";
+
+    field {
+        desc = "Core reset procedure start";
+    } RESET_START [1];
+
+    field {
+        desc = "Core reset procedure end";
+    } RESET_END [1];
+
+    field {
+        desc = "Core configuration start";
+    } CONFIG_START [1];
+
+    field {
+        desc = "Core configuration end";
+    } CONFIG_END [1];
+
+    field {
+        desc = "Test start";
+    } TEST_START [1];
+
+    field {
+        desc = "Test end";
+    } TEST_END [1];
+
+    field {
+        desc = "When 1'b1, the Firmware has detected an error and switched to idle state";
+    } TEST_ERR [1];
+
+    field {
+        desc = "Unused";
+    } reserved [1];
+};
+
+// Core status register
+reg SREG_CORE_STATUS { 
+        regwidth = 8; 
+        default hw = rw; 
+        default sw = r; 
+        resetreg;
+    desc = "Core status register";
+
+    field {
+        desc = "This signal goes high whenever the solution is ready on the OUTPUT_SOLUTION_* flops";
+    } VALID_OUT [1];
+
+    field {
+        desc = "Unused";
+    } reserved [7];
+};
+
+
+
+addrmap core_regfile {
+    desc = "Core register file";
+
+    // Debug only
+    CREG_GP DBUG_REG_0; 
+    DBUG_REG_0->desc = "General-purpose register for debug";
+    DBUG_REG_0->resetreg = 1;
+    CREG_GP DBUG_REG_1; 
+    DBUG_REG_1->desc = "General-purpose register for debug";
+    DBUG_REG_1->resetreg = 1;
+    CREG_GP DBUG_REG_2; 
+    DBUG_REG_2->desc = "General-purpose register for debug";
+    DBUG_REG_2->resetreg = 1;
+    CREG_GP DBUG_REG_3; 
+    DBUG_REG_3->desc = "General-purpose register for debug";
+    DBUG_REG_3->resetreg = 1;
+
+    // Input problem, one vector for each pixel
+    
+    CREG_GP INPUT_GRID_0; 
+    INPUT_GRID_0->desc = "Pixel 0 of the input character";
+    
+    CREG_GP INPUT_GRID_1; 
+    INPUT_GRID_1->desc = "Pixel 1 of the input character";
+    
+    CREG_GP INPUT_GRID_2; 
+    INPUT_GRID_2->desc = "Pixel 2 of the input character";
+    
+    CREG_GP INPUT_GRID_3; 
+    INPUT_GRID_3->desc = "Pixel 3 of the input character";
+    
+    CREG_GP INPUT_GRID_4; 
+    INPUT_GRID_4->desc = "Pixel 4 of the input character";
+    
+    CREG_GP INPUT_GRID_5; 
+    INPUT_GRID_5->desc = "Pixel 5 of the input character";
+    
+    CREG_GP INPUT_GRID_6; 
+    INPUT_GRID_6->desc = "Pixel 6 of the input character";
+    
+    CREG_GP INPUT_GRID_7; 
+    INPUT_GRID_7->desc = "Pixel 7 of the input character";
+    
+    CREG_GP INPUT_GRID_8; 
+    INPUT_GRID_8->desc = "Pixel 8 of the input character";
+    
+    CREG_GP INPUT_GRID_9; 
+    INPUT_GRID_9->desc = "Pixel 9 of the input character";
+    
+    CREG_GP INPUT_GRID_10; 
+    INPUT_GRID_10->desc = "Pixel 10 of the input character";
+    
+    CREG_GP INPUT_GRID_11; 
+    INPUT_GRID_11->desc = "Pixel 11 of the input character";
+    
+    CREG_GP INPUT_GRID_12; 
+    INPUT_GRID_12->desc = "Pixel 12 of the input character";
+    
+    CREG_GP INPUT_GRID_13; 
+    INPUT_GRID_13->desc = "Pixel 13 of the input character";
+    
+    CREG_GP INPUT_GRID_14; 
+    INPUT_GRID_14->desc = "Pixel 14 of the input character";
+    
+    CREG_GP INPUT_GRID_15; 
+    INPUT_GRID_15->desc = "Pixel 15 of the input character";
+    
+
+    // Output solution, one vector for each character
+    
+    SREG_GP OUTPUT_SOLUTION_0; 
+    OUTPUT_SOLUTION_0->desc = "Digit 0 of the output solution";
+    
+    SREG_GP OUTPUT_SOLUTION_1; 
+    OUTPUT_SOLUTION_1->desc = "Digit 1 of the output solution";
+    
+    SREG_GP OUTPUT_SOLUTION_2; 
+    OUTPUT_SOLUTION_2->desc = "Digit 2 of the output solution";
+    
+    SREG_GP OUTPUT_SOLUTION_3; 
+    OUTPUT_SOLUTION_3->desc = "Digit 3 of the output solution";
+    
+    SREG_GP OUTPUT_SOLUTION_4; 
+    OUTPUT_SOLUTION_4->desc = "Digit 4 of the output solution";
+    
+
+    // Control register
+    CREG_CORE_CTRL CORE_CTRL;
+    CORE_CTRL->resetreg = 1;
+
+    // Debug register
+    CREG_CORE_DEBUG_INFO CORE_DEBUG_INFO;
+    CORE_DEBUG_INFO->resetreg = 1;
+
+    // Status register
+    SREG_CORE_STATUS CORE_STATUS;
+    CORE_STATUS->resetreg = 1;
+
+    // 7-segments control registers
+    CREG_GP SEVENSEG_0; 
+    SEVENSEG_0->desc = "7-segments display contents: .gfedcba";
+    SEVENSEG_0->resetreg = 1;
+    CREG_GP SEVENSEG_1; 
+    SEVENSEG_1->desc = "7-segments display contents: .gfedcba";
+    SEVENSEG_1->resetreg = 1;
+    CREG_GP SEVENSEG_2; 
+    SEVENSEG_2->desc = "7-segments display contents: .gfedcba";
+    SEVENSEG_2->resetreg = 1;
+    CREG_GP SEVENSEG_3; 
+    SEVENSEG_3->desc = "7-segments display contents: .gfedcba";
+    SEVENSEG_3->resetreg = 1;
+};

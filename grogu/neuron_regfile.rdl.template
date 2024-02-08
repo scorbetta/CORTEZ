@@ -1,0 +1,16 @@
+// Neuron's register file
+
+`include "common.rdl"
+`include "regs.rdl"
+
+addrmap __PREFIX__neuron_regfile {
+    desc = "Neuron's register file";
+
+    // Weights
+    <% for($rdx=0; $rdx<__NUM_INPUTS__; $rdx+=1) { %>
+    `REF_CGPREG(GP, WEIGHT_<%=$rdx%>, "Input weight <%=$rdx%>")
+    <% } %>
+
+    // Bias
+    `REF_CGPREG(GP, BIAS, "Input bias")
+};

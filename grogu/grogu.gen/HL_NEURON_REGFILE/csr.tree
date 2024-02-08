@@ -1,0 +1,35 @@
+ hl_neuron_regfile
+	 WEIGHT_0
+		 [7:0] data sw=rw
+	 WEIGHT_1
+		 [7:0] data sw=rw
+	 WEIGHT_2
+		 [7:0] data sw=rw
+	 WEIGHT_3
+		 [7:0] data sw=rw
+	 WEIGHT_4
+		 [7:0] data sw=rw
+	 WEIGHT_5
+		 [7:0] data sw=rw
+	 WEIGHT_6
+		 [7:0] data sw=rw
+	 WEIGHT_7
+		 [7:0] data sw=rw
+	 WEIGHT_8
+		 [7:0] data sw=rw
+	 WEIGHT_9
+		 [7:0] data sw=rw
+	 WEIGHT_10
+		 [7:0] data sw=rw
+	 WEIGHT_11
+		 [7:0] data sw=rw
+	 WEIGHT_12
+		 [7:0] data sw=rw
+	 WEIGHT_13
+		 [7:0] data sw=rw
+	 WEIGHT_14
+		 [7:0] data sw=rw
+	 WEIGHT_15
+		 [7:0] data sw=rw
+	 BIAS
+		 [7:0] data sw=rw
