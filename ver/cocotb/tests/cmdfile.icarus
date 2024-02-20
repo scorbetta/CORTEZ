@@ -1,0 +1,6 @@
++incdir+../../rtl
++incdir+../../grogu
++incdir+../../grogu/grogu.gen/CORE_REGFILE/rtl
++incdir+../../grogu/grogu.gen/HL_NEURON_REGFILE/rtl
++incdir+../../grogu/grogu.gen/OL_NEURON_REGFILE/rtl
++timescale+1ns/100ps
