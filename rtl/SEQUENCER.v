@@ -38,7 +38,6 @@ module SEQUENCER
     // Latch incoming edges
     EDGE_DETECTOR TRIGGER_EDGE_DETECTOR (
         .CLK            (CLK),
-        .RSTN           (RSTN),
         .SAMPLE_IN      (TRIGGER),
         .RISE_EDGE_OUT  (trigger_rise),
         .FALL_EDGE_OUT  (trigger_fall)

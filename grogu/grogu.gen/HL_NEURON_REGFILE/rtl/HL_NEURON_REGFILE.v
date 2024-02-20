@@ -12,11 +12,11 @@ module HL_NEURON_REGFILE (
     input wire RSTN,
     // Register interface
     input wire WREQ,
-    input wire [31:0] WADDR,
+    input wire [4:0] WADDR,
     input wire [7:0] WDATA,
     output wire WACK,
     input wire RREQ,
-    input wire [31:0] RADDR,
+    input wire [4:0] RADDR,
     output wire [7:0] RDATA,
     output wire RVALID,
     // Register bundles
@@ -41,6 +41,7 @@ module HL_NEURON_REGFILE (
 
     reg rvalid;
     reg [7:0] rdata;
+    reg wack;
 
     // Instantiate registers and declare their own signals. From a Software perspective, i.e. access
     // via the AXI4 Lite interface, Configuration registers are Write-only while Status and Delta
@@ -303,6 +304,7 @@ module HL_NEURON_REGFILE (
         
     // Write decoder
     always @(posedge CLK) begin
+        wack <= 1'b0;
         weight_0_wreq <= 1'b0;
         weight_1_wreq <= 1'b0;
         weight_2_wreq <= 1'b0;
@@ -322,6 +324,8 @@ module HL_NEURON_REGFILE (
         bias_wreq <= 1'b0;
 
         if(WREQ) begin
+            wack <= 1'b1;
+
             case(WADDR)
                `HL_NEURON_REGFILE_WEIGHT_0_OFFSET : begin weight_0_wreq <= 1'b1; end
                `HL_NEURON_REGFILE_WEIGHT_1_OFFSET : begin weight_1_wreq <= 1'b1; end
@@ -376,6 +380,7 @@ module HL_NEURON_REGFILE (
     // Pinout
     assign RVALID   = rvalid;
     assign RDATA    = rdata;
+    assign WACK     = wack;
 
     // Compose and decompose CSR bundle data. Control registers (those written by the Software and
     // read by the Hardware) are put over the  HWIF_OUT_*  ports; Status registers (those written by

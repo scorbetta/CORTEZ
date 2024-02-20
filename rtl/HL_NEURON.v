@@ -13,10 +13,10 @@ module HL_NEURON #(
     input wire                      CLK,
     input wire                      RSTN,
     // CSI interface
-    input wire                      CSN,
-    input wire                      SIN,
-    output wire                     SOUT,
-    output wire                     SACK,
+    input wire                      SCI_CSN,
+    input wire                      SCI_REQ,
+    inout wire                      SCI_RESP,
+    inout wire                      SCI_ACK,
     // Inputs are all asserted at the same time
     output wire                     READY,
     input wire signed [WIDTH-1:0]   VALUE_IN,
@@ -59,25 +59,25 @@ module HL_NEURON #(
     wire                                busy;
 
     // Local registers
-    SCI #(
+    SCI_SLAVE #(
         .ADDR_WIDTH (5), // 17 registers
         .DATA_WIDTH (8)
     )
-    SCI (
-        .CLK    (CLK),
-        .RSTN   (RSTN),
-        .CSN    (CSN),
-        .SIN    (SIN),
-        .SOUT   (SOUT),
-        .SACK   (SACK),
-        .WREQ   (regpool_wreq),
-        .WADDR  (regpool_waddr),
-        .WDATA  (regpool_wdata),
-        .WACK   (regpool_wack),
-        .RREQ   (regpool_rreq),
-        .RADDR  (regpool_raddr),
-        .RDATA  (regpool_rdata),
-        .RVALID (regpool_rvalid)
+    SCI_SLAVE (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .SCI_CSN    (SCI_CSN),
+        .SCI_REQ    (SCI_REQ),
+        .SCI_RESP   (SCI_RESP),
+        .SCI_ACK    (SCI_ACK),
+        .NI_WREQ    (regpool_wreq),
+        .NI_WADDR   (regpool_waddr),
+        .NI_WDATA   (regpool_wdata),
+        .NI_WACK    (regpool_wack),
+        .NI_RREQ    (regpool_rreq),
+        .NI_RADDR   (regpool_raddr),
+        .NI_RDATA   (regpool_rdata),
+        .NI_RVALID  (regpool_rvalid)
     );
 
     HL_NEURON_REGFILE REGFILE (
