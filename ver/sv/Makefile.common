@@ -1,0 +1,25 @@
+.PHONY: clean
+
+default: sim
+
+# Top-level name is required
+TOPLEVEL ?= __NOT_DEFINED__
+WAVES ?= 0
+
+# All sources are to be put in  sources.list  
+SOURCES = $(shell cat ./sources.list | tr '\n' ' ')
+
+# Search folders
+INCLUDES += +incdir+../../../rtl
+
+# General testbench defines
+DEFINES += +define+MAX_CYCLES=1e4 +define+WAVES=$(WAVES)
+
+sim: comp
+	vsim -32 -batch -do "run -all; quit" -work work $(TOPLEVEL)
+
+comp: $(SOURCES)
+	vlog -32 -noincr -work work $(DEFINES) $(INCLUDES) -mfcu -sv -sv17compat -svfilesuffix=sv -timescale="1ns/100ps" $?
+
+clean:
+	rm -fR work dump.*
