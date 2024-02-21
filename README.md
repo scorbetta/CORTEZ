@@ -1,14 +1,15 @@
 # Introduction
 The CORTEZ repository contains design files and tools for the CORTEZ chip. This is a digital
-implementation of a simple Neural Network for characters recognition. The CORTEZ chip is meant to be
+implementation of a simple Neural Network for symbols recognition. The CORTEZ chip is meant to be
 used as a testbed for MPW-driven ASICs.
 
 ## Overview
-The CORTEZ design implements a back-propagation neural network that recognizes vowels in a noisy
-input. The general architecture consists of one hidden layer and one output layer. The training is
-based on the back-propagation algorithm using a piece-wise approximation of the hyperbolic tangent
-function as activation layer.  The digital design is based on fixed-point rather than floating-point
-to simplify the design and reduce costs (area).
+The CORTEZ design implements a simple neural network for pattern recognition of symbols laid out on
+an input square noisy grid. It makes use of bipolar inputs and outputs, similar to the Madaline.
+However, since the Madaline's activation function is non-differentiable and has a poor training
+algorithm, this network makes us of a more general back-propagation algorithm. The activation
+function is a piece-wise designed approximation of the hyperbolic tangent. The digital design is
+based on fixed-point rather than floating-point to simplify the design and reduce area.
 
 ## Design versions
 Different design versions solve different problems, called boulders. The following table reports the
@@ -163,6 +164,16 @@ register index since registers are 1-Byte wide. Address is 6-bit wide.
 | `SEVENSEG_1` | 0x1d | Contents to drive 7-segments display 1 |
 | `SEVENSEG_2` | 0x1e | Contents to drive 7-segments display 2 |
 | `SEVENSEG_3` | 0x1f | Contents to drive 7-segments display 3 |
+
+## Piecewise approximation of `tanh()`
+The selected activation function `tanh()` is being replaced by its piecewise approximation function.
+This reduced area requirements and simplifies implementation. Linear interpolation between
+successive points is carefully chosen to minimize the error. The points where the `tanh()` function
+is split are chosen by looking at up to the 4-th derivative. Since the `tanh()` function is odd
+symmetric, the digital implementation focuses on half of the problem in the 1st quadrant. The other
+half of the problem on the 3rd quadrant is derived. The output is shown.
+
+![tanh approximation](./model/piecewise_approximation/plot_derivatives.png)
 
 ## Firmware initialization
 TBD
