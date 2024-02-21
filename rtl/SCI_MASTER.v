@@ -1,5 +1,6 @@
 `default_nettype none
 
+// Scalable Configuration Interface
 module SCI_MASTER
 #(
     parameter ADDR_WIDTH        = 4,
@@ -19,36 +20,59 @@ module SCI_MASTER
     output wire [DATA_WIDTH-1:0]        DATA_OUT,
     // Serial interface
     output wire [NUM_PERIPHERALS-1:0]   SCI_CSN,
-    output wire                         SCI_SOUT,
-    inout                               SCI_SIN,
-    inout                               SCI_SACK
+    output wire                         SCI_REQ,
+    inout wire                          SCI_RESP,
+    inout wire                          SCI_ACK
 );
 
-    localparam IDLE             = 2'b00;
-    localparam ADDRESS_PHASE    = 2'b01;
-    localparam WDATA_PHASE      = 2'b10;
-    localparam RDATA_PHASE      = 2'b11;
+    localparam IDLE         = 2'b00;
+    localparam ADDR_PHASE   = 2'b01;
+    localparam COUNT_DATA   = 2'b10;
+    localparam WAIT_DATA    = 2'b11;
 
     reg [1:0]                       curr_state;
-    reg                             sci_sout;
-    wire [NUM_PERIPHERALS-1:0]      sci_csn;
-    reg [$clog2(DATA_WIDTH)-1:0]    data_count;
-    reg [$clog2(ADDR_WIDTH)-1:0]    addr_count;
-    wire                            addr_load;
-    wire                            addr_shift;
-    wire                            addr;
-    wire                            wdata_load;
+    wire                            new_req;
     wire                            wdata_shift;
     wire                            wdata;
-    wire                            rdata_load;
+    wire                            addr_shift;
+    wire                            addr;
+    wire                            sci_resp_enable;
+    wire                            sci_resp;
+    reg                             sci_resp_q;
+    wire                            sci_ack_enable;
+    wire                            sci_ack;
+    reg                             sci_ack_q;
     wire                            count_rstn;
+    wire                            addr_count_en;
+    wire [$clog2(ADDR_WIDTH)-1:0]   addr_count;
+    wire                            data_count_en;
+    wire [$clog2(DATA_WIDTH)-1:0]   data_count;
+    reg                             sci_req;
+    reg [NUM_PERIPHERALS-1:0]       sci_csn;
+    wire                            sci_ack_q_rise;
+    wire                            sci_ack_q_fall;
     reg                             ack;
-    wire                            sci_sin_enable;
-    wire                            sci_sin;
-    wire                            sci_sack_enable;
-    wire                            sci_sack;
+    wire                            sci_ack_qq_rise;
+    wire                            sci_ack_qq_fall;
 
-    // Address and data buffers
+    // Detect new request
+    EDGE_DETECTOR NEW_REQ_DETECTOR (
+        .CLK            (CLK),
+        .SAMPLE_IN      (REQ),
+        .RISE_EDGE_OUT  (new_req),
+        .FALL_EDGE_OUT  () // Unused
+    );
+
+    // Detect transaction closure by the Slave: rising edge over  SCI_ACK  during a Write, and
+    // falling edge during a Read
+    EDGE_DETECTOR ACK_Q_EDGE_DETECTOR (
+        .CLK            (CLK),
+        .SAMPLE_IN      (sci_ack_q),
+        .RISE_EDGE_OUT  (sci_ack_q_rise),
+        .FALL_EDGE_OUT  (sci_ack_q_fall)
+    );
+
+    // Latch address and data
     PISO_BUFFER #(
         .DEPTH  (ADDR_WIDTH)
     )
@@ -66,67 +90,22 @@ module SCI_MASTER
     WDATA_BUFFER (
         .CLK        (CLK),
         .PIN        (DATA_IN),
-        .LOAD_IN    (wdata_load),
+        .LOAD_IN    (REQ),
         .SHIFT_OUT  (wdata_shift),
         .SOUT       (wdata)
     );
 
-    // Data from the selected peripheral will shift in serially. Data will *not* be counted,
-    // instead data transfer is considered done when the peripheral clears  SCI_SACK  signal
     SIPO_BUFFER #(
         .DEPTH  (DATA_WIDTH)
     )
     RDATA_BUFFER (
         .CLK    (CLK),
-        .SIN    (SCI_SIN),
-        .EN     (rdata_load),
+        .SIN    (sci_resp_q),
+        .EN     (sci_ack_q),
         .POUT   (DATA_OUT)
     );
 
-    // Load data only when needed
-    assign wdata_load = REQ & WNR;
-
-    // Counters
-    COUNTER #(
-        .WIDTH  (ADDR_WIDTH)
-    )
-    ADDR_COUNTER (
-        .CLK        (CLK),
-        .RSTN       (count_rstn),
-        .EN         (addr_shift),
-        .VALUE      (addr_count),
-        .OVERFLOW   () // Unused
-    );
-
-    COUNTER #(
-        .WIDTH  (DATA_WIDTH)
-    )
-    WDATA_COUNTER (
-        .CLK        (CLK),
-        .RSTN       (count_rstn),
-        .EN         (wdata_shift),
-        .VALUE      (data_count),
-        .OVERFLOW   () // Unused
-    );
-
-    // Detects peripheral transfer end
-    EDGE_DETECTOR PERIPH_ACK_EDGE (
-        .CLK            (CLK),
-        .SAMPLE_IN      (SCI_SACK),
-        .RISE_EDGE_OUT  (), // Unused
-        .FALL_EDGE_OUT  (ack)
-    );
-
-    // Shift and count control signals
-    assign count_rstn   = (curr_state == IDLE) ? 1'b0 : 1'b1;
-    assign addr_shift   = (curr_state == ADDRESS_PHASE) ? 1'b1 : 1'b0;
-    assign wdata_shift  = (curr_state == WDATA_PHASE) ? 1'b1 : 1'b0;
-    assign rdata_load   = (curr_state == RDATA_PHASE) ? SCI_SACK : 1'b0;
-
-    // Peripheral select
-    assign sci_csn = ( (curr_state == IDLE) ? ( REQ ? CSN_IN : {NUM_PERIPHERALS{1'b1}} ) : CSN_IN );
-
-    // Main engine
+    // Control engine
     always @(posedge CLK) begin
         if(!RSTN) begin
             curr_state <= IDLE;
@@ -134,69 +113,133 @@ module SCI_MASTER
         else begin
             case(curr_state)
                 IDLE : begin
-                    if(REQ) begin
-                        curr_state <= ADDRESS_PHASE;
+                    if(new_req) begin
+                        curr_state <= ADDR_PHASE;
                     end
                 end
 
-                ADDRESS_PHASE : begin
-                    if(addr_count == ADDR_WIDTH-1 && WNR) begin
-                        curr_state <= WDATA_PHASE;
-                    end
-                    else if(addr_count == ADDR_WIDTH-1 && !WNR) begin
-                        curr_state <= RDATA_PHASE;
+                ADDR_PHASE : begin
+                    if(addr_count == ADDR_WIDTH-1) begin
+                        if(WNR) begin
+                            curr_state <= COUNT_DATA;
+                        end
+                        else begin
+                            curr_state <= WAIT_DATA;
+                        end
                     end
                 end
 
-                WDATA_PHASE : begin
+                COUNT_DATA : begin
                     if(data_count == DATA_WIDTH-1) begin
                         curr_state <= IDLE;
                     end
                 end
 
-                RDATA_PHASE : begin
-                    if(ack) begin
-                        curr_state <= IDLE;
+                WAIT_DATA : begin
+                    if(sci_ack_q_rise) begin
+                        curr_state <= COUNT_DATA;
                     end
+                end
+
+                default : begin
                 end
             endcase
         end
     end
 
-    // Mux internals to output
-    always @* begin
+    assign count_rstn = ~new_req;
+
+    // Chip-select is kept alive throughout the entire transfer
+    always @(posedge CLK) begin
+        if(!RSTN) begin
+            sci_csn <= {NUM_PERIPHERALS{1'b1}};
+        end
+        else if(new_req) begin
+            sci_csn <= CSN_IN;
+        end
+        else if((!WNR && sci_ack_q_fall) || (WNR && sci_ack_q_rise)) begin
+            sci_csn <= {NUM_PERIPHERALS{1'b1}};
+        end
+    end
+
+    assign SCI_CSN = sci_csn;
+
+    // Send address bits
+    COUNTER #(
+        .WIDTH  ($clog2(ADDR_WIDTH))
+    )
+    ADDR_COUNTER (
+        .CLK        (CLK),
+        .RSTN       (count_rstn),
+        .EN         (addr_count_en),
+        .VALUE      (addr_count),
+        .OVERFLOW   () // Unused
+    );
+
+    assign addr_count_en    = (curr_state == ADDR_PHASE) ? 1'b1 : 1'b0;
+    assign addr_shift       = (curr_state == ADDR_PHASE) ? 1'b1 : 1'b0;
+
+    // Send data bits
+    COUNTER #(
+        .WIDTH  ($clog2(DATA_WIDTH))
+    )
+    DATA_COUNTER (
+        .CLK        (CLK),
+        .RSTN       (count_rstn),
+        .EN         (data_count_en),
+        .VALUE      (data_count),
+        .OVERFLOW   () // Unused
+    );
+
+    assign data_count_en    = (curr_state == COUNT_DATA) ? 1'b1 : 1'b0;
+    assign wdata_shift      = (curr_state == COUNT_DATA) ? 1'b1 : 1'b0;
+
+    // Mux request, address and data
+    always @(posedge CLK) begin
         case(curr_state)
             IDLE : begin
-                sci_sout = WNR;
+                sci_req <= WNR;
             end
 
-            ADDRESS_PHASE : begin
-                sci_sout = addr;
+            ADDR_PHASE :begin
+                sci_req <= addr;
             end
 
-            WDATA_PHASE : begin
-                sci_sout = wdata;
+            COUNT_DATA :begin
+                sci_req <= wdata;
             end
 
             default : begin
-                sci_sout = WNR;
+                sci_req <= 1'b0;
             end
         endcase
     end
 
-    // Response interface line is tri-stated
-    assign sci_sin_enable   = 1'b0;
-    assign SCI_SIN          = (sci_sin_enable ? 1'b0 : 1'bz);
-    assign sci_sin          = SCI_SIN;
+    assign SCI_REQ = sci_req;
 
-    assign sci_sack_enable  = 1'b0;
-    assign SCI_SACK         = (sci_sack_enable ? 1'b0 : 1'bz);
-    assign sci_sack         = SCI_SACK;
+    // Response interface line is tri-stated, but input only
+    assign sci_resp_enable  = 1'b0;
+    assign SCI_RESP         = (sci_resp_enable ? 1'b0 : 1'bz);
+    assign sci_resp         = SCI_RESP;
 
-    // Pinout
-    assign ACK      = ack;
-    assign SCI_CSN  = sci_csn;
-    assign SCI_SOUT = sci_sout;
+    assign sci_ack_enable   = 1'b0;
+    assign SCI_ACK          = (sci_ack_enable ? 1'b0 : 1'bz);
+    assign sci_ack          = SCI_ACK;
+
+    // Resample data from tri-state buffers
+    always @(posedge CLK) begin
+        if(!RSTN) begin
+            sci_ack_q <= 1'b0;
+            sci_resp_q <= 1'b0;
+        end
+        else begin
+            sci_ack_q <= sci_ack;
+            sci_resp_q <= sci_resp;
+        end
+    end
+
+    // Local ack
+    assign ACK = (~WNR & sci_ack_q_fall) | (WNR & sci_ack_q_rise);
 endmodule
 
 `default_nettype wire

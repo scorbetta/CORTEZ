@@ -116,7 +116,13 @@ class SCI:
         return data
 
     # Simple Slave model
-    async def start_slave(self, dut, addr_len, data_len):
+    #  addr_lens  and  data_lens  are two vector whose size covers all the peripherals in the
+    # current architecture. They are used to manage multi-peripheral cases with different address
+    # and/or data width
+    async def start_slave(self, dut, addr_lens, data_lens):
+        assert len(addr_lens) == len(data_lens)
+        assert len(addr_lens) == self.num_peripherals
+
         while 1:
             # Wait for peripheral select (Slaves will wait a rising edge in this state)
             while 1:
@@ -134,7 +140,11 @@ class SCI:
 
             assert len(pids) == 1
             pid = pids[0]
-            #@DBUGprint(f'dbug: Peripheral selected #{pid}')
+
+            # Get address and data width of current peripheral
+            addr_len = addr_lens[pid]
+            data_len = data_lens[pid]
+            #@DBUGprint(f'dbug: {int(dut.counter.value)} Selected peripheral #{pid} has addr_len={addr_len} and data_len={data_len}')
 
             wnr = int(dut._id(self.name['req'],extended=False).value)
             addr = ''
@@ -150,7 +160,6 @@ class SCI:
                     data = f"{dut._id(self.name['req'],extended=False).value}{data}"
     
                 self.mems[pid][addr] = data
-                #@DBUGprint(f'dbug: [{pid}] Write to {addr} --> {self.mems}')
 
                 # Random delay for the ack
                 random_wait = randint(1, 4)
@@ -161,12 +170,14 @@ class SCI:
                 dut._id(self.name['ack'],extended=False).value = 1
                 await RisingEdge(dut._id(self.name['clock'],extended=False))
                 dut._id(self.name['ack'],extended=False).value = 0
+                #@DBUGprint(f'dbug: {int(dut.counter.value)} Write done at addr={addr},data={data},pid={pid},mems={self.mems[pid]}')
             else:
                 # Read
                 random_wait = randint(10, 25)
                 for _ in range(random_wait):
                     await RisingEdge(dut._id(self.name['clock'],extended=False))
     
+                #@DBUGprint(f'dbug: {int(dut.counter.value)} Reading from addr={addr},pid={pid},mems={self.mems[pid]}')
                 assert addr in self.mems[pid]
                 data = self.mems[pid][addr]
                 #@DBUGprint(f'dbug: [{pid}] Read from {addr}')

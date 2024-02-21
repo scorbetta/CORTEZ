@@ -3,10 +3,10 @@ TOPLEVEL_LANG = verilog
 SIM ?= verilator
 
 # Prefix for change of hierarchy. Do *not* modify this line!
-VERILOG_SOURCES = $(shell grep -E "\.[s]*v$$" ../../rtl/rtl_sources.list | sed 's/^/\.\.\/\.\.\/rtl\//g' )
+VERILOG_SOURCES = $(shell grep -E "\.[s]*v$$" ../../../rtl/rtl_sources.list | sed 's/^/\.\.\/\.\.\/\.\.\/rtl\//g' )
 
 # Include dirs
-VERILOG_INCLUDE_DIRS=../../rtl -I../../grogu ../../grogu/grogu.gen/CORE_REGFILE/rtl ../../grogu/grogu.gen/HL_NEURON_REGFILE/rtl ../../grogu/grogu.gen/OL_NEURON_REGFILE/rtl
+VERILOG_INCLUDE_DIRS=../../../rtl ../../../grogu ../../../grogu/grogu.gen/CORE_REGFILE/rtl ../../../grogu/grogu.gen/HL_NEURON_REGFILE/rtl ../../../grogu/grogu.gen/OL_NEURON_REGFILE/rtl
 
 # Top-level module determines also test name
 TOPLEVEL ?= FIXED_POINT_ACT_FUN

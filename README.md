@@ -3,6 +3,13 @@ The CORTEZ repository contains design files and tools for the CORTEZ chip. This 
 implementation of a simple Neural Network for characters recognition. The CORTEZ chip is meant to be
 used as a testbed for MPW-driven ASICs.
 
+## Overview
+The CORTEZ design implements a back-propagation neural network that recognizes vowels in a noisy
+input. The general architecture consists of one hidden layer and one output layer. The training is
+based on the back-propagation algorithm using a piece-wise approximation of the hyperbolic tangent
+function as activation layer.  The digital design is based on fixed-point rather than floating-point
+to simplify the design and reduce costs (area).
+
 ## Design versions
 Different design versions solve different problems, called boulders. The following table reports the
 available versions, the target shuttle and the implementation status. Design version matches the tag
@@ -12,16 +19,155 @@ within this repository.
 |-|-|-|-|
 | `v1.0` | `o`, `u` and `i` recognition on a 3x3 grid | [GFMPW-1](https://repositories.efabless.com/scorbetta/CORTEZ1_GFMPW1) | Submitted |
 | `v1.1` | `c` and `f` recognition on a 3x3 grid | None | Deprecated |
-| `v1.2` | Vowels recognition on a 5x5 grid | TT06 | Work in progress |
+| `v1.2` | ACIC-tailored redesign | MPWXX | Work in progress |
 
-## Design overview
-The CORTEZ design implements a back-propagation neural network that recognizes vowels in a noisy
-input. The general architecture consists of one hidden layer and one output layer. The training is
-based on the back-propagation algorithm using a piece-wise approximation of the hyperbolic tangent
-function as activation layer.  The digital design is based on fixed-point rather than floating-point
-to simplify the design and reduce costs (area).
+# Design notes
 
-# Contents
+## Introduction to version `v1.2`
+The current version of the `CORTEZ` chip is specifically tailored to ASIC designs:
+- The centralized `grogu` configuration instances has been replaced with multiple distributed
+`grogu` instances; each neuron has its own minimal register file. This increases modules
+independency, reducing the routing requirements;
+- The configuration interface within each neuron is serial, instead of parallel. AXI4 Lite interface
+has been replaced by the custom `SCI` interface (Scalable Configuration Interface). Wiring and area
+are reduced tremendously. Routing congestion is reduced, for a better turnaround time;
+- Accurate design partitioning and floorplan;
+- Hierarchical design. Macros are used to isolate functionality, to simplify reuse and routing.
+Macros at the same functional level share the same metal layers. Enclosing macros use an higher
+metal layer.
+
+| MACRO | BRIEF | FLOORPLAN | HIGHER METAL |
+|-|-|-|-|
+| `HL_NEURON` | Hidden layer neuron | 200umx200um | `met3` |
+| `OL_NEURON` | Output layer neuron | 200umx200um | `met3` |
+| `HIDDEN_LAYER` | Hidden layer w/ 8 neurons | 1050umx550um | `met3` |
+| `OUTPUT_LAYER` | Output layer w/ 5 neurons | 1300umx300um | `met3` |
+| `NETWORK` | Top-level network and synchronizers | TBD | `met4` |
+| `CORE_TOP` | Chip top | TBD | `met4` |
+
+## Architecture
+The simplified block diagram shows the CORTEZ top-level architecture, contents of each layer and
+contents of each neuron.
+
+![CORTEZ Architecture](./docs/CORTEZ_Architecture.png)
+
+## Scalable Configuration Interface
+The `SCI` interface is an SPI-inspired serial interface for dense configurable designs. It is meant
+for use in low-frequency register accesses, e.g. on-chip peripheral configuration registers or
+status registers.
+
+Compared to (one might say) classical approaches where a single register file centralizes
+configuration and status information, SCI opts for a distributed methodology. Multiple configurable
+blocks have their own local and confined register file. A serial interface then is used to access
+them. The clocked interface consists of 4 signals plus the reference clock:
+
+| SIGNAL | WIDTH | BRIEF |
+|-|-|-|
+| `CLK` | 1 | Reference clock |
+| `CSN` | N | Active-low chip select |
+| `REQ` | 1 | Request line (Master to Slave) |
+| `RESP` | 1 | Read response line (Slave to Master) |
+| `ACK` | 1 | Transfer ack and strobe line (Slave to Master) |
+
+`N` is the number of peripherals attached to the Master block. `RESP` and `ACK` backward lines are
+tri-stated. Access to the bus is allowed one peripheral at a time. It is the Master who selects
+which peripheral can access the tri-state buffer through the `CSN` signal.
+
+More information can be found in the `docs/SCI_*.*` files.
+
+## Register files
+There are multiple register files (distributed, refer to section on SCI): one for each neuron
+containing configuration values (i.e., weights and bias for each input/neuron pair) and one
+core-level space for configuration/status values that apply to either the network or the core.
+Neuron-level register files sit on the SCI bus; core's, on the other hand, is based on a standard
+AXI4 Lite interface.
+
+All are managed through the `grogu` utility, and more additional information can be found in the
+`grogu/grogu.gen/*/html` folders.
+
+### Hidden layer registers
+Hidden layer registers are 8-bit wide. SCI is word-addressable; the address corresponds to the
+register index. Address is 5-bit wide.
+
+| REGNAME | ADDRESS | CONTENTS |
+|-|-|-|
+| `WEIGHT_0` | 0x00 | Fixed-point weight for input 0 |
+| `WEIGHT_1` | 0x01 | Fixed-point weight for input 1 |
+| `WEIGHT_2` | 0x02 | Fixed-point weight for input 2 |
+| `WEIGHT_3` | 0x03 | Fixed-point weight for input 3 |
+| `WEIGHT_4` | 0x04 | Fixed-point weight for input 4 |
+| `WEIGHT_5` | 0x05 | Fixed-point weight for input 5 |
+| `WEIGHT_6` | 0x06 | Fixed-point weight for input 6 |
+| `WEIGHT_7` | 0x07 | Fixed-point weight for input 7 |
+| `WEIGHT_8` | 0x08 | Fixed-point weight for input 8 |
+| `WEIGHT_9` | 0x09 | Fixed-point weight for input 9 |
+| `WEIGHT_10` | 0x0a | Fixed-point weight for input 10 |
+| `WEIGHT_11` | 0x0b | Fixed-point weight for input 11 |
+| `WEIGHT_12` | 0x0c | Fixed-point weight for input 12 |
+| `WEIGHT_13` | 0x0d | Fixed-point weight for input 13 |
+| `WEIGHT_14` | 0x0e | Fixed-point weight for input 14 |
+| `WEIGHT_15` | 0x0f | Fixed-point weight for input 15 |
+| `BIAS` | 0x10 | Fixed-point bias |
+
+### Output layer registers
+Output layer registers are 8-bit wide. SCI is word-addressable; the address corresponds to the
+register index. Address is 4-bit wide.
+
+| REGNAME | ADDRESS | CONTENTS |
+|-|-|-|
+| `WEIGHT_0` | 0x0 | Fixed-point weight for input 0 |
+| `WEIGHT_1` | 0x1 | Fixed-point weight for input 1 |
+| `WEIGHT_2` | 0x2 | Fixed-point weight for input 2 |
+| `WEIGHT_3` | 0x3 | Fixed-point weight for input 3 |
+| `WEIGHT_4` | 0x4 | Fixed-point weight for input 4 |
+| `WEIGHT_5` | 0x5 | Fixed-point weight for input 5 |
+| `WEIGHT_6` | 0x6 | Fixed-point weight for input 6 |
+| `WEIGHT_7` | 0x7 | Fixed-point weight for input 7 |
+| `BIAS` | 0x8 | Fixed-point bias |
+
+### Core registers
+Core registers are 8-bit wide. AXI4 Lite is Byte-addressable; the address still corresponds to the
+register index since registers are 1-Byte wide. Address is 6-bit wide.
+
+| REGNAME | ADDRESS | CONTENTS |
+|-|-|-|
+| `DBUG_REG_0` | 0x00 | Debug register |
+| `DBUG_REG_1` | 0x01 | Debug register |
+| `DBUG_REG_2` | 0x02 | Debug register |
+| `DBUG_REG_3` | 0x03 | Debug register |
+| `INPUT_GRID_0` | 0x04 | Input value for grid cell 0 |
+| `INPUT_GRID_1` | 0x05 | Input value for grid cell 1 |
+| `INPUT_GRID_2` | 0x06 | Input value for grid cell 2 |
+| `INPUT_GRID_3` | 0x07 | Input value for grid cell 3 |
+| `INPUT_GRID_4` | 0x08 | Input value for grid cell 4 |
+| `INPUT_GRID_5` | 0x09 | Input value for grid cell 5 |
+| `INPUT_GRID_6` | 0x0a | Input value for grid cell 6 |
+| `INPUT_GRID_7` | 0x0b | Input value for grid cell 7 |
+| `INPUT_GRID_8` | 0x0c | Input value for grid cell 8 |
+| `INPUT_GRID_9` | 0x0d | Input value for grid cell 9 |
+| `INPUT_GRID_10` | 0x0e | Input value for grid cell 10 |
+| `INPUT_GRID_11` | 0x0f | Input value for grid cell 11 |
+| `INPUT_GRID_12` | 0x10 | Input value for grid cell 12 |
+| `INPUT_GRID_13` | 0x11 | Input value for grid cell 13 |
+| `INPUT_GRID_14` | 0x12 | Input value for grid cell 14 |
+| `INPUT_GRID_15` | 0x13 | Input value for grid cell 15 |
+| `OUTPUT_SOLUTION_0` | 0x14 | Output solution, one-hot |
+| `OUTPUT_SOLUTION_1` | 0x15 | Output solution, one-hot |
+| `OUTPUT_SOLUTION_2` | 0x16 | Output solution, one-hot |
+| `OUTPUT_SOLUTION_3` | 0x17 | Output solution, one-hot |
+| `OUTPUT_SOLUTION_4` | 0x18 | Output solution, one-hot |
+| `CORE_CTRL` | 0x19 | Core control register |
+| `CORE_DEBUG_INFO` | 0x1a | Core debug register |
+| `CORE_STATUS` | 0x1b | Core status register |
+| `SEVENSEG_0` | 0x1c | Contents to drive 7-segments display 0 |
+| `SEVENSEG_1` | 0x1d | Contents to drive 7-segments display 1 |
+| `SEVENSEG_2` | 0x1e | Contents to drive 7-segments display 2 |
+| `SEVENSEG_3` | 0x1f | Contents to drive 7-segments display 3 |
+
+## Firmware initialization
+TBD
+
+# Repository contents
 - `grogu/`, register map design files based on [`grogu`](https://github.com/scorbetta/grogu);
 - `model/neural_network/`, the Python model of the neural network;
 - `model/piecewise_approximation/`, the Python and Matlab files of the `tanh()` approximation;

@@ -1,0 +1,51 @@
+{
+  	// Cycle count
+	head: {tock: 1},
+  
+  	// Read example
+  	signal: [
+    	{name: 'CLK',
+         	wave: 'P........|..........'
+	    },
+	  	{name: 'CSN',
+		   	wave: '1.0......|.........1'
+        },
+		{name: 'SIN',
+	     	wave: 'x.0.1010x|..........'
+	    },
+		{name: 'count_rstn',
+	     	wave: '1..01....|..........'
+	    },
+		{name: 'addr_count_en',
+	     	wave: '0...1...0|..........'
+	    },
+		{name: 'addr_count',
+	     	wave: 'x..=.====|..........',
+	     	data: "0 1 2 3 4"
+	    },
+		{name: 'sin_q', // Internally resampled SIN
+	     	wave: 'x..0.1010|x.........'
+	    },
+      	{name: 'wnr',
+	     	wave: 'x..=.....|..........',
+	     	data: "1'b0"
+	    },
+      	{name: 'addr[3:0]',
+	     	wave: 'x...==.=.|..........',
+	     	data: "0x0 0x2 0xa"
+	    },
+	  	{name: 'SACK',
+	  		wave: 'z..0.....|1.......z.',
+	     	data: "1"
+        },
+	  	{name: 'SOUT',
+	    	wave: 'z..x.....|0...1...x.'
+	    },
+  	],
+
+  	edge: [
+      	'a~>b Select', // Peripheral select
+		'c~>d Start', // Start data count
+      	'e~>f End', // End of transaction
+  	]
+}

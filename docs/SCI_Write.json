@@ -1,0 +1,66 @@
+{
+  	// Cycle count
+	head: {tock: 1},
+  
+  	// Write example
+  	signal: [
+    	{name: 
+	    	'CLK', wave: 'P................|..'
+	    },
+	  	{name: 'CSN',
+		   	wave: '1.0..............|.1',
+		   	node: '  a                f'},
+      	
+		{name: 'SIN',
+	     	wave: 'x.101010...1...x.|..'
+	    },
+		{name: 'count_rstn',
+	     	wave: '1..01............|..',
+         	node: '   b',
+	    },
+		{name: 'addr_count_en',
+	     	wave: '0...1...0........|..'
+	    },
+		{name: 'addr_count',
+	     	wave: 'x..=.====........|..',
+         	node: '       c',
+	     	data: "0 1 2 3 4",
+	    },
+		{name: 'data_count_en',
+	     	wave: '0.......1.......0|..',
+         	node: '        d',
+	    },
+		{name: 'data_count',
+	     	wave: 'x..=.....========|..',
+	     	data: "0 1 2 3 4 5 6 7 8"
+	    },
+		{name: 'sin_q', // Internally resampled SIN
+	     	wave: 'x..101010...1...x|..'
+	    },
+      	{name: 'wnr',
+	     	wave: 'x..=.............|..',
+	     	data: "1'b1",
+	    },
+      	{name: 'addr[3:0]',
+	     	wave: 'x...==.=.........|..',
+	     	data: "0x0 0x2 0xa",
+	    },
+      	{name: 'data[7:0]',
+	     	wave: 'x.......=...====.|..',
+	     	data: "0x00 0x10 0x30 0x70 0xf0",
+	    },
+	  	{name: 'SACK',
+	  		wave: 'z.0..............|1z',
+	     	data: "1",
+	   		node: '                  e'},
+	  	{name: 'SOUT',
+	    	wave: 'z................|..'
+	    },
+  	],
+
+  	edge: [
+      	'a~>b Select', // Peripheral select
+		'c~>d Start', // Start data count
+      	'e~>f End', // End of transaction
+  	]
+}
