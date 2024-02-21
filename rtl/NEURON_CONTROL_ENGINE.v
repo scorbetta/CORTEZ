@@ -30,6 +30,7 @@ module NEURON_CONTROL_ENGINE
     reg                             pipe_en;
     reg                             bias_add_start;
     reg                             busy;
+    reg [3:0]                       delayed_rstn;
 
     // Detect new value
     always @(posedge CLK) begin
@@ -74,13 +75,27 @@ module NEURON_CONTROL_ENGINE
         end
     end
 
+    // Out-of-reset busy: release the  busy  signal after a while, so that edge-triggered client
+    // modules can see the first edge
+    always @(posedge CLK) begin
+        if(!RSTN) begin
+            delayed_rstn <= 4'b0000;
+        end
+        else begin
+            delayed_rstn <= { delayed_rstn[2:0], RSTN };
+        end
+    end
+
     // Busy signal gets asserted/cleared multiple times
     always @(posedge CLK) begin
         if(!RSTN) begin
-            busy <= 1'b0;
+            busy <= 1'b1;
         end
         else begin
-            if(!busy && new_value) begin
+            if(busy && delayed_rstn == 4'b0111) begin
+                busy <= 1'b0;
+            end
+            else if(!busy && new_value) begin
                 busy <= 1'b1;
             end
             else if(busy && ADD_DONE) begin

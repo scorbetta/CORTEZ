@@ -3,9 +3,7 @@ endpackage
 
 interface sci_if
 #(
-    parameter NUM_PERIPHERALS   = 1,
-    parameter ADDR_WIDTH        = 4,
-    parameter DATA_WIDTH        = 8
+    parameter NUM_PERIPHERALS = 1
 )
 (
     input clk
@@ -60,12 +58,16 @@ interface sci_if
 
     // Write data
     task m_send_data(
-        input int                       pid,
-        input logic [ADDR_WIDTH-1:0]    addr,
-        input logic [DATA_WIDTH-1:0]    data
+        input int           pid,
+        input int           addr_len,
+        input logic [31:0]  addr, // Size refers to max length
+        input int           data_len,
+        input logic [31:0]  data // Size refers to max length
     );
 
         // Verify prerequisites
+        assert(addr_len >= 1 && addr_len <= 32) else $fatal(1, "Invalid address length: %0d, expected: [1,32]", addr_len);
+        assert(data_len >= 1 && data_len <= 32) else $fatal(1, "Invalid data length: %0d, expected: [1,32]", data_len);
         assert(csn == get_mask(-1)) else $fatal(1, "Unexpected sci.csn: 0x%0x, expected: 0x%0x", csn, get_mask(-1));
         assert(ack === 1'bz) else $fatal(1, "Unexpected sci.ack: 1'b%0b, expected: 1'bz", ack);
         assert(resp === 1'bz) else $fatal(1, "Unexpected sci.resp: 1'b%0b, expected: 1'bz", resp);
@@ -76,13 +78,13 @@ interface sci_if
         req <= 1'b1;
 
         // 2nd phase: address, LSB first!
-        for(int adx = 0; adx < ADDR_WIDTH; adx++) begin
+        for(int adx = 0; adx < addr_len; adx++) begin
             @(negedge clk);
             req <= addr[adx];
         end
 
         // 3rd phase: data, LSB first!
-        for(int ddx = 0; ddx < DATA_WIDTH; ddx++) begin
+        for(int ddx = 0; ddx < data_len; ddx++) begin
             @(negedge clk);
             req <= data[ddx];
         end
@@ -95,12 +97,16 @@ interface sci_if
 
     // Read data
     task m_recv_data(
-        input int                       pid,
-        input logic [ADDR_WIDTH-1:0]    addr,
-        output logic [DATA_WIDTH-1:0]   data
+        input int           pid,
+        input int           addr_len,
+        input logic [31:0]  addr, // Size refers to max length
+        input int           data_len,
+        output logic [31:0] data // Size refers to max length
     );
 
         // Verify prerequisites
+        assert(addr_len >= 1 && addr_len <= 32) else $fatal(1, "Invalid address length: %0d, expected: [1,32]", addr_len);
+        assert(data_len >= 1 && data_len <= 32) else $fatal(1, "Invalid data length: %0d, expected: [1,32]", data_len);
         assert(csn == get_mask(-1)) else $fatal(1, "Unexpected sci.csn: 0x%0x, expected: 0x%0x", csn, get_mask(-1));
         assert(ack === 1'bz) else $fatal(1, "Unexpected sci.ack: 1'b%0b, expected: 1'bz", ack);
         assert(resp === 1'bz) else $fatal(1, "Unexpected sci.resp: 1'b%0b, expected: 1'bz", resp);
@@ -111,15 +117,16 @@ interface sci_if
         req <= 1'b0;
 
         // 2nd phase: address, LSB first!
-        for(int adx = 0; adx < ADDR_WIDTH; adx++) begin
+        for(int adx = 0; adx < addr_len; adx++) begin
             @(negedge clk);
             req <= addr[adx];
         end
 
         // 3rd phase: wait ack w/data, LSB first!
+        data <= 32'd0;
         while(!ack) @(negedge clk);
-        for(int ddx = 0; ddx < DATA_WIDTH; ddx++) begin
-            assert(ack === 1'b1) else $fatal(1, "Unexpected sci.ack during readout at beat %0d/%0d: 1'b%0b, expected: 1'b1", ddx+1, DATA_WIDTH, ack);
+        for(int ddx = 0; ddx < data_len; ddx++) begin
+            assert(ack === 1'b1) else $fatal(1, "Unexpected sci.ack during readout at beat %0d/%0d: 1'b%0b, expected: 1'b1", ddx+1, data_len, ack);
             data[ddx] <= resp;
             @(negedge clk);
         end

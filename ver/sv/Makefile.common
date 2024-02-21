@@ -10,7 +10,7 @@ WAVES ?= 0
 SOURCES = $(shell cat ./sources.list | tr '\n' ' ')
 
 # Search folders
-INCLUDES += +incdir+../../../rtl
+INCLUDES += +incdir+../../../rtl +incdir+../../../grogu/grogu.gen/HL_NEURON_REGFILE/rtl +incdir+../../../grogu/grogu.gen/OL_NEURON_REGFILE/rtl +incdir+../../../grogu/grogu.gen/CORE_REGFILE/rtl
 
 # General testbench defines
 DEFINES += +define+MAX_CYCLES=1e4 +define+WAVES=$(WAVES)
@@ -20,6 +20,3 @@ sim: comp
 
 comp: $(SOURCES)
 	vlog -32 -noincr -work work $(DEFINES) $(INCLUDES) -mfcu -sv -sv17compat -svfilesuffix=sv -timescale="1ns/100ps" $?
-
-clean:
-	rm -fR work dump.*

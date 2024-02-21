@@ -1,10 +1,10 @@
 `default_nettype none
 
 // The top-level neural network module contains designed instances and connections of  LAYER
-// modules. This network solves the 5x5 vowel recognition problem using bipolar inputs and outputs,
+// modules. This network solves a symbol recognition problem using bipolar inputs and outputs,
 // similar to the Madaline network does. However, the Madaline's activation function is
 // non-differentiable, and the training algorithm is poor. This network, instead, makes use of the
-// more general back-propagation algorithm during training; it employs a aiecewise approximation of
+// more general back-propagation algorithm during training; it employs a piecewise approximation of
 // the tanh function
 module NETWORK
 #(
