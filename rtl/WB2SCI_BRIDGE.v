@@ -95,7 +95,7 @@ module WB2SCI_BRIDGE
             case(curr_state)
                 IDLE : begin
                     if(!WB_ACK && WB_CYC && WB_STB) begin
-                        wb_addr <= WB_ADDR;
+                        wb_addr <= (WB_ADDR >> 2);
                         sci_master_data_in <= WB_WDATA;
                         sci_master_req <= 1'b1;
                         sci_master_wnr <= WB_WE;

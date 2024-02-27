@@ -3,7 +3,7 @@ TOPLEVEL_LANG = verilog
 SIM ?= icarus
 
 # Prefix for change of hierarchy. Do *not* modify this line!
-VERILOG_SOURCES = $(shell grep -E "\.[s]*v$$" ../../rtl/rtl_sources.list | sed 's/^/\.\.\/\.\.\/rtl\//g' )
+VERILOG_SOURCES = $(shell grep -E "\.[s]*v$$" ../../../rtl/rtl_sources.list | sed 's/^/\.\.\/\.\.\/\.\.\/rtl\//g' )
 
 # Top-level module determines also test name
 TOPLEVEL ?= FIXED_POINT_ACT_FUN

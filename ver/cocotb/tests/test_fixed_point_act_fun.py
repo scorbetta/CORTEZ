@@ -7,7 +7,7 @@ import sys
 import os
 sys.path.append(os.path.relpath('../'))
 from utils.my_utils import *
-sys.path.append(os.path.relpath("../../model/neural_network"))
+sys.path.append(os.path.relpath("../../../model/neural_network"))
 from activations import afun_test_primitive
 
 @cocotb.test()

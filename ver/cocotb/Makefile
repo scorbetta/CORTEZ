@@ -16,6 +16,38 @@ OL_SCI_ADDR_WIDTH := $(shell python3 -c "import math; print(math.ceil(math.log2(
 # Optionals to be passed to COCOTB's Makefile
 WAVES ?= 0
 
+# Run all tests
+all: test_fixed_point_act_fun test_hidden_neuron test_output_neuron test_hl_sequencer test_ol_sequencer test_wb2sci_bridge test_wbxbar
+
+# Available tests, each one has its own options
+test_fixed_point_act_fun:
+	$(MAKE) -C tests -f Makefile.verilator purge
+	$(MAKE) -C tests -f Makefile.verilator TOPLEVEL=FIXED_POINT_ACT_FUN WAVES=$(WAVES) EXTRA_ARGS+="-GWIDTH=$(FP_WIDTH) -GFRAC_BITS=$(FP_FRAC)"
+
+test_hidden_neuron:
+	$(MAKE) -C tests -f Makefile.verilator purge
+	$(MAKE) -C tests -f Makefile.verilator MODULE=test_neuron TOPLEVEL=HL_NEURON WAVES=$(WAVES) EXTRA_ARGS+="-GWIDTH=$(FP_WIDTH) -GFRAC_BITS=$(FP_FRAC) -GNUM_INPUTS=$(NUM_INPUTS)"
+
+test_output_neuron:
+	$(MAKE) -C tests -f Makefile.verilator purge
+	$(MAKE) -C tests -f Makefile.verilator MODULE=test_neuron TOPLEVEL=OL_NEURON WAVES=$(WAVES) EXTRA_ARGS+="-GWIDTH=$(FP_WIDTH) -GFRAC_BITS=$(FP_FRAC) -GNUM_INPUTS=$(HL_NEURONS)"
+
+test_hl_sequencer:
+	$(MAKE) -C tests -f Makefile.verilator purge
+	$(MAKE) -C tests -f Makefile.verilator TOPLEVEL=SEQUENCER WAVES=$(WAVES) EXTRA_ARGS+="-GWIDTH=$(FP_WIDTH) -GNUM_INPUTS=$(NUM_INPUTS)"
+
+test_ol_sequencer:
+	$(MAKE) -C tests -f Makefile.verilator purge
+	$(MAKE) -C tests -f Makefile.verilator TOPLEVEL=SEQUENCER WAVES=$(WAVES) EXTRA_ARGS+="-GWIDTH=$(FP_WIDTH) -GNUM_INPUTS=$(HL_NEURONS)"
+
+test_wb2sci_bridge:
+	$(MAKE) -C tests -f Makefile.verilator purge
+	$(MAKE) -C tests -f Makefile.verilator TOPLEVEL=WB2SCI_BRIDGE WAVES=$(WAVES) EXTRA_ARGS+="-GADDR_WIDTH=32 -GDATA_WIDTH=8 -GNUM_HL_NEURONS=$(HL_NEURONS) -GNUM_OL_NEURONS=$(OL_NEURONS) -GHL_ADDR_WIDTH=$(HL_SCI_ADDR_WIDTH) -GOL_ADDR_WIDTH=$(OL_SCI_ADDR_WIDTH)"
+
+test_wbxbar:
+	$(MAKE) -C tests -f Makefile.verilator purge
+	$(MAKE) -C tests -f Makefile.verilator TOPLEVEL=WBXBAR WAVES=$(WAVES)
+
 # Print configuration
 show_config:
 	@echo "cnfg: Network configuration"
@@ -23,27 +55,10 @@ show_config:
 	@echo "cnfg:    Fixed-point ($(FP_WIDTH),$(FP_FRAC))"
 	@echo "cnfg:    Grid size: $(GRID_SIDE)"
 	@echo "cnfg:    Number of inputs: $(NUM_INPUTS)"
-	@echo "cnfg:    Number of outputs: $(NUM_OUTPUTS)"
-
-# Available tests, each one has its own options
-test_fixed_point_act_fun:
-	$(MAKE) -C tests -f Makefile.verilator TOPLEVEL=FIXED_POINT_ACT_FUN WAVES=$(WAVES) EXTRA_ARGS+="-GWIDTH=$(FP_WIDTH) -GFRAC_BITS=$(FP_FRAC)"
-
-test_hidden_neuron:
-	$(MAKE) -C tests -f Makefile.verilator MODULE=test_neuron TOPLEVEL=HL_NEURON WAVES=$(WAVES) EXTRA_ARGS+="-GWIDTH=$(FP_WIDTH) -GFRAC_BITS=$(FP_FRAC) -GNUM_INPUTS=$(NUM_INPUTS)"
-
-test_output_neuron:
-	$(MAKE) -C tests -f Makefile.verilator MODULE=test_neuron TOPLEVEL=OL_NEURON WAVES=$(WAVES) EXTRA_ARGS+="-GWIDTH=$(FP_WIDTH) -GFRAC_BITS=$(FP_FRAC) -GNUM_INPUTS=$(HL_NEURONS)"
-
-test_hl_sequencer:
-	$(MAKE) -C tests -f Makefile.verilator TOPLEVEL=SEQUENCER WAVES=$(WAVES) EXTRA_ARGS+="-GWIDTH=$(FP_WIDTH) -GNUM_INPUTS=$(NUM_INPUTS)"
-
-test_ol_sequencer:
-	$(MAKE) -C tests -f Makefile.verilator TOPLEVEL=SEQUENCER WAVES=$(WAVES) EXTRA_ARGS+="-GWIDTH=$(FP_WIDTH) -GNUM_INPUTS=$(HL_NEURONS)"
-
-test_wb2sci_bridge:
-	$(MAKE) -C tests -f Makefile.verilator TOPLEVEL=WB2SCI_BRIDGE WAVES=$(WAVES) EXTRA_ARGS+="-GADDR_WIDTH=32 -GDATA_WIDTH=8 -GNUM_HL_NEURONS=$(HL_NEURONS) -GNUM_OL_NEURONS=$(OL_NEURONS) -GHL_ADDR_WIDTH=$(HL_SCI_ADDR_WIDTH) -GOL_ADDR_WIDTH=$(OL_SCI_ADDR_WIDTH)"
+	@echo "cnfg:    Hidden layer neurons: $(HL_NEURONS)"
+	@echo "cnfg:    Output layer neurons: $(OL_NEURONS)"
+	@echo "cnfg:    Hidden layer SCI address width: $(HL_SCI_ADDR_WIDTH)"
+	@echo "cnfg:    Output layer SCI address width: $(OL_SCI_ADDR_WIDTH)"
 
 clean:
 	$(MAKE) -C tests -f Makefile.verilator purge
-	$(MAKE) -C tests -f Makefile.icarus purge

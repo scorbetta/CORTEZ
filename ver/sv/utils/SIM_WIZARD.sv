@@ -43,6 +43,7 @@ module SIM_WIZARD
 
     initial begin
         repeat(MAX_CYCLES) @(posedge user_clk);
+        $display("warn: Max simulation cycles reached, ending simulation");
         $finish;
     end
 
