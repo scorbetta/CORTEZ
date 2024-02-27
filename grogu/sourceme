@@ -35,8 +35,20 @@ peakrdl_cmd="peakrdl preprocess temp.rdl -o ol_neuron_regfile.rdl"
 echo "exec: ${peakrdl_cmd}"
 eval ${peakrdl_cmd}
 
-# Run grogu within virtual environment, on all files
-fileset=( core_regfile.rdl hl_neuron_regfile.rdl ol_neuron_regfile.rdl )
+# Run grogu for neurons
+ln -sf grogu.neurons.ini grogu.ini
+fileset=( hl_neuron_regfile.rdl ol_neuron_regfile.rdl )
+for file in ${fileset[@]}
+do
+    basename=$( basename $file .rdl )
+    grogu_cmd="./grogu.git/src/grogu.py --rdl ${file} --prefix ${basename}"
+    echo "exec: ${grogu_cmd}"
+    eval ${grogu_cmd}
+done
+
+# Run grogu for core
+ln -sf grogu.core.ini grogu.ini
+fileset=( core_regfile.rdl )
 for file in ${fileset[@]}
 do
     basename=$( basename $file .rdl )
