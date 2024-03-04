@@ -39,6 +39,46 @@
 		 [7:0] data sw=rw
 	 INPUT_GRID_15
 		 [7:0] data sw=rw
+	 INPUT_GRID_16
+		 [7:0] data sw=rw
+	 INPUT_GRID_17
+		 [7:0] data sw=rw
+	 INPUT_GRID_18
+		 [7:0] data sw=rw
+	 INPUT_GRID_19
+		 [7:0] data sw=rw
+	 INPUT_GRID_20
+		 [7:0] data sw=rw
+	 INPUT_GRID_21
+		 [7:0] data sw=rw
+	 INPUT_GRID_22
+		 [7:0] data sw=rw
+	 INPUT_GRID_23
+		 [7:0] data sw=rw
+	 INPUT_GRID_24
+		 [7:0] data sw=rw
+	 INPUT_GRID_25
+		 [7:0] data sw=rw
+	 INPUT_GRID_26
+		 [7:0] data sw=rw
+	 INPUT_GRID_27
+		 [7:0] data sw=rw
+	 INPUT_GRID_28
+		 [7:0] data sw=rw
+	 INPUT_GRID_29
+		 [7:0] data sw=rw
+	 INPUT_GRID_30
+		 [7:0] data sw=rw
+	 INPUT_GRID_31
+		 [7:0] data sw=rw
+	 INPUT_GRID_32
+		 [7:0] data sw=rw
+	 INPUT_GRID_33
+		 [7:0] data sw=rw
+	 INPUT_GRID_34
+		 [7:0] data sw=rw
+	 INPUT_GRID_35
+		 [7:0] data sw=rw
 	 OUTPUT_SOLUTION_0
 		 [7:0] data sw=r
 	 OUTPUT_SOLUTION_1

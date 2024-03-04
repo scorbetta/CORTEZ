@@ -11,7 +11,7 @@ module CORE_REGFILE (
     // Active-low synchronous reset
     input wire ARESETN,
     // AXI interface
-    input wire [4:0] AWADDR,
+    input wire [5:0] AWADDR,
     input wire [2:0] AWPROT,
     input wire AWVALID,
     output wire AWREADY,
@@ -22,7 +22,7 @@ module CORE_REGFILE (
     output wire [1:0] BRESP,
     output wire BVALID,
     input wire BREADY,
-    input wire [4:0] ARADDR,
+    input wire [5:0] ARADDR,
     input wire [2:0] ARPROT,
     input wire ARVALID,
     output wire ARREADY,
@@ -51,6 +51,26 @@ module CORE_REGFILE (
     output wire [7:0] HWIF_OUT_INPUT_GRID_13,
     output wire [7:0] HWIF_OUT_INPUT_GRID_14,
     output wire [7:0] HWIF_OUT_INPUT_GRID_15,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_16,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_17,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_18,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_19,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_20,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_21,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_22,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_23,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_24,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_25,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_26,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_27,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_28,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_29,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_30,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_31,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_32,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_33,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_34,
+    output wire [7:0] HWIF_OUT_INPUT_GRID_35,
     input wire [7:0] HWIF_IN_OUTPUT_SOLUTION_0,
     input wire [7:0] HWIF_IN_OUTPUT_SOLUTION_1,
     input wire [7:0] HWIF_IN_OUTPUT_SOLUTION_2,
@@ -66,18 +86,18 @@ module CORE_REGFILE (
 );
 
     wire regpool_ren;
-    wire [4:0] regpool_raddr;
+    wire [5:0] regpool_raddr;
     reg [7:0] regpool_rdata;
     reg regpool_rvalid;
     wire regpool_wen;
     reg regpool_wen_resampled;
-    wire [4:0] regpool_waddr;
+    wire [5:0] regpool_waddr;
     wire [7:0] regpool_wdata;
 
     // AXI4 Lite to Native bridge
     AXIL2NATIVE #(
         .DATA_WIDTH (8),
-        .ADDR_WIDTH (5)
+        .ADDR_WIDTH (6)
     )
     AXIL2NATIVE_0 (
         .AXI_ACLK       (ACLK),
@@ -435,6 +455,326 @@ module CORE_REGFILE (
         .VALUE_OUT  (input_grid_15_value_out)
     );
         
+    // INPUT_GRID_16: Pixel 16 of the input character
+    reg input_grid_16_wreq;
+    wire input_grid_16_wreq_filtered;
+    wire [7:0] input_grid_16_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_16_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_16_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_16_value_out)
+    );
+        
+    // INPUT_GRID_17: Pixel 17 of the input character
+    reg input_grid_17_wreq;
+    wire input_grid_17_wreq_filtered;
+    wire [7:0] input_grid_17_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_17_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_17_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_17_value_out)
+    );
+        
+    // INPUT_GRID_18: Pixel 18 of the input character
+    reg input_grid_18_wreq;
+    wire input_grid_18_wreq_filtered;
+    wire [7:0] input_grid_18_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_18_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_18_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_18_value_out)
+    );
+        
+    // INPUT_GRID_19: Pixel 19 of the input character
+    reg input_grid_19_wreq;
+    wire input_grid_19_wreq_filtered;
+    wire [7:0] input_grid_19_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_19_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_19_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_19_value_out)
+    );
+        
+    // INPUT_GRID_20: Pixel 20 of the input character
+    reg input_grid_20_wreq;
+    wire input_grid_20_wreq_filtered;
+    wire [7:0] input_grid_20_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_20_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_20_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_20_value_out)
+    );
+        
+    // INPUT_GRID_21: Pixel 21 of the input character
+    reg input_grid_21_wreq;
+    wire input_grid_21_wreq_filtered;
+    wire [7:0] input_grid_21_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_21_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_21_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_21_value_out)
+    );
+        
+    // INPUT_GRID_22: Pixel 22 of the input character
+    reg input_grid_22_wreq;
+    wire input_grid_22_wreq_filtered;
+    wire [7:0] input_grid_22_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_22_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_22_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_22_value_out)
+    );
+        
+    // INPUT_GRID_23: Pixel 23 of the input character
+    reg input_grid_23_wreq;
+    wire input_grid_23_wreq_filtered;
+    wire [7:0] input_grid_23_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_23_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_23_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_23_value_out)
+    );
+        
+    // INPUT_GRID_24: Pixel 24 of the input character
+    reg input_grid_24_wreq;
+    wire input_grid_24_wreq_filtered;
+    wire [7:0] input_grid_24_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_24_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_24_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_24_value_out)
+    );
+        
+    // INPUT_GRID_25: Pixel 25 of the input character
+    reg input_grid_25_wreq;
+    wire input_grid_25_wreq_filtered;
+    wire [7:0] input_grid_25_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_25_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_25_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_25_value_out)
+    );
+        
+    // INPUT_GRID_26: Pixel 26 of the input character
+    reg input_grid_26_wreq;
+    wire input_grid_26_wreq_filtered;
+    wire [7:0] input_grid_26_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_26_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_26_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_26_value_out)
+    );
+        
+    // INPUT_GRID_27: Pixel 27 of the input character
+    reg input_grid_27_wreq;
+    wire input_grid_27_wreq_filtered;
+    wire [7:0] input_grid_27_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_27_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_27_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_27_value_out)
+    );
+        
+    // INPUT_GRID_28: Pixel 28 of the input character
+    reg input_grid_28_wreq;
+    wire input_grid_28_wreq_filtered;
+    wire [7:0] input_grid_28_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_28_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_28_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_28_value_out)
+    );
+        
+    // INPUT_GRID_29: Pixel 29 of the input character
+    reg input_grid_29_wreq;
+    wire input_grid_29_wreq_filtered;
+    wire [7:0] input_grid_29_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_29_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_29_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_29_value_out)
+    );
+        
+    // INPUT_GRID_30: Pixel 30 of the input character
+    reg input_grid_30_wreq;
+    wire input_grid_30_wreq_filtered;
+    wire [7:0] input_grid_30_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_30_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_30_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_30_value_out)
+    );
+        
+    // INPUT_GRID_31: Pixel 31 of the input character
+    reg input_grid_31_wreq;
+    wire input_grid_31_wreq_filtered;
+    wire [7:0] input_grid_31_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_31_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_31_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_31_value_out)
+    );
+        
+    // INPUT_GRID_32: Pixel 32 of the input character
+    reg input_grid_32_wreq;
+    wire input_grid_32_wreq_filtered;
+    wire [7:0] input_grid_32_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_32_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_32_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_32_value_out)
+    );
+        
+    // INPUT_GRID_33: Pixel 33 of the input character
+    reg input_grid_33_wreq;
+    wire input_grid_33_wreq_filtered;
+    wire [7:0] input_grid_33_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_33_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_33_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_33_value_out)
+    );
+        
+    // INPUT_GRID_34: Pixel 34 of the input character
+    reg input_grid_34_wreq;
+    wire input_grid_34_wreq_filtered;
+    wire [7:0] input_grid_34_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_34_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_34_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_34_value_out)
+    );
+        
+    // INPUT_GRID_35: Pixel 35 of the input character
+    reg input_grid_35_wreq;
+    wire input_grid_35_wreq_filtered;
+    wire [7:0] input_grid_35_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    INPUT_GRID_35_REG (
+        .CLK        (ACLK),
+        .RSTN       (ARESETN),
+        .WEN        (input_grid_35_wreq_filtered),
+        .VALUE_IN   (regpool_wdata),
+        .VALUE_OUT  (input_grid_35_value_out)
+    );
+        
     // OUTPUT_SOLUTION_0: Digit 0 of the output solution
     wire [7:0] output_solution_0_value_in;
     wire [7:0] output_solution_0_value_out;
@@ -637,6 +977,26 @@ module CORE_REGFILE (
         input_grid_13_wreq <= 1'b0;
         input_grid_14_wreq <= 1'b0;
         input_grid_15_wreq <= 1'b0;
+        input_grid_16_wreq <= 1'b0;
+        input_grid_17_wreq <= 1'b0;
+        input_grid_18_wreq <= 1'b0;
+        input_grid_19_wreq <= 1'b0;
+        input_grid_20_wreq <= 1'b0;
+        input_grid_21_wreq <= 1'b0;
+        input_grid_22_wreq <= 1'b0;
+        input_grid_23_wreq <= 1'b0;
+        input_grid_24_wreq <= 1'b0;
+        input_grid_25_wreq <= 1'b0;
+        input_grid_26_wreq <= 1'b0;
+        input_grid_27_wreq <= 1'b0;
+        input_grid_28_wreq <= 1'b0;
+        input_grid_29_wreq <= 1'b0;
+        input_grid_30_wreq <= 1'b0;
+        input_grid_31_wreq <= 1'b0;
+        input_grid_32_wreq <= 1'b0;
+        input_grid_33_wreq <= 1'b0;
+        input_grid_34_wreq <= 1'b0;
+        input_grid_35_wreq <= 1'b0;
         core_ctrl_wreq <= 1'b0;
         core_debug_info_wreq <= 1'b0;
         sevenseg_0_wreq <= 1'b0;
@@ -665,6 +1025,26 @@ module CORE_REGFILE (
             `CORE_REGFILE_INPUT_GRID_13_OFFSET : begin input_grid_13_wreq <= 1'b1; end
             `CORE_REGFILE_INPUT_GRID_14_OFFSET : begin input_grid_14_wreq <= 1'b1; end
             `CORE_REGFILE_INPUT_GRID_15_OFFSET : begin input_grid_15_wreq <= 1'b1; end
+            `CORE_REGFILE_INPUT_GRID_16_OFFSET : begin input_grid_16_wreq <= 1'b1; end
+            `CORE_REGFILE_INPUT_GRID_17_OFFSET : begin input_grid_17_wreq <= 1'b1; end
+            `CORE_REGFILE_INPUT_GRID_18_OFFSET : begin input_grid_18_wreq <= 1'b1; end
+            `CORE_REGFILE_INPUT_GRID_19_OFFSET : begin input_grid_19_wreq <= 1'b1; end
+            `CORE_REGFILE_INPUT_GRID_20_OFFSET : begin input_grid_20_wreq <= 1'b1; end
+            `CORE_REGFILE_INPUT_GRID_21_OFFSET : begin input_grid_21_wreq <= 1'b1; end
+            `CORE_REGFILE_INPUT_GRID_22_OFFSET : begin input_grid_22_wreq <= 1'b1; end
+            `CORE_REGFILE_INPUT_GRID_23_OFFSET : begin input_grid_23_wreq <= 1'b1; end
+            `CORE_REGFILE_INPUT_GRID_24_OFFSET : begin input_grid_24_wreq <= 1'b1; end
+            `CORE_REGFILE_INPUT_GRID_25_OFFSET : begin input_grid_25_wreq <= 1'b1; end
+            `CORE_REGFILE_INPUT_GRID_26_OFFSET : begin input_grid_26_wreq <= 1'b1; end
+            `CORE_REGFILE_INPUT_GRID_27_OFFSET : begin input_grid_27_wreq <= 1'b1; end
+            `CORE_REGFILE_INPUT_GRID_28_OFFSET : begin input_grid_28_wreq <= 1'b1; end
+            `CORE_REGFILE_INPUT_GRID_29_OFFSET : begin input_grid_29_wreq <= 1'b1; end
+            `CORE_REGFILE_INPUT_GRID_30_OFFSET : begin input_grid_30_wreq <= 1'b1; end
+            `CORE_REGFILE_INPUT_GRID_31_OFFSET : begin input_grid_31_wreq <= 1'b1; end
+            `CORE_REGFILE_INPUT_GRID_32_OFFSET : begin input_grid_32_wreq <= 1'b1; end
+            `CORE_REGFILE_INPUT_GRID_33_OFFSET : begin input_grid_33_wreq <= 1'b1; end
+            `CORE_REGFILE_INPUT_GRID_34_OFFSET : begin input_grid_34_wreq <= 1'b1; end
+            `CORE_REGFILE_INPUT_GRID_35_OFFSET : begin input_grid_35_wreq <= 1'b1; end
             `CORE_REGFILE_CORE_CTRL_OFFSET : begin core_ctrl_wreq <= 1'b1; end
             `CORE_REGFILE_CORE_DEBUG_INFO_OFFSET : begin core_debug_info_wreq <= 1'b1; end
             `CORE_REGFILE_SEVENSEG_0_OFFSET : begin sevenseg_0_wreq <= 1'b1; end
@@ -700,6 +1080,26 @@ module CORE_REGFILE (
     assign input_grid_13_wreq_filtered = input_grid_13_wreq & regpool_wen_resampled;
     assign input_grid_14_wreq_filtered = input_grid_14_wreq & regpool_wen_resampled;
     assign input_grid_15_wreq_filtered = input_grid_15_wreq & regpool_wen_resampled;
+    assign input_grid_16_wreq_filtered = input_grid_16_wreq & regpool_wen_resampled;
+    assign input_grid_17_wreq_filtered = input_grid_17_wreq & regpool_wen_resampled;
+    assign input_grid_18_wreq_filtered = input_grid_18_wreq & regpool_wen_resampled;
+    assign input_grid_19_wreq_filtered = input_grid_19_wreq & regpool_wen_resampled;
+    assign input_grid_20_wreq_filtered = input_grid_20_wreq & regpool_wen_resampled;
+    assign input_grid_21_wreq_filtered = input_grid_21_wreq & regpool_wen_resampled;
+    assign input_grid_22_wreq_filtered = input_grid_22_wreq & regpool_wen_resampled;
+    assign input_grid_23_wreq_filtered = input_grid_23_wreq & regpool_wen_resampled;
+    assign input_grid_24_wreq_filtered = input_grid_24_wreq & regpool_wen_resampled;
+    assign input_grid_25_wreq_filtered = input_grid_25_wreq & regpool_wen_resampled;
+    assign input_grid_26_wreq_filtered = input_grid_26_wreq & regpool_wen_resampled;
+    assign input_grid_27_wreq_filtered = input_grid_27_wreq & regpool_wen_resampled;
+    assign input_grid_28_wreq_filtered = input_grid_28_wreq & regpool_wen_resampled;
+    assign input_grid_29_wreq_filtered = input_grid_29_wreq & regpool_wen_resampled;
+    assign input_grid_30_wreq_filtered = input_grid_30_wreq & regpool_wen_resampled;
+    assign input_grid_31_wreq_filtered = input_grid_31_wreq & regpool_wen_resampled;
+    assign input_grid_32_wreq_filtered = input_grid_32_wreq & regpool_wen_resampled;
+    assign input_grid_33_wreq_filtered = input_grid_33_wreq & regpool_wen_resampled;
+    assign input_grid_34_wreq_filtered = input_grid_34_wreq & regpool_wen_resampled;
+    assign input_grid_35_wreq_filtered = input_grid_35_wreq & regpool_wen_resampled;
     assign core_ctrl_wreq_filtered = core_ctrl_wreq & regpool_wen_resampled;
     assign core_debug_info_wreq_filtered = core_debug_info_wreq & regpool_wen_resampled;
     assign sevenseg_0_wreq_filtered = sevenseg_0_wreq & regpool_wen_resampled;
@@ -735,6 +1135,26 @@ module CORE_REGFILE (
             `CORE_REGFILE_INPUT_GRID_13_OFFSET : begin regpool_rdata <= input_grid_13_value_out; end
             `CORE_REGFILE_INPUT_GRID_14_OFFSET : begin regpool_rdata <= input_grid_14_value_out; end
             `CORE_REGFILE_INPUT_GRID_15_OFFSET : begin regpool_rdata <= input_grid_15_value_out; end
+            `CORE_REGFILE_INPUT_GRID_16_OFFSET : begin regpool_rdata <= input_grid_16_value_out; end
+            `CORE_REGFILE_INPUT_GRID_17_OFFSET : begin regpool_rdata <= input_grid_17_value_out; end
+            `CORE_REGFILE_INPUT_GRID_18_OFFSET : begin regpool_rdata <= input_grid_18_value_out; end
+            `CORE_REGFILE_INPUT_GRID_19_OFFSET : begin regpool_rdata <= input_grid_19_value_out; end
+            `CORE_REGFILE_INPUT_GRID_20_OFFSET : begin regpool_rdata <= input_grid_20_value_out; end
+            `CORE_REGFILE_INPUT_GRID_21_OFFSET : begin regpool_rdata <= input_grid_21_value_out; end
+            `CORE_REGFILE_INPUT_GRID_22_OFFSET : begin regpool_rdata <= input_grid_22_value_out; end
+            `CORE_REGFILE_INPUT_GRID_23_OFFSET : begin regpool_rdata <= input_grid_23_value_out; end
+            `CORE_REGFILE_INPUT_GRID_24_OFFSET : begin regpool_rdata <= input_grid_24_value_out; end
+            `CORE_REGFILE_INPUT_GRID_25_OFFSET : begin regpool_rdata <= input_grid_25_value_out; end
+            `CORE_REGFILE_INPUT_GRID_26_OFFSET : begin regpool_rdata <= input_grid_26_value_out; end
+            `CORE_REGFILE_INPUT_GRID_27_OFFSET : begin regpool_rdata <= input_grid_27_value_out; end
+            `CORE_REGFILE_INPUT_GRID_28_OFFSET : begin regpool_rdata <= input_grid_28_value_out; end
+            `CORE_REGFILE_INPUT_GRID_29_OFFSET : begin regpool_rdata <= input_grid_29_value_out; end
+            `CORE_REGFILE_INPUT_GRID_30_OFFSET : begin regpool_rdata <= input_grid_30_value_out; end
+            `CORE_REGFILE_INPUT_GRID_31_OFFSET : begin regpool_rdata <= input_grid_31_value_out; end
+            `CORE_REGFILE_INPUT_GRID_32_OFFSET : begin regpool_rdata <= input_grid_32_value_out; end
+            `CORE_REGFILE_INPUT_GRID_33_OFFSET : begin regpool_rdata <= input_grid_33_value_out; end
+            `CORE_REGFILE_INPUT_GRID_34_OFFSET : begin regpool_rdata <= input_grid_34_value_out; end
+            `CORE_REGFILE_INPUT_GRID_35_OFFSET : begin regpool_rdata <= input_grid_35_value_out; end
             `CORE_REGFILE_OUTPUT_SOLUTION_0_OFFSET : begin regpool_rdata <= output_solution_0_value_out; end
             `CORE_REGFILE_OUTPUT_SOLUTION_1_OFFSET : begin regpool_rdata <= output_solution_1_value_out; end
             `CORE_REGFILE_OUTPUT_SOLUTION_2_OFFSET : begin regpool_rdata <= output_solution_2_value_out; end
@@ -774,6 +1194,26 @@ module CORE_REGFILE (
     assign HWIF_OUT_INPUT_GRID_13 = input_grid_13_value_out;
     assign HWIF_OUT_INPUT_GRID_14 = input_grid_14_value_out;
     assign HWIF_OUT_INPUT_GRID_15 = input_grid_15_value_out;
+    assign HWIF_OUT_INPUT_GRID_16 = input_grid_16_value_out;
+    assign HWIF_OUT_INPUT_GRID_17 = input_grid_17_value_out;
+    assign HWIF_OUT_INPUT_GRID_18 = input_grid_18_value_out;
+    assign HWIF_OUT_INPUT_GRID_19 = input_grid_19_value_out;
+    assign HWIF_OUT_INPUT_GRID_20 = input_grid_20_value_out;
+    assign HWIF_OUT_INPUT_GRID_21 = input_grid_21_value_out;
+    assign HWIF_OUT_INPUT_GRID_22 = input_grid_22_value_out;
+    assign HWIF_OUT_INPUT_GRID_23 = input_grid_23_value_out;
+    assign HWIF_OUT_INPUT_GRID_24 = input_grid_24_value_out;
+    assign HWIF_OUT_INPUT_GRID_25 = input_grid_25_value_out;
+    assign HWIF_OUT_INPUT_GRID_26 = input_grid_26_value_out;
+    assign HWIF_OUT_INPUT_GRID_27 = input_grid_27_value_out;
+    assign HWIF_OUT_INPUT_GRID_28 = input_grid_28_value_out;
+    assign HWIF_OUT_INPUT_GRID_29 = input_grid_29_value_out;
+    assign HWIF_OUT_INPUT_GRID_30 = input_grid_30_value_out;
+    assign HWIF_OUT_INPUT_GRID_31 = input_grid_31_value_out;
+    assign HWIF_OUT_INPUT_GRID_32 = input_grid_32_value_out;
+    assign HWIF_OUT_INPUT_GRID_33 = input_grid_33_value_out;
+    assign HWIF_OUT_INPUT_GRID_34 = input_grid_34_value_out;
+    assign HWIF_OUT_INPUT_GRID_35 = input_grid_35_value_out;
     assign output_solution_0_value_in = HWIF_IN_OUTPUT_SOLUTION_0;
     assign output_solution_1_value_in = HWIF_IN_OUTPUT_SOLUTION_1;
     assign output_solution_2_value_in = HWIF_IN_OUTPUT_SOLUTION_2;

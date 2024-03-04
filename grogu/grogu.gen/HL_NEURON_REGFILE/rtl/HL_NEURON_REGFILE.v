@@ -12,11 +12,11 @@ module HL_NEURON_REGFILE (
     input wire RSTN,
     // Register interface
     input wire WREQ,
-    input wire [4:0] WADDR,
+    input wire [5:0] WADDR,
     input wire [7:0] WDATA,
     output wire WACK,
     input wire RREQ,
-    input wire [4:0] RADDR,
+    input wire [5:0] RADDR,
     output wire [7:0] RDATA,
     output wire RVALID,
     // Register bundles
@@ -36,6 +36,26 @@ module HL_NEURON_REGFILE (
     output wire [7:0] HWIF_OUT_WEIGHT_13,
     output wire [7:0] HWIF_OUT_WEIGHT_14,
     output wire [7:0] HWIF_OUT_WEIGHT_15,
+    output wire [7:0] HWIF_OUT_WEIGHT_16,
+    output wire [7:0] HWIF_OUT_WEIGHT_17,
+    output wire [7:0] HWIF_OUT_WEIGHT_18,
+    output wire [7:0] HWIF_OUT_WEIGHT_19,
+    output wire [7:0] HWIF_OUT_WEIGHT_20,
+    output wire [7:0] HWIF_OUT_WEIGHT_21,
+    output wire [7:0] HWIF_OUT_WEIGHT_22,
+    output wire [7:0] HWIF_OUT_WEIGHT_23,
+    output wire [7:0] HWIF_OUT_WEIGHT_24,
+    output wire [7:0] HWIF_OUT_WEIGHT_25,
+    output wire [7:0] HWIF_OUT_WEIGHT_26,
+    output wire [7:0] HWIF_OUT_WEIGHT_27,
+    output wire [7:0] HWIF_OUT_WEIGHT_28,
+    output wire [7:0] HWIF_OUT_WEIGHT_29,
+    output wire [7:0] HWIF_OUT_WEIGHT_30,
+    output wire [7:0] HWIF_OUT_WEIGHT_31,
+    output wire [7:0] HWIF_OUT_WEIGHT_32,
+    output wire [7:0] HWIF_OUT_WEIGHT_33,
+    output wire [7:0] HWIF_OUT_WEIGHT_34,
+    output wire [7:0] HWIF_OUT_WEIGHT_35,
     output wire [7:0] HWIF_OUT_BIAS
 );
 
@@ -287,6 +307,306 @@ module HL_NEURON_REGFILE (
         .VALUE_OUT  (weight_15_value_out)
     );
         
+    // WEIGHT_16: Input weight 16
+    reg weight_16_wreq;
+    wire [7:0] weight_16_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    WEIGHT_16_REG (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .WEN        (weight_16_wreq),
+        .VALUE_IN   (WDATA),
+        .VALUE_OUT  (weight_16_value_out)
+    );
+        
+    // WEIGHT_17: Input weight 17
+    reg weight_17_wreq;
+    wire [7:0] weight_17_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    WEIGHT_17_REG (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .WEN        (weight_17_wreq),
+        .VALUE_IN   (WDATA),
+        .VALUE_OUT  (weight_17_value_out)
+    );
+        
+    // WEIGHT_18: Input weight 18
+    reg weight_18_wreq;
+    wire [7:0] weight_18_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    WEIGHT_18_REG (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .WEN        (weight_18_wreq),
+        .VALUE_IN   (WDATA),
+        .VALUE_OUT  (weight_18_value_out)
+    );
+        
+    // WEIGHT_19: Input weight 19
+    reg weight_19_wreq;
+    wire [7:0] weight_19_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    WEIGHT_19_REG (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .WEN        (weight_19_wreq),
+        .VALUE_IN   (WDATA),
+        .VALUE_OUT  (weight_19_value_out)
+    );
+        
+    // WEIGHT_20: Input weight 20
+    reg weight_20_wreq;
+    wire [7:0] weight_20_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    WEIGHT_20_REG (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .WEN        (weight_20_wreq),
+        .VALUE_IN   (WDATA),
+        .VALUE_OUT  (weight_20_value_out)
+    );
+        
+    // WEIGHT_21: Input weight 21
+    reg weight_21_wreq;
+    wire [7:0] weight_21_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    WEIGHT_21_REG (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .WEN        (weight_21_wreq),
+        .VALUE_IN   (WDATA),
+        .VALUE_OUT  (weight_21_value_out)
+    );
+        
+    // WEIGHT_22: Input weight 22
+    reg weight_22_wreq;
+    wire [7:0] weight_22_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    WEIGHT_22_REG (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .WEN        (weight_22_wreq),
+        .VALUE_IN   (WDATA),
+        .VALUE_OUT  (weight_22_value_out)
+    );
+        
+    // WEIGHT_23: Input weight 23
+    reg weight_23_wreq;
+    wire [7:0] weight_23_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    WEIGHT_23_REG (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .WEN        (weight_23_wreq),
+        .VALUE_IN   (WDATA),
+        .VALUE_OUT  (weight_23_value_out)
+    );
+        
+    // WEIGHT_24: Input weight 24
+    reg weight_24_wreq;
+    wire [7:0] weight_24_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    WEIGHT_24_REG (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .WEN        (weight_24_wreq),
+        .VALUE_IN   (WDATA),
+        .VALUE_OUT  (weight_24_value_out)
+    );
+        
+    // WEIGHT_25: Input weight 25
+    reg weight_25_wreq;
+    wire [7:0] weight_25_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    WEIGHT_25_REG (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .WEN        (weight_25_wreq),
+        .VALUE_IN   (WDATA),
+        .VALUE_OUT  (weight_25_value_out)
+    );
+        
+    // WEIGHT_26: Input weight 26
+    reg weight_26_wreq;
+    wire [7:0] weight_26_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    WEIGHT_26_REG (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .WEN        (weight_26_wreq),
+        .VALUE_IN   (WDATA),
+        .VALUE_OUT  (weight_26_value_out)
+    );
+        
+    // WEIGHT_27: Input weight 27
+    reg weight_27_wreq;
+    wire [7:0] weight_27_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    WEIGHT_27_REG (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .WEN        (weight_27_wreq),
+        .VALUE_IN   (WDATA),
+        .VALUE_OUT  (weight_27_value_out)
+    );
+        
+    // WEIGHT_28: Input weight 28
+    reg weight_28_wreq;
+    wire [7:0] weight_28_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    WEIGHT_28_REG (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .WEN        (weight_28_wreq),
+        .VALUE_IN   (WDATA),
+        .VALUE_OUT  (weight_28_value_out)
+    );
+        
+    // WEIGHT_29: Input weight 29
+    reg weight_29_wreq;
+    wire [7:0] weight_29_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    WEIGHT_29_REG (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .WEN        (weight_29_wreq),
+        .VALUE_IN   (WDATA),
+        .VALUE_OUT  (weight_29_value_out)
+    );
+        
+    // WEIGHT_30: Input weight 30
+    reg weight_30_wreq;
+    wire [7:0] weight_30_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    WEIGHT_30_REG (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .WEN        (weight_30_wreq),
+        .VALUE_IN   (WDATA),
+        .VALUE_OUT  (weight_30_value_out)
+    );
+        
+    // WEIGHT_31: Input weight 31
+    reg weight_31_wreq;
+    wire [7:0] weight_31_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    WEIGHT_31_REG (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .WEN        (weight_31_wreq),
+        .VALUE_IN   (WDATA),
+        .VALUE_OUT  (weight_31_value_out)
+    );
+        
+    // WEIGHT_32: Input weight 32
+    reg weight_32_wreq;
+    wire [7:0] weight_32_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    WEIGHT_32_REG (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .WEN        (weight_32_wreq),
+        .VALUE_IN   (WDATA),
+        .VALUE_OUT  (weight_32_value_out)
+    );
+        
+    // WEIGHT_33: Input weight 33
+    reg weight_33_wreq;
+    wire [7:0] weight_33_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    WEIGHT_33_REG (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .WEN        (weight_33_wreq),
+        .VALUE_IN   (WDATA),
+        .VALUE_OUT  (weight_33_value_out)
+    );
+        
+    // WEIGHT_34: Input weight 34
+    reg weight_34_wreq;
+    wire [7:0] weight_34_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    WEIGHT_34_REG (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .WEN        (weight_34_wreq),
+        .VALUE_IN   (WDATA),
+        .VALUE_OUT  (weight_34_value_out)
+    );
+        
+    // WEIGHT_35: Input weight 35
+    reg weight_35_wreq;
+    wire [7:0] weight_35_value_out;
+    RW_REG #(
+        .DATA_WIDTH (8),
+        .HAS_RESET  (0)
+    )
+    WEIGHT_35_REG (
+        .CLK        (CLK),
+        .RSTN       (RSTN),
+        .WEN        (weight_35_wreq),
+        .VALUE_IN   (WDATA),
+        .VALUE_OUT  (weight_35_value_out)
+    );
+        
     // BIAS: Input bias
     reg bias_wreq;
     wire [7:0] bias_value_out;
@@ -321,6 +641,26 @@ module HL_NEURON_REGFILE (
         weight_13_wreq <= 1'b0;
         weight_14_wreq <= 1'b0;
         weight_15_wreq <= 1'b0;
+        weight_16_wreq <= 1'b0;
+        weight_17_wreq <= 1'b0;
+        weight_18_wreq <= 1'b0;
+        weight_19_wreq <= 1'b0;
+        weight_20_wreq <= 1'b0;
+        weight_21_wreq <= 1'b0;
+        weight_22_wreq <= 1'b0;
+        weight_23_wreq <= 1'b0;
+        weight_24_wreq <= 1'b0;
+        weight_25_wreq <= 1'b0;
+        weight_26_wreq <= 1'b0;
+        weight_27_wreq <= 1'b0;
+        weight_28_wreq <= 1'b0;
+        weight_29_wreq <= 1'b0;
+        weight_30_wreq <= 1'b0;
+        weight_31_wreq <= 1'b0;
+        weight_32_wreq <= 1'b0;
+        weight_33_wreq <= 1'b0;
+        weight_34_wreq <= 1'b0;
+        weight_35_wreq <= 1'b0;
         bias_wreq <= 1'b0;
 
         if(WREQ) begin
@@ -343,6 +683,26 @@ module HL_NEURON_REGFILE (
                `HL_NEURON_REGFILE_WEIGHT_13_OFFSET : begin weight_13_wreq <= 1'b1; end
                `HL_NEURON_REGFILE_WEIGHT_14_OFFSET : begin weight_14_wreq <= 1'b1; end
                `HL_NEURON_REGFILE_WEIGHT_15_OFFSET : begin weight_15_wreq <= 1'b1; end
+               `HL_NEURON_REGFILE_WEIGHT_16_OFFSET : begin weight_16_wreq <= 1'b1; end
+               `HL_NEURON_REGFILE_WEIGHT_17_OFFSET : begin weight_17_wreq <= 1'b1; end
+               `HL_NEURON_REGFILE_WEIGHT_18_OFFSET : begin weight_18_wreq <= 1'b1; end
+               `HL_NEURON_REGFILE_WEIGHT_19_OFFSET : begin weight_19_wreq <= 1'b1; end
+               `HL_NEURON_REGFILE_WEIGHT_20_OFFSET : begin weight_20_wreq <= 1'b1; end
+               `HL_NEURON_REGFILE_WEIGHT_21_OFFSET : begin weight_21_wreq <= 1'b1; end
+               `HL_NEURON_REGFILE_WEIGHT_22_OFFSET : begin weight_22_wreq <= 1'b1; end
+               `HL_NEURON_REGFILE_WEIGHT_23_OFFSET : begin weight_23_wreq <= 1'b1; end
+               `HL_NEURON_REGFILE_WEIGHT_24_OFFSET : begin weight_24_wreq <= 1'b1; end
+               `HL_NEURON_REGFILE_WEIGHT_25_OFFSET : begin weight_25_wreq <= 1'b1; end
+               `HL_NEURON_REGFILE_WEIGHT_26_OFFSET : begin weight_26_wreq <= 1'b1; end
+               `HL_NEURON_REGFILE_WEIGHT_27_OFFSET : begin weight_27_wreq <= 1'b1; end
+               `HL_NEURON_REGFILE_WEIGHT_28_OFFSET : begin weight_28_wreq <= 1'b1; end
+               `HL_NEURON_REGFILE_WEIGHT_29_OFFSET : begin weight_29_wreq <= 1'b1; end
+               `HL_NEURON_REGFILE_WEIGHT_30_OFFSET : begin weight_30_wreq <= 1'b1; end
+               `HL_NEURON_REGFILE_WEIGHT_31_OFFSET : begin weight_31_wreq <= 1'b1; end
+               `HL_NEURON_REGFILE_WEIGHT_32_OFFSET : begin weight_32_wreq <= 1'b1; end
+               `HL_NEURON_REGFILE_WEIGHT_33_OFFSET : begin weight_33_wreq <= 1'b1; end
+               `HL_NEURON_REGFILE_WEIGHT_34_OFFSET : begin weight_34_wreq <= 1'b1; end
+               `HL_NEURON_REGFILE_WEIGHT_35_OFFSET : begin weight_35_wreq <= 1'b1; end
                `HL_NEURON_REGFILE_BIAS_OFFSET : begin bias_wreq <= 1'b1; end
             endcase
         end
@@ -372,6 +732,26 @@ module HL_NEURON_REGFILE (
             `HL_NEURON_REGFILE_WEIGHT_13_OFFSET : begin rdata = weight_13_value_out; end
             `HL_NEURON_REGFILE_WEIGHT_14_OFFSET : begin rdata = weight_14_value_out; end
             `HL_NEURON_REGFILE_WEIGHT_15_OFFSET : begin rdata = weight_15_value_out; end
+            `HL_NEURON_REGFILE_WEIGHT_16_OFFSET : begin rdata = weight_16_value_out; end
+            `HL_NEURON_REGFILE_WEIGHT_17_OFFSET : begin rdata = weight_17_value_out; end
+            `HL_NEURON_REGFILE_WEIGHT_18_OFFSET : begin rdata = weight_18_value_out; end
+            `HL_NEURON_REGFILE_WEIGHT_19_OFFSET : begin rdata = weight_19_value_out; end
+            `HL_NEURON_REGFILE_WEIGHT_20_OFFSET : begin rdata = weight_20_value_out; end
+            `HL_NEURON_REGFILE_WEIGHT_21_OFFSET : begin rdata = weight_21_value_out; end
+            `HL_NEURON_REGFILE_WEIGHT_22_OFFSET : begin rdata = weight_22_value_out; end
+            `HL_NEURON_REGFILE_WEIGHT_23_OFFSET : begin rdata = weight_23_value_out; end
+            `HL_NEURON_REGFILE_WEIGHT_24_OFFSET : begin rdata = weight_24_value_out; end
+            `HL_NEURON_REGFILE_WEIGHT_25_OFFSET : begin rdata = weight_25_value_out; end
+            `HL_NEURON_REGFILE_WEIGHT_26_OFFSET : begin rdata = weight_26_value_out; end
+            `HL_NEURON_REGFILE_WEIGHT_27_OFFSET : begin rdata = weight_27_value_out; end
+            `HL_NEURON_REGFILE_WEIGHT_28_OFFSET : begin rdata = weight_28_value_out; end
+            `HL_NEURON_REGFILE_WEIGHT_29_OFFSET : begin rdata = weight_29_value_out; end
+            `HL_NEURON_REGFILE_WEIGHT_30_OFFSET : begin rdata = weight_30_value_out; end
+            `HL_NEURON_REGFILE_WEIGHT_31_OFFSET : begin rdata = weight_31_value_out; end
+            `HL_NEURON_REGFILE_WEIGHT_32_OFFSET : begin rdata = weight_32_value_out; end
+            `HL_NEURON_REGFILE_WEIGHT_33_OFFSET : begin rdata = weight_33_value_out; end
+            `HL_NEURON_REGFILE_WEIGHT_34_OFFSET : begin rdata = weight_34_value_out; end
+            `HL_NEURON_REGFILE_WEIGHT_35_OFFSET : begin rdata = weight_35_value_out; end
             `HL_NEURON_REGFILE_BIAS_OFFSET : begin rdata = bias_value_out; end
             default : begin rdata = {8{1'b1}}; end
         endcase
@@ -401,6 +781,26 @@ module HL_NEURON_REGFILE (
     assign HWIF_OUT_WEIGHT_13 = weight_13_value_out;
     assign HWIF_OUT_WEIGHT_14 = weight_14_value_out;
     assign HWIF_OUT_WEIGHT_15 = weight_15_value_out;
+    assign HWIF_OUT_WEIGHT_16 = weight_16_value_out;
+    assign HWIF_OUT_WEIGHT_17 = weight_17_value_out;
+    assign HWIF_OUT_WEIGHT_18 = weight_18_value_out;
+    assign HWIF_OUT_WEIGHT_19 = weight_19_value_out;
+    assign HWIF_OUT_WEIGHT_20 = weight_20_value_out;
+    assign HWIF_OUT_WEIGHT_21 = weight_21_value_out;
+    assign HWIF_OUT_WEIGHT_22 = weight_22_value_out;
+    assign HWIF_OUT_WEIGHT_23 = weight_23_value_out;
+    assign HWIF_OUT_WEIGHT_24 = weight_24_value_out;
+    assign HWIF_OUT_WEIGHT_25 = weight_25_value_out;
+    assign HWIF_OUT_WEIGHT_26 = weight_26_value_out;
+    assign HWIF_OUT_WEIGHT_27 = weight_27_value_out;
+    assign HWIF_OUT_WEIGHT_28 = weight_28_value_out;
+    assign HWIF_OUT_WEIGHT_29 = weight_29_value_out;
+    assign HWIF_OUT_WEIGHT_30 = weight_30_value_out;
+    assign HWIF_OUT_WEIGHT_31 = weight_31_value_out;
+    assign HWIF_OUT_WEIGHT_32 = weight_32_value_out;
+    assign HWIF_OUT_WEIGHT_33 = weight_33_value_out;
+    assign HWIF_OUT_WEIGHT_34 = weight_34_value_out;
+    assign HWIF_OUT_WEIGHT_35 = weight_35_value_out;
     assign HWIF_OUT_BIAS = bias_value_out;
 endmodule
 

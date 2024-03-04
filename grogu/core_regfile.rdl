@@ -232,6 +232,66 @@ addrmap core_regfile {
     CREG_GP INPUT_GRID_15; 
     INPUT_GRID_15->desc = "Pixel 15 of the input character";
     
+    CREG_GP INPUT_GRID_16; 
+    INPUT_GRID_16->desc = "Pixel 16 of the input character";
+    
+    CREG_GP INPUT_GRID_17; 
+    INPUT_GRID_17->desc = "Pixel 17 of the input character";
+    
+    CREG_GP INPUT_GRID_18; 
+    INPUT_GRID_18->desc = "Pixel 18 of the input character";
+    
+    CREG_GP INPUT_GRID_19; 
+    INPUT_GRID_19->desc = "Pixel 19 of the input character";
+    
+    CREG_GP INPUT_GRID_20; 
+    INPUT_GRID_20->desc = "Pixel 20 of the input character";
+    
+    CREG_GP INPUT_GRID_21; 
+    INPUT_GRID_21->desc = "Pixel 21 of the input character";
+    
+    CREG_GP INPUT_GRID_22; 
+    INPUT_GRID_22->desc = "Pixel 22 of the input character";
+    
+    CREG_GP INPUT_GRID_23; 
+    INPUT_GRID_23->desc = "Pixel 23 of the input character";
+    
+    CREG_GP INPUT_GRID_24; 
+    INPUT_GRID_24->desc = "Pixel 24 of the input character";
+    
+    CREG_GP INPUT_GRID_25; 
+    INPUT_GRID_25->desc = "Pixel 25 of the input character";
+    
+    CREG_GP INPUT_GRID_26; 
+    INPUT_GRID_26->desc = "Pixel 26 of the input character";
+    
+    CREG_GP INPUT_GRID_27; 
+    INPUT_GRID_27->desc = "Pixel 27 of the input character";
+    
+    CREG_GP INPUT_GRID_28; 
+    INPUT_GRID_28->desc = "Pixel 28 of the input character";
+    
+    CREG_GP INPUT_GRID_29; 
+    INPUT_GRID_29->desc = "Pixel 29 of the input character";
+    
+    CREG_GP INPUT_GRID_30; 
+    INPUT_GRID_30->desc = "Pixel 30 of the input character";
+    
+    CREG_GP INPUT_GRID_31; 
+    INPUT_GRID_31->desc = "Pixel 31 of the input character";
+    
+    CREG_GP INPUT_GRID_32; 
+    INPUT_GRID_32->desc = "Pixel 32 of the input character";
+    
+    CREG_GP INPUT_GRID_33; 
+    INPUT_GRID_33->desc = "Pixel 33 of the input character";
+    
+    CREG_GP INPUT_GRID_34; 
+    INPUT_GRID_34->desc = "Pixel 34 of the input character";
+    
+    CREG_GP INPUT_GRID_35; 
+    INPUT_GRID_35->desc = "Pixel 35 of the input character";
+    
 
     // Output solution, one vector for each character
     

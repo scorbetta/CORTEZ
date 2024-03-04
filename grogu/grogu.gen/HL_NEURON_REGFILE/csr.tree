@@ -31,5 +31,45 @@
 		 [7:0] data sw=rw
 	 WEIGHT_15
 		 [7:0] data sw=rw
+	 WEIGHT_16
+		 [7:0] data sw=rw
+	 WEIGHT_17
+		 [7:0] data sw=rw
+	 WEIGHT_18
+		 [7:0] data sw=rw
+	 WEIGHT_19
+		 [7:0] data sw=rw
+	 WEIGHT_20
+		 [7:0] data sw=rw
+	 WEIGHT_21
+		 [7:0] data sw=rw
+	 WEIGHT_22
+		 [7:0] data sw=rw
+	 WEIGHT_23
+		 [7:0] data sw=rw
+	 WEIGHT_24
+		 [7:0] data sw=rw
+	 WEIGHT_25
+		 [7:0] data sw=rw
+	 WEIGHT_26
+		 [7:0] data sw=rw
+	 WEIGHT_27
+		 [7:0] data sw=rw
+	 WEIGHT_28
+		 [7:0] data sw=rw
+	 WEIGHT_29
+		 [7:0] data sw=rw
+	 WEIGHT_30
+		 [7:0] data sw=rw
+	 WEIGHT_31
+		 [7:0] data sw=rw
+	 WEIGHT_32
+		 [7:0] data sw=rw
+	 WEIGHT_33
+		 [7:0] data sw=rw
+	 WEIGHT_34
+		 [7:0] data sw=rw
+	 WEIGHT_35
+		 [7:0] data sw=rw
 	 BIAS
 		 [7:0] data sw=rw

@@ -68,7 +68,135 @@ typedef union ol_neuron_regfile_WEIGHT_7_reg_tag {
     uint32_t value;
 } ol_neuron_regfile_WEIGHT_7_reg_t;
 
-// ol_neuron_regfile_BIAS @+0x8
+// ol_neuron_regfile_WEIGHT_8 @+0x8
+typedef union ol_neuron_regfile_WEIGHT_8_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} ol_neuron_regfile_WEIGHT_8_reg_t;
+
+// ol_neuron_regfile_WEIGHT_9 @+0x9
+typedef union ol_neuron_regfile_WEIGHT_9_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} ol_neuron_regfile_WEIGHT_9_reg_t;
+
+// ol_neuron_regfile_WEIGHT_10 @+0xa
+typedef union ol_neuron_regfile_WEIGHT_10_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} ol_neuron_regfile_WEIGHT_10_reg_t;
+
+// ol_neuron_regfile_WEIGHT_11 @+0xb
+typedef union ol_neuron_regfile_WEIGHT_11_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} ol_neuron_regfile_WEIGHT_11_reg_t;
+
+// ol_neuron_regfile_WEIGHT_12 @+0xc
+typedef union ol_neuron_regfile_WEIGHT_12_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} ol_neuron_regfile_WEIGHT_12_reg_t;
+
+// ol_neuron_regfile_WEIGHT_13 @+0xd
+typedef union ol_neuron_regfile_WEIGHT_13_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} ol_neuron_regfile_WEIGHT_13_reg_t;
+
+// ol_neuron_regfile_WEIGHT_14 @+0xe
+typedef union ol_neuron_regfile_WEIGHT_14_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} ol_neuron_regfile_WEIGHT_14_reg_t;
+
+// ol_neuron_regfile_WEIGHT_15 @+0xf
+typedef union ol_neuron_regfile_WEIGHT_15_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} ol_neuron_regfile_WEIGHT_15_reg_t;
+
+// ol_neuron_regfile_WEIGHT_16 @+0x10
+typedef union ol_neuron_regfile_WEIGHT_16_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} ol_neuron_regfile_WEIGHT_16_reg_t;
+
+// ol_neuron_regfile_WEIGHT_17 @+0x11
+typedef union ol_neuron_regfile_WEIGHT_17_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} ol_neuron_regfile_WEIGHT_17_reg_t;
+
+// ol_neuron_regfile_WEIGHT_18 @+0x12
+typedef union ol_neuron_regfile_WEIGHT_18_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} ol_neuron_regfile_WEIGHT_18_reg_t;
+
+// ol_neuron_regfile_WEIGHT_19 @+0x13
+typedef union ol_neuron_regfile_WEIGHT_19_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} ol_neuron_regfile_WEIGHT_19_reg_t;
+
+// ol_neuron_regfile_WEIGHT_20 @+0x14
+typedef union ol_neuron_regfile_WEIGHT_20_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} ol_neuron_regfile_WEIGHT_20_reg_t;
+
+// ol_neuron_regfile_WEIGHT_21 @+0x15
+typedef union ol_neuron_regfile_WEIGHT_21_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} ol_neuron_regfile_WEIGHT_21_reg_t;
+
+// ol_neuron_regfile_WEIGHT_22 @+0x16
+typedef union ol_neuron_regfile_WEIGHT_22_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} ol_neuron_regfile_WEIGHT_22_reg_t;
+
+// ol_neuron_regfile_WEIGHT_23 @+0x17
+typedef union ol_neuron_regfile_WEIGHT_23_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} ol_neuron_regfile_WEIGHT_23_reg_t;
+
+// ol_neuron_regfile_BIAS @+0x18
 typedef union ol_neuron_regfile_BIAS_reg_tag {
     struct {
         uint32_t data : 8; // @[7:0]

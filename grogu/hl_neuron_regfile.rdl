@@ -218,6 +218,66 @@ addrmap hl_neuron_regfile {
     CREG_GP WEIGHT_15; 
     WEIGHT_15->desc = "Input weight 15";
     
+    CREG_GP WEIGHT_16; 
+    WEIGHT_16->desc = "Input weight 16";
+    
+    CREG_GP WEIGHT_17; 
+    WEIGHT_17->desc = "Input weight 17";
+    
+    CREG_GP WEIGHT_18; 
+    WEIGHT_18->desc = "Input weight 18";
+    
+    CREG_GP WEIGHT_19; 
+    WEIGHT_19->desc = "Input weight 19";
+    
+    CREG_GP WEIGHT_20; 
+    WEIGHT_20->desc = "Input weight 20";
+    
+    CREG_GP WEIGHT_21; 
+    WEIGHT_21->desc = "Input weight 21";
+    
+    CREG_GP WEIGHT_22; 
+    WEIGHT_22->desc = "Input weight 22";
+    
+    CREG_GP WEIGHT_23; 
+    WEIGHT_23->desc = "Input weight 23";
+    
+    CREG_GP WEIGHT_24; 
+    WEIGHT_24->desc = "Input weight 24";
+    
+    CREG_GP WEIGHT_25; 
+    WEIGHT_25->desc = "Input weight 25";
+    
+    CREG_GP WEIGHT_26; 
+    WEIGHT_26->desc = "Input weight 26";
+    
+    CREG_GP WEIGHT_27; 
+    WEIGHT_27->desc = "Input weight 27";
+    
+    CREG_GP WEIGHT_28; 
+    WEIGHT_28->desc = "Input weight 28";
+    
+    CREG_GP WEIGHT_29; 
+    WEIGHT_29->desc = "Input weight 29";
+    
+    CREG_GP WEIGHT_30; 
+    WEIGHT_30->desc = "Input weight 30";
+    
+    CREG_GP WEIGHT_31; 
+    WEIGHT_31->desc = "Input weight 31";
+    
+    CREG_GP WEIGHT_32; 
+    WEIGHT_32->desc = "Input weight 32";
+    
+    CREG_GP WEIGHT_33; 
+    WEIGHT_33->desc = "Input weight 33";
+    
+    CREG_GP WEIGHT_34; 
+    WEIGHT_34->desc = "Input weight 34";
+    
+    CREG_GP WEIGHT_35; 
+    WEIGHT_35->desc = "Input weight 35";
+    
 
     // Bias
     CREG_GP BIAS; 

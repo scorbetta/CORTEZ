@@ -13,7 +13,7 @@
 #---- CONFIGURATION -------------------------------------------------------------------------------
 
 # Network architecture. The value of  OL_NEURONS  determines the number of characters to recognize
-HL_NEURONS=8
+HL_NEURONS=24
 OL_NEURONS=5
 
 # Fixed-point
@@ -21,12 +21,12 @@ FP_WIDTH=8
 FP_FRAC=5
 
 # Input problem grid size (one side)
-GRID_SIZE=4
+GRID_SIZE=6
 
 # Network training configuration
-MAX_NOISY_PIXELS=2
-TRAINING_LEN=150
-TEST_LEN=200
+MAX_NOISY_PIXELS=5
+TRAINING_LEN=500
+TEST_LEN=250
 EPOCHS=1200
 ALPHA=0.01
 
@@ -64,18 +64,8 @@ pushd model/neural_network >/dev/null
 
     # Copy files to deploy folder
     cp config.ini trained_network
-    cp hidden_layer_bias_fp_hex.txt trained_network
-    cp hidden_layer_bias_fp.txt trained_network
-    cp hidden_layer_bias.txt trained_network
-    cp hidden_layer_weights_fp_hex.txt trained_network
-    cp hidden_layer_weights_fp.txt trained_network
-    cp hidden_layer_weights.txt trained_network
-    cp output_layer_bias_fp_hex.txt trained_network
-    cp output_layer_bias_fp.txt trained_network
-    cp output_layer_bias.txt trained_network
-    cp output_layer_weights_fp_hex.txt trained_network
-    cp output_layer_weights_fp.txt trained_network
-    cp output_layer_weights.txt trained_network
+    cp hidden_layer_*.txt trained_network
+    cp output_layer_*.txt trained_network
     cp weights.npz trained_network
 
     # Generate init code
@@ -110,127 +100,127 @@ popd >/dev/null
 
 pushd grogu >/dev/null
     echo -e "${BLUE}info: Launching grogu${NONE}"
-    source sourceme ${NUM_INPUTS} ${OL_NEURONS} ${HL_NEURONS}
+    source sourceme ${input_size} ${OL_NEURONS} ${HL_NEURONS}
 popd >/dev/null
 
 
-#---- RTL GENERATION ------------------------------------------------------------------------------
-
-pushd rtl >/dev/null
-    echo -e "${BLUE}info: Generating RTL design files set${NONE}"
-
-    # Copy piecewise approximation
-    cp ../model/piecewise_approximation/PIECEWISE_APPROXIMATION_PARAMETERS.vh .
-
-    # Generate top-level instances for generic NETWORK_TOP (deprecated) and Caravel's Core (ASIC
-    # only(
-    tfiles=( NETWORK_TOP.v.template CORE_TOP.v.template )
-    for tfile in ${tfiles[@]}
-    do
-        # Remove  .template  substring
-        target=${tfile::-9}
-        cp $tfile $target
-        sed -i "s/__FP_WIDTH__/$FP_WIDTH/g" $target
-        sed -i "s/__FP_FRAC__/$FP_FRAC/g" $target
-        sed -i "s/__INPUT_SIZE__/$input_size/g" $target
-        sed -i "s/__HL_NEURONS__/$HL_NEURONS/g" $target
-        sed -i "s/__OL_NEURONS__/$OL_NEURONS/g" $target
-        sed -i "s/__AXI_BASE_ADDR__/$AXI_BASE_ADDR/g" $target
-
-        # Hidden layer weights
-        replacement=""
-        for hdx in $( seq 1 1 ${HL_NEURONS} )
-        do
-            ndx=$(( $hdx - 1 ))
-
-            if [ $hdx -gt 1 ]
-            then
-                replacement="${replacement}\n        "
-            fi
-            replacement="${replacement}.HWIF_OUT_HL_WEIGHTS_${ndx}      (hl_weights[${ndx}*${input_size}*${FP_WIDTH} +: ${input_size}*${FP_WIDTH}]),"
-        done
-        sed -i "s/__HL_WEIGHTS__/$replacement/g" $target
-
-        # Hidden layer bias
-        replacement=""
-        for hdx in $( seq 1 1 ${HL_NEURONS} )
-        do
-            ndx=$(( $hdx - 1 ))
-
-            if [ $hdx -gt 1 ]
-            then
-                replacement="${replacement}\n        "
-            fi
-            replacement="${replacement}.HWIF_OUT_HL_BIAS_${ndx}         (hl_bias[${ndx}*${FP_WIDTH} +: ${FP_WIDTH}]),"
-        done
-        sed -i "s/__HL_BIAS__/$replacement/g" $target
-
-        # Output layer weights
-        replacement=""
-        for odx in $( seq 1 1 ${OL_NEURONS} )
-        do
-            ndx=$(( $odx - 1 ))
-
-            if [ $odx -gt 1 ]
-            then
-                replacement="${replacement}\n        "
-            fi
-            replacement="${replacement}.HWIF_OUT_OL_WEIGHTS_${ndx}      (ol_weights[${ndx}*${HL_NEURONS}*${FP_WIDTH} +: ${HL_NEURONS}*${FP_WIDTH}]),"
-        done
-        sed -i "s/__OL_WEIGHTS__/$replacement/g" $target
-
-        # Output layer bias
-        replacement=""
-        for odx in $( seq 1 1 ${OL_NEURONS} )
-        do
-            ndx=$(( $odx - 1 ))
-
-            if [ $odx -gt 1 ]
-            then
-                replacement="${replacement}\n        "
-            fi
-            replacement="${replacement}.HWIF_OUT_OL_BIAS_${ndx}         (ol_bias[${ndx}*${FP_WIDTH} +: ${FP_WIDTH}]),"
-        done
-        sed -i "s/__OL_BIAS__/$replacement/g" $target
-
-        # Input problem
-        replacement=""
-        for idx in $( seq 1 1 ${input_size} )
-        do
-            bdx=$(( $idx - 1 ))
-
-            if [ $idx -gt 1 ]
-            then
-                replacement="${replacement}\n        "
-            fi
-            replacement="${replacement}.HWIF_OUT_INPUT_GRID_${bdx}      (values_in[${bdx}*${FP_WIDTH} +: ${FP_WIDTH}]),"
-        done
-        sed -i "s/__INPUT_GRID__/$replacement/g" $target
-
-        # Output solution
-        replacement=""
-        for odx in $( seq 1 1 ${OL_NEURONS} )
-        do
-            ndx=$(( $odx - 1 ))
-
-            if [ $odx -gt 1 ]
-            then
-                replacement="${replacement}\n        "
-            fi
-            replacement="${replacement}.HWIF_IN_OUTPUT_SOLUTION_${ndx}  (values_out[${ndx}*${FP_WIDTH} +: ${FP_WIDTH}]),"
-        done
-        sed -i "s/__OUTPUT_SOLUTION__/$replacement/g" $target
-    done
-popd >/dev/null
-
-
-#---- SIMULATION ----------------------------------------------------------------------------------
-
-pushd sim >/dev/null
-    pushd ootbtb >/dev/null
-        echo -e "${BLUE}info: Running simple OOTBTB simulation${NONE}"
-        make clean
-        make DATA_WIDTH=${FP_WIDTH} NUM_INPUTS=${input_size} NUM_HL_NODES=${HL_NEURONS} NUM_OL_NODES=${OL_NEURONS}
-        echo -e "info: Waves available, open with: gtkwave ootbtb.vcd ootbtb.gtkw"
-    popd >/dev/null
-popd >/dev/null
+#@DEPRECATED#---- RTL GENERATION ------------------------------------------------------------------------------
+#@DEPRECATED
+#@DEPRECATEDpushd rtl >/dev/null
+#@DEPRECATED    echo -e "${BLUE}info: Generating RTL design files set${NONE}"
+#@DEPRECATED
+#@DEPRECATED    # Copy piecewise approximation
+#@DEPRECATED    cp ../model/piecewise_approximation/PIECEWISE_APPROXIMATION_PARAMETERS.vh .
+#@DEPRECATED
+#@DEPRECATED    # Generate top-level instances for generic NETWORK_TOP (deprecated) and Caravel's Core (ASIC
+#@DEPRECATED    # only(
+#@DEPRECATED    tfiles=( NETWORK_TOP.v.template CORE_TOP.v.template )
+#@DEPRECATED    for tfile in ${tfiles[@]}
+#@DEPRECATED    do
+#@DEPRECATED        # Remove  .template  substring
+#@DEPRECATED        target=${tfile::-9}
+#@DEPRECATED        cp $tfile $target
+#@DEPRECATED        sed -i "s/__FP_WIDTH__/$FP_WIDTH/g" $target
+#@DEPRECATED        sed -i "s/__FP_FRAC__/$FP_FRAC/g" $target
+#@DEPRECATED        sed -i "s/__INPUT_SIZE__/$input_size/g" $target
+#@DEPRECATED        sed -i "s/__HL_NEURONS__/$HL_NEURONS/g" $target
+#@DEPRECATED        sed -i "s/__OL_NEURONS__/$OL_NEURONS/g" $target
+#@DEPRECATED        sed -i "s/__AXI_BASE_ADDR__/$AXI_BASE_ADDR/g" $target
+#@DEPRECATED
+#@DEPRECATED        # Hidden layer weights
+#@DEPRECATED        replacement=""
+#@DEPRECATED        for hdx in $( seq 1 1 ${HL_NEURONS} )
+#@DEPRECATED        do
+#@DEPRECATED            ndx=$(( $hdx - 1 ))
+#@DEPRECATED
+#@DEPRECATED            if [ $hdx -gt 1 ]
+#@DEPRECATED            then
+#@DEPRECATED                replacement="${replacement}\n        "
+#@DEPRECATED            fi
+#@DEPRECATED            replacement="${replacement}.HWIF_OUT_HL_WEIGHTS_${ndx}      (hl_weights[${ndx}*${input_size}*${FP_WIDTH} +: ${input_size}*${FP_WIDTH}]),"
+#@DEPRECATED        done
+#@DEPRECATED        sed -i "s/__HL_WEIGHTS__/$replacement/g" $target
+#@DEPRECATED
+#@DEPRECATED        # Hidden layer bias
+#@DEPRECATED        replacement=""
+#@DEPRECATED        for hdx in $( seq 1 1 ${HL_NEURONS} )
+#@DEPRECATED        do
+#@DEPRECATED            ndx=$(( $hdx - 1 ))
+#@DEPRECATED
+#@DEPRECATED            if [ $hdx -gt 1 ]
+#@DEPRECATED            then
+#@DEPRECATED                replacement="${replacement}\n        "
+#@DEPRECATED            fi
+#@DEPRECATED            replacement="${replacement}.HWIF_OUT_HL_BIAS_${ndx}         (hl_bias[${ndx}*${FP_WIDTH} +: ${FP_WIDTH}]),"
+#@DEPRECATED        done
+#@DEPRECATED        sed -i "s/__HL_BIAS__/$replacement/g" $target
+#@DEPRECATED
+#@DEPRECATED        # Output layer weights
+#@DEPRECATED        replacement=""
+#@DEPRECATED        for odx in $( seq 1 1 ${OL_NEURONS} )
+#@DEPRECATED        do
+#@DEPRECATED            ndx=$(( $odx - 1 ))
+#@DEPRECATED
+#@DEPRECATED            if [ $odx -gt 1 ]
+#@DEPRECATED            then
+#@DEPRECATED                replacement="${replacement}\n        "
+#@DEPRECATED            fi
+#@DEPRECATED            replacement="${replacement}.HWIF_OUT_OL_WEIGHTS_${ndx}      (ol_weights[${ndx}*${HL_NEURONS}*${FP_WIDTH} +: ${HL_NEURONS}*${FP_WIDTH}]),"
+#@DEPRECATED        done
+#@DEPRECATED        sed -i "s/__OL_WEIGHTS__/$replacement/g" $target
+#@DEPRECATED
+#@DEPRECATED        # Output layer bias
+#@DEPRECATED        replacement=""
+#@DEPRECATED        for odx in $( seq 1 1 ${OL_NEURONS} )
+#@DEPRECATED        do
+#@DEPRECATED            ndx=$(( $odx - 1 ))
+#@DEPRECATED
+#@DEPRECATED            if [ $odx -gt 1 ]
+#@DEPRECATED            then
+#@DEPRECATED                replacement="${replacement}\n        "
+#@DEPRECATED            fi
+#@DEPRECATED            replacement="${replacement}.HWIF_OUT_OL_BIAS_${ndx}         (ol_bias[${ndx}*${FP_WIDTH} +: ${FP_WIDTH}]),"
+#@DEPRECATED        done
+#@DEPRECATED        sed -i "s/__OL_BIAS__/$replacement/g" $target
+#@DEPRECATED
+#@DEPRECATED        # Input problem
+#@DEPRECATED        replacement=""
+#@DEPRECATED        for idx in $( seq 1 1 ${input_size} )
+#@DEPRECATED        do
+#@DEPRECATED            bdx=$(( $idx - 1 ))
+#@DEPRECATED
+#@DEPRECATED            if [ $idx -gt 1 ]
+#@DEPRECATED            then
+#@DEPRECATED                replacement="${replacement}\n        "
+#@DEPRECATED            fi
+#@DEPRECATED            replacement="${replacement}.HWIF_OUT_INPUT_GRID_${bdx}      (values_in[${bdx}*${FP_WIDTH} +: ${FP_WIDTH}]),"
+#@DEPRECATED        done
+#@DEPRECATED        sed -i "s/__INPUT_GRID__/$replacement/g" $target
+#@DEPRECATED
+#@DEPRECATED        # Output solution
+#@DEPRECATED        replacement=""
+#@DEPRECATED        for odx in $( seq 1 1 ${OL_NEURONS} )
+#@DEPRECATED        do
+#@DEPRECATED            ndx=$(( $odx - 1 ))
+#@DEPRECATED
+#@DEPRECATED            if [ $odx -gt 1 ]
+#@DEPRECATED            then
+#@DEPRECATED                replacement="${replacement}\n        "
+#@DEPRECATED            fi
+#@DEPRECATED            replacement="${replacement}.HWIF_IN_OUTPUT_SOLUTION_${ndx}  (values_out[${ndx}*${FP_WIDTH} +: ${FP_WIDTH}]),"
+#@DEPRECATED        done
+#@DEPRECATED        sed -i "s/__OUTPUT_SOLUTION__/$replacement/g" $target
+#@DEPRECATED    done
+#@DEPRECATEDpopd >/dev/null
+#@DEPRECATED
+#@DEPRECATED
+#@DEPRECATED#---- SIMULATION ----------------------------------------------------------------------------------
+#@DEPRECATED
+#@DEPRECATEDpushd sim >/dev/null
+#@DEPRECATED    pushd ootbtb >/dev/null
+#@DEPRECATED        echo -e "${BLUE}info: Running simple OOTBTB simulation${NONE}"
+#@DEPRECATED        make clean
+#@DEPRECATED        make DATA_WIDTH=${FP_WIDTH} NUM_INPUTS=${input_size} NUM_HL_NODES=${HL_NEURONS} NUM_OL_NODES=${OL_NEURONS}
+#@DEPRECATED        echo -e "info: Waves available, open with: gtkwave ootbtb.vcd ootbtb.gtkw"
+#@DEPRECATED    popd >/dev/null
+#@DEPRECATEDpopd >/dev/null

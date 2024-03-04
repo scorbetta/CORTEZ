@@ -194,6 +194,54 @@ addrmap ol_neuron_regfile {
     CREG_GP WEIGHT_7; 
     WEIGHT_7->desc = "Input weight 7";
     
+    CREG_GP WEIGHT_8; 
+    WEIGHT_8->desc = "Input weight 8";
+    
+    CREG_GP WEIGHT_9; 
+    WEIGHT_9->desc = "Input weight 9";
+    
+    CREG_GP WEIGHT_10; 
+    WEIGHT_10->desc = "Input weight 10";
+    
+    CREG_GP WEIGHT_11; 
+    WEIGHT_11->desc = "Input weight 11";
+    
+    CREG_GP WEIGHT_12; 
+    WEIGHT_12->desc = "Input weight 12";
+    
+    CREG_GP WEIGHT_13; 
+    WEIGHT_13->desc = "Input weight 13";
+    
+    CREG_GP WEIGHT_14; 
+    WEIGHT_14->desc = "Input weight 14";
+    
+    CREG_GP WEIGHT_15; 
+    WEIGHT_15->desc = "Input weight 15";
+    
+    CREG_GP WEIGHT_16; 
+    WEIGHT_16->desc = "Input weight 16";
+    
+    CREG_GP WEIGHT_17; 
+    WEIGHT_17->desc = "Input weight 17";
+    
+    CREG_GP WEIGHT_18; 
+    WEIGHT_18->desc = "Input weight 18";
+    
+    CREG_GP WEIGHT_19; 
+    WEIGHT_19->desc = "Input weight 19";
+    
+    CREG_GP WEIGHT_20; 
+    WEIGHT_20->desc = "Input weight 20";
+    
+    CREG_GP WEIGHT_21; 
+    WEIGHT_21->desc = "Input weight 21";
+    
+    CREG_GP WEIGHT_22; 
+    WEIGHT_22->desc = "Input weight 22";
+    
+    CREG_GP WEIGHT_23; 
+    WEIGHT_23->desc = "Input weight 23";
+    
 
     // Bias
     CREG_GP BIAS; 

@@ -24,7 +24,7 @@ from activations import tanh, tanh_prime, afun_test, afun_test_prime, all_data
 from losses import mse, mse_prime
 from utils import *
 
-sys.path.append(os.path.relpath("../../ver/utils"))
+sys.path.append(os.path.relpath("../../ver/cocotb/utils"))
 from my_utils import *
 
 # Plot character

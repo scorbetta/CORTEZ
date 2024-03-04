@@ -164,7 +164,167 @@ typedef union core_regfile_INPUT_GRID_15_reg_tag {
     uint32_t value;
 } core_regfile_INPUT_GRID_15_reg_t;
 
-// core_regfile_OUTPUT_SOLUTION_0 @+0x14
+// core_regfile_INPUT_GRID_16 @+0x14
+typedef union core_regfile_INPUT_GRID_16_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} core_regfile_INPUT_GRID_16_reg_t;
+
+// core_regfile_INPUT_GRID_17 @+0x15
+typedef union core_regfile_INPUT_GRID_17_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} core_regfile_INPUT_GRID_17_reg_t;
+
+// core_regfile_INPUT_GRID_18 @+0x16
+typedef union core_regfile_INPUT_GRID_18_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} core_regfile_INPUT_GRID_18_reg_t;
+
+// core_regfile_INPUT_GRID_19 @+0x17
+typedef union core_regfile_INPUT_GRID_19_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} core_regfile_INPUT_GRID_19_reg_t;
+
+// core_regfile_INPUT_GRID_20 @+0x18
+typedef union core_regfile_INPUT_GRID_20_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} core_regfile_INPUT_GRID_20_reg_t;
+
+// core_regfile_INPUT_GRID_21 @+0x19
+typedef union core_regfile_INPUT_GRID_21_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} core_regfile_INPUT_GRID_21_reg_t;
+
+// core_regfile_INPUT_GRID_22 @+0x1a
+typedef union core_regfile_INPUT_GRID_22_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} core_regfile_INPUT_GRID_22_reg_t;
+
+// core_regfile_INPUT_GRID_23 @+0x1b
+typedef union core_regfile_INPUT_GRID_23_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} core_regfile_INPUT_GRID_23_reg_t;
+
+// core_regfile_INPUT_GRID_24 @+0x1c
+typedef union core_regfile_INPUT_GRID_24_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} core_regfile_INPUT_GRID_24_reg_t;
+
+// core_regfile_INPUT_GRID_25 @+0x1d
+typedef union core_regfile_INPUT_GRID_25_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} core_regfile_INPUT_GRID_25_reg_t;
+
+// core_regfile_INPUT_GRID_26 @+0x1e
+typedef union core_regfile_INPUT_GRID_26_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} core_regfile_INPUT_GRID_26_reg_t;
+
+// core_regfile_INPUT_GRID_27 @+0x1f
+typedef union core_regfile_INPUT_GRID_27_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} core_regfile_INPUT_GRID_27_reg_t;
+
+// core_regfile_INPUT_GRID_28 @+0x20
+typedef union core_regfile_INPUT_GRID_28_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} core_regfile_INPUT_GRID_28_reg_t;
+
+// core_regfile_INPUT_GRID_29 @+0x21
+typedef union core_regfile_INPUT_GRID_29_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} core_regfile_INPUT_GRID_29_reg_t;
+
+// core_regfile_INPUT_GRID_30 @+0x22
+typedef union core_regfile_INPUT_GRID_30_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} core_regfile_INPUT_GRID_30_reg_t;
+
+// core_regfile_INPUT_GRID_31 @+0x23
+typedef union core_regfile_INPUT_GRID_31_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} core_regfile_INPUT_GRID_31_reg_t;
+
+// core_regfile_INPUT_GRID_32 @+0x24
+typedef union core_regfile_INPUT_GRID_32_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} core_regfile_INPUT_GRID_32_reg_t;
+
+// core_regfile_INPUT_GRID_33 @+0x25
+typedef union core_regfile_INPUT_GRID_33_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} core_regfile_INPUT_GRID_33_reg_t;
+
+// core_regfile_INPUT_GRID_34 @+0x26
+typedef union core_regfile_INPUT_GRID_34_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} core_regfile_INPUT_GRID_34_reg_t;
+
+// core_regfile_INPUT_GRID_35 @+0x27
+typedef union core_regfile_INPUT_GRID_35_reg_tag {
+    struct {
+        uint32_t data : 8; // @[7:0]
+    } fields;
+    uint32_t value;
+} core_regfile_INPUT_GRID_35_reg_t;
+
+// core_regfile_OUTPUT_SOLUTION_0 @+0x28
 typedef union core_regfile_OUTPUT_SOLUTION_0_reg_tag {
     struct {
         uint32_t data : 8; // @[7:0]
@@ -172,7 +332,7 @@ typedef union core_regfile_OUTPUT_SOLUTION_0_reg_tag {
     uint32_t value;
 } core_regfile_OUTPUT_SOLUTION_0_reg_t;
 
-// core_regfile_OUTPUT_SOLUTION_1 @+0x15
+// core_regfile_OUTPUT_SOLUTION_1 @+0x29
 typedef union core_regfile_OUTPUT_SOLUTION_1_reg_tag {
     struct {
         uint32_t data : 8; // @[7:0]
@@ -180,7 +340,7 @@ typedef union core_regfile_OUTPUT_SOLUTION_1_reg_tag {
     uint32_t value;
 } core_regfile_OUTPUT_SOLUTION_1_reg_t;
 
-// core_regfile_OUTPUT_SOLUTION_2 @+0x16
+// core_regfile_OUTPUT_SOLUTION_2 @+0x2a
 typedef union core_regfile_OUTPUT_SOLUTION_2_reg_tag {
     struct {
         uint32_t data : 8; // @[7:0]
@@ -188,7 +348,7 @@ typedef union core_regfile_OUTPUT_SOLUTION_2_reg_tag {
     uint32_t value;
 } core_regfile_OUTPUT_SOLUTION_2_reg_t;
 
-// core_regfile_OUTPUT_SOLUTION_3 @+0x17
+// core_regfile_OUTPUT_SOLUTION_3 @+0x2b
 typedef union core_regfile_OUTPUT_SOLUTION_3_reg_tag {
     struct {
         uint32_t data : 8; // @[7:0]
@@ -196,7 +356,7 @@ typedef union core_regfile_OUTPUT_SOLUTION_3_reg_tag {
     uint32_t value;
 } core_regfile_OUTPUT_SOLUTION_3_reg_t;
 
-// core_regfile_OUTPUT_SOLUTION_4 @+0x18
+// core_regfile_OUTPUT_SOLUTION_4 @+0x2c
 typedef union core_regfile_OUTPUT_SOLUTION_4_reg_tag {
     struct {
         uint32_t data : 8; // @[7:0]
@@ -204,7 +364,7 @@ typedef union core_regfile_OUTPUT_SOLUTION_4_reg_tag {
     uint32_t value;
 } core_regfile_OUTPUT_SOLUTION_4_reg_t;
 
-// core_regfile_CORE_CTRL @+0x19
+// core_regfile_CORE_CTRL @+0x2d
 typedef union core_regfile_CORE_CTRL_reg_tag {
     struct {
         uint32_t RESET : 1; // @[0:0]
@@ -215,7 +375,7 @@ typedef union core_regfile_CORE_CTRL_reg_tag {
     uint32_t value;
 } core_regfile_CORE_CTRL_reg_t;
 
-// core_regfile_CORE_DEBUG_INFO @+0x1a
+// core_regfile_CORE_DEBUG_INFO @+0x2e
 typedef union core_regfile_CORE_DEBUG_INFO_reg_tag {
     struct {
         uint32_t RESET_START : 1; // @[0:0]
@@ -230,7 +390,7 @@ typedef union core_regfile_CORE_DEBUG_INFO_reg_tag {
     uint32_t value;
 } core_regfile_CORE_DEBUG_INFO_reg_t;
 
-// core_regfile_CORE_STATUS @+0x1b
+// core_regfile_CORE_STATUS @+0x2f
 typedef union core_regfile_CORE_STATUS_reg_tag {
     struct {
         uint32_t VALID_OUT : 1; // @[0:0]
@@ -239,7 +399,7 @@ typedef union core_regfile_CORE_STATUS_reg_tag {
     uint32_t value;
 } core_regfile_CORE_STATUS_reg_t;
 
-// core_regfile_SEVENSEG_0 @+0x1c
+// core_regfile_SEVENSEG_0 @+0x30
 typedef union core_regfile_SEVENSEG_0_reg_tag {
     struct {
         uint32_t data : 8; // @[7:0]
@@ -247,7 +407,7 @@ typedef union core_regfile_SEVENSEG_0_reg_tag {
     uint32_t value;
 } core_regfile_SEVENSEG_0_reg_t;
 
-// core_regfile_SEVENSEG_1 @+0x1d
+// core_regfile_SEVENSEG_1 @+0x31
 typedef union core_regfile_SEVENSEG_1_reg_tag {
     struct {
         uint32_t data : 8; // @[7:0]
@@ -255,7 +415,7 @@ typedef union core_regfile_SEVENSEG_1_reg_tag {
     uint32_t value;
 } core_regfile_SEVENSEG_1_reg_t;
 
-// core_regfile_SEVENSEG_2 @+0x1e
+// core_regfile_SEVENSEG_2 @+0x32
 typedef union core_regfile_SEVENSEG_2_reg_tag {
     struct {
         uint32_t data : 8; // @[7:0]
@@ -263,7 +423,7 @@ typedef union core_regfile_SEVENSEG_2_reg_tag {
     uint32_t value;
 } core_regfile_SEVENSEG_2_reg_t;
 
-// core_regfile_SEVENSEG_3 @+0x1f
+// core_regfile_SEVENSEG_3 @+0x33
 typedef union core_regfile_SEVENSEG_3_reg_tag {
     struct {
         uint32_t data : 8; // @[7:0]
