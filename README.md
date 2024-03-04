@@ -39,12 +39,12 @@ metal layer.
 
 | MACRO | BRIEF | FLOORPLAN | HIGHER METAL |
 |-|-|-|-|
-| `HL_NEURON` | Hidden layer neuron | 200umx200um | `met3` |
-| `OL_NEURON` | Output layer neuron | 200umx200um | `met3` |
-| `HIDDEN_LAYER` | Hidden layer w/ 8 neurons | 1050umx550um | `met3` |
-| `OUTPUT_LAYER` | Output layer w/ 5 neurons | 1300umx300um | `met3` |
-| `NETWORK` | Top-level network and synchronizers | TBD | `met4` |
-| `CORE_TOP` | Chip top | TBD | `met4` |
+| `HL_NEURON` | Hidden layer neuron | 270umx270um | `met3` |
+| `OL_NEURON` | Output layer neuron | 270umx270um | `met3` |
+| `HIDDEN_LAYER` | Hidden layer w/ 24 neurons | 1900umx1300um | `met3` |
+| `OUTPUT_LAYER` | Output layer w/ 5 neurons | 1600umx400um | `met3` |
+| `CORE_REGFILE` | Core-level register file | 300umx1300um | `met3` |
+| `CORE_TOP` | Top-level core (w/o Caravel harness) | 3000umx3000um | `met4` |
 
 ## Architecture
 The simplified block diagram shows the CORTEZ top-level architecture, contents of each layer and
