@@ -88,7 +88,7 @@ All are managed through the `grogu` utility, and more additional information can
 
 ### Hidden layer registers
 Hidden layer registers are 8-bit wide. SCI is word-addressable; the address corresponds to the
-register index. Address is 5-bit wide.
+register index. Address is 6-bit wide.
 
 | REGNAME | ADDRESS | CONTENTS |
 |-|-|-|
@@ -108,6 +108,26 @@ register index. Address is 5-bit wide.
 | `WEIGHT_13` | 0x0d | Fixed-point weight for input 13 |
 | `WEIGHT_14` | 0x0e | Fixed-point weight for input 14 |
 | `WEIGHT_15` | 0x0f | Fixed-point weight for input 15 |
+| `WEIGHT_16` | 0x10 | Fixed-point weight for input 16 |
+| `WEIGHT_17` | 0x11 | Fixed-point weight for input 17 |
+| `WEIGHT_18` | 0x12 | Fixed-point weight for input 18 |
+| `WEIGHT_19` | 0x13 | Fixed-point weight for input 19 |
+| `WEIGHT_20` | 0x14 | Fixed-point weight for input 20 |
+| `WEIGHT_21` | 0x15 | Fixed-point weight for input 21 |
+| `WEIGHT_22` | 0x16 | Fixed-point weight for input 22 |
+| `WEIGHT_23` | 0x17 | Fixed-point weight for input 23 |
+| `WEIGHT_24` | 0x18 | Fixed-point weight for input 24 |
+| `WEIGHT_25` | 0x19 | Fixed-point weight for input 25 |
+| `WEIGHT_26` | 0x1a | Fixed-point weight for input 26 |
+| `WEIGHT_27` | 0x1b | Fixed-point weight for input 27 |
+| `WEIGHT_28` | 0x1c | Fixed-point weight for input 28 |
+| `WEIGHT_29` | 0x1d | Fixed-point weight for input 29 |
+| `WEIGHT_30` | 0x1e | Fixed-point weight for input 30 |
+| `WEIGHT_31` | 0x1f | Fixed-point weight for input 31 |
+| `WEIGHT_32` | 0x20 | Fixed-point weight for input 32 |
+| `WEIGHT_33` | 0x21 | Fixed-point weight for input 33 |
+| `WEIGHT_34` | 0x22 | Fixed-point weight for input 34 |
+| `WEIGHT_35` | 0x23 | Fixed-point weight for input 35 |
 | `BIAS` | 0x10 | Fixed-point bias |
 
 ### Output layer registers
@@ -152,18 +172,38 @@ register index since registers are 1-Byte wide. Address is 6-bit wide.
 | `INPUT_GRID_13` | 0x11 | Input value for grid cell 13 |
 | `INPUT_GRID_14` | 0x12 | Input value for grid cell 14 |
 | `INPUT_GRID_15` | 0x13 | Input value for grid cell 15 |
-| `OUTPUT_SOLUTION_0` | 0x14 | Output solution, one-hot |
-| `OUTPUT_SOLUTION_1` | 0x15 | Output solution, one-hot |
-| `OUTPUT_SOLUTION_2` | 0x16 | Output solution, one-hot |
-| `OUTPUT_SOLUTION_3` | 0x17 | Output solution, one-hot |
-| `OUTPUT_SOLUTION_4` | 0x18 | Output solution, one-hot |
-| `CORE_CTRL` | 0x19 | Core control register |
-| `CORE_DEBUG_INFO` | 0x1a | Core debug register |
-| `CORE_STATUS` | 0x1b | Core status register |
-| `SEVENSEG_0` | 0x1c | Contents to drive 7-segments display 0 |
-| `SEVENSEG_1` | 0x1d | Contents to drive 7-segments display 1 |
-| `SEVENSEG_2` | 0x1e | Contents to drive 7-segments display 2 |
-| `SEVENSEG_3` | 0x1f | Contents to drive 7-segments display 3 |
+| `INPUT_GRID_16` | 0x14 | Input value for grid cell 16 |
+| `INPUT_GRID_17` | 0x15 | Input value for grid cell 17 |
+| `INPUT_GRID_18` | 0x16 | Input value for grid cell 18 |
+| `INPUT_GRID_19` | 0x17 | Input value for grid cell 19 |
+| `INPUT_GRID_20` | 0x18 | Input value for grid cell 20 |
+| `INPUT_GRID_21` | 0x19 | Input value for grid cell 21 |
+| `INPUT_GRID_22` | 0x1a | Input value for grid cell 22 |
+| `INPUT_GRID_23` | 0x1b | Input value for grid cell 23 |
+| `INPUT_GRID_24` | 0x1c | Input value for grid cell 24 |
+| `INPUT_GRID_25` | 0x1d | Input value for grid cell 25 |
+| `INPUT_GRID_26` | 0x1e | Input value for grid cell 26 |
+| `INPUT_GRID_27` | 0x1f | Input value for grid cell 27 |
+| `INPUT_GRID_28` | 0x20 | Input value for grid cell 28 |
+| `INPUT_GRID_29` | 0x21 | Input value for grid cell 29 |
+| `INPUT_GRID_30` | 0x22 | Input value for grid cell 30 |
+| `INPUT_GRID_31` | 0x23 | Input value for grid cell 31 |
+| `INPUT_GRID_32` | 0x24 | Input value for grid cell 32 |
+| `INPUT_GRID_33` | 0x25 | Input value for grid cell 33 |
+| `INPUT_GRID_34` | 0x26 | Input value for grid cell 34 |
+| `INPUT_GRID_35` | 0x27 | Input value for grid cell 35 |
+| `OUTPUT_SOLUTION_0` | 0x28 | Output solution, one-hot |
+| `OUTPUT_SOLUTION_1` | 0x29 | Output solution, one-hot |
+| `OUTPUT_SOLUTION_2` | 0x2a | Output solution, one-hot |
+| `OUTPUT_SOLUTION_3` | 0x2b | Output solution, one-hot |
+| `OUTPUT_SOLUTION_4` | 0x2c | Output solution, one-hot |
+| `CORE_CTRL` | 0x2d | Core control register |
+| `CORE_DEBUG_INFO` | 0x2e | Core debug register |
+| `CORE_STATUS` | 0x2f | Core status register |
+| `SEVENSEG_0` | 0x30 | Contents to drive 7-segments display 0 |
+| `SEVENSEG_1` | 0x31 | Contents to drive 7-segments display 1 |
+| `SEVENSEG_2` | 0x32 | Contents to drive 7-segments display 2 |
+| `SEVENSEG_3` | 0x33 | Contents to drive 7-segments display 3 |
 
 ## Piecewise approximation of `tanh()`
 The selected activation function `tanh()` is being replaced by its piecewise approximation function.
