@@ -34,6 +34,8 @@ module HIDDEN_LAYER #(
     wire [NUM_OUTPUTS-1:0]  readies;
     wire [NUM_OUTPUTS-1:0]  valids_out;
     wire                    all_valids;
+    wire [NUM_OUTPUTS-1:0]  sci_resps;
+    wire [NUM_OUTPUTS-1:0]  sci_acks;
 
     generate
         for(gdx = 0; gdx < NUM_OUTPUTS; gdx = gdx + 1) begin
@@ -47,8 +49,8 @@ module HIDDEN_LAYER #(
                 .RSTN       (RSTN),
                 .SCI_CSN    (SCI_CSN[gdx]),
                 .SCI_REQ    (SCI_REQ),
-                .SCI_RESP   (SCI_RESP),
-                .SCI_ACK    (SCI_ACK),
+                .SCI_RESP   (sci_resps[gdx]),
+                .SCI_ACK    (sci_acks[gdx]),
                 .READY      (readies[gdx]),
                 .VALUE_IN   (VALUE_IN),
                 .VALID_IN   (VALID_IN),
@@ -60,6 +62,10 @@ module HIDDEN_LAYER #(
     endgenerate
 
     assign all_valids = &valids_out;
+
+    // Tri-stated  RESP/ACK  bus
+    `include "sci_resp_z.v"
+    `include "sci_ack_z.v"
 
     // Pinout
     assign READY        = &readies;

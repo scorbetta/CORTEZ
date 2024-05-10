@@ -15,8 +15,8 @@ module HL_NEURON #(
     // CSI interface
     input wire                      SCI_CSN,
     input wire                      SCI_REQ,
-    inout wire                      SCI_RESP,
-    inout wire                      SCI_ACK,
+    output wire                     SCI_RESP,
+    output wire                     SCI_ACK,
     // Inputs are all asserted at the same time
     output wire                     READY,
     input wire signed [WIDTH-1:0]   VALUE_IN,
@@ -36,11 +36,11 @@ module HL_NEURON #(
     wire [NUM_INPUTS*WIDTH-1:0]         weights;
     wire [WIDTH-1:0]                    bias;
     wire                                regpool_wreq;
-    wire [4:0]                          regpool_waddr;
+    wire [5:0]                          regpool_waddr;
     wire [7:0]                          regpool_wdata;
     wire                                regpool_wack;
     wire                                regpool_rreq;
-    wire [4:0]                          regpool_raddr;
+    wire [5:0]                          regpool_raddr;
     wire [7:0]                          regpool_rdata;
     wire                                regpool_rvalid;
     wire                                mul_start;
@@ -60,7 +60,7 @@ module HL_NEURON #(
 
     // Local registers
     SCI_SLAVE #(
-        .ADDR_WIDTH (5), // 17 registers
+        .ADDR_WIDTH (6), // 36+1 registers
         .DATA_WIDTH (8)
     )
     SCI_SLAVE (
@@ -91,22 +91,42 @@ module HL_NEURON #(
         .RADDR              (regpool_raddr),
         .RDATA              (regpool_rdata),
         .RVALID             (regpool_rvalid),
-        .HWIF_OUT_WEIGHT_0  (weights[0*WIDTH +: WIDTH]),
-        .HWIF_OUT_WEIGHT_1  (weights[1*WIDTH +: WIDTH]),
-        .HWIF_OUT_WEIGHT_2  (weights[2*WIDTH +: WIDTH]),
-        .HWIF_OUT_WEIGHT_3  (weights[3*WIDTH +: WIDTH]),
-        .HWIF_OUT_WEIGHT_4  (weights[4*WIDTH +: WIDTH]),
-        .HWIF_OUT_WEIGHT_5  (weights[5*WIDTH +: WIDTH]),
-        .HWIF_OUT_WEIGHT_6  (weights[6*WIDTH +: WIDTH]),
-        .HWIF_OUT_WEIGHT_7  (weights[7*WIDTH +: WIDTH]),
-        .HWIF_OUT_WEIGHT_8  (weights[8*WIDTH +: WIDTH]),
-        .HWIF_OUT_WEIGHT_9  (weights[9*WIDTH +: WIDTH]),
-        .HWIF_OUT_WEIGHT_10 (weights[10*WIDTH +: WIDTH]),
-        .HWIF_OUT_WEIGHT_11 (weights[11*WIDTH +: WIDTH]),
-        .HWIF_OUT_WEIGHT_12 (weights[12*WIDTH +: WIDTH]),
-        .HWIF_OUT_WEIGHT_13 (weights[13*WIDTH +: WIDTH]),
-        .HWIF_OUT_WEIGHT_14 (weights[14*WIDTH +: WIDTH]),
-        .HWIF_OUT_WEIGHT_15 (weights[15*WIDTH +: WIDTH]),
+        .HWIF_OUT_WEIGHT_0  (weights[0*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_1  (weights[1*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_2  (weights[2*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_3  (weights[3*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_4  (weights[4*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_5  (weights[5*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_6  (weights[6*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_7  (weights[7*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_8  (weights[8*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_9  (weights[9*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_10 (weights[10*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_11 (weights[11*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_12 (weights[12*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_13 (weights[13*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_14 (weights[14*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_15 (weights[15*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_16 (weights[16*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_17 (weights[17*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_18 (weights[18*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_19 (weights[19*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_20 (weights[20*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_21 (weights[21*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_22 (weights[22*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_23 (weights[23*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_24 (weights[24*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_25 (weights[25*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_26 (weights[26*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_27 (weights[27*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_28 (weights[28*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_29 (weights[29*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_30 (weights[30*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_31 (weights[31*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_32 (weights[32*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_33 (weights[33*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_34 (weights[34*WIDTH+:WIDTH]),
+        .HWIF_OUT_WEIGHT_35 (weights[35*WIDTH+:WIDTH]),
         .HWIF_OUT_BIAS      (bias)
     );
 
